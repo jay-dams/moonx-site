@@ -1,7 +1,7 @@
 (function () {
   "use strict";
 
-  var GA_ID = "";
+  var GA_ID = "G-Z2QVDGTL5P";
   var CLE = "moonx.consent";
 
   if (!GA_ID) return;

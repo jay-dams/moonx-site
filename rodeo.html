@@ -39,7 +39,9 @@ main{max-width:1120px;padding-bottom:40px}
   border:1px solid var(--line-2);background:#03050C;box-shadow:0 40px 90px -50px rgba(45,123,255,.8);
   aspect-ratio:9/16;max-height:calc(100svh - var(--navh) - 190px)}
 .frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block}
-.frame.full{position:fixed;inset:0;z-index:60;max-width:none;max-height:none;margin:0;border-radius:0;border:0;aspect-ratio:auto}
+
+.frame.full{position:fixed;top:0;left:0;right:0;bottom:auto;width:100%;height:100svh;z-index:60;max-width:none;max-height:none;margin:0;border-radius:0;border:0;aspect-ratio:auto}
+.frame.full .fs{top:max(10px,env(safe-area-inset-top));right:max(10px,env(safe-area-inset-right))}
 .frame .fs{position:absolute;right:10px;top:10px;z-index:2;width:38px;height:38px;border-radius:12px;
   background:rgba(3,5,12,.72);border:1px solid var(--line-2);color:var(--dim);display:grid;place-items:center;backdrop-filter:blur(8px)}
 .frame .fs:hover{color:#fff;border-color:var(--hi)}
@@ -177,8 +179,29 @@ main{max-width:1120px;padding-bottom:40px}
   const frame=document.getElementById("frame"), btn=document.getElementById("fsBtn");
   const isFull=()=>document.fullscreenElement===frame||frame.classList.contains("full");
   function label(){ const f=isFull(); btn.setAttribute("aria-label", f?"Leave fullscreen":"Play fullscreen"); btn.title=f?"Leave fullscreen":"Fullscreen"; }
-  function enter(){ if(frame.requestFullscreen) frame.requestFullscreen().catch(()=>frame.classList.add("full")); else frame.classList.add("full"); setTimeout(label,60); }
-  function leave(){ if(document.fullscreenElement) document.exitFullscreen().catch(()=>{}); frame.classList.remove("full"); setTimeout(label,60); }
+
+  function vh(){ frame.style.height=(window.visualViewport?visualViewport.height:innerHeight)+"px"; }
+  let scrollY=0;
+  function lock(on){
+    if(on){ scrollY=window.scrollY;
+      document.body.style.position="fixed"; document.body.style.top=(-scrollY)+"px";
+      document.body.style.left="0"; document.body.style.right="0"; document.body.style.width="100%";
+      vh(); addEventListener("resize",vh); if(window.visualViewport) visualViewport.addEventListener("resize",vh);
+    } else {
+      document.body.style.position=""; document.body.style.top=""; document.body.style.left="";
+      document.body.style.right=""; document.body.style.width=""; frame.style.height="";
+      removeEventListener("resize",vh); if(window.visualViewport) visualViewport.removeEventListener("resize",vh);
+      window.scrollTo(0,scrollY);
+    }
+  }
+  function enter(){
+    if(frame.requestFullscreen) frame.requestFullscreen().catch(()=>{ frame.classList.add("full"); lock(true); });
+    else { frame.classList.add("full"); lock(true); }
+    setTimeout(label,60);
+  }
+  function leave(){ if(document.fullscreenElement) document.exitFullscreen().catch(()=>{});
+    if(frame.classList.contains("full")){ frame.classList.remove("full"); lock(false); }
+    setTimeout(label,60); }
   btn.addEventListener("click",()=>{ isFull()?leave():enter(); });
   document.addEventListener("fullscreenchange",label);
   addEventListener("keydown",e=>{ if(e.key==="f"||e.key==="F"){ isFull()?leave():enter(); } else if(e.key==="Escape"&&frame.classList.contains("full")) leave(); });

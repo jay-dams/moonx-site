@@ -1,11 +1,29 @@
-# Cloudflare Pages / Netlify: cache policy. Images and fonts never change (hashed names).
+# Cloudflare Pages / Netlify: politique de cache.
+# Le principe: tout ce qui ne change jamais est mis en cache pour un an et n'est plus
+# redemande; le HTML est revalide a chaque visite, pour qu'une mise en ligne soit visible
+# tout de suite.
+
 /assets/*
-  Cache-Control: public, max-age=31536000, immutable
-/*.html
-  Cache-Control: public, max-age=0, must-revalidate
-/*.js
   Cache-Control: public, max-age=31536000, immutable
 /fonts/*
   Cache-Control: public, max-age=31536000, immutable
 /brand/*
   Cache-Control: public, max-age=31536000, immutable
+/*.js
+  Cache-Control: public, max-age=31536000, immutable
+
+# L'AUDIO: 273 Mo, la plus grosse depense du site et la seule qui se repete.
+# Sans cette regle, un visiteur qui revient retelecharge chaque morceau qu'il reecoute.
+# Un an, immutable: un morceau est un enregistrement, il ne change pas. Le jour ou un
+# master est remplace, changer le nom du fichier -- jamais le contenu sous le meme nom.
+/audio/*
+  Cache-Control: public, max-age=31536000, immutable
+  Accept-Ranges: bytes
+
+# Le jeu est un seul fichier de 1,6 Mo et il n'etait couvert par aucune regle: `/*.html`
+# ne descend pas dans les sous-dossiers.
+/game/*
+  Cache-Control: public, max-age=0, must-revalidate
+
+/*.html
+  Cache-Control: public, max-age=0, must-revalidate

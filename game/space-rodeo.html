@@ -49,7 +49,9 @@ h1{font-weight:800;font-size:clamp(28px,7vw,44px);letter-spacing:-.035em;line-he
 .dot{width:12px;height:12px;border-radius:50%;flex:none}
 #ride{display:none;position:fixed;inset:0;z-index:3}
 #ride.on{display:block}
-canvas{display:block;width:100%;height:100%}
+canvas{display:block;width:100%;height:100%;
+
+  touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 #hud[hidden]{display:none}
 #hud{position:fixed;top:0;left:0;right:0;z-index:4;display:flex;justify-content:space-between;align-items:center;padding:14px 16px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--dim);pointer-events:none}
 #hud .x{font-family:Inter;font-weight:800;font-size:38px;letter-spacing:-.04em;color:var(--hi);text-shadow:0 0 18px rgba(127,182,255,.6)}
@@ -964,7 +966,8 @@ function draw(){ if(!R) return;
     if(d>GOOD+Math.max(0,OFF)+0.06){ n.hit="miss"; onMiss(); if(R.ended) return; } }
   cx.globalCompositeOperation="source-over";
 
-  for(const n of R.notes){ if(!n.holding) continue; const down=(dragging&&rocketLane===n.lane)||KEYS[n.lane];
+  for(const n of R.notes){ if(!n.holding) continue;
+    const down=LANE_DOWN[n.lane]>0||KEYS[n.lane];
     if(down) n.upSince=null; else if(n.upSince==null) n.upSince=now;
     if(now>=n.t+n.len){ n.holding=false; n.held=true; holdTone(n.lane,false);
 
@@ -1138,10 +1141,30 @@ function moveLane(lane){ if(!R||R.ended) return; if(lane!==rocketLane) whoosh();
 let SET=Object.assign({lyrics:true, titleCard:true, shake:true, haptics:true}, (function(){ try{ return JSON.parse(localStorage.getItem("sr.set")||"{}"); }catch(_){ return {}; } })());
 function saveSet(){ try{ localStorage.setItem("sr.set", JSON.stringify(SET)); }catch(_){} }
 let RIDE_CARD=null;
+
+const PTR=new Map();
+const LANE_DOWN=[0,0,0];
 let dragging=false, lastLane=-1;
-cv.addEventListener("pointerdown",e=>{ e.preventDefault(); dragging=true; cv.setPointerCapture(e.pointerId); const l=laneFromX(e.clientX); lastLane=l; tapLane(l); });
-cv.addEventListener("pointermove",e=>{ if(!dragging) return; const l=laneFromX(e.clientX); if(l!==lastLane){ lastLane=l; moveLane(l); } });
-cv.addEventListener("pointerup",()=>{ dragging=false; lastLane=-1; }); cv.addEventListener("pointercancel",()=>{ dragging=false; lastLane=-1; });
+function ptrSet(id,l){ const old=PTR.get(id);
+  if(old===l) return;
+  if(old!=null) LANE_DOWN[old]=Math.max(0,LANE_DOWN[old]-1);
+  PTR.set(id,l); LANE_DOWN[l]++;
+}
+function ptrDel(id){ const old=PTR.get(id);
+  if(old!=null) LANE_DOWN[old]=Math.max(0,LANE_DOWN[old]-1);
+  PTR.delete(id);
+  dragging=PTR.size>0; if(!dragging) lastLane=-1;
+}
+cv.addEventListener("pointerdown",e=>{ e.preventDefault(); dragging=true;
+  try{ cv.setPointerCapture(e.pointerId); }catch(_){}
+  const l=laneFromX(e.clientX); ptrSet(e.pointerId,l); lastLane=l; tapLane(l); });
+cv.addEventListener("pointermove",e=>{ if(!PTR.has(e.pointerId)) return;
+  const l=laneFromX(e.clientX); if(l===PTR.get(e.pointerId)) return;
+  ptrSet(e.pointerId,l); lastLane=l; moveLane(l); });
+cv.addEventListener("pointerup",e=>ptrDel(e.pointerId));
+cv.addEventListener("pointercancel",e=>ptrDel(e.pointerId));
+
+document.addEventListener("visibilitychange",()=>{ if(document.hidden){ PTR.clear(); LANE_DOWN[0]=LANE_DOWN[1]=LANE_DOWN[2]=0; dragging=false; lastLane=-1; } });
 function endRide(moon){ if(R.ended) return;
 
   if(R.learn){ return; } setDayBest(R.score); if(R.real&&(R.hitsSeen||0)>=8){ META.offset=OFF; saveMeta(); } if(moon&&!R.landing){ R.landing=clock(); R.landHold=true; for(let i=0;i<8;i++) firework(cv.width,cv.height,i%2?"#A6FF3D":"#FFC93C"); FX.banner={txt:"MOON",sub:"YOU HELD TO THE LAST NOTE",c:"#A6FF3D",t:0}; setTimeout(()=>{ R.landHold=false; endRide(true); },2600); return; } R.ended=true; cancelAnimationFrame(raf); if(typeof PAUSED!=="undefined"){ PAUSED=false; document.body.classList.remove("paused"); clearInterval(RESUME_T); $("pausePane").classList.remove("on"); $("resume").classList.remove("on"); } $("pauseBtn").classList.remove("on")   ; document.body.classList.remove("riding"); try{ if(bdMoi()) window.__lastRank=bdPoser(R); outroReset(); outroJoin(); requestAnimationFrame(majActH); setTimeout(majActH,400);
@@ -1318,13 +1341,17 @@ $("joinWrap").classList.add("on"); $("oTicket").hidden=true; $("joinName").focus
 
 const SUPA_URL="https://xcyqdfhnpntcloimotoo.supabase.co", SUPA_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhjeXFkZmhucG50Y2xvaW1vdG9vIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODkzMzQ4NjQsImV4cCI6MjEwNDkxMDg2NH0.9UcRNt5xW1bGEussS9Ca0DrrdfD35y5X-P4zr0NCU2k";
 const SUPA=()=>!!(SUPA_URL&&SUPA_KEY);
-async function supaSignup(p){
-  const r=await fetch(SUPA_URL+"/functions/v1/signup",{method:"POST",
-    headers:{"content-type":"application/json","authorization":"Bearer "+SUPA_KEY},
-    body:JSON.stringify(p)});
-  if(!r.ok) throw new Error("signup "+r.status);
-  return r.json();
+
+function monJeton(){
+  try{
+    let t=localStorage.getItem("sr.owner");
+    if(!t){ t=[...crypto.getRandomValues(new Uint8Array(16))]
+              .map(b=>b.toString(16).padStart(2,"0")).join("");
+            localStorage.setItem("sr.owner", t); }
+    return t;
+  }catch(_){ return ""; }
 }
+
 async function supaEnvoyer(run, pseudo){
   if(!SUPA() || !run || !pseudo) return null;
   try{
@@ -1333,6 +1360,7 @@ async function supaEnvoyer(run, pseudo){
       headers:{ "Content-Type":"application/json", apikey:SUPA_KEY, authorization:"Bearer "+SUPA_KEY },
       body: JSON.stringify({
         handle: pseudo,
+        owner: monJeton(),
         song: (song&&song.slug)||"",
         score: Math.round(run.score||0),
         multiple: Math.max(1, Math.round(run.bestX||run.x||1)),
@@ -1340,9 +1368,10 @@ async function supaEnvoyer(run, pseudo){
         seconds: Math.max(3, Math.round(run.heldFor || (run.dur||0)))
       })
     });
+    if(r.status===409){ const e=new Error("409"); e.pris=true; throw e; }
     if(!r.ok) return null;
     return await r.json();
-  }catch(_){ return null; }
+  }catch(e){ if(e&&e.pris) throw e; return null; }
 }
 
 async function supaBoard(n){
@@ -1367,8 +1396,6 @@ if($("joinSend")) $("joinSend").addEventListener("click",()=>{
 
   requestAnimationFrame(majActH); setTimeout(majActH,350);
   window.__lastRank=bdPoser(R, h);
-
-  supaEnvoyer(R, h).then(res=>{ if(res && res.rank) try{ bdRendre(); }catch(_){} });
   const dejaLa=bdLire();
   $("joinRank").textContent="#"+(window.__lastRank>0?window.__lastRank:dejaLa.length);
 
@@ -1381,9 +1408,7 @@ if($("joinSend")) $("joinSend").addEventListener("click",()=>{
   $("joinWrap").classList.remove("on"); $("joinOk").classList.add("on"); $("oTicket").hidden=true;
   bdRendre(); haptic("x");
 
-  if(SUPA()) supaSignup({handle:h, source:"rodeo",
-      score:Math.round((R&&R.score)||0), multiple:Math.round((R&&(R.bestX||R.x))||1),
-      best_run:Math.round((R&&R.best)||0), song:(song&&song.slug)||""})
+  if(SUPA()) supaEnvoyer(R, h)
     .then(d=>{
       if(!d) return;
 
