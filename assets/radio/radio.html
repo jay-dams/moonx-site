@@ -1,0 +1,53 @@
+<div id="radioVeil" aria-hidden="true"></div>
+
+<div id="miniBar" role="region" aria-label="Now playing">
+  <div class="set">
+    <button type="button" class="glass" id="miniGlass" aria-label="Open the radio"><b id="miniStation">K-HAT 101.7</b><div class="mq" id="miniMqWrap"><span id="miniNow">Chasing X · Della &amp; the Long Shots</span></div><i class="tune">TUNE</i></button>
+    <button type="button" id="miniStPrev" aria-label="Previous station" title="Previous station">&#171;</button>
+      <button type="button" id="miniPrev" aria-label="Previous track">◀</button>
+    <button type="button" id="miniPlay" class="play" aria-label="Play or pause">&#9654;</button>
+    <button type="button" id="miniNext" aria-label="Next track">▶</button>
+      <button type="button" id="miniStNext" aria-label="Next station" title="Next station">&#187;</button>
+  </div>
+</div>
+<div id="radioSheet" role="dialog" aria-label="Shuttle radio" aria-hidden="true">
+  <div class="rs-head"><div><b>every journey starts with a good soundtrack.</b><span>Houston, the board isn't open yet. Ten stations, one road trip to the moon. A gift for the wait.</span></div><button type="button" id="rsClose" aria-label="Minimise the radio" title="Minimise"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 10l6 6 6-6"/><path d="M5 20h14"/></svg></button></div>
+  <div id="sheetSlot"><div id="radioWrap">
+    <div class="set">
+      <div class="glass">
+        <div class="scope"><canvas id="dial" aria-label="Orbit tuner: drag the rocket between stations"></canvas><div class="crt" aria-hidden="true"></div></div>
+        <div class="tele">
+          <span class="led" id="led"></span><b id="lockTxt">LOCK</b>
+          <span class="vu" id="vu" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+          <b id="freqTxt">101.7 MHz</b>
+        </div>
+        <div class="readout">
+          <div class="rline">
+            <b id="dispStation">K-HAT 101.7</b>
+            <span class="dj" id="dispDj">DJ DUSTY LONGSHOT</span>
+            <span class="pos" id="dispPos">1/5</span>
+          </div>
+          <div class="mq" id="mqWrap"><span id="dispNow">CHASING X</span></div>
+          <div class="artist" id="dispArtist">DELLA &amp; THE LONG SHOTS</div>
+          <div class="tline"><span id="tElapsed">0:00</span><div class="tbar" id="tBar" role="slider" aria-label="Seek"><i id="tFill"></i></div><span id="tTotal">0:00</span></div>
+          <canvas id="viz" width="600" height="46" aria-hidden="true"></canvas>
+        </div>
+      </div>
+      <div class="mesh" aria-hidden="true"></div>
+      <div class="presets" id="presets" role="group" aria-label="Station presets"></div>
+      <div class="keys">
+        <button type="button" id="prevSt">◀ STATION</button>
+        <button type="button" id="playBtn" class="play">PAUSE</button>
+        <button type="button" id="nextSt">STATION ▶</button>
+      </div>
+      <div class="keys">
+        <button type="button" id="prevTr">◀ TRACK</button>
+        <button type="button" id="karBtn" aria-pressed="false">LYRICS</button>
+        <button type="button" id="nextTr">TRACK ▶</button>
+      </div>
+      <div class="vol"><span>VOL</span><input type="range" id="volRange" min="0" max="100" value="42" step="1" aria-label="Volume"><span id="volOut">42</span></div>
+      <div id="karaoke" aria-live="polite"><div class="kh"><b id="kTitle">Chasing X</b><span id="kArtist">DELLA &amp; THE LONG SHOTS</span></div><div id="klines"></div></div>
+    </div>
+  </div></div>
+</div>
+<button id="needPlay" type="button" hidden>&#9654; TAP TO START THE RADIO</button>

@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#03050C">
+<title>MOONX | Moon Rodeo, ride the beat and take the board</title>
+<meta name="description" content="Moon Rodeo: a rhythm game on the MOONX radio. One song, one life, and a daily board where the top three each win a shot.">
+<link rel="canonical" href="https://moonx.fi/rodeo.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="MOONX">
+<meta property="og:title" content="MOONX | Moon Rodeo, ride the beat and take the board">
+<meta property="og:description" content="Moon Rodeo: a rhythm game on the MOONX radio. The top three of each day win a shot.">
+<meta property="og:url" content="https://moonx.fi/rodeo.html">
+<meta property="og:image" content="https://moonx.fi/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.ico" sizes="32x32">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<link rel="stylesheet" href="fonts/fonts.css">
+<link rel="stylesheet" href="assets/css/site.css">
+<link rel="stylesheet" href="assets/radio/radio.css">
+<script src="assets/js/sky.js" defer></script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"VideoGame","name":"Moon Rodeo","url":"https://moonx.fi/rodeo.html",
+ "applicationCategory":"Game","genre":"Rhythm","playMode":"SinglePlayer","gamePlatform":["Web browser"],
+ "operatingSystem":"Any","publisher":{"@type":"Organization","name":"MOONX","url":"https://moonx.fi"},
+ "offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},
+ "description":"A rhythm game on the MOONX radio. One song, one life, and a daily board where the top three each win a shot."}
+</script>
+<style>
+
+main{max-width:1120px;padding-bottom:40px}
+.hero-lead{max-width:56ch}
+
+.frame{position:relative;width:100%;max-width:520px;margin:26px auto 0;border-radius:26px;overflow:hidden;
+  border:1px solid var(--line-2);background:#03050C;box-shadow:0 40px 90px -50px rgba(45,123,255,.8);
+  aspect-ratio:9/16;max-height:calc(100svh - var(--navh) - 190px)}
+.frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block}
+.frame.full{position:fixed;inset:0;z-index:60;max-width:none;max-height:none;margin:0;border-radius:0;border:0;aspect-ratio:auto}
+.frame .fs{position:absolute;right:10px;top:10px;z-index:2;width:38px;height:38px;border-radius:12px;
+  background:rgba(3,5,12,.72);border:1px solid var(--line-2);color:var(--dim);display:grid;place-items:center;backdrop-filter:blur(8px)}
+.frame .fs:hover{color:#fff;border-color:var(--hi)}
+.frame .fs svg{width:16px;height:16px}
+.framebar{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:14px;flex-wrap:wrap;
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;color:var(--mute)}
+.framebar b{color:var(--dim);font-weight:700}
+.keys{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:14px}
+.keys kbd{font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--dim);background:var(--card);
+  border:1px solid var(--line-2);border-bottom-width:2px;border-radius:8px;padding:7px 10px}
+@media (max-width:620px){ .frame{max-width:none;max-height:calc(100svh - var(--navh) - 160px)} .keys{display:none} }
+.grid3{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin:34px 0 0;text-align:left}
+.grid3 .card h3{margin:0 0 8px;font-size:19px}
+.grid3 .card p{font-size:15px;margin:0}
+.grid2{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));margin:26px 0 0;text-align:left}
+.grid2 .card h3{margin:6px 0 8px;font-size:20px;letter-spacing:-.02em}
+.grid2 .card p{font-size:15px;margin:0}
+.rules{list-style:none;padding:0;margin:22px auto 0;max-width:62ch;text-align:left}
+.rules li{position:relative;padding:12px 0 12px 26px;border-bottom:1px solid var(--line);color:var(--dim);font-size:16px;line-height:1.5}
+.rules li::before{content:"";position:absolute;left:4px;top:20px;width:7px;height:7px;border-radius:2px;background:var(--blue)}
+.rules li:last-child{border-bottom:0}
+
+.arc{margin-top:28px}
+.arcbar{display:grid;grid-template-columns:1fr 1.2fr 1fr;gap:1px;background:var(--line);
+  border:1px solid var(--line-2);border-radius:18px;overflow:hidden}
+.arcslot{background:var(--card);padding:18px 16px;text-align:center}
+.arclbl{font-family:var(--mono);font-size:8.5px;letter-spacing:.2em;color:var(--dim)}
+.arcbig{font-family:var(--mono);font-size:clamp(22px,4.4vw,30px);font-weight:700;color:var(--mint);
+  margin-top:8px;font-variant-numeric:tabular-nums;text-shadow:0 0 22px rgba(166,255,61,.45)}
+.arcsub{font-family:var(--mono);font-size:8.5px;letter-spacing:.14em;color:var(--mute);margin-top:6px}
+.arcpod ol,.arc ol{list-style:none;margin:8px 0 0;padding:0}
+#arcPod li{display:grid;grid-template-columns:18px 1fr auto;gap:8px;align-items:baseline;
+  padding:3px 0;text-align:left;font-size:13px}
+#arcPod li i{font-family:var(--mono);font-size:9px;letter-spacing:.1em;color:var(--dim);font-style:normal}
+#arcPod li b{font-weight:800;color:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#arcPod li s{font-family:var(--mono);font-size:11px;color:var(--dim);text-decoration:none;
+  font-variant-numeric:tabular-nums}
+#arcPod li:first-child b,#arcPod li:first-child s{color:var(--mint)}
+#arcPod li.empty{display:block;font-family:var(--mono);font-size:9px;letter-spacing:.14em;
+  color:var(--mute);text-align:center;padding-top:10px}
+.arcpot{display:flex;gap:8px;justify-content:center;margin-top:8px}
+.arcpot b{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;
+  border-radius:10px;font-family:var(--mono);font-size:14px;font-weight:700;color:#03050C;
+  background:linear-gradient(120deg,#A6FF3D,#6FE01E)}
+.arcpot b:nth-child(2){background:linear-gradient(120deg,#C6D3E6,#8FA8C8);width:30px;height:30px;font-size:13px}
+.arcpot b:nth-child(3){background:linear-gradient(120deg,#E0A24F,#C98A3E);width:27px;height:27px;font-size:12px}
+.arcbtn{display:block;width:100%;margin-top:10px;padding:14px;border-radius:14px;
+  border:1px solid var(--line-2);background:var(--card);color:var(--dim);
+  font-family:var(--mono);font-size:10px;letter-spacing:.16em;cursor:pointer}
+.arcbtn:hover{border-color:var(--hi);color:#fff}
+@media (max-width:760px){ .arcbar{grid-template-columns:1fr} }
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://moonx.fi/"},{"@type":"ListItem","position":2,"name":"Moon Rodeo","item":"https://moonx.fi/rodeo.html"}]}</script>
+<style>
+.rules{margin-top:28px}
+.rules .rl{font-size:16px;line-height:1.65;color:var(--dim);margin:12px 0 0}
+.rules .rl b{color:#fff;font-weight:800}
+.rules ol{margin:14px 0 0;padding-left:0;list-style:none;counter-reset:r}
+.rules li{counter-increment:r;position:relative;padding-left:40px;margin-bottom:12px;list-style:none;
+  font-size:15px;line-height:1.65;color:var(--dim)}
+.rules li b{color:#fff;font-weight:800}
+
+.rules li::before{content:counter(r,decimal-leading-zero);position:absolute;left:0;top:2px;
+  width:30px;height:auto;background:none;border-radius:0;text-align:left;
+  font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:var(--hi);font-weight:700}
+.rules .hold{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.12em;
+  color:#FFC93C;border:1px solid rgba(255,201,60,.4);border-radius:6px;padding:2px 6px}
+.rules .keys2{margin-top:16px;font-size:14px;line-height:1.7;color:var(--mute)}
+.rules .keys2 b{color:var(--dim);font-weight:700}
+</style>
+</head>
+<body data-autoresume="1" class="lit">
+<div id="bgfix" aria-hidden="true"></div>
+<div class="sky" aria-hidden="true"></div>
+<canvas class="skycv" aria-hidden="true"></canvas>
+
+<a class="skip" href="#main">Skip to content</a>
+<nav aria-label="Main">
+  <a href="index.html" aria-label="MOONX, home"><svg class="wm" viewBox="0 0 100 22" role="img" aria-label="MOONX" preserveAspectRatio="xMidYMid meet"><text class="wmt" x="50" y="17" text-anchor="middle">MOONX</text></svg></a>
+  <a class="go" href="index.html#board">Get your ticket</a>
+</nav>
+
+<main id="main">
+  <div class="eyebrow">MOON RODEO</div>
+  <h1>hold on to the beat.</h1>
+  <p class="lead hero-lead">A rhythm game on the MOONX radio. The best three rides of the day each win a shot: 5, 3 and 2 USDC.</p>
+
+<div class="frame" id="frame"><span id="play" aria-hidden="true" style="position:absolute;top:-90px"></span>
+    <button class="fs" id="fsBtn" aria-label="Play fullscreen" title="Fullscreen">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
+    </button>
+    <iframe id="game" loading="lazy" src="game/space-rodeo.html?light" title="Moon Rodeo, the MOONX rhythm game" allow="autoplay; fullscreen; clipboard-write"></iframe>
+  </div>
+
+    </div>
+
+  <section class="arc">
+    <div class="arcbar">
+      <div class="arcslot">
+        <div class="arclbl">TODAY'S BOARD RESETS IN</div>
+        <div class="arcbig" id="arcClock">--:--:--</div>
+        <div class="arcsub">MIDNIGHT UTC</div>
+      </div>
+      <div class="arcslot arcpod">
+        <div class="arclbl">TODAY'S PODIUM</div>
+        <ol id="arcPod"><li class="empty">NOBODY YET. THE BOARD IS OPEN.</li></ol>
+      </div>
+      <div class="arcslot">
+        <div class="arclbl">THE POT</div>
+        <div class="arcpot"><b>5</b><b>3</b><b>2</b></div>
+        <div class="arcsub">USDC · TOP 3 EVERY DAY</div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="tg">where long shots become legends.</div>
+  <nav class="cols" aria-label="Footer">
+    <div><b>ABOUT</b><a href="index.html#journey">Radio</a><a href="index.html#faq">FAQ</a><a href="rodeo.html">Moon Rodeo<span class="pz"><i></i>TOP 3 WIN DAILY</span></a></div>
+    <div><b>SOCIAL</b><a href="#" rel="me">X/Twitter</a></div>
+    <div><b>LEGAL</b><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms of Service</a></div>
+  </nav>
+  <small>© 2026 MOONX · Non-custodial, on Polygon and Monad · Prices in moonshots. Results may vary. They always do. · Ad astra, cowboy.</small>
+  <div class="giant" aria-hidden="true"><svg class="wm" viewBox="0 0 100 22" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><text class="wmt" x="50" y="17" text-anchor="middle">MOONX</text></svg></div>
+</footer>
+
+<script>
+
+(function(){
+  const frame=document.getElementById("frame"), btn=document.getElementById("fsBtn");
+  const isFull=()=>document.fullscreenElement===frame||frame.classList.contains("full");
+  function label(){ const f=isFull(); btn.setAttribute("aria-label", f?"Leave fullscreen":"Play fullscreen"); btn.title=f?"Leave fullscreen":"Fullscreen"; }
+  function enter(){ if(frame.requestFullscreen) frame.requestFullscreen().catch(()=>frame.classList.add("full")); else frame.classList.add("full"); setTimeout(label,60); }
+  function leave(){ if(document.fullscreenElement) document.exitFullscreen().catch(()=>{}); frame.classList.remove("full"); setTimeout(label,60); }
+  btn.addEventListener("click",()=>{ isFull()?leave():enter(); });
+  document.addEventListener("fullscreenchange",label);
+  addEventListener("keydown",e=>{ if(e.key==="f"||e.key==="F"){ isFull()?leave():enter(); } else if(e.key==="Escape"&&frame.classList.contains("full")) leave(); });
+})();
+</script>
+
+<div id="miniBar" role="region" aria-label="Now playing">
+  <div class="set">
+    <button type="button" class="glass" id="miniGlass" aria-label="Open the radio"><b id="miniStation">K-HAT 101.7</b><div class="mq" id="miniMqWrap"><span id="miniNow">Chasing X · Della &amp; the Long Shots</span></div><i class="tune">TUNE</i></button>
+    <button type="button" id="miniStPrev" aria-label="Previous station" title="Previous station">&#171;</button>
+      <button type="button" id="miniPrev" aria-label="Previous track">◀</button>
+    <button type="button" id="miniPlay" class="play" aria-label="Play or pause">&#9654;</button>
+    <button type="button" id="miniNext" aria-label="Next track">▶</button>
+      <button type="button" id="miniStNext" aria-label="Next station" title="Next station">&#187;</button>
+  </div>
+</div>
+<div id="radioVeil" aria-hidden="true"></div>
+<div id="radioSheet" role="dialog" aria-label="Shuttle radio" aria-hidden="true">
+  <div class="rs-head"><div><b>every journey starts with a good soundtrack.</b><span>Houston, the board isn't open yet. Ten stations, one road trip to the moon. A gift for the wait.</span></div><button type="button" id="rsClose" aria-label="Minimise the radio" title="Minimise"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 10l6 6 6-6"/><path d="M5 20h14"/></svg></button></div>
+  <div id="sheetSlot"><div id="radioWrap">
+    <div class="set">
+      <div class="glass">
+        <div class="scope"><canvas id="dial" aria-label="Orbit tuner: drag the rocket between stations"></canvas><div class="crt" aria-hidden="true"></div></div>
+        <div class="tele">
+          <span class="led" id="led"></span><b id="lockTxt">LOCK</b>
+          <span class="vu" id="vu" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+          <b id="freqTxt">101.7 MHz</b>
+        </div>
+        <div class="readout">
+          <div class="rline">
+            <b id="dispStation">K-HAT 101.7</b>
+            <span class="dj" id="dispDj">DJ DUSTY LONGSHOT</span>
+            <span class="pos" id="dispPos">1/5</span>
+          </div>
+          <div class="mq" id="mqWrap"><span id="dispNow">CHASING X</span></div>
+          <div class="artist" id="dispArtist">DELLA &amp; THE LONG SHOTS</div>
+          <div class="tline"><span id="tElapsed">0:00</span><div class="tbar" id="tBar" role="slider" aria-label="Seek"><i id="tFill"></i></div><span id="tTotal">0:00</span></div>
+          <canvas id="viz" width="600" height="46" aria-hidden="true"></canvas>
+        </div>
+      </div>
+      <div class="mesh" aria-hidden="true"></div>
+      <div class="presets" id="presets" role="group" aria-label="Station presets"></div>
+      <div class="keys">
+        <button type="button" id="prevSt">◀ STATION</button>
+        <button type="button" id="playBtn" class="play">PAUSE</button>
+        <button type="button" id="nextSt">STATION ▶</button>
+      </div>
+      <div class="keys">
+        <button type="button" id="prevTr">◀ TRACK</button>
+        <button type="button" id="karBtn" aria-pressed="false">LYRICS</button>
+        <button type="button" id="nextTr">TRACK ▶</button>
+      </div>
+      <div class="vol"><span>VOL</span><input type="range" id="volRange" min="0" max="100" value="42" step="1" aria-label="Volume"><span id="volOut">42</span></div>
+      <div id="karaoke" aria-live="polite"><div class="kh"><b id="kTitle">Chasing X</b><span id="kArtist">DELLA &amp; THE LONG SHOTS</span></div><div id="klines"></div></div>
+    </div>
+  </div></div>
+</div>
+<button id="needPlay" type="button" hidden>&#9654; TAP TO START THE RADIO</button>
+<script>addEventListener("load",()=>{ if(window.MoonxSky) MoonxSky.mount(document.querySelector(".skycv"),{fill:true, always:true, density:320, parallax:18, moon:false}); });</script>
+<script src="radio.js"></script>
+<script>
+
+(function(){
+  var reprendre=false;
+  addEventListener("message",function(e){
+    var d=e&&e.data; if(!d||!d.moonx) return;
+    var btn=document.getElementById("miniPlay"); if(!btn) return;
+    if(d.moonx==="ride-start"){ if(typeof playing!=="undefined"&&playing){ reprendre=true; btn.click(); } }
+    else if(d.moonx==="ride-end"){ if(reprendre){ reprendre=false; btn.click(); } }
+  });
+})();
+</script>
+
+<script>
+if(location.hash==="#play"){ const f=document.getElementById("frame");
+  if(f) requestAnimationFrame(()=>f.scrollIntoView({block:"center"})); }
+</script>
+<script src="assets/js/ga.js" defer></script>
+<script>
+
+(function(){
+  const el=document.getElementById("arcClock"), pod=document.getElementById("arcPod");
+  if(!el) return;
+  function tic(){
+    const n=new Date();
+    const min=Date.UTC(n.getUTCFullYear(),n.getUTCMonth(),n.getUTCDate()+1,0,0,0);
+    let r=Math.max(0,Math.floor((min-n.getTime())/1000));
+    const h=String(Math.floor(r/3600)).padStart(2,"0"); r%=3600;
+    const m=String(Math.floor(r/60)).padStart(2,"0"), s=String(r%60).padStart(2,"0");
+    el.textContent=h+":"+m+":"+s;
+  }
+  tic(); setInterval(tic,1000);
+
+  function peindre(a){
+    if(!a||!a.length) return;
+    pod.innerHTML=a.slice(0,3).map((e,i)=>"<li><i>"+String(i+1).padStart(2,"0")+"</i><b>"
+      +String(e.handle||e.h||"@cowboy").replace(/[<&]/g,"")+"</b><s>"
+      +Number(e.score||e.s||0).toLocaleString("en-US")+"</s></li>").join("");
+  }
+  if(window.SUPA_URL&&window.SUPA_KEY){
+    fetch(window.SUPA_URL+"/rest/v1/board_today?select=handle,score&order=score.desc&limit=3",
+      {headers:{apikey:window.SUPA_KEY,authorization:"Bearer "+window.SUPA_KEY},cache:"no-store"})
+      .then(r=>r.ok?r.json():null).then(peindre).catch(()=>{});
+  } else {
+    try{ peindre(JSON.parse(localStorage.getItem("sr.board")||"[]")); }catch(_){}
+  }
+
+})();
+</script>
+</body>
+</html>

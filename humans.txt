@@ -1,0 +1,4 @@
+/* TEAM */
+Founders: JP Dumas, Thibault Coulon and friends. France, with a foot in Vietnam.
+/* SITE */
+Standards: HTML, CSS, vanilla JS, no framework. Fonts: Inter, JetBrains Mono, Michroma (OFL), Blanka and Elianto for the wordmark. Radio: ten stations of original songs. Hat: the one from the first logo.
