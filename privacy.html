@@ -165,7 +165,7 @@ li{margin:7px 0}
 <footer>
   <div class="tg">where long shots become legends.</div>
   <nav class="cols" aria-label="Footer">
-    <div><b>ABOUT</b><a href="index.html#journey">Radio</a><a href="index.html#faq">FAQ</a><a href="rodeo.html">Moon Rodeo<span class="pz"><i></i>TOP 3 WIN DAILY</span></a></div>
+    <div><b>ABOUT</b><a href="index.html#journey">Radio</a><a href="index.html#faq">FAQ</a><a href="rodeo.html">Moon Rodeo</a></div>
     <div><b>SOCIAL</b><a href="#" rel="me">X/Twitter</a></div>
     <div><b>LEGAL</b><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms of Service</a></div>
   </nav>
@@ -183,7 +183,7 @@ li{margin:7px 0}
 </div>
 <div id="radioVeil" aria-hidden="true"></div>
 <div id="radioSheet" role="dialog" aria-label="Shuttle radio" aria-hidden="true">
-  <div class="rs-head"><div><b>every journey starts with a good soundtrack.</b><span>Houston, the board isn't open yet. Ten stations, one road trip to the moon. A gift for the wait.</span></div><button type="button" id="rsClose" aria-label="Minimise the radio" title="Minimise"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 10l6 6 6-6"/><path d="M5 20h14"/></svg></button></div>
+  <div class="rs-head"><div><b>MOONX Radio</b><span id="rsSub">Ten stations. Sixty-five songs, all of them ours.</span></div><button type="button" id="rsClose" aria-label="Minimise the radio" title="Minimise"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 10l6 6 6-6"/><path d="M5 20h14"/></svg></button></div>
   <div id="sheetSlot"><div id="radioWrap">
     <div class="set">
       <div class="glass">
@@ -227,5 +227,21 @@ li{margin:7px 0}
 <script src="radio.js"></script>
 <script>addEventListener("load",()=>{ if(window.MoonxSky) MoonxSky.mount(document.querySelector(".skycv"),{fill:true, always:true, density:320, parallax:18, moon:false}); });</script>
 <script src="assets/js/ga.js" defer></script>
+<script>
+
+(function(){
+  const bar=document.getElementById("miniBar");
+  if(!bar) return;
+  document.querySelectorAll('a[href$="#journey"], a[href="index.html#journey"]').forEach(a=>{
+    a.setAttribute("href","#miniBar");
+    a.addEventListener("click",e=>{
+      e.preventDefault();
+      const g=document.getElementById("miniGlass");
+      if(g){ g.click(); return; }
+      bar.scrollIntoView({behavior:"smooth", block:"nearest"});
+    });
+  });
+})();
+</script>
 </body>
 </html>

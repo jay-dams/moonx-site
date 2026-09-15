@@ -6,12 +6,12 @@
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#03050C">
 <title>MOONX | Moon Rodeo, ride the beat and take the board</title>
-<meta name="description" content="Moon Rodeo: a rhythm game on the MOONX radio. One song, one life, and a daily board where the top three each win a shot.">
+<meta name="description" content="Moon Rodeo: a rhythm game on the MOONX radio. One song, one life, and your handle on the board.">
 <link rel="canonical" href="https://moonx.fi/rodeo.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="MOONX">
 <meta property="og:title" content="MOONX | Moon Rodeo, ride the beat and take the board">
-<meta property="og:description" content="Moon Rodeo: a rhythm game on the MOONX radio. The top three of each day win a shot.">
+<meta property="og:description" content="Moon Rodeo: a rhythm game on the MOONX radio. One song, one life, and your handle on the board.">
 <meta property="og:url" content="https://moonx.fi/rodeo.html">
 <meta property="og:image" content="https://moonx.fi/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -28,7 +28,7 @@
  "applicationCategory":"Game","genre":"Rhythm","playMode":"SinglePlayer","gamePlatform":["Web browser"],
  "operatingSystem":"Any","publisher":{"@type":"Organization","name":"MOONX","url":"https://moonx.fi"},
  "offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},
- "description":"A rhythm game on the MOONX radio. One song, one life, and a daily board where the top three each win a shot."}
+ "description":"A rhythm game on the MOONX radio. One song, one life, and your handle on the board."}
 </script>
 <style>
 
@@ -47,10 +47,11 @@ main{max-width:1120px;padding-bottom:40px}
 .framebar{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:14px;flex-wrap:wrap;
   font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;color:var(--mute)}
 .framebar b{color:var(--dim);font-weight:700}
-.keys{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:14px}
+
+.frame ~ .keys, main > .keys{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:14px}
 .keys kbd{font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--dim);background:var(--card);
   border:1px solid var(--line-2);border-bottom-width:2px;border-radius:8px;padding:7px 10px}
-@media (max-width:620px){ .frame{max-width:none;max-height:calc(100svh - var(--navh) - 160px)} .keys{display:none} }
+@media (max-width:620px){ .frame{max-width:none;max-height:calc(100svh - var(--navh) - 160px)} main > .keys{display:none} }
 .grid3{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin:34px 0 0;text-align:left}
 .grid3 .card h3{margin:0 0 8px;font-size:19px}
 .grid3 .card p{font-size:15px;margin:0}
@@ -62,7 +63,12 @@ main{max-width:1120px;padding-bottom:40px}
 .rules li::before{content:"";position:absolute;left:4px;top:20px;width:7px;height:7px;border-radius:2px;background:var(--blue)}
 .rules li:last-child{border-bottom:0}
 
-.arc{margin-top:28px}
+.arc{margin:22px auto 0;width:100%;max-width:520px}
+.arc .arcbar{border-radius:20px}
+.arc .arcslot{padding:14px 16px}
+.arc .arclbl{font-size:8px}
+#arcPod li{font-size:12.5px;padding:2px 0}
+.arcbar.arcsolo{grid-template-columns:1fr}
 .arcbar{display:grid;grid-template-columns:1fr 1.2fr 1fr;gap:1px;background:var(--line);
   border:1px solid var(--line-2);border-radius:18px;overflow:hidden}
 .arcslot{background:var(--card);padding:18px 16px;text-align:center}
@@ -91,6 +97,13 @@ main{max-width:1120px;padding-bottom:40px}
   font-family:var(--mono);font-size:10px;letter-spacing:.16em;cursor:pointer}
 .arcbtn:hover{border-color:var(--hi);color:#fff}
 @media (max-width:760px){ .arcbar{grid-template-columns:1fr} }
+
+#miniBar.ping{animation:miniPing 1.1s ease-out}
+@keyframes miniPing{
+  0%{box-shadow:0 0 0 0 rgba(127,182,255,.55)}
+  70%{box-shadow:0 0 0 14px rgba(127,182,255,0)}
+  100%{box-shadow:0 0 0 0 rgba(127,182,255,0)}}
+@media (prefers-reduced-motion:reduce){ #miniBar.ping{animation:none} }
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://moonx.fi/"},{"@type":"ListItem","position":2,"name":"Moon Rodeo","item":"https://moonx.fi/rodeo.html"}]}</script>
 <style>
@@ -125,7 +138,7 @@ main{max-width:1120px;padding-bottom:40px}
 <main id="main">
   <div class="eyebrow">MOON RODEO</div>
   <h1>hold on to the beat.</h1>
-  <p class="lead hero-lead">A rhythm game on the MOONX radio. The best three rides of the day each win a shot: 5, 3 and 2 USDC.</p>
+  <p class="lead hero-lead">A rhythm game on the MOONX radio. One song, one life, and your handle on the board.</p>
 
 <div class="frame" id="frame"><span id="play" aria-hidden="true" style="position:absolute;top:-90px"></span>
     <button class="fs" id="fsBtn" aria-label="Play fullscreen" title="Fullscreen">
@@ -137,29 +150,20 @@ main{max-width:1120px;padding-bottom:40px}
     </div>
 
   <section class="arc">
-    <div class="arcbar">
-      <div class="arcslot">
-        <div class="arclbl">TODAY'S BOARD RESETS IN</div>
-        <div class="arcbig" id="arcClock">--:--:--</div>
-        <div class="arcsub">MIDNIGHT UTC</div>
-      </div>
+    <div class="arcbar arcsolo">
       <div class="arcslot arcpod">
-        <div class="arclbl">TODAY'S PODIUM</div>
+        <div class="arclbl">THE BOARD</div>
         <ol id="arcPod"><li class="empty">NOBODY YET. THE BOARD IS OPEN.</li></ol>
-      </div>
-      <div class="arcslot">
-        <div class="arclbl">THE POT</div>
-        <div class="arcpot"><b>5</b><b>3</b><b>2</b></div>
-        <div class="arcsub">USDC · TOP 3 EVERY DAY</div>
       </div>
     </div>
   </section>
+
 </main>
 
 <footer>
   <div class="tg">where long shots become legends.</div>
   <nav class="cols" aria-label="Footer">
-    <div><b>ABOUT</b><a href="index.html#journey">Radio</a><a href="index.html#faq">FAQ</a><a href="rodeo.html">Moon Rodeo<span class="pz"><i></i>TOP 3 WIN DAILY</span></a></div>
+    <div><b>ABOUT</b><a href="index.html#journey">Radio</a><a href="index.html#faq">FAQ</a><a href="rodeo.html">Moon Rodeo</a></div>
     <div><b>SOCIAL</b><a href="#" rel="me">X/Twitter</a></div>
     <div><b>LEGAL</b><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms of Service</a></div>
   </nav>
@@ -193,7 +197,7 @@ main{max-width:1120px;padding-bottom:40px}
 </div>
 <div id="radioVeil" aria-hidden="true"></div>
 <div id="radioSheet" role="dialog" aria-label="Shuttle radio" aria-hidden="true">
-  <div class="rs-head"><div><b>every journey starts with a good soundtrack.</b><span>Houston, the board isn't open yet. Ten stations, one road trip to the moon. A gift for the wait.</span></div><button type="button" id="rsClose" aria-label="Minimise the radio" title="Minimise"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 10l6 6 6-6"/><path d="M5 20h14"/></svg></button></div>
+  <div class="rs-head"><div><b>MOONX Radio</b><span id="rsSub">Ten stations. Sixty-five songs, all of them ours.</span></div><button type="button" id="rsClose" aria-label="Minimise the radio" title="Minimise"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 10l6 6 6-6"/><path d="M5 20h14"/></svg></button></div>
   <div id="sheetSlot"><div id="radioWrap">
     <div class="set">
       <div class="glass">
@@ -256,17 +260,8 @@ if(location.hash==="#play"){ const f=document.getElementById("frame");
 <script>
 
 (function(){
-  const el=document.getElementById("arcClock"), pod=document.getElementById("arcPod");
-  if(!el) return;
-  function tic(){
-    const n=new Date();
-    const min=Date.UTC(n.getUTCFullYear(),n.getUTCMonth(),n.getUTCDate()+1,0,0,0);
-    let r=Math.max(0,Math.floor((min-n.getTime())/1000));
-    const h=String(Math.floor(r/3600)).padStart(2,"0"); r%=3600;
-    const m=String(Math.floor(r/60)).padStart(2,"0"), s=String(r%60).padStart(2,"0");
-    el.textContent=h+":"+m+":"+s;
-  }
-  tic(); setInterval(tic,1000);
+  const pod=document.getElementById("arcPod");
+  if(!pod) return;
 
   function peindre(a){
     if(!a||!a.length) return;
@@ -275,13 +270,29 @@ if(location.hash==="#play"){ const f=document.getElementById("frame");
       +Number(e.score||e.s||0).toLocaleString("en-US")+"</s></li>").join("");
   }
   if(window.SUPA_URL&&window.SUPA_KEY){
-    fetch(window.SUPA_URL+"/rest/v1/board_today?select=handle,score&order=score.desc&limit=3",
+    fetch(window.SUPA_URL+"/rest/v1/board?select=handle,score&order=score.desc&limit=3",
       {headers:{apikey:window.SUPA_KEY,authorization:"Bearer "+window.SUPA_KEY},cache:"no-store"})
       .then(r=>r.ok?r.json():null).then(peindre).catch(()=>{});
   } else {
     try{ peindre(JSON.parse(localStorage.getItem("sr.board")||"[]")); }catch(_){}
   }
 
+})();
+</script>
+<script>
+
+(function(){
+  const bar=document.getElementById("miniBar");
+  if(!bar) return;
+  document.querySelectorAll('a[href$="#journey"], a[href="index.html#journey"]').forEach(a=>{
+    a.setAttribute("href","#miniBar");
+    a.addEventListener("click",e=>{
+      e.preventDefault();
+      const g=document.getElementById("miniGlass");
+      if(g){ g.click(); return; }
+      bar.scrollIntoView({behavior:"smooth", block:"nearest"});
+    });
+  });
 })();
 </script>
 </body>

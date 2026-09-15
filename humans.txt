@@ -1,4 +1,28 @@
-/* TEAM */
-Founders: JP Dumas, Thibault Coulon and friends. France, with a foot in Vietnam.
-/* SITE */
-Standards: HTML, CSS, vanilla JS, no framework. Fonts: Inter, JetBrains Mono, Michroma (OFL), Blanka and Elianto for the wordmark. Radio: ten stations of original songs. Hat: the one from the first logo.
+              .
+         .        *          .
+    *         .        .           *
+              MOONX
+    .     humans.txt      *     .
+         *        .           .
+
+/* WHO */
+Nobody you need to know. Look at the product instead.
+
+/* WHAT IS ACTUALLY IN HERE */
+10 radio stations. 65 original songs, every one written for this.
+Lyrics timed line by line to the recordings.
+One rhythm game, Moon Rodeo, running in the page you are on.
+One cowboy hat, worn by a wordmark.
+
+/* HOW IT IS BUILT */
+HTML, CSS and JavaScript. No framework. No build step. No bundler.
+Zero third-party scripts on the page. Nothing loads that you did not ask for.
+Four typefaces, all served from this domain: Inter, JetBrains Mono, Blanka, Elianto.
+Every byte comes from moonx.fi.
+
+/* THANKS */
+Polymarket, for the markets.
+
+/* IF YOU READ THIS FAR */
+You are the kind of person who opens humans.txt.
+There is a hat on the logo. Hover it.

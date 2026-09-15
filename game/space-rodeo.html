@@ -148,9 +148,52 @@ body.light #saddle,body.light [data-saddle-label]{display:none}
 
 body.light #boots i:nth-child(n+2){display:none}
 
+#lifeTag{display:none}
+
+body.light #lifeTag{display:inline-flex;align-items:center;gap:7px;padding:5px 11px;
+  border-radius:999px;font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.16em;
+  color:#03050C;background:var(--amber);box-shadow:0 0 14px rgba(255,201,60,.45)}
+body.light #lifeTag::before{content:"";width:7px;height:7px;border-radius:50%;background:#03050C;opacity:.5}
+body.light.warned #lifeTag{background:var(--red);color:#fff;box-shadow:0 0 18px rgba(255,59,107,.85);
+  animation:lifeBeat 1s ease-in-out infinite}
+body.light.warned #lifeTag::before{background:#fff;opacity:1}
+body.light #boots,body.light [data-boots-label]{display:none}
+@media (prefers-reduced-motion:reduce){ body.light.warned #lifeTag{animation:none} }
+body.warned #boots i{background:var(--red) !important;border-color:transparent !important;
+  box-shadow:0 0 14px rgba(255,59,107,.9) !important;
+  animation:lifeBeat 1s ease-in-out infinite !important;
+
+  transform:none;opacity:1;width:16px !important;height:16px !important}
+body.warned #boots i::after{background:#2A0A12 !important}
+@keyframes lifeBeat{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.45;transform:scale(.86)}}
+body.warned [data-boots-label]{color:var(--red) !important}
+@media (prefers-reduced-motion:reduce){ #lifeTag{display:none}
+
+body.light #lifeTag{display:inline-flex;align-items:center;gap:7px;padding:5px 11px;
+  border-radius:999px;font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.16em;
+  color:#03050C;background:var(--amber);box-shadow:0 0 14px rgba(255,201,60,.45)}
+body.light #lifeTag::before{content:"";width:7px;height:7px;border-radius:50%;background:#03050C;opacity:.5}
+body.light.warned #lifeTag{background:var(--red);color:#fff;box-shadow:0 0 18px rgba(255,59,107,.85);
+  animation:lifeBeat 1s ease-in-out infinite}
+body.light.warned #lifeTag::before{background:#fff;opacity:1}
+body.light #boots,body.light [data-boots-label]{display:none}
+@media (prefers-reduced-motion:reduce){ body.light.warned #lifeTag{animation:none} }
+body.warned #boots i{animation:none} }
+
 body.light .gear{right:auto;left:14px}
 
 #simTip{display:none}
+
+#simKey{display:none}
+body.sim #simKey{display:flex;position:fixed;left:50%;bottom:calc(var(--minih,16px) + 118px);
+  transform:translateX(-50%);z-index:30;align-items:center;justify-content:center;
+  min-width:96px;height:44px;padding:0 18px;border-radius:10px;
+  border:1px solid var(--line2);border-bottom-width:4px;background:var(--card2);
+  color:var(--dim);font-family:var(--mono);font-size:11px;letter-spacing:.16em;
+  opacity:0;transition:opacity .18s}
+body.sim #simKey.on{opacity:1;color:#03050C;border-bottom-width:1px;transform:translate(-50%,3px);
+  background:linear-gradient(120deg,#A6FF3D,#6FE01E);border-color:#A6FF3D}
+@media (prefers-reduced-motion:reduce){ #simKey{transition:none} }
 body.sim #simTip{display:block;position:fixed;left:50%;bottom:calc(var(--minih,16px) + 22px);
   transform:translateX(-50%);z-index:30;width:min(90vw,380px);padding:14px 16px;text-align:center;
   border-radius:14px;border:1px solid var(--line2);background:rgba(10,14,26,.92);
@@ -190,8 +233,10 @@ body.light #hud .xbar{order:3;margin-top:6px}
 body.light #hud .streak{order:4}
 body.light #hud>div:last-child{display:flex;flex-direction:column;align-items:flex-end}
 
+#s-result .col.flux{justify-content:flex-start !important;min-height:0 !important;padding-top:18px}
 #s-result .col{padding-bottom:calc(var(--actH,200px) + 20px);
-  display:flex;flex-direction:column;justify-content:center;min-height:100dvh}
+  display:flex;flex-direction:column;justify-content:center;
+  min-height:var(--vpH, 100dvh)}
 
 body.light .actions[data-for="s-result"] .in{gap:8px}
 body.light #outro{margin-top:8px}
@@ -242,7 +287,10 @@ body.light .actions[data-for="s-result"] .row button{padding:12px 8px;font-size:
   body.light #joinWrap input{padding:11px;margin-bottom:6px}
   body.light #joinWrap .tk{padding:11px}
 
-  body.light.joining #rcard,body.light.joined #rcard{display:none}
+  body.light.joining #rcard{display:none}
+
+  body.light.joined #rcard{display:block;transform:scale(.84);transform-origin:top center;
+    margin-bottom:-14%}
   body.light.joining .top,body.light.joined .top{opacity:.5}
 }
 
@@ -267,17 +315,9 @@ body.light .actions[data-for="s-result"] .row button{padding:12px 8px;font-size:
 .bdrow .xx{font-family:var(--mono);font-size:10px;color:var(--dim);margin-left:8px}
 #bdEmpty{font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:var(--dim);
   line-height:1.9;text-align:center;margin-top:26px}
-
-#bdTabs{display:grid;grid-template-columns:1fr 1fr;gap:6px;width:min(88vw,340px);margin:0 auto 12px}
-#bdTabs button{padding:10px;border-radius:11px;border:1px solid var(--line2);background:transparent;
-  color:var(--dim);font-family:var(--mono);font-size:9.5px;letter-spacing:.16em}
-#bdTabs button.on{background:var(--card2);color:#fff;border-color:var(--hi)}
 #bdNote{font-family:var(--mono);font-size:9px;letter-spacing:.11em;color:var(--mute);
   line-height:1.9;text-align:left;margin:22px auto 0;width:min(100%,420px)}
 
-#joinWrap .jnote{font-family:var(--mono);font-size:8.5px;letter-spacing:.11em;color:var(--dim);
-  line-height:1.9;margin:8px 0 10px;text-align:center}
-#joinMail{margin-top:8px}
 #joinWrap{display:none;margin-top:10px}
 #joinWrap.on{display:block}
 body.joining .actions[data-for="s-result"] .row{display:none}
@@ -519,11 +559,7 @@ body.paused #hud,body.paused #prog{opacity:0;transition:opacity .2s}
   <div class="top"><button class="back" id="bdBack">◀</button><span class="ttl">THE BOARD</span><span class="spacer"></span></div>
   <div class="col">
     <h1 class="sc">the board.</h1>
-    <p class="sub sc" id="bdSub">Today's board. The top three tonight win a shot: 5, 3 and 2 USDC. It resets at midnight UTC.</p>
-    <div id="bdTabs">
-      <button type="button" class="on" data-bd="today">TODAY</button>
-      <button type="button" data-bd="alltime">ALL TIME</button>
-    </div>
+    <p class="sub sc" id="bdSub">The best rides, in order. Your handle puts you on it.</p>
     <div id="bdList"></div>
     <div id="bdEmpty">NO RIDE ON THE BOARD YET.<br>FINISH A RIDE AND PUT YOUR NAME ON IT.</div>
     <p id="bdNote"></p>
@@ -548,7 +584,7 @@ body.paused #hud,body.paused #prog{opacity:0;transition:opacity .2s}
       <div class="setrow"><div class="txt"><b>Vibration</b><small>ON PHONES THAT ALLOW IT</small></div><button class="sw" role="switch" data-set="haptics" aria-checked="true" aria-label="Vibration"></button></div>
     </div>
 
-    <p class="setnote">THE GAME LEARNS YOUR DELAY ON ITS OWN, TAP BY TAP. MEASURE IT BY HAND ONLY IF YOU PLAY ON HEADPHONES OR OVER BLUETOOTH, WHERE THE SOUND ARRIVES LATE ENOUGH TO BE WORTH SETTING ONCE.<br><br>SETTINGS ARE KEPT ON THIS DEVICE. CLEARING YOUR BROWSER DATA CLEARS THEM.</p>
+    <p class="setnote">The game learns your delay on its own, tap by tap: the first few taps set it, then it settles. Nothing to adjust.</p>
   </div>
 </section>
 <section class="screen" id="s-song">
@@ -576,8 +612,10 @@ body.paused #hud,body.paused #prog{opacity:0;transition:opacity .2s}
 </div>
 <div id="resume" aria-hidden="true"><b id="resumeN">3</b></div>
 <div id="ride"><canvas id="c"></canvas></div>
-<div id="hud" hidden><div><div id="hudSong">K-HAT · CHASING X</div><div class="stake" id="hudStake">$0.0000</div><div class="lbl2" data-boots-label>BOOTS</div><div class="boots" id="boots"><i class="on"></i><i class="on"></i><i class="on"></i></div><div class="lbl2" data-saddle-label>SADDLE</div><div class="saddle" id="saddle"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></div></div><div style="text-align:right"><div class="x" id="hudX">1x</div><div class="xbar"><i id="xFill"></i></div><div class="streak" id="hudStreak"></div><div class="score" id="hudScore">0</div></div></div>
+<div id="hud" hidden><div><div id="hudSong">K-HAT · CHASING X</div><div class="stake" id="hudStake">$0.0000</div><div id="lifeTag" aria-live="polite"></div>
+      <div class="lbl2" data-boots-label>BOOTS</div><div class="boots" id="boots"><i class="on"></i><i class="on"></i><i class="on"></i></div><div class="lbl2" data-saddle-label>SADDLE</div><div class="saddle" id="saddle"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></div></div><div style="text-align:right"><div class="x" id="hudX">1x</div><div class="xbar"><i id="xFill"></i></div><div class="streak" id="hudStreak"></div><div class="score" id="hudScore">0</div></div></div>
 <div id="simTip" aria-live="polite"></div>
+<div id="simKey" aria-hidden="true"></div>
 <div id="prog" hidden><div class="bar"><i id="progFill"></i><b id="progMoon" title="moonshot"></b></div><div class="pt"><span id="progNow">0:00</span><span id="progSec">INTRO</span><span id="progEnd">3:14</span></div></div>
 <div id="judge"></div>
 <section class="screen" id="s-result">
@@ -605,9 +643,7 @@ body.paused #hud,body.paused #prog{opacity:0;transition:opacity .2s}
       </div>
       <div id="joinWrap">
         <input id="joinName" type="text" maxlength="18" placeholder="@yourhandle" aria-label="Your handle">
-    <input id="joinMail" type="email" inputmode="email" autocomplete="email" placeholder="your@email" aria-label="Your email">
         <div id="joinErr"></div>
-        <p class="jnote">TOP 3 OF THE DAY WIN A SHOT · 5, 3 AND 2 USDC · WE WRITE TO THE WINNERS<br>THE BOARD RESETS EVERY DAY AT MIDNIGHT UTC</p>
         <button class="tk" id="joinSend">Take my place</button>
       </div>
       <div id="joinOk">
@@ -751,6 +787,13 @@ const XK=7, XP=1.75;
 const PERFECT=0.09, GOOD=0.22, REACH=0.30; let OFF=0.05;
 function xFor(streak){ return 1+Math.pow(Math.max(0,streak)/XK, XP); }
 
+function rideNo(){
+  const base = String(song&&song.slug||"") + "|" + Math.round((R&&R.score)||0) + "|" + Math.floor(((R&&R.t0)||0)/60);
+  let h=2166136261;
+  for(let i=0;i<base.length;i++){ h^=base.charCodeAt(i); h=Math.imul(h,16777619); }
+  return String(1000 + (Math.abs(h) % 9000));
+}
+
 function xTexte(x){ return (x<10 ? (Math.round(x*10)/10).toFixed(1) : String(Math.round(x)))+"x"; }
 function xProgress(streak){
 
@@ -780,6 +823,10 @@ function startRide(){
   const ch=CHARTS[song.slug];
 
   const LY=(typeof LYRICS!=="undefined")?LYRICS[song.slug]:null;
+  document.body.classList.remove("warned");
+  { const t=$("lifeTag"); if(t) t.textContent="ONE LIFE"; }
+
+  [...$("boots").children].forEach(i=>{ i.classList.remove("gone"); i.style.animation=""; });
   RIDE_CARD={station:song.station, title:song.title, artist:song.artist||"",
     meta:(ch?Math.round(ch.bpm)+" BPM":"")+(function(){
 
@@ -834,7 +881,10 @@ const PY=p=>HOR()+(SADDLE_Y()-HOR())*Math.pow(p,1.7)-HILL(p);
 const LANE_X=i=>LX(i,1), SPEED=()=>cv.height*0.62;
 function draw(){ if(!R) return;
 
-  if(R.learn){ FX.shake=Math.min(FX.shake,1); CAM.boost=Math.min(CAM.boost,0.15); FX.vign=Math.min(FX.vign||0,.2); } if(typeof PAUSED!=="undefined" && PAUSED) return;    raf=requestAnimationFrame(draw); fpsTick(); const now=clock(), W=cv.width,H=cv.height,dp=DPR, col=COLORS[song.code]||"#7FB6FF";
+  if(R.learn){
+
+    FX.shake=Math.min(FX.shake,1); CAM.boost=Math.min(CAM.boost,0.15); FX.vign=Math.min(FX.vign||0,.2);
+  } if(typeof PAUSED!=="undefined" && PAUSED) return;    raf=requestAnimationFrame(draw); fpsTick(); const now=clock(), W=cv.width,H=cv.height,dp=DPR, col=COLORS[song.code]||"#7FB6FF";
   const _pn=performance.now(); const dt=LAST_PN?Math.min(0.05,(_pn-LAST_PN)/1000):1/60; LAST_PN=_pn; if(!FX.stars.length) initStars(); musicTick();
   HEAT+=(intensity(now)-HEAT)*0.035;
   SCEN+=dt*(0.55+1.15*HEAT+(R.moonshot?0.5:0)+(R.inDrop?0.35:0));
@@ -1048,6 +1098,11 @@ function onMiss(){ if(R&&R.learn){ return; }     R.miss++; const grace=R.real&&c
     if(!R.warned){
 
       R.warned=true; R.shield=nowT; saddle(); judge("miss"); fx("miss"); haptic("miss");
+      document.body.classList.add("warned");
+      [...$("boots").children].forEach(i=>{
+        i.classList.remove("gone"); i.classList.add("on"); i.style.animation=""; i.style.opacity="";
+      });
+      { const t=$("lifeTag"); if(t) t.textContent="LAST LIFE"; }
       musicMiss(); FX.shake=8; FX.vign=.8; $("hudStreak").textContent="";
       FX.banner={txt:"ONE LEFT",sub:"NEXT MISS ENDS THE RIDE",c:"#FFC93C",t:0};
       R.streak=0; R.x=xFor(0); $("hudX").textContent=xTexte(R.x); xProgress(0);
@@ -1089,14 +1144,15 @@ cv.addEventListener("pointermove",e=>{ if(!dragging) return; const l=laneFromX(e
 cv.addEventListener("pointerup",()=>{ dragging=false; lastLane=-1; }); cv.addEventListener("pointercancel",()=>{ dragging=false; lastLane=-1; });
 function endRide(moon){ if(R.ended) return;
 
-  if(R.learn){ return; } setDayBest(R.score); if(R.real&&(R.hitsSeen||0)>=8){ META.offset=OFF; saveMeta(); } if(moon&&!R.landing){ R.landing=clock(); R.landHold=true; for(let i=0;i<8;i++) firework(cv.width,cv.height,i%2?"#A6FF3D":"#FFC93C"); FX.banner={txt:"MOON",sub:"YOU HELD TO THE LAST NOTE",c:"#A6FF3D",t:0}; setTimeout(()=>{ R.landHold=false; endRide(true); },2600); return; } R.ended=true; cancelAnimationFrame(raf); if(typeof PAUSED!=="undefined"){ PAUSED=false; document.body.classList.remove("paused"); clearInterval(RESUME_T); $("pausePane").classList.remove("on"); $("resume").classList.remove("on"); } $("pauseBtn").classList.remove("on")   ; document.body.classList.remove("riding"); try{ if(bdMoi()) window.__lastRank=bdPoser(R); outroReset(); outroJoin(); requestAnimationFrame(majActH); setTimeout(majActH,400); }catch(_){} try{ if(window.top!==window.self) parent.postMessage({moonx:"ride-end"},"*"); }catch(_){} if(typeof guardClosing==="function"){ guardClosing(false); } const heldNow=clock(); if(AUD&&!moon){   } $("hud").hidden=true; $("prog").hidden=true; $("ride").classList.remove("on"); $("hudX").classList.remove("moon");
+  if(R.learn){ return; } setDayBest(R.score); if(R.real&&(R.hitsSeen||0)>=8){ META.offset=OFF; saveMeta(); } if(moon&&!R.landing){ R.landing=clock(); R.landHold=true; for(let i=0;i<8;i++) firework(cv.width,cv.height,i%2?"#A6FF3D":"#FFC93C"); FX.banner={txt:"MOON",sub:"YOU HELD TO THE LAST NOTE",c:"#A6FF3D",t:0}; setTimeout(()=>{ R.landHold=false; endRide(true); },2600); return; } R.ended=true; cancelAnimationFrame(raf); if(typeof PAUSED!=="undefined"){ PAUSED=false; document.body.classList.remove("paused"); clearInterval(RESUME_T); $("pausePane").classList.remove("on"); $("resume").classList.remove("on"); } $("pauseBtn").classList.remove("on")   ; document.body.classList.remove("riding"); try{ if(bdMoi()) window.__lastRank=bdPoser(R); outroReset(); outroJoin(); requestAnimationFrame(majActH); setTimeout(majActH,400);
+  requestAnimationFrame(carteVisible); setTimeout(carteVisible,450); setTimeout(carteVisible,1200); }catch(_){} try{ if(window.top!==window.self) parent.postMessage({moonx:"ride-end"},"*"); }catch(_){} if(typeof guardClosing==="function"){ guardClosing(false); } const heldNow=clock(); if(AUD&&!moon){   } $("hud").hidden=true; $("prog").hidden=true; $("ride").classList.remove("on"); $("hudX").classList.remove("moon");
   const held=Math.max(0,Math.min(R.real?heldNow:heldNow-1.2,R.dur)), m=Math.floor(held/60), s=String(Math.floor(held%60)).padStart(2,"0"); const perf=R.hits?Math.round(R.perf/R.hits*100):0;
   const rodBonus=(rideOfDay().slug===song.slug&&META.rideOfDayDone!==today())?2:1; if(rodBonus===2) META.rideOfDayDone=today(); const bonus=(moon?1.5:1)*rodBonus; const stakeNum=R.stake*bonus; const stake=stakeNum.toFixed(4); META.stake+=stakeNum; META.dayStake+=stakeNum; if(META.stations.length>=3&&META.comboDay!==today()){ META.comboDay=today(); META.bootBonus=(META.bootBonus||0)+1; } saveMeta(); setBest(song.slug,R.x);
-  $("rcard").className="card "+(moon?"moon":"miss"); $("rcard").style.setProperty("--sc",(typeof COLORS!=="undefined"&&COLORS[station])||"#7FB6FF"); $("rSn").textContent="SR-"+String(Math.floor(Math.random()*9000)+1000)+" · "+song.station; $("rTitle").textContent=song.title;
+  $("rcard").className="card "+(moon?"moon":"miss"); $("rcard").style.setProperty("--sc",(typeof COLORS!=="undefined"&&COLORS[station])||"#7FB6FF"); $("rSn").textContent="SR-"+rideNo()+" · "+song.station; $("rTitle").textContent=song.title;
 const peak=Math.max(R.bestX||1, R.x); $("rX").textContent=xTexte(peak); if($("rXsmall")) $("rXsmall").textContent=xTexte(peak); if($("rScoreBig")) $("rScoreBig").textContent=Math.round(R.score||0).toLocaleString("en-US"); $("rSt").textContent=moon?"MOON":"THROWN AT "+m+":"+s; $("rBest").textContent=Math.floor(R.best)    ; const finalScore=Math.round(R.score*(moon?1.5:1));  $("rHeldLine").textContent="HELD "+m+":"+s+(moon?" · MOON BONUS ×1.5":""); const prevBest=Math.max(0,...(META.log||[]).filter(r=>r.slug===song.slug).map(r=>r.score));
   { const cible=xTexte(Math.max(2, peak*1.6));
     $("rHeldLine").textContent="YOU HELD "+xTexte(peak)+". NEXT TIME, "+cible+"."; }
-  $("rRecord").textContent=(R.dayTarget&&R.score>R.dayTarget?"NEW BEST TODAY ON THIS BEAT":(R.dayTarget?"TODAY'S BEST: "+R.dayTarget.toLocaleString("en-US"):""))||finalScore>prevBest?(prevBest?"NEW RECORD · +"+Math.abs(finalScore-prevBest).toLocaleString("en-US"):"FIRST RIDE ON THIS SONG · YOUR RECORD TO BEAT"):(prevBest-finalScore).toLocaleString("en-US")+" SHORT OF YOUR RECORD · RIDE AGAIN"; META.totalScore=(META.totalScore||0)+finalScore; (META.log=META.log||[]).push({who:META.handle||"",slug:song.slug,title:song.title,station:song.station,score:finalScore,stake:+stake,x:R.x,moon:moon,d:Date.now()}); META.log=META.log.slice(-200); saveMeta(); $("rStake").textContent="$"+stake;
+  $("rRecord").textContent=(R.dayTarget&&R.score>R.dayTarget)?"NEW BEST TODAY ON THIS BEAT":(finalScore>prevBest)?(prevBest?"NEW RECORD · +"+Math.abs(finalScore-prevBest).toLocaleString("en-US"):"FIRST RIDE ON THIS SONG · YOUR RECORD TO BEAT"):(prevBest-finalScore).toLocaleString("en-US")+" SHORT OF YOUR RECORD · RIDE AGAIN"; META.totalScore=(META.totalScore||0)+finalScore; (META.log=META.log||[]).push({who:META.handle||"",slug:song.slug,title:song.title,station:song.station,score:finalScore,stake:+stake,x:R.x,moon:moon,d:Date.now()}); META.log=META.log.slice(-200); saveMeta(); $("rStake").textContent="$"+stake;
   show("s-result"); }
 $("shareTg").addEventListener("click",()=>{ const text=(META.handle||"A cowboy")+" just rode "+song.title+" at "+$("rX").textContent+" on Moon Rodeo, "+$("rSt").textContent.toLowerCase()+". Beat it: "; const url="https://t.me/share/url?url="+encodeURIComponent(inviteLink())+"&text="+encodeURIComponent(text); if(TG&&TG.openTelegramLink) TG.openTelegramLink(url); else window.open(url,"_blank"); });
 for(const id of ["hgTg","rTg"]){ const b=$(id); if(b) b.addEventListener("click",()=>{ window.open("https://t.me/"+BOT+"/"+APP,"_blank","noopener"); }); }
@@ -1143,12 +1199,35 @@ document.addEventListener("keyup",e=>{ const k=e.key.toLowerCase();
   if(e.key==="1"||e.key==="2"||e.key==="3") KEYS[+e.key-1]=false;
 });
 
+function majVpH(){
+
+  document.documentElement.style.setProperty("--vpH", window.innerHeight + "px");
+}
+majVpH();
+addEventListener("resize", majVpH);
+addEventListener("orientationchange", majVpH);
+
+function carteVisible(){
+  const col=$("s-result") && $("s-result").querySelector(".col");
+  const c=$("rcard");
+  if(!col||!c) return;
+  col.classList.remove("flux");
+  const r=c.getBoundingClientRect();
+  const dehors = r.height<2 || r.bottom<8 || r.top>innerHeight-8;
+  if(dehors){
+    col.classList.add("flux");
+    try{ col.scrollIntoView({block:"start"}); }catch(_){}
+  }
+}
+
 function majActH(){
   const a=document.querySelector('.actions[data-for="s-result"]');
   const c=document.querySelector("#s-result .col");
   if(a&&c) c.style.setProperty("--actH", Math.round(a.getBoundingClientRect().height)+"px");
 }
 addEventListener("resize",majActH);
+addEventListener("resize",carteVisible);
+addEventListener("orientationchange",carteVisible);
 function outroReset(){
 
   const slot=$("outroSlot"), bloc=$("outro");
@@ -1196,23 +1275,11 @@ function bdPoser(run, pseudo){
   a.sort((p,q)=>q.s-p.s); bdEcrire(a);
   return a.findIndex(e=>e.t===cle)+1;
 }
-let BD_VUE="today", BD_SRC="local";
-if($("bdTabs")) $("bdTabs").querySelectorAll("button").forEach(b=>{
-  b.addEventListener("click",()=>{
-    BD_VUE=b.dataset.bd;
-    $("bdTabs").querySelectorAll("button").forEach(x=>x.classList.toggle("on", x===b));
-    bdRendre();
-  });
-});
-
+let BD_SRC="local";
 function bdRendre(){
-  const v=BD_VUE;
-  $("bdSub").textContent = (v==="alltime")
-    ? "Every ride ever, best first. This one never resets: it is the hall of fame."
-    : "Today's board. The top three tonight win a shot: 5, 3 and 2 USDC. It resets at midnight UTC.";
-  if(SUPA()) supaBoard(50, v).then(rows=>{
-    if(BD_VUE!==v) return;
-    if(Array.isArray(rows)){ BD_SRC="serveur"; bdPeindre(rows.map(r=>({h:r.handle,s:r.score,x:r.multiple}))); }
+  $("bdSub").textContent = "The best rides, in order. Your handle puts you on it.";
+  if(SUPA()) supaBoard(50).then(rows=>{
+    if(Array.isArray(rows) && rows.length){ BD_SRC="serveur"; bdPeindre(rows.map(r=>({h:r.handle,s:r.score,x:r.multiple}))); }
   }).catch(()=>{});
 
   BD_SRC="local"; bdPeindre(bdLire());
@@ -1228,8 +1295,7 @@ function bdPeindre(a){
   vide.style.display=a.length?"none":"block";
   $("bdNote").innerHTML = a.length
     ? (BD_SRC==="serveur"
-      ? (BD_VUE==="alltime" ? "EVERY RIDE, EVERYWHERE, SINCE THE FIRST DAY."
-                            : "EVERY RIDE PLAYED TODAY, EVERYWHERE. RESETS AT MIDNIGHT UTC.")
+      ? "EVERY RIDE, EVERYWHERE, SINCE THE FIRST DAY."
       : "THIS BOARD HOLDS THE RIDES FROM THIS DEVICE. WHEN THE SEASON OPENS IT HOLDS EVERYONE'S, AND YOUR PLACE COMES WITH YOU.")
     : "";
 }
@@ -1259,9 +1325,28 @@ async function supaSignup(p){
   if(!r.ok) throw new Error("signup "+r.status);
   return r.json();
 }
-async function supaBoard(n, vue){
-  const t=(vue==="alltime")?"board_alltime":"board_today";
-  const r=await fetch(SUPA_URL+"/rest/v1/"+t+"?select=handle,score,multiple,song&order=score.desc&limit="+(n||50),
+async function supaEnvoyer(run, pseudo){
+  if(!SUPA() || !run || !pseudo) return null;
+  try{
+    const r = await fetch(SUPA_URL+"/functions/v1/submit-run", {
+      method:"POST",
+      headers:{ "Content-Type":"application/json", apikey:SUPA_KEY, authorization:"Bearer "+SUPA_KEY },
+      body: JSON.stringify({
+        handle: pseudo,
+        song: (song&&song.slug)||"",
+        score: Math.round(run.score||0),
+        multiple: Math.max(1, Math.round(run.bestX||run.x||1)),
+        best_run: Math.round(run.best||0),
+        seconds: Math.max(3, Math.round(run.heldFor || (run.dur||0)))
+      })
+    });
+    if(!r.ok) return null;
+    return await r.json();
+  }catch(_){ return null; }
+}
+
+async function supaBoard(n){
+  const r=await fetch(SUPA_URL+"/rest/v1/board?select=handle,score,multiple,song&order=score.desc&limit="+(n||50),
     {headers:{apikey:SUPA_KEY,authorization:"Bearer "+SUPA_KEY}});
   if(!r.ok) throw new Error("board "+r.status);
   return r.json();
@@ -1271,15 +1356,6 @@ if($("joinSend")) $("joinSend").addEventListener("click",()=>{
   let h=($("joinName").value||"").trim();
   if(h.length<2){ $("joinErr").textContent="PICK A HANDLE FIRST."; haptic("miss"); return; }
   if(h[0]!=="@") h="@"+h;
-
-  const mail=String(($("joinMail")&&$("joinMail").value)||"").trim().toLowerCase();
-  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(mail)){
-    $("joinErr").textContent="WE NEED AN EMAIL TO PAY THE WINNER."; haptic("miss");
-    if($("joinMail")) $("joinMail").focus();
-    return;
-  }
-  try{ const a=JSON.parse(localStorage.getItem("moonx.me")||"{}"); a.email=mail;
-       localStorage.setItem("moonx.me", JSON.stringify(a)); }catch(_){}
   try{ localStorage.setItem("sr.handle", h);
 
        const a=JSON.parse(localStorage.getItem("moonx.me")||"{}");
@@ -1291,6 +1367,8 @@ if($("joinSend")) $("joinSend").addEventListener("click",()=>{
 
   requestAnimationFrame(majActH); setTimeout(majActH,350);
   window.__lastRank=bdPoser(R, h);
+
+  supaEnvoyer(R, h).then(res=>{ if(res && res.rank) try{ bdRendre(); }catch(_){} });
   const dejaLa=bdLire();
   $("joinRank").textContent="#"+(window.__lastRank>0?window.__lastRank:dejaLa.length);
 
@@ -1347,6 +1425,9 @@ if($("goBoard")) $("goBoard").addEventListener("click",()=>{ try{ bdRendre(); }c
 
 let LEARN=false, LEARN_APRES=null, LEARN_T=[];
 
+const TENU_G = TOUCH ? "KEEP YOUR FINGER DOWN" : "HOLD SPACE DOWN";
+const LEVE_G = TOUCH ? "LIFT"                  : "LET GO";
+
 function learnFini(){ try{ return localStorage.getItem("sr.learned")==="1"; }catch(_){ return false; } }
 
 function learnDire(titre, sous){
@@ -1390,9 +1471,12 @@ function startLearn(apres){
   document.querySelectorAll(".actions").forEach(a=>a.style.display="none");
   $("hudSong").textContent="HOW IT WORKS"; document.body.classList.add("sim");
   $("hudX").textContent=xTexte(1); $("hudScore").textContent="0";
+  const CMD  = TOUCH ? "TAP THE LANE"        : "PRESS SPACE";
+  const TENU = TOUCH ? "KEEP YOUR FINGER DOWN" : "HOLD SPACE DOWN";
+  const LEVE = TOUCH ? "LIFT YOUR FINGER"      : "RELEASE SPACE";
   learnDire("WATCH", "THE RIDER MOVES UNDER EACH BUCK");
-  LEARN_T.push(setTimeout(()=>{ if(LEARN) learnDire("TAP THE LANE", "WHEN THE BUCK REACHES THE LINE"); }, 2600));
-  LEARN_T.push(setTimeout(()=>{ if(LEARN) learnDire("THE LONG ONE", "IT SAYS HOLD \u00b7 PRESS AND DO NOT LET GO"); }, 5600));
+  LEARN_T.push(setTimeout(()=>{ if(LEARN) learnDire(CMD, "WHEN THE BUCK REACHES THE LINE"); }, 2600));
+  LEARN_T.push(setTimeout(()=>{ if(LEARN) learnDire("HERE COMES A LONG ONE", "IT SAYS HOLD \u00b7 " + TENU); }, 5600));
   LEARN_T.push(setTimeout(()=>{ if(LEARN) learnDire("NOW YOU", "ONE MISS AND THE RIDE IS OVER"); }, 10200));
   LEARN_T.push(setTimeout(()=>{ if(LEARN) learnFin(); }, 12200));
   scheduleBeats();
@@ -1410,8 +1494,11 @@ function learnJoue(){
     const t=clock();
     const h=R.notes.find(x=>x.type==="hold" && t>=x.t-0.05 && t<=x.t+x.len);
     const e=$("simTip");
-    if(h&&e&&!e.dataset.hold){ e.dataset.hold="1"; learnDire("KEEP HOLDING","UNTIL THE TAIL RUNS OUT"); }
+    const k=$("simKey");
+    if(k) k.textContent = TOUCH ? "FINGER DOWN" : "SPACE";
+    if(h&&e&&!e.dataset.hold){ e.dataset.hold="1"; learnDire(TENU_G, "UNTIL THE TAIL RUNS OUT, THEN " + LEVE_G); }
     if(!h&&e&&e.dataset.hold){ delete e.dataset.hold; }
+    if(k) k.classList.toggle("on", !!h);
   }
 
   if(!LEARN||!R||R.ended) return;
@@ -1420,8 +1507,16 @@ function learnJoue(){
   for(const x of R.notes){ if(x.hit) continue; const dd=x.t-now; if(dd>-0.2&&dd<d){ d=dd; n=x; } }
   if(n){
     if(n.lane!==rocketLane) moveLane(n.lane);
-    if(n.type==="hold"){ KEYS[n.lane]=(now>=n.t-0.05 && now<=n.t+n.len+0.05); }
-    else KEYS[n.lane]=false;
+    const aFrapper = (now>=n.t-0.06 && now<=n.t+0.12);
+    if(n.type==="hold"){
+      const tenu = (now>=n.t-0.05 && now<=n.t+n.len+0.05);
+      if(aFrapper && !n.__fx){ n.__fx=1; tapLane(n.lane); haptic("tick"); }
+      KEYS[n.lane]=tenu;
+      if(tenu) FX.lanePress[n.lane]=1;
+    } else {
+      KEYS[n.lane]=false;
+      if(aFrapper && !n.__fx){ n.__fx=1; FX.lanePress[n.lane]=1; haptic("tick"); }
+    }
   }
   requestAnimationFrame(learnJoue);
 }
@@ -1480,7 +1575,12 @@ if(TGU){ META.tgId=TGU.id; META.handle=TGU.username?("@"+TGU.username):(TGU.firs
 if(!META.handle){ try{ META.handle=localStorage.getItem("sr.handle")||""; }catch(_){} }
 
 (()=>{ const sp=TG&&TG.initDataUnsafe&&TG.initDataUnsafe.start_param; if(sp&&/^SR-/.test(sp)&&sp!==META.code&&!META.from){ META.from=sp; META.fuel=FUEL_MAX; saveMeta(); } })();
-function haptic(kind){ if(SET.haptics===false) return; try{ if(TG&&TG.HapticFeedback){ if(kind==="perfect") TG.HapticFeedback.impactOccurred("light"); else if(kind==="good") TG.HapticFeedback.selectionChanged(); else if(kind==="miss") TG.HapticFeedback.notificationOccurred("error"); else if(kind==="x") TG.HapticFeedback.impactOccurred("heavy"); } }catch(_){} }
+function haptic(kind){ if(SET.haptics===false) return;
+
+  if(!TG){ try{ if(navigator.vibrate){
+    navigator.vibrate(kind==="miss"?[18,40,18] : kind==="x"?26 : kind==="perfect"?12 : 7);
+  } }catch(_){} return; }
+  try{ if(TG&&TG.HapticFeedback){ if(kind==="perfect") TG.HapticFeedback.impactOccurred("light"); else if(kind==="good") TG.HapticFeedback.selectionChanged(); else if(kind==="miss") TG.HapticFeedback.notificationOccurred("error"); else if(kind==="x") TG.HapticFeedback.impactOccurred("heavy"); } }catch(_){} }
 function inviteLink(){ return "https://t.me/"+BOT+"/"+APP+"?startapp="+META.code; }
 function inviteViaTelegram(){ const text="Ride the beat, win your first stake on MOONX. Moon Rodeo: hold on to the rocket, everybody falls off one day."; const url="https://t.me/share/url?url="+encodeURIComponent(inviteLink())+"&text="+encodeURIComponent(text); if(TG&&TG.openTelegramLink) TG.openTelegramLink(url); else window.open(url,"_blank"); }
 function ensureHandle(cb){ if(META.handle){ cb(); return; } const w=$("handleWrap"), inp=$("handleIn"); if(w.style.display==="none"){ w.style.display="block"; inp.focus(); $("go").textContent="RIDE AS THIS HANDLE"; return; } const h=(inp.value||"").trim(); META.handle=h?(h.startsWith("@")?h:"@"+h):"@cowboy"; try{ localStorage.setItem("sr.handle",META.handle); }catch(_){} saveMeta(); cb(); }
@@ -1491,8 +1591,7 @@ function today(){ return new Date().toISOString().slice(0,10); }
 function outOfRides(){
   if(LIGHT){
 
-    const h=$("homeSub"); if(h) h.textContent="That was today's ride. Come back tomorrow, or go take the whole setlist and real USDC on Telegram.";
-    const g=$("go"); if(g){ g.textContent="RIDE ON TELEGRAM"; g.onclick=()=>window.open("https://t.me/"+BOT+"/"+APP,"_blank","noopener"); }
+    const h=$("homeSub"); if(h) h.textContent="One song. One life. No account.";
     toHome(); return;
   }
   const n=ridesPerDay(); const tip=$("hgTip");

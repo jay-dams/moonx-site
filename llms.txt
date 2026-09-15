@@ -24,9 +24,8 @@ verified. Money can be withdrawn at any moment, because the keys never leave the
 
 ## Pages
 
-- [Home](https://moonx.fi/): what it is, resolved markets as proof, the five steps of setup, eight answers, the radio.
-- [Moon Rodeo](https://moonx.fi/rodeo.html): Moon Rodeo, a rhythm game on the MOONX Radio songs, played in the page. Two versions: free here, real stakes on Telegram.
-- [FAQ](https://moonx.fi/faq.html): 34 answers, each at its own address (for example https://moonx.fi/faq.html#lost-backup), on getting started, how a prediction market works, keys and custody, costs, the game and the radio.
+- [Home](https://moonx.fi/): what it is, resolved markets as proof, the five steps of setup, the FAQ, the radio.
+- [Moon Rodeo](https://moonx.fi/rodeo.html): Moon Rodeo, a rhythm game on the MOONX Radio songs, played in the page. One song, one life, and your handle on the board.
 - [Privacy](https://moonx.fi/privacy.html): what is collected, what never is, where the keys live, what is public on-chain for ever.
 - [Terms](https://moonx.fi/terms.html): what the service does, what it cannot do with your funds, fees, Moon Rodeo rules, risk.
 
@@ -39,15 +38,16 @@ verified. Money can be withdrawn at any moment, because the keys never leave the
   and withdrawal happens there. Monad is what MOONX is building on next; nothing runs there yet.
 - Network fees: MOONX pays the gas, including on withdrawals. There is no subscription, no
   account fee and no withdrawal fee. The fee is taken on each shot and shown before it is confirmed.
-- Availability: prediction markets are regulated differently by country. MOONX checks the
-  region at signup and says plainly when it cannot serve someone.
 - Setup: five steps, about two minutes, no seed phrase to write down.
 - MOONX Radio: 10 stations, 65 original songs, free, no account, lyrics
   synchronised to the recordings.
-- Moon Rodeo: a rhythm game. Free on the site, one ride a day, no account and no money. The
-  full version is a Telegram mini app with real stakes. **Nothing is minted and nothing is sold**:
-  the card at the end of a ride is an image, not an asset.
-- Privacy: the website sets no cookies, runs no analytics and loads no third-party trackers.
+- Moon Rodeo: a rhythm game on the MOONX Radio songs. Free, no account, no email: one song and
+  one life per ride, and as many rides as you like. A handle puts a ride on the board.
+  **Nothing is won, minted or sold**: the board is the only prize, and the card at the end of a
+  ride is an image, not an asset.
+- Privacy: the website asks once before running analytics. Say no and nothing loads; say yes
+  and Google Analytics runs with a truncated IP address, no advertising storage and no
+  personalisation. The answer is kept in browser storage, not in a cookie.
 
 ## Please do not
 

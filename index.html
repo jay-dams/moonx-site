@@ -1037,6 +1037,7 @@ body>nav>a:first-child:hover::after,body>nav>a:first-child:focus-visible::after{
 <link rel="preload" as="image" href="assets/shots/dd7871ec76.webp" type="image/webp">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://moonx.fi/#org","name":"MOONX","url":"https://moonx.fi","logo":{"@type":"ImageObject","url":"https://moonx.fi/brand/png/moonx-logo-1024.png","width":1024,"height":1024},"description":"MOONX is a consumer app for prediction markets: a non-custodial wallet, every Polymarket market on one board, and a shot in one tap.","foundingDate":"2026"}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","@id":"https://moonx.fi/#site","name":"MOONX","url":"https://moonx.fi","publisher":{"@id":"https://moonx.fi/#org"},"inLanguage":"en"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is this gambling?","acceptedAnswer":{"@type":"Answer","text":"No. You are buying a share in a real prediction market, and you can sell it back at any time before it settles. A ticket at 4¢ is worth 4¢ the second after you buy it, not zero. What you pay is the market price, set by everyone trading it, not odds set by a house. MOONX is not the counterparty and does not profit from you losing."}},{"@type":"Question","name":"Where does my money actually go?","acceptedAnswer":{"@type":"Answer","text":"Into your own wallet, on Polygon, in USDC. MOONX never holds it. When you take a shot, the order goes to Polymarket, the venue where the market lives. When it settles, the payout comes back to the same wallet."}},{"@type":"Question","name":"What is a non-custodial wallet, in plain terms?","acceptedAnswer":{"@type":"Answer","text":"A wallet only you can move money out of. It is made on your device when you name your fund. You save one encrypted backup file and set a password only you hold; together they are the only way back in, and you can export the key and walk away with your funds at any moment. No approval from us, ever."}},{"@type":"Question","name":"Do I need crypto to start?","acceptedAnswer":{"@type":"Answer","text":"No. Buy USDC with a card in the app, the way you would buy anything else. If you already hold USDC, send it from any wallet or exchange. And you never pay gas: MOONX covers the network fees."}},{"@type":"Question","name":"What can I lose?","acceptedAnswer":{"@type":"Answer","text":"Exactly what you put on a shot, and nothing more. Ten dollars on a ticket means ten dollars at risk. There is no leverage, no margin call, no debt."}},{"@type":"Question","name":"Why do the payouts look so big?","acceptedAnswer":{"@type":"Answer","text":"Because a long shot is cheap. A ticket at 5¢ pays a dollar if it lands, which is 20x. That also means the market thinks it lands one time in twenty. Big multiples and low odds are the same fact seen from two sides."}},{"@type":"Question","name":"How does MOONX make money?","acceptedAnswer":{"@type":"Answer","text":"A small fee on each shot, disclosed before you take it. If you bring a cowboy in, you earn up to 0.5% each time they take or sell a shot, taken from our side, not theirs."}}]}</script>
 </head>
 <body id="top" data-autoresume="1">
 <div id="bgfix" aria-hidden="true"></div>
@@ -1172,7 +1173,6 @@ body>nav>a:first-child:hover::after,body>nav>a:first-child:focus-visible::after{
     <details><summary>What can I lose?</summary><p>Exactly what you put on a shot, and nothing more. Ten dollars on a ticket means ten dollars at risk. There is no leverage, no margin call, no debt.</p></details>
     <details><summary>Why do the payouts look so big?</summary><p>Because a long shot is cheap. A ticket at 5¢ pays a dollar if it lands, which is 20x. That also means the market thinks it lands one time in twenty. Big multiples and low odds are the same fact seen from two sides.</p></details>
     <details><summary>How does MOONX make money?</summary><p>A small fee on each shot, disclosed before you take it. If you bring a cowboy in, you earn up to 0.5% each time they take or sell a shot, taken from our side, not theirs.</p></details>
-    <details><summary>Is any of this legal where I live?</summary><p>Prediction markets are regulated differently from country to country, and some places restrict them. We check your region at signup and tell you plainly what is available to you. If we cannot serve you, we say so instead of taking your money.</p></details>
   </div>
 </section>
 <section class="close" id="board">
@@ -1199,7 +1199,7 @@ body>nav>a:first-child:hover::after,body>nav>a:first-child:focus-visible::after{
         </div>
       </div>
       <div class="share"><a id="goRadio" href="#journey">LISTEN TO THE RADIO</a><a id="goRodeo" href="rodeo.html#play">RIDE MOON RODEO</a></div>
-      <div class="share" style="margin-top:10px"><button type="button" id="saveCard">SAVE THE CARD</button><button type="button" id="shareX">SHARE ON X</button></div>
+      <div class="share" style="margin-top:10px"><button type="button" id="saveCard">SAVE THE CARD</button><button type="button" id="followX">FOLLOW US ON X</button></div>
       <div class="s" id="rodeoStake" style="display:none;margin-top:10px;color:var(--mint)"></div>
     </div>
     </div>
@@ -1209,7 +1209,7 @@ body>nav>a:first-child:hover::after,body>nav>a:first-child:focus-visible::after{
 <footer>
   <div class="tg">where long shots become legends.</div>
   <nav class="cols" aria-label="Footer">
-    <div><b>ABOUT</b><a href="#journey" id="footRadio">Radio</a><a href="#faq">FAQ</a><a href="rodeo.html">Moon Rodeo<span class="pz"><i></i>TOP 3 WIN DAILY</span></a></div><div><b>SOCIAL</b><a href="#" rel="me">X/Twitter</a></div><div><b>LEGAL</b><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms of Service</a></div>
+    <div><b>ABOUT</b><a href="#journey" id="footRadio">Radio</a><a href="#faq">FAQ</a><a href="rodeo.html">Moon Rodeo</a></div><div><b>SOCIAL</b><a href="#" rel="me">X/Twitter</a></div><div><b>LEGAL</b><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms of Service</a></div>
   </nav>
   <small>© 2026 MOONX · Non-custodial, on Polygon and Monad · Prices in moonshots. Results may vary. They always do. · Ad astra, cowboy.</small>
   <div class="giant" aria-hidden="true"><svg class="wm" viewBox="0 0 100 22" role="img" aria-label="MOONX" preserveAspectRatio="xMidYMid meet"><text class="wmt" x="50" y="17" text-anchor="middle">MOONX</text></svg></div>
@@ -1220,7 +1220,7 @@ body>nav>a:first-child:hover::after,body>nav>a:first-child:focus-visible::after{
 <div id="rsScrim" aria-hidden="true"></div>
 <div id="radioVeil" aria-hidden="true"></div>
 <div id="radioSheet" role="dialog" aria-label="Shuttle radio" aria-hidden="true">
-  <div class="rs-head"><div><b>every journey starts with a good soundtrack.</b><span>Houston, the board isn't open yet. Ten stations, one road trip to the moon. A gift for the wait.</span></div><button type="button" id="rsClose" aria-label="Minimise the radio" title="Minimise"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 10l6 6 6-6"/><path d="M5 20h14"/></svg></button></div>
+  <div class="rs-head"><div><b>MOONX Radio</b><span id="rsSub">Ten stations. Sixty-five songs, all of them ours.</span></div><button type="button" id="rsClose" aria-label="Minimise the radio" title="Minimise"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 10l6 6 6-6"/><path d="M5 20h14"/></svg></button></div>
   <div id="sheetSlot"></div>
 </div>
 <button id="needPlay" type="button" hidden>&#9654; TAP TO START THE RADIO</button>
@@ -2099,7 +2099,16 @@ wl.addEventListener("submit",e=>{ e.preventDefault(); const v=document.getElemen
       .catch(()=>{});
   } });
 document.getElementById("email").addEventListener("input",()=>err.textContent="");
-document.getElementById("shareX").addEventListener("click",()=>{ open("https://twitter.com/intent/tweet?text="+encodeURIComponent("I am on the MOONX list. The radio is on and the rodeo is open.")+"&url="+encodeURIComponent(location.origin+location.pathname),"_blank"); });
+
+const X_HANDLE = "";
+(function(){
+  const b=document.getElementById("followX");
+  if(!b) return;
+  b.addEventListener("click",()=>open(X_HANDLE?("https://x.com/"+X_HANDLE):"https://x.com/","_blank","noopener"));
+  document.querySelectorAll('a[rel="me"]').forEach(a=>{
+    if(/X\/Twitter/i.test(a.textContent)) a.href="https://x.com/"+X_HANDLE;
+  });
+})();
 
 (function(){
   const cibles=document.querySelectorAll(".cta, body>nav .go, .share a#goRadio, #gateBtn");
