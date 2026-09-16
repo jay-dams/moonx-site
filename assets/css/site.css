@@ -26,7 +26,7 @@ body:has(canvas.skycv) .sky{opacity:.35}
 .skip{position:fixed;left:-9999px;top:8px;z-index:99;background:var(--blue);color:#fff;padding:12px 18px;border-radius:10px;font-weight:700}
 .skip:focus{left:12px}
 :focus-visible{outline:2px solid var(--hi);outline-offset:3px;border-radius:6px}
-body>nav{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;align-items:center;justify-content:space-between;background:rgba(3,5,12,.86);backdrop-filter:blur(16px);border-bottom:1px solid var(--line);padding:14px max(20px, calc((100% - 980px) / 2))}
+body>nav{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;align-items:center;justify-content:space-between;background:rgba(3,5,12,.86);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border-bottom:1px solid var(--line);padding:14px max(20px, calc((100% - 980px) / 2))}
 body>nav .wm{width:118px}
 .wm .wmt{font-family:"Blanka","Elianto","Michroma",system-ui,sans-serif;font-size:16px;letter-spacing:.06em;fill:#fff;stroke:none;font-weight:400}
 nav

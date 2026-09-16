@@ -214,7 +214,7 @@ body.sim #simKey.on{opacity:1;color:#03050C;border-bottom-width:1px;transform:tr
 body.sim #simTip{display:block;position:fixed;left:50%;bottom:calc(var(--minih,16px) + 22px);
   transform:translateX(-50%);z-index:30;width:min(90vw,380px);padding:14px 16px;text-align:center;
   border-radius:14px;border:1px solid var(--line2);background:rgba(10,14,26,.92);
-  backdrop-filter:blur(8px)}
+  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
 #simTip b{display:block;font-weight:800;font-size:17px;letter-spacing:-.01em;color:#fff}
 #simTip i{display:block;font-style:normal;font-family:var(--mono);font-size:9px;
   letter-spacing:.14em;color:var(--dim);margin-top:6px;line-height:1.7}
@@ -419,17 +419,17 @@ body.embed
 .setnote{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;color:var(--dim);line-height:1.8;margin-top:20px;text-align:left}
 
 .gear{position:fixed;top:max(10px,env(safe-area-inset-top));right:10px;z-index:6;width:40px;height:40px;border-radius:12px;
-  display:grid;place-items:center;border:1px solid var(--line);background:rgba(10,14,26,.7);backdrop-filter:blur(8px);color:var(--dim)}
+  display:grid;place-items:center;border:1px solid var(--line);background:rgba(10,14,26,.7);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);color:var(--dim)}
 .gear:hover,.gear:focus-visible{color:#fff;border-color:var(--line2)}
 .screen:not(.on) ~ .gear{display:grid}
 
 #pauseBtn{position:fixed;top:max(10px,env(safe-area-inset-top));left:50%;transform:translateX(-50%);z-index:6;
   width:44px;height:44px;border-radius:14px;display:none;place-items:center;border:1px solid var(--line);
-  background:rgba(3,5,12,.55);backdrop-filter:blur(6px);color:var(--dim)}
+  background:rgba(3,5,12,.55);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);color:var(--dim)}
 #pauseBtn.on{display:grid}
 #pauseBtn:active{transform:translateX(-50%) scale(.94)}
 #pausePane{position:fixed;inset:0;z-index:9;display:none;flex-direction:column;align-items:center;justify-content:center;
-  padding:24px;background:rgba(3,5,12,.74);backdrop-filter:blur(9px) saturate(.75)}
+  padding:24px;background:rgba(3,5,12,.74);-webkit-backdrop-filter:blur(9px) saturate(.75);backdrop-filter:blur(9px) saturate(.75)}
 #pausePane.on{display:flex}
 #pausePane .pcard{width:min(100%,380px);text-align:center}
 #pausePane h2{font-weight:800;font-size:clamp(26px,7vw,36px);letter-spacing:-.035em;margin-top:10px}
@@ -441,7 +441,7 @@ body.embed
 #pausePane button.p{background:linear-gradient(180deg,#4C8BFF,#2D7BFF);border-color:transparent;font-weight:800;font-family:Inter;font-size:16px;letter-spacing:-.01em}
 #pausePane button.warn{color:var(--red);border-color:rgba(255,59,107,.35)}
 
-body.paused .screen.on{z-index:11;background:rgba(3,5,12,.94);backdrop-filter:blur(12px)}
+body.paused .screen.on{z-index:11;background:rgba(3,5,12,.94);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
 body.paused #hud,body.paused #prog{opacity:0;transition:opacity .2s}
 
 #resume{position:fixed;inset:0;z-index:10;display:none;place-items:center;pointer-events:none}

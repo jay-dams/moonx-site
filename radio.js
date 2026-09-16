@@ -5,6 +5,7 @@ const MANIFEST = {"stations": [{"f": 88.6, "code": "moonwave", "name": "MOONWAVE
 const STATIONS = MANIFEST.stations, PIRATE = null;
 const FMIN=88, FMAX=106, LOCK=0.35;
 let AC=null, noise=null, noiseGain=null, master=null, music=null, musicSrc=null, analyser=null, vuData=new Uint8Array(64);
+let tuneAnim=0;
 let volume=0.42, playing=false, freq=101.7, current=null, trackIdx={}, pirateOn=false;
 
 function srcOf(p){ return (typeof p==="string" && window.MOONX_BASE && /^\.\.\//.test(p)) ? window.MOONX_BASE+p : p; }
@@ -19,6 +20,8 @@ function audioInit(){
   noiseGain=AC.createGain(); noiseGain.gain.value=0;
   noise.connect(bp); bp.connect(noiseGain); noiseGain.connect(master); noise.start();
   music=new Audio();
+
+  music.addEventListener("playing",()=>{ if(current) setStatic(0,0.05); });
   ["play","playing","pause","ended","emptied","waiting"].forEach(ev=>music.addEventListener(ev,()=>{ if(typeof syncPlayLabel==="function") syncPlayLabel(); }));
   music.preload="auto"; music.volume=volume;
   music.addEventListener("ended",()=>{ if(current) playNext(current); });
@@ -76,7 +79,7 @@ function setFreq(f,silent){
   else if(!s && current) unlock();
   else if(!s){ dispStation.textContent=freq.toFixed(1); setNow("SEARCHING",{}); }
 }
-function lock(s){ current=s; st(s).justLocked=true; clearTimeout(demoTimer); document.getElementById("led").classList.add("on"); document.getElementById("lockTxt").textContent="LOCK"; document.querySelectorAll("#presets button").forEach(b=>b.classList.toggle("on",parseFloat(b.dataset.f)===s.f)); if(!(s.code in trackIdx)) trackIdx[s.code]=0; dispStation.textContent=`${s.name} ${s.f.toFixed(1)}`; setStatic(0,0.08); loadTrack(s); }
+function lock(s){ current=s; st(s).justLocked=true; clearTimeout(demoTimer); tuneAnim++; document.getElementById("led").classList.add("on"); document.getElementById("lockTxt").textContent="LOCK"; document.querySelectorAll("#presets button").forEach(b=>b.classList.toggle("on",parseFloat(b.dataset.f)===s.f)); if(!(s.code in trackIdx)) trackIdx[s.code]=0; dispStation.textContent=`${s.name} ${s.f.toFixed(1)}`; setStatic(0,0.08); loadTrack(s); }
 function unlock(){ current=null; clearTimeout(demoTimer); document.getElementById("led").classList.remove("on"); document.getElementById("lockTxt").textContent="SEARCH"; document.querySelectorAll("#presets button").forEach(b=>b.classList.remove("on")); dispStation.textContent=freq.toFixed(1); setNow("SEARCHING",{}); if(music) music.pause(); setStatic(playing?0.35:0,0.05); renderKaraoke(null); }
 
 const DEMO={song:14000,id:4000,drop:5000,jingle:6000,voice:12000,static:2000};
@@ -121,11 +124,26 @@ function stepStation(dir){
   if(idx<0) idx=L.length-1; if(idx>=L.length) idx=0;
   const target=L[idx].f; animateTo(target);
 }
+
+function staticWanted(){
+  if(!playing) return 0;
+  if(!current) return 0.35;
+  if(music && music.src && !music.paused) return 0;
+  if(cur && !(music && music.src)) return cur.type==="static"?0.35:0.06;
+  return 0;
+}
+function staticSettle(){ setStatic(staticWanted(), 0.08); }
 function animateTo(target){ if(!AC){ audioInit(); AC.resume(); }
-  const start=freq, t0=performance.now(), dur=420;
-  function st(now){ const p=Math.min(1,(now-t0)/dur), e=1-Math.pow(1-p,3); setFreq(start+(target-start)*e, p<1); if(p<1){ setStatic(0.3,0.03); requestAnimationFrame(st);} else setFreq(target); }
+  const start=freq, t0=performance.now(), dur=420, id=++tuneAnim;
+  function st(now){ if(id!==tuneAnim) return;
+    const p=Math.min(1,(now-t0)/dur), e=1-Math.pow(1-p,3); setFreq(start+(target-start)*e, p<1);
+    if(p<1){ setStatic(0.3,0.03); requestAnimationFrame(st); }
+    else { setFreq(target); staticSettle(); } }
   requestAnimationFrame(st);
 }
+
+setInterval(()=>{ if(!AC||!noiseGain) return;
+  if(current && music && music.src && !music.paused && noiseGain.gain.value>0.02) setStatic(0,0.05); }, 400);
 function setPlaying(p){
   playing=p;
 

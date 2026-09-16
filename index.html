@@ -6,12 +6,12 @@
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#03050C">
 <title>MOONX | Where long shots become legends</title>
-<meta name="description" content="Get your ticket, become a space cowboy of DeFi. A non-custodial wallet, every prediction market to explore, the moonshot one tap away.">
+<meta name="description" content="Without a crypto PhD, trade any prediction market in a tap.">
 <link rel="canonical" href="https://moonx.fi/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="MOONX">
 <meta property="og:title" content="MOONX | Where long shots become legends">
-<meta property="og:description" content="Get your ticket, become a space cowboy of DeFi. A non-custodial wallet, every prediction market to explore, the moonshot one tap away.">
+<meta property="og:description" content="Without a crypto PhD, trade any prediction market in a tap.">
 <meta property="og:url" content="https://moonx.fi/">
 <meta property="og:image" content="https://moonx.fi/og-image.png">
 <meta property="og:image:width" content="1200">
@@ -79,7 +79,7 @@ a{color:inherit;text-decoration:none}
 
 html{overflow-x:clip}
 body{overflow-x:clip}
-body>nav{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;align-items:center;justify-content:space-between;background:rgba(3,5,12,.86);backdrop-filter:blur(16px);border-bottom:1px solid var(--line);padding:14px max(20px, calc((100% - 980px) / 2))}
+body>nav{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;align-items:center;justify-content:space-between;background:rgba(3,5,12,.86);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border-bottom:1px solid var(--line);padding:14px max(20px, calc((100% - 980px) / 2))}
 nav img{height:28px}
 
 body>nav .go{position:relative;overflow:hidden;isolation:isolate;
@@ -103,10 +103,10 @@ main{position:relative;z-index:1}
 #bgfix{position:absolute;left:0;top:0;right:0;bottom:0;z-index:0;pointer-events:none;background-color:#03050C;background-image:linear-gradient(180deg,rgba(14,42,85,0) 0%,rgba(14,42,85,0) 8%,rgba(14,42,85,.14) 24%,rgba(14,42,85,.14) 78%,rgba(14,42,85,0) 95%)}
 body{position:relative}
 
-.hero{--heroPad:20px;min-height:100svh;display:flex;flex-direction:column;align-items:center;text-align:center;padding:96px var(--heroPad) 0;position:relative;overflow:hidden}
+.hero{--heroPad:20px;min-height:100vh;min-height:100svh;display:flex;flex-direction:column;align-items:center;text-align:center;padding:96px var(--heroPad) 0;position:relative;overflow:hidden}
 .glow{display:none}
 .wordmark .wm{width:100%;margin:0 auto;display:block}
-.wordmark{position:relative;z-index:2;width:min(88vw,620px);margin:0 auto;height:auto;opacity:0;transform:translateY(12px);transition:opacity 1s .1s,transform 1s .1s}
+.wordmark{position:relative;z-index:2;width:min(92vw,720px);margin:0 auto;height:auto;opacity:0;transform:translateY(12px);transition:opacity 1s .1s,transform 1s .1s}
 .hero h1{position:relative;z-index:2;font-weight:800;font-size:clamp(30px,6.4vw,58px);letter-spacing:-.035em;line-height:1.02;margin-top:26px;max-width:15ch}
 .hero .sub{position:relative;z-index:2;color:#B9C7DE;font-size:clamp(15px,2vw,18px);line-height:1.55;max-width:40ch;margin-top:14px}
 body.lit .wordmark,body.lit .hero h1,body.lit .hero .sub{opacity:1;transform:none}
@@ -409,7 +409,9 @@ footer small{display:block;margin-top:50px;color:#5A6B8A;font-size:12px;font-fam
   .rail .ni.on{background:rgba(45,123,255,.14);color:#fff;border-left:3px solid var(--blue)}
   .d
 main{--mainPad:20px;padding:18px var(--mainPad)}
-.hero{margin-left:calc(-1 * var(--mainPad));margin-right:calc(-1 * var(--mainPad))}
+.hero{margin-left:calc(-1 * var(--mainPad));margin-right:calc(-1 * var(--mainPad));
+
+  padding-top:150px}
   .dmain h4{font-weight:800;font-size:22px;letter-spacing:-.03em}
   .drow{display:flex;gap:14px;align-items:center;margin-top:12px}
   .phone{position:absolute;right:calc(50% - min(35vw,450px) - 40px);top:120px;width:250px;transform:rotateX(22deg) rotateY(-10deg)}
@@ -756,7 +758,7 @@ body.lit .kick{opacity:1}
 
 .pageview{position:fixed;inset:0;z-index:25;background:#03050C;overflow:auto;transform:translateX(100%);transition:transform .32s cubic-bezier(.2,.8,.2,1);padding-bottom:110px}
 .pageview.on{transform:none}
-.pv-bar{position:sticky;top:0;z-index:2;padding:14px 18px;background:rgba(3,5,12,.86);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
+.pv-bar{position:sticky;top:0;z-index:2;padding:14px 18px;background:rgba(3,5,12,.86);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
 .pv-back{font-family:var(--mono);font-size:10px;letter-spacing:.12em;padding:10px 14px;border:1px solid var(--line-2);border-radius:99px;background:var(--card)}
 .pageview .sec{padding-top:40px}
 .pageview .cab{width:min(52vw,240px);margin:28px auto 0}
@@ -796,6 +798,9 @@ body.lit .kick{opacity:1}
 .pbadge .pmk{width:14px;height:14px;display:block}.pbadge b{font-weight:800;font-size:11px;letter-spacing:0;color:#fff}
 @media (min-width:900px){.pbadge{font-size:9px;padding:8px 12px 8px 10px}.pbadge .pmk{width:16px;height:16px}}
 .kick2{position:relative;z-index:2;font-weight:800;font-size:clamp(28px,6.4vw,54px);letter-spacing:-.035em;line-height:1.02;margin-top:14px;max-width:15ch}
+
+.tagline{position:relative;z-index:2;margin:16px auto 0;max-width:min(92vw,64ch);color:var(--dim,#8FA8C8);font-size:clamp(17px,1.6vw,22px);line-height:1.4;font-weight:500;text-align:center}
+.pline[hidden]{display:none}
 .proof[hidden]{display:none}
 .proof{position:relative;z-index:2;margin-top:18px;text-align:center;opacity:0;transition:opacity 1s .4s}
 body.lit .proof{opacity:1}
@@ -811,11 +816,11 @@ body.lit .proof{opacity:1}
 .journey{position:relative;z-index:1;padding:20px 0 40px}
 
 .jwrap{position:relative;max-width:1100px;margin:0 auto}
-.jsticky{position:sticky;top:52px;z-index:2;height:52svh;margin-bottom:-52svh;display:flex;align-items:center;justify-content:center;pointer-events:none}
+.jsticky{position:sticky;top:52px;z-index:2;height:52vh;height:52svh;margin-bottom:-52vh;margin-bottom:-52svh;display:flex;align-items:center;justify-content:center;pointer-events:none}
 
-.jphone{width:auto!important;height:min(58svh,520px);aspect-ratio:780/1688;--pw:calc(min(58svh,520px)*0.47)}
+.jphone{width:auto!important;height:min(58vh,520px);height:min(58svh,520px);aspect-ratio:780/1688;--pw:calc(min(58vh,520px)*0.47);--pw:calc(min(58svh,520px)*0.47)}
 
-.step{min-height:100svh;justify-content:flex-end;padding-bottom:15svh}
+.step{min-height:100vh;min-height:100svh;justify-content:flex-end;padding-bottom:15vh;padding-bottom:15svh}
 .step>*{position:relative;z-index:1}
 
 .jstage{perspective:900px;perspective-origin:50% 45%;position:relative;transform-style:preserve-3d}
@@ -828,8 +833,9 @@ body.lit .proof{opacity:1}
 .jphone .scr.fit{object-fit:contain;background:#03050C;padding:18px 10px}
 .jnotch{position:absolute;top:14px;left:50%;transform:translateX(-50%);width:34%;height:16px;border-radius:99px;background:#03050C}
 .jglow{position:absolute;inset:-60px;border-radius:50%;background:radial-gradient(50% 50% at 50% 60%,rgba(45,123,255,.28),transparent 70%);z-index:-1;will-change:opacity}
-.jsteps{padding:56svh 20px 40svh}
-.step{min-height:92vh;display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:14vh;text-align:left;max-width:520px;margin:0 auto;opacity:.16;will-change:opacity,transform}
+.jsteps{padding:56vh 20px 40vh;padding:56svh 20px 40svh}
+
+.step{min-height:62vh;min-height:62svh;display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:5vh;padding-bottom:5svh;text-align:left;max-width:520px;margin:0 auto;opacity:.16;will-change:opacity,transform}
 
 .step h3{font-weight:800;font-size:clamp(28px,6.4vw,44px);letter-spacing:-.03em;line-height:1.05;margin-top:14px;max-width:16ch}
 .step .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.16em;color:var(--blue);font-weight:600}
@@ -837,7 +843,7 @@ body.lit .proof{opacity:1}
   .jwrap{display:grid;grid-template-columns:1fr 1fr;gap:0}
   .jsticky{height:calc(100vh - 80px);top:80px;order:2}
 
-  .jphone{width:auto!important;height:min(76svh,660px)!important;aspect-ratio:780/1688;--pw:calc(min(76svh,660px)*0.47)}
+  .jphone{width:auto!important;height:min(76vh,660px)!important;height:min(76svh,660px)!important;aspect-ratio:780/1688;--pw:calc(min(76vh,660px)*0.47);--pw:calc(min(76svh,660px)*0.47)}
   .jsteps{order:1;padding:0 40px}
   .step{min-height:80vh;margin:0;justify-content:center;padding-bottom:0}
   .jsticky{margin-bottom:0}
@@ -870,11 +876,11 @@ body>nav .wm{width:118px}
 .jband{position:fixed;left:0;right:0;bottom:0;z-index:3;pointer-events:none;height:0;opacity:0;transition:opacity .25s}
 .jband.inview{opacity:1}
 
-.jband .bandin{position:fixed;left:0;right:0;bottom:15svh;padding:0 20px;height:17svh}
+.jband .bandin{position:fixed;left:0;right:0;bottom:15vh;bottom:15svh;padding:0 20px;height:17vh;height:17svh}
 .jband .bt{position:absolute;left:20px;right:20px;bottom:0;opacity:0;visibility:hidden;transition:opacity .18s;will-change:opacity}
 .jband .bt.show{visibility:visible}
 .jband .bt .eyebrow{margin-bottom:10px}
-.jband::before{content:"";position:absolute;left:0;right:0;bottom:0;height:44svh;background:linear-gradient(180deg,rgba(3,5,12,0),rgba(3,5,12,.78) 34%,rgba(3,5,12,.96) 70%);pointer-events:none}
+.jband::before{content:"";position:absolute;left:0;right:0;bottom:0;height:44vh;height:44svh;background:linear-gradient(180deg,rgba(3,5,12,0),rgba(3,5,12,.78) 34%,rgba(3,5,12,.96) 70%);pointer-events:none}
 @media (min-width:900px){ .jband{display:none} }
 @media (max-width:899px){ .jsteps .step .eyebrow, .jsteps .step h3{visibility:hidden} .step::before{display:none} }
 
@@ -943,7 +949,7 @@ section[hidden]{display:none!important}
 
 .jband .bt .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;color:var(--blue);font-weight:600;margin-bottom:8px}
 .jband .bt h3{font-weight:800;font-size:clamp(24px,6vw,32px);letter-spacing:-.03em;line-height:1.08;margin:0;color:#fff;max-width:16ch}
-.jband::before{content:"";position:fixed;left:0;right:0;bottom:0;height:44svh;background:linear-gradient(180deg,rgba(3,5,12,0),rgba(3,5,12,.82) 40%,rgba(3,5,12,.97) 78%);pointer-events:none}
+.jband::before{content:"";position:fixed;left:0;right:0;bottom:0;height:44vh;height:44svh;background:linear-gradient(180deg,rgba(3,5,12,0),rgba(3,5,12,.82) 40%,rgba(3,5,12,.97) 78%);pointer-events:none}
 
 @media (max-width:899px){
 
@@ -953,7 +959,23 @@ section[hidden]{display:none!important}
 .pbadge{font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.16em}
 
 @media (max-width:899px){
-  .hero>.pbadge{display:inline-flex;align-items:center;gap:8px;margin:0 auto 26px}
+
+  body.jcar .jwrap,body.jcar .jband{display:none}
+  .jcarousel{display:flex;gap:16px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;
+    -webkit-overflow-scrolling:touch;padding:8px 20px 12px;scrollbar-width:none}
+  .jcarousel::-webkit-scrollbar{display:none}
+  .jcard{flex:0 0 100%;scroll-snap-align:center;scroll-snap-stop:always;display:flex;flex-direction:column;align-items:center;gap:18px}
+  .jcard .jphone{position:relative;width:min(64vw,250px)!important;height:auto!important;--pw:min(64vw,250px);aspect-ratio:780/1688;margin:0}
+  .jcard .jscreen{position:relative;width:100%;height:100%;overflow:hidden;background:#03050C}
+  .jcard .scr{opacity:1!important;transform:none!important;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top}
+  .jcard .step{min-height:0;opacity:1!important;transform:none!important;padding:0;justify-content:flex-start;text-align:center;max-width:none;margin:0;width:100%}
+  .jcard .step h3{max-width:none;margin:8px auto 0;font-size:clamp(22px,5.8vw,30px)}
+  .jcard .step .eyebrow{position:static}
+  .jdots{display:flex;justify-content:center;gap:7px;padding:2px 0 10px}
+  .jdots i{width:6px;height:6px;border-radius:3px;background:rgba(150,195,255,.28);transition:width .2s,background .2s}
+  .jdots i.on{width:18px;background:#2D7BFF}
+
+  .hero>.pbadge{position:static;display:inline-flex;align-items:center;gap:8px;margin:0 auto 26px}
   .hero>.pbadge .pmk{width:15px;height:15px;display:block;flex:0 0 auto}
 }
 
@@ -979,11 +1001,17 @@ body>nav .go{font-family:Inter,sans-serif;font-size:13.5px;font-weight:800;lette
 
 #karBtn[disabled]{opacity:.35;pointer-events:none}
 
-:root{--navh:64px;--minih:62px;--bandzone:36svh;
-      --jsh:calc(100svh - var(--navh) - var(--bandzone) - 10px)}
-@media (min-width:900px){ :root{--jsh:calc(100svh - var(--navh) - var(--minih) - 56px)} }
+:root{--navh:64px;--minih:62px;--bandzone:30vh;--bandzone:30svh;
+      --jsh:calc(100vh - var(--navh) - var(--bandzone) - 10px);--jsh:calc(100svh - var(--navh) - var(--bandzone) - 10px)}
+@media (min-width:900px){ :root{--jsh:calc(100vh - var(--navh) - var(--minih) - 56px);--jsh:calc(100svh - var(--navh) - var(--minih) - 56px)} }
 
-.gatein{display:flex;flex-direction:column;align-items:center;gap:14px;width:100%;max-width:min(94vw,640px);margin:auto;zoom:var(--gate-fit,1)}
+.gatein{display:block;width:100%;max-width:min(94vw,640px);margin:auto}
+.gatefit{display:flex;flex-direction:column;align-items:center;gap:14px;width:100%;
+  transform-origin:top center;transform:scale(var(--gate-fit,1));will-change:transform}
+
+#gate{contain:paint;backface-visibility:hidden}
+body.gated{overflow:hidden}
+#gate.gone{display:none}
 .gatein>small{text-align:center}
 #gate #radioWrap{width:100%}
 
@@ -1038,10 +1066,10 @@ body>nav>a:first-child:hover::after,body>nav>a:first-child:focus-visible::after{
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","@id":"https://moonx.fi/#site","name":"MOONX","url":"https://moonx.fi","publisher":{"@id":"https://moonx.fi/#org"},"inLanguage":"en"}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is this gambling?","acceptedAnswer":{"@type":"Answer","text":"No. You are buying a share in a real prediction market, and you can sell it back at any time before it settles. A ticket at 4¢ is worth 4¢ the second after you buy it, not zero. What you pay is the market price, set by everyone trading it, not odds set by a house. MOONX is not the counterparty and does not profit from you losing."}},{"@type":"Question","name":"Where does my money actually go?","acceptedAnswer":{"@type":"Answer","text":"Into your own wallet, on Polygon, in USDC. MOONX never holds it. When you take a shot, the order goes to Polymarket, the venue where the market lives. When it settles, the payout comes back to the same wallet."}},{"@type":"Question","name":"What is a non-custodial wallet, in plain terms?","acceptedAnswer":{"@type":"Answer","text":"A wallet only you can move money out of. It is made on your device when you name your fund. You save one encrypted backup file and set a password only you hold; together they are the only way back in, and you can export the key and walk away with your funds at any moment. No approval from us, ever."}},{"@type":"Question","name":"Do I need crypto to start?","acceptedAnswer":{"@type":"Answer","text":"No. Buy USDC with a card in the app, the way you would buy anything else. If you already hold USDC, send it from any wallet or exchange. Inside MOONX you never pay gas: every shot, every sale, every payout, we cover the network fees. What it costs to send USDC to us from somewhere else is set by that somewhere else, not by us."}},{"@type": "Question", "name": "Do I have to wait for the market to settle?", "acceptedAnswer": {"@type": "Answer", "text": "No. A shot is a position you can sell any time before it resolves, at the price the market gives it that moment. If your ticket climbed from 5¢ to 30¢, you can take the 6x now instead of waiting for the dollar. If it is going the wrong way, you can sell and keep what is left instead of riding it to zero. Holding to the end is one way to play. It is not the only one."}},{"@type":"Question","name":"What can I lose?","acceptedAnswer":{"@type":"Answer","text":"Exactly what you put on a shot, and nothing more. Ten dollars on a ticket means ten dollars at risk. There is no leverage, no margin call, no debt."}},{"@type":"Question","name":"Why do the payouts look so big?","acceptedAnswer":{"@type":"Answer","text":"Some are big, most are not, and both are the point. A ticket at 5¢ pays a dollar if it lands, which is 20x; a ticket at 90¢ pays a dollar too, which is 1.1x. The market prices every shot at what it thinks the odds are, so a big multiple is just a long shot seen from the other side. Chasing the moonshot is a way of riding, not a number: a 1.1x is a moonshot, a 1000x is a moonshot, and win or lose, the ride is what you keep. Winning big is better, of course. That is why you ride."}},{"@type":"Question","name":"How does MOONX make money?","acceptedAnswer":{"@type":"Answer","text":"A 1% fee on each shot. If you bring a cowboy in, you earn up to 0.5% each time they take or sell a shot, taken from our side, not theirs."}}]}</script>
 </head>
-<body id="top" data-autoresume="1">
+<body id="top" data-autoresume="1" class="gated">
 <div id="bgfix" aria-hidden="true"></div>
 
-<div id="gate" aria-label="Enter MOONX"><div class="gatein">
+<div id="gate" aria-label="Enter MOONX"><div class="gatein"><div class="gatefit">
   <svg class="wm" viewBox="0 0 100 22" role="img" aria-label="MOONX" preserveAspectRatio="xMidYMid meet"><text class="wmt" x="50" y="17" text-anchor="middle">MOONX</text></svg>
   <p class="gline">where long shots become legends.</p>
   <div id="radioWrap">
@@ -1083,7 +1111,7 @@ body>nav>a:first-child:hover::after,body>nav>a:first-child:focus-visible::after{
   </div>
   <button id="gateBtn" type="button">ENTER</button>
   <small>PRESS PLAY IF YOU WANT THE RADIO. ENTER EITHER WAY.</small>
-</div></div>
+</div></div></div>
 
 <a class="skip" href="#main">Skip to content</a>
 <nav aria-label="Main">
@@ -1099,15 +1127,18 @@ body>nav>a:first-child:hover::after,body>nav>a:first-child:focus-visible::after{
 <b>Polymarket</b><span>BUILDER</span></a>
   <canvas id="sky" aria-hidden="true"></canvas>
   <div class="glow" aria-hidden="true"></div>
-  <div class="wordmark"><svg class="wm" viewBox="0 0 100 22" role="img" aria-label="MOONX" preserveAspectRatio="xMidYMid meet"><text class="wmt" x="50" y="17" text-anchor="middle">MOONX</text></svg></div>
+
+  <div class="wordmark"><svg class="wm" viewBox="14 0 72 22" role="img" aria-label="MOONX" preserveAspectRatio="xMidYMid meet"><text class="wmt" x="50" y="17" text-anchor="middle">MOONX</text></svg></div>
   <p class="kick2" id="kick2">where long shots become legends.</p>
+
+  <p class="tagline">Without a crypto PhD, trade any prediction market in a tap.</p>
   <div class="proof" id="proof" hidden>
     <div class="pmult" id="pMult">4.5x</div>
     <div class="ptime" id="pTime">IN 90 MINUTES</div>
     <div class="phead" id="pHead">Norway beats Brazil</div>
-    <div class="pmeta" id="pMeta">YES AT 22¢ · JULY 5 · SPORTS</div>
-    <div class="pline" id="pLine">World Cup round of 16.</div>
-    <div class="psrc" id="pSrc">REAL MARKET. REAL PRICE. RESOLVED.</div>
+    <div class="pmeta" id="pMeta">YES AT 22¢ · JULY 5</div>
+    <div class="pline" id="pLine">$100 in, $2,000 back.</div>
+    <div class="psrc" id="pSrc" hidden></div>
   </div>
   <a class="cta" href="#board">Get your ticket</a>
   <div class="stage">
@@ -1117,8 +1148,7 @@ body>nav>a:first-child:hover::after,body>nav>a:first-child:focus-visible::after{
     </div>
     <div class="fade" aria-hidden="true"></div>
     <div class="band">
-      <h1 class="tg-h">where long shots become legends.</h1>
-      <p class="sub">Create your account, get your ticket, ride into DeFi as a space cowboy. A wallet only you hold, every prediction market to explore, no gas, no jargon.</p>
+      <h1 class="tg-h">take your shot at what happens next.</h1> <p class="sub">Sports, elections, crypto, weather. A few dollars in and you're riding.</p>
     </div>
   </div>
 </header>
@@ -1128,9 +1158,35 @@ body>nav>a:first-child:hover::after,body>nav>a:first-child:focus-visible::after{
   <div class="jwrap">
     <div class="jsticky"><div class="jstage"><div class="jphone" id="jphone"><div class="jscreen"><picture><source srcset="assets/shots/fe14147745.webp" type="image/webp"><img class="scr" data-i="0" src="assets/shots/fe14147745.png" width="780" height="1688" alt="The MOONX account step: an email, a name for your fund, and a PIN." loading="lazy" decoding="async"></picture><picture><source srcset="assets/shots/2f304c423f.webp" type="image/webp"><img class="scr" data-i="1" src="assets/shots/2f304c423f.png" width="780" height="1688" alt="The wallet step: an encrypted backup file and a password only you hold." loading="lazy" decoding="async"></picture><picture><source srcset="assets/shots/0e46fb0722.webp" type="image/webp"><img class="scr" data-i="2" src="assets/shots/0e46fb0722.png" width="780" height="1688" alt="Choosing a PIN, six to twelve digits, that confirms every trade."></picture><picture><source srcset="assets/shots/eec0e71716.webp" type="image/webp"><img class="scr" data-i="3" src="assets/shots/eec0e71716.png" width="780" height="1688" alt="The bridge to Polymarket, opened from your own wallet." loading="lazy" decoding="async"></picture><picture><source srcset="assets/shots/dd7871ec76.webp" type="image/webp"><img class="scr" data-i="4" src="assets/shots/dd7871ec76.png" width="780" height="1688" alt="The board: every prediction market, with its price." loading="lazy" decoding="async"></picture><picture><source srcset="assets/shots/fa761d795b.webp" type="image/webp"><img class="scr" data-i="5" src="assets/shots/fa761d795b.png" width="780" height="1688" alt="Taking a shot on a market, with the payout shown before you confirm." loading="lazy" decoding="async"></picture><picture><source srcset="assets/shots/0c6cef10d6.webp" type="image/webp"><img class="scr" data-i="6" src="assets/shots/0c6cef10d6.png" width="780" height="1688" alt="The feed: who took which shot, and how it resolved." loading="lazy" decoding="async"></picture><picture><source srcset="assets/shots/6fdc2fb68d.webp" type="image/webp"><img class="scr" data-i="7" src="assets/shots/6fdc2fb68d.png" width="780" height="1688" alt="A resolved position paying its multiple, on-chain." loading="lazy" decoding="async"></picture><picture><source srcset="assets/shots/a3fd2457c9.webp" type="image/webp"><img class="scr" data-i="8" src="assets/shots/a3fd2457c9.png" width="780" height="1688" alt="The Hall of Fame: the biggest multiples, kept forever." loading="lazy" decoding="async"></picture><picture><source srcset="assets/shots/3b6543f892.webp" type="image/webp"><img class="scr" data-i="9" src="assets/shots/3b6543f892.png" width="780" height="1688" alt="Cashing out to your own wallet." loading="lazy" decoding="async"></picture><div class="jsheet" id="jsheet" aria-hidden="true"><div class="jsheet-grab"></div><div class="jsheet-t">Put your idle cash to work.</div><div class="jsheet-row"><span>Main wallet</span><b>$1,240.00</b></div><div class="jsheet-rate"><span>Aave, on Polygon</span><b>4.5% a year</b></div><div class="jsheet-cta">Earn 4.5%</div><div class="jsheet-note">Withdraw any time. It never leaves your wallet.</div></div></div></div><div class="jglow"></div></div></div>
     <div class="jband" aria-hidden="true"><div class="bandin" id="bandin"></div></div>
-    <div class="jsteps" id="jsteps"><div class="step" data-i="0"><div class="eyebrow">01 · ACCOUNT</div><h3>an email, a name for your fund, a PIN, and you are on-chain</h3></div><div class="step" data-i="1"><div class="eyebrow">02 · FUNDING</div><h3>one tap to fund, with a card or the USDC you hold</h3></div><div class="step" data-i="2"><div class="eyebrow">03 · FEED</div><h3>see what everyone is chasing</h3></div><div class="step" data-i="3"><div class="eyebrow">04 · THE BOARD</div><h3>take what's on the board, or stack your own</h3></div><div class="step" data-i="4"><div class="eyebrow">05 · THE SHOT</div><h3>dollars in, the sky if it moons</h3></div><div class="step" data-i="5"><div class="eyebrow">06 · SHOTS</div><h3>watch it climb, cash out when you like</h3></div><div class="step" data-i="6"><div class="eyebrow">07 · HALL OF FAME</div><h3>every shot you settle becomes a card</h3></div><div class="step" data-i="7"><div class="eyebrow">08 · MONEY</div><h3>your keys, no gas, and one tap puts idle cash to work</h3></div><div class="step" data-i="8"><div class="eyebrow">09 · INVITE</div><h3>bring a cowboy in, earn on every shot they take</h3></div><div class="step" data-i="9"><div class="eyebrow">10 · ON-CHAIN</div><h3>built on the venues that matter</h3></div></div>
+    <div class="jsteps" id="jsteps"><div class="step" data-i="0"><div class="eyebrow">01 · EASY ONBOARDING</div><h3>an email, a name for your fund, a PIN, and you are on-chain</h3></div><div class="step" data-i="1"><div class="eyebrow">02 · ONE CLICK FUNDING</div><h3>fund with a card or the USDC you hold</h3></div><div class="step" data-i="2"><div class="eyebrow">03 · SOCIAL FEED</div><h3>see what everyone is chasing</h3></div><div class="step" data-i="3"><div class="eyebrow">04 · MARKETS</div><h3>take what's on the board, or stack your own</h3></div><div class="step" data-i="4"><div class="eyebrow">05 · THE SHOT</div><h3>dollars in, the sky if it moons</h3></div><div class="step" data-i="5"><div class="eyebrow">06 · SHOTS</div><h3>watch it climb, cash out when you like</h3></div><div class="step" data-i="6"><div class="eyebrow">07 · HALL OF FAME</div><h3>every shot you settle becomes a card</h3></div><div class="step" data-i="7"><div class="eyebrow">08 · MONEY</div><h3>your keys, no gas, and one tap puts idle cash to work</h3></div><div class="step" data-i="8"><div class="eyebrow">09 · INVITE</div><h3>bring a cowboy in, earn on every shot they take</h3></div><div class="step" data-i="9"><div class="eyebrow">10 · ON-CHAIN</div><h3>built on the venues that matter</h3></div></div>
   </div>
 </section>
+<script>
+
+(function(){
+  if(!matchMedia("(max-width:899px)").matches) return;
+  const J=document.getElementById("journey"); if(!J) return;
+  const wrap=J.querySelector(".jwrap"), pics=[...J.querySelectorAll(".jscreen picture")], steps=[...J.querySelectorAll(".jsteps .step")];
+  if(!wrap||pics.length<2||steps.length!==pics.length) return;
+  const car=document.createElement("div"); car.className="jcarousel"; car.setAttribute("aria-label","How MOONX works, one card per swipe");
+  steps.forEach((st,i)=>{
+    const card=document.createElement("div"); card.className="jcard";
+    const ph=document.createElement("div"); ph.className="jphone";
+    const scr=document.createElement("div"); scr.className="jscreen";
+    const pc=pics[i].cloneNode(true); const img=pc.querySelector("img"); if(img){ img.classList.add("on"); img.loading=i<2?"eager":"lazy"; }
+    scr.appendChild(pc); ph.appendChild(scr); card.appendChild(ph);
+    card.appendChild(st.cloneNode(true));
+    car.appendChild(card);
+  });
+  const dots=document.createElement("div"); dots.className="jdots"; dots.setAttribute("aria-hidden","true");
+  steps.forEach((_,i)=>{ const d=document.createElement("i"); if(!i) d.className="on"; dots.appendChild(d); });
+  wrap.after(car); car.after(dots); document.body.classList.add("jcar");
+  let raf=0;
+  car.addEventListener("scroll",()=>{ if(raf) return; raf=requestAnimationFrame(()=>{ raf=0;
+    const w=car.firstElementChild.getBoundingClientRect().width+16; const i=Math.round(car.scrollLeft/w);
+    [...dots.children].forEach((d,k)=>d.classList.toggle("on",k===i)); }); },{passive:true});
+})();
+</script>
 <section class="sec plan" id="plan" hidden data-parked="reason: undecided, see REPRISE.md">
   <div class="eyebrow" style="font-family:var(--mono);font-size:12px;letter-spacing:.16em;color:var(--blue);font-weight:700">FLIGHT PLAN</div>
   <h2 style="margin-top:14px">what's in orbit, what's launching next.</h2>
@@ -1246,6 +1302,7 @@ const MANIFEST = {"stations": [{"f": 88.6, "code": "moonwave", "name": "MOONWAVE
 const STATIONS = MANIFEST.stations, PIRATE = null;
 const FMIN=88, FMAX=106, LOCK=0.35;
 let AC=null, noise=null, noiseGain=null, master=null, music=null, musicSrc=null, analyser=null, vuData=new Uint8Array(64);
+let tuneAnim=0;
 let volume=0.42, playing=false, freq=101.7, current=null, trackIdx={}, pirateOn=false;
 
 function srcOf(p){ return (typeof p==="string" && window.MOONX_BASE && /^\.\.\//.test(p)) ? window.MOONX_BASE+p : p; }
@@ -1260,6 +1317,8 @@ function audioInit(){
   noiseGain=AC.createGain(); noiseGain.gain.value=0;
   noise.connect(bp); bp.connect(noiseGain); noiseGain.connect(master); noise.start();
   music=new Audio();
+
+  music.addEventListener("playing",()=>{ if(current) setStatic(0,0.05); });
   ["play","playing","pause","ended","emptied","waiting"].forEach(ev=>music.addEventListener(ev,()=>{ if(typeof syncPlayLabel==="function") syncPlayLabel(); }));
   music.preload="auto"; music.volume=volume;
   music.addEventListener("ended",()=>{ if(current) playNext(current); });
@@ -1317,7 +1376,7 @@ function setFreq(f,silent){
   else if(!s && current) unlock();
   else if(!s){ dispStation.textContent=freq.toFixed(1); setNow("SEARCHING",{}); }
 }
-function lock(s){ current=s; st(s).justLocked=true; clearTimeout(demoTimer); document.getElementById("led").classList.add("on"); document.getElementById("lockTxt").textContent="LOCK"; document.querySelectorAll("#presets button").forEach(b=>b.classList.toggle("on",parseFloat(b.dataset.f)===s.f)); if(!(s.code in trackIdx)) trackIdx[s.code]=0; dispStation.textContent=`${s.name} ${s.f.toFixed(1)}`; setStatic(0,0.08); loadTrack(s); }
+function lock(s){ current=s; st(s).justLocked=true; clearTimeout(demoTimer); tuneAnim++; document.getElementById("led").classList.add("on"); document.getElementById("lockTxt").textContent="LOCK"; document.querySelectorAll("#presets button").forEach(b=>b.classList.toggle("on",parseFloat(b.dataset.f)===s.f)); if(!(s.code in trackIdx)) trackIdx[s.code]=0; dispStation.textContent=`${s.name} ${s.f.toFixed(1)}`; setStatic(0,0.08); loadTrack(s); }
 function unlock(){ current=null; clearTimeout(demoTimer); document.getElementById("led").classList.remove("on"); document.getElementById("lockTxt").textContent="SEARCH"; document.querySelectorAll("#presets button").forEach(b=>b.classList.remove("on")); dispStation.textContent=freq.toFixed(1); setNow("SEARCHING",{}); if(music) music.pause(); setStatic(playing?0.35:0,0.05); renderKaraoke(null); }
 
 const DEMO={song:14000,id:4000,drop:5000,jingle:6000,voice:12000,static:2000};
@@ -1362,11 +1421,26 @@ function stepStation(dir){
   if(idx<0) idx=L.length-1; if(idx>=L.length) idx=0;
   const target=L[idx].f; animateTo(target);
 }
+
+function staticWanted(){
+  if(!playing) return 0;
+  if(!current) return 0.35;
+  if(music && music.src && !music.paused) return 0;
+  if(cur && !(music && music.src)) return cur.type==="static"?0.35:0.06;
+  return 0;
+}
+function staticSettle(){ setStatic(staticWanted(), 0.08); }
 function animateTo(target){ if(!AC){ audioInit(); AC.resume(); }
-  const start=freq, t0=performance.now(), dur=420;
-  function st(now){ const p=Math.min(1,(now-t0)/dur), e=1-Math.pow(1-p,3); setFreq(start+(target-start)*e, p<1); if(p<1){ setStatic(0.3,0.03); requestAnimationFrame(st);} else setFreq(target); }
+  const start=freq, t0=performance.now(), dur=420, id=++tuneAnim;
+  function st(now){ if(id!==tuneAnim) return;
+    const p=Math.min(1,(now-t0)/dur), e=1-Math.pow(1-p,3); setFreq(start+(target-start)*e, p<1);
+    if(p<1){ setStatic(0.3,0.03); requestAnimationFrame(st); }
+    else { setFreq(target); staticSettle(); } }
   requestAnimationFrame(st);
 }
+
+setInterval(()=>{ if(!AC||!noiseGain) return;
+  if(current && music && music.src && !music.paused && noiseGain.gain.value>0.02) setStatic(0,0.05); }, 400);
 function setPlaying(p){
   playing=p;
 
@@ -1648,14 +1722,19 @@ if(RESTORED){
 </script>
 <script>
 const CAME_FROM_SITE=(()=>{ try{ const v=sessionStorage.getItem("moonx.nav")==="1"; sessionStorage.removeItem("moonx.nav"); return v; }catch(_){ return false; } })();
-if(typeof RESTORED!=="undefined"&&RESTORED&&CAME_FROM_SITE){ document.getElementById("gate").classList.add("off"); document.body.classList.add("lit"); document.getElementById("miniBar").classList.add("on"); document.getElementById("sheetSlot").appendChild(document.getElementById("radioWrap")); setTimeout(scopeSize,50); }
+if(typeof RESTORED!=="undefined"&&RESTORED&&CAME_FROM_SITE){ document.getElementById("gate").classList.add("off","gone"); document.body.classList.remove("gated"); document.body.classList.add("lit"); document.getElementById("miniBar").classList.add("on"); document.getElementById("sheetSlot").appendChild(document.getElementById("radioWrap")); setTimeout(scopeSize,50); }
 
 let GATE_ID=null;
 const reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
 document.getElementById("gateBtn").addEventListener("click",()=>{
   const alreadyOn = !!(typeof music!=="undefined" && music && music.src && !music.paused);
   if(alreadyOn){ try{ AC && AC.resume(); }catch(_){} }
-  document.getElementById("gate").classList.add("off"); document.body.classList.add("lit"); document.getElementById("miniBar").classList.add("on"); document.getElementById("sheetSlot").appendChild(document.getElementById("radioWrap")); setTimeout(scopeSize,50);
+  const gate=document.getElementById("gate");
+  gate.classList.add("off"); document.body.classList.remove("gated"); document.body.classList.add("lit"); document.getElementById("miniBar").classList.add("on"); document.getElementById("sheetSlot").appendChild(document.getElementById("radioWrap")); setTimeout(scopeSize,50);
+
+  const partir=()=>gate.classList.add("gone");
+  gate.addEventListener("transitionend", partir, {once:true});
+  setTimeout(partir, 900);
   syncPlayLabel();
 
 });
@@ -2046,19 +2125,13 @@ function jambe(txt, max){
   if(camp&&/^no$/i.test(camp)) return "No: "+court(t,max-4);
   return court(t,max);
 }
-function detailOf(l){ if(l.detail) return l.detail;
-  const gain="$100 in, "+retour(l.m)+" back. ";
-  if(l.kind==="combo") return gain+"Two straight shots: everything the first one paid rode on the second.";
-  const d=Number(l.open_price||0), j=Number(l.low_days||0), p=cents(l.m);
 
-  if(/hour/.test(String(l.held||""))) return gain+"In and out in "+String(l.held).toLowerCase()+".";
-  if(d>=l.m*3) return gain+"The market had it at "+cents(d)+", talked itself down to "+p+", and was wrong.";
-  if(j>=5) return gain+"It sat at "+p+" for "+j+" straight days before it paid.";
-  return gain+p+" was still on the table "+String(l.held||"").toLowerCase()+" before it resolved."; }
+function detailOf(l){ return "$100 in, "+retour(l.m)+" back."; }
 
 function lisible(p, camp){
   const h=p&&p.head?String(p.head).trim():"";
-  if(h.length<14||h.length>96) return false;
+
+  if(h.length<14||h.length>60) return false;
   if(/\u2014|\u2026/.test(h)) return false;
   if(!isFinite(p.m)||p.m<2) return false;
   if(!p.meta||!p.detail) return false;
@@ -2085,7 +2158,8 @@ function buildProofs(legs){ const singles=[],combos=[];
     const brut=mm?mm[1]:String(l.what||"");
     const head=duel(brut, mm?mm[2].trim():null)||titre(brut);
     const camp=mm?mm[2].trim().toUpperCase():"YES";
-    const c={m:1/l.m,head,meta:camp+" AT "+cents(l.m)+" · "+whenOf(l)+(l.cat?" · "+l.cat.toUpperCase():""),detail:detailOf(l),combo:false,cat:l.cat||"",held:l.held||""};
+    const c={m:1/l.m,head,
+     meta:camp+" AT "+cents(l.m)+" · "+whenOf(l),detail:detailOf(l),combo:false,cat:l.cat||"",held:l.held||""};
     if(lisible(c,camp)) singles.push(c); }
 
   for(const l of legs){
@@ -2120,7 +2194,11 @@ function fmtDate(iso){ const d=new Date(iso+"T12:00:00Z"); return d.toLocaleDate
   const T=document.getElementById("pTime"), Hd=document.getElementById("pHead"), Me=document.getElementById("pMeta"), K=document.getElementById("kick2"), P=document.getElementById("proof");
   let proofs=[], order=[], last=-1;
   const next=()=>{ if(!order.length){ order=proofs.map((_,i)=>i); } const i=order.shift(); last=i; return proofs[i]; };
-  const showP=p=>{ M.textContent=fmtX(p.m); Hd.textContent=p.head; Me.textContent=p.meta; L.textContent=p.detail; if(T){ T.textContent=p.held?"IN "+p.held.toUpperCase():""; T.style.display=p.held?"inline-block":"none"; T.classList.toggle("c",!!p.combo); } S.textContent=p.combo?"REAL MARKETS. REAL PRICES. ONE AFTER THE OTHER.":"REAL MARKET. REAL PRICE. RESOLVED."; M.style.color=p.combo?"#7FB6FF":"#A6FF3D"; M.style.textShadow=p.combo?"0 0 30px rgba(127,182,255,.45)":"0 0 30px rgba(166,255,61,.45)"; };
+
+  const lignes=el=>{ const cs=getComputedStyle(el); return Math.round(el.getBoundingClientRect().height/(parseFloat(cs.lineHeight)||parseFloat(cs.fontSize)*1.15)); };
+  const tientEnDeux=()=>{ Hd.style.fontSize=""; if(lignes(Hd)<=2) return true; Hd.style.fontSize="calc("+getComputedStyle(Hd).fontSize+" * .88)"; return lignes(Hd)<=2; };
+  const showP=p=>{ M.textContent=fmtX(p.m); Hd.textContent=p.head; Me.textContent=p.meta; L.textContent=p.detail;
+    if(!tientEnDeux()){ p.__trop=(p.__trop||0)+1; if(proofs.length>1&&p.__trop<3){ showP(next()); return; } } if(T){ T.textContent=p.held?"IN "+p.held.toUpperCase():""; T.style.display=p.held?"inline-block":"none"; T.classList.toggle("c",!!p.combo); } S.hidden=true; M.style.color=p.combo?"#7FB6FF":"#A6FF3D"; M.style.textShadow=p.combo?"0 0 30px rgba(127,182,255,.45)":"0 0 30px rgba(166,255,61,.45)"; };
 
   function start(legs){ if(!Array.isArray(legs)||!legs.length) return; LEGS=legs; proofs=buildProofs(LEGS);
     if(proofs.length<5&&legs!==FALLBACK){ start(FALLBACK); return; }
@@ -2154,7 +2232,10 @@ function fmtDate(iso){ const d=new Date(iso+"T12:00:00Z"); return d.toLocaleDate
   else if(PROOF_FEED&&location.protocol!=="file:"){ fetch(PROOF_FEED,{cache:"no-store"}).then(r=>r.ok?r.json():null).then(j=>{ if(j&&j.length) start(j); else start(FALLBACK); }).catch(()=>start(FALLBACK)); } else { start(FALLBACK); }
 })();
 
-(()=>{ const steps=[...document.querySelectorAll(".step")], scrs=[...document.querySelectorAll(".jphone .scr")], ph=document.getElementById("jphone"), glow=document.querySelector(".jglow"), sec=document.getElementById("journey"); if(!steps.length) return;
+(()=>{
+
+  if(document.body.classList.contains("jcar")) return;
+  const steps=[...document.querySelectorAll(".jsteps .step")], scrs=[...document.querySelectorAll("#jphone .scr")], ph=document.getElementById("jphone"), glow=document.querySelector(".jglow"), sec=document.getElementById("journey"); if(!steps.length) return;
   const N=steps.length; let prog=0, sprog=0, cur=-1;
 
   const bandin=document.getElementById("bandin");
@@ -2354,9 +2435,13 @@ document.getElementById("saveCard").addEventListener("click",()=>{
     if(!gatein) return;
     const gate=document.getElementById("gate");
     if(!gate||gate.classList.contains("off")) return;
-    gatein.style.setProperty("--gate-fit",1);
-    const room=window.innerHeight-30, need=gatein.scrollHeight;
-    if(need>room) gatein.style.setProperty("--gate-fit", Math.max(0.6, room/need).toFixed(3));
+    const fit=gatein.querySelector(".gatefit")||gatein;
+    fit.style.setProperty("--gate-fit",1); gatein.style.height="";
+    const room=window.innerHeight-30, need=fit.scrollHeight;
+    if(need>room){ const k=Math.max(0.6, room/need);
+      fit.style.setProperty("--gate-fit", k.toFixed(3));
+
+      gatein.style.height=Math.round(need*k)+"px"; }
   }
   function all(){ bars(); fitGate(); }
   all();
