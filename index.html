@@ -2004,8 +2004,7 @@ function titre(t){ let h=String(t||"").trim();
   h=h.replace(new RegExp("\\s+(?:on|by|in)\\s+"+MOIS+"\\s*\\d{0,2}(?:,?\\s*\\d{4})?\\s*\\??$","i"),"");
   h=h.replace(/\s*\?+\s*$/,"");
   h=h.replace(/\s{2}/g," ").trim();
-  if(h.length>92){ const c=h.slice(0,92); const k=c.lastIndexOf(" "); h=(k>60?c.slice(0,k):c).replace(/[,;:\-]$/,"")+"\u2026"; }
-  return h; }
+  return h.length>96?null:h; }
 
 function duel(brut, camp){
   if(!camp) return null;
@@ -2013,8 +2012,10 @@ function duel(brut, camp){
   if(c==="YES"||c==="NO") return null;
   let t=String(brut||"");
   const tail=t.match(/\s+-\s+([^-]{3,40})$/);
-  const tournoi=tail?tail[1].trim():"";
+  let tournoi=tail?tail[1].trim():"";
   t=t.replace(/\s+-\s+[^-]{3,40}$/,"");
+
+  if(/\b(winner|game\s*\d|map\s*\d|round\s*\d|set\s*\d|first|total|over|under|handicap|spread|margin|odd|even)\b/i.test(tournoi)) return null;
   t=t.replace(/^[^:]{2,26}:\s*/,"");
   t=t.replace(/\s*\([^)]{1,8}\)/g,"");
   const duo=t.split(/\s+vs\.?\s+/i);
@@ -2031,15 +2032,14 @@ function duel(brut, camp){
   return (tournoi&&phrase.length+tournoi.length<=76)?phrase+" at "+tournoi:phrase;
 }
 
-function court(t, max){ t=String(t||"").trim(); if(t.length<=max) return t;
-  const c=t.slice(0,max), k=c.lastIndexOf(" ");
-  return (k>max*0.55?c.slice(0,k):c).replace(/[,;:\-]$/,"")+"\u2026"; }
+function court(t, max){ t=String(t||"").trim(); return t.length<=max?t:null; }
 function jambe(txt, max){
   const mm=String(txt||"").match(/^([\s\S]*?)\s—\s*([^—]{1,24})$/);
   const camp=mm?mm[2].trim():null;
   let t=mm?mm[1]:String(txt||"");
   const d=duel(t,camp); if(d) return court(d,max);
   t=titre(t);
+  if(t===null) return null;
   t=t.replace(/^will\s+(the\s+)?/i,"");
 
   if(camp&&/^no$/i.test(camp)) return "No: "+court(t,max-4);
@@ -2056,16 +2056,24 @@ function detailOf(l){ if(l.detail) return l.detail;
   return gain+p+" was still on the table "+String(l.held||"").toLowerCase()+" before it resolved."; }
 
 function lisible(p, camp){
-  const h=String(p.head||"").trim();
-  if(h.length<8||h.length>104) return false;
-  if(/\u2014/.test(h)) return false;
+  const h=p&&p.head?String(p.head).trim():"";
+  if(h.length<14||h.length>96) return false;
+  if(/\u2014|\u2026/.test(h)) return false;
   if(!isFinite(p.m)||p.m<2) return false;
   if(!p.meta||!p.detail) return false;
+  if(camp==="ROLLED") return true;
+  const nomme=!/^(YES|NO)$/i.test(camp||"");
 
-  if(/\svs\.?\s/i.test(h) && (camp==="YES"||camp==="NO")
-     && !/\b(will|who|which|does|do|is|are|can|has|have)\b/i.test(h)) return false;
+  if(/\sbeat\s/.test(h)) return true;
+
+  if(nomme){ const n=x=>x.toLowerCase().replace(/[^a-z0-9]/g,"");
+    return n(h).indexOf(n(camp))>=0; }
+
+  if(/\svs\.?\s/i.test(h) && !/\b(will|who|which|does|do|is|are|can|has|have|should)\b/i.test(h))
+    return false;
   return true;
 }
+
 function buildProofs(legs){ const singles=[],combos=[];
 
   for(const l of legs){ if(l.kind==="combo") continue;
@@ -2081,7 +2089,14 @@ function buildProofs(legs){ const singles=[],combos=[];
     if(l.kind!=="combo") continue;
 
     const duo=String(l.what||"").split(/,\s+then\s+/);
-    const tete=duo.length===2?(jambe(duo[0],40)+" \u2192 "+jambe(duo[1],40)):titre(l.what);
+
+    let tete=null;
+    if(duo.length===2){
+      const a1=jambe(duo[0],200), b1=jambe(duo[1],200);
+
+      if(a1&&b1&&a1.length+b1.length<=88) tete=a1+" \u2192 "+b1;
+    } else tete=titre(l.what);
+    if(!tete){ continue; }
 
     const prix=String(l.when||"").match(/([\d.]+¢|<1¢)/g);
     combos.push({m:1/l.m,head:tete,
