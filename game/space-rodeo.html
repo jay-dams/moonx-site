@@ -187,6 +187,7 @@ body.light #boots,body.light [data-boots-label]{display:none}
 body.warned #boots i{animation:none} }
 
 body.light .gear{right:auto;left:14px}
+.gear.exit,body.light .gear.exit{right:14px;left:auto}
 
 #simTip{display:none}
 
@@ -603,6 +604,8 @@ body.paused #hud,body.paused #prog{opacity:0;transition:opacity .2s}
 </section>
 <div id="noAudio" hidden style="position:fixed;left:12px;right:12px;bottom:14px;z-index:60;padding:12px 14px;border-radius:14px;background:rgba(255,59,107,.14);border:1px solid rgba(255,59,107,.5);color:#fff;font-family:var(--mono);font-size:11px;letter-spacing:.08em;line-height:1.6;text-align:left">NO AUDIO FILE. THE GAME NEEDS THE <b>audio</b> FOLDER NEXT TO IT.<br>UNZIP THE PACKAGE AND OPEN <b>MOONX/game/space-rodeo.html</b> FROM THE FOLDER.</div>
 <button class="gear" id="gearBtn" aria-label="Settings" title="Settings"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9v.09a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button>
+
+<a class="gear exit" id="exitBtn" href="../rodeo.html" aria-label="Leave the game" title="Back to MOONX" hidden><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></a>
 <button id="pauseBtn" aria-label="Pause the ride" title="Pause"><svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor" aria-hidden="true"><rect x="7" y="5" width="3.4" height="14" rx="1.2"/><rect x="13.6" y="5" width="3.4" height="14" rx="1.2"/></svg></button>
 <div id="pausePane" role="dialog" aria-modal="true" aria-label="Ride paused">
   <div class="pcard">
@@ -1354,6 +1357,15 @@ function outroJoin(){
 if($("oTicket")) $("oTicket").addEventListener("click",()=>{ document.body.classList.add("joining");
 $("joinWrap").classList.add("on"); $("oTicket").hidden=true; $("joinName").focus(); haptic("good"); });
 
+(function(){
+  const x=document.getElementById("exitBtn"); if(!x) return;
+  if(window.top!==window.self) return;
+  x.hidden=false;
+  x.addEventListener("click",e=>{
+
+    if(history.length>1 && document.referrer && document.referrer.indexOf(location.host)>=0){ e.preventDefault(); history.back(); }
+  });
+})();
 const SUPA_URL="https://xcyqdfhnpntcloimotoo.supabase.co", SUPA_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhjeXFkZmhucG50Y2xvaW1vdG9vIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODkzMzQ4NjQsImV4cCI6MjEwNDkxMDg2NH0.9UcRNt5xW1bGEussS9Ca0DrrdfD35y5X-P4zr0NCU2k";
 const SUPA=()=>!!(SUPA_URL&&SUPA_KEY);
 
@@ -1450,12 +1462,16 @@ if($("joinSee")) $("joinSee").addEventListener("click",()=>{ bdRendre(); show("s
 if($("bdBack")) $("bdBack").addEventListener("click",()=>goBack());
 
 function majAccueilBoard(){
+  peindreAccueil(bdLire());
+  if(SUPA()) supaBoard(BOARD_N).then(rows=>{
+    if(Array.isArray(rows)&&rows.length) peindreAccueil(rows.map(r=>({h:r.handle,s:r.score,x:r.multiple,t:r.created_at})));
+  }).catch(()=>{});
+}
+function peindreAccueil(a){
   const b=$("goBoard"), v=$("goBoardTop");
   if(!b||!v) return;
-  const a=bdLire();
   if(!a.length){ v.innerHTML='<span class="vide">BE THE FIRST ON IT</span>'; return; }
-
-  v.innerHTML=a.slice(0,3).map((e,i)=>'<span class="r">'
+  v.innerHTML=a.slice(0,BOARD_N).map((e,i)=>'<span class="r">'
     +'<span class="n">'+String(i+1).padStart(2,"0")+'</span>'
     +'<span class="h">'+String(e.h||"@cowboy").replace(/[<&]/g,"")+'</span>'
     +'<span class="s">'+Number(e.s||0).toLocaleString("en-US")+'</span></span>').join("");
