@@ -13,9 +13,9 @@
 <meta name="twitter:card" content="summary_large_image">
 <title>MOONX | Wrong exit, cowboy</title>
 <meta name="description" content="This address has no market. Head back to the board, or let the radio play while you find your way: ten stations, sixty songs, no account needed.">
-<link rel="icon" href="/favicon.ico" sizes="32x32">
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="icon" href="/favicon-x.ico" sizes="32x32">
+<link rel="icon" href="/favicon-x.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon-x.png">
 <link rel="manifest" href="/site.webmanifest">
 <meta property="og:image" content="https://moonx.fi/og-image.png">
 <meta property="og:url" content="https://moonx.fi/404.html">
@@ -31,7 +31,7 @@
 :root{--bg:#03050C;--card:#0A0E1A;--card-2:#121A2B;--well:rgba(160,200,255,.05);--line:rgba(150,195,255,.16);--line-2:rgba(150,195,255,.30);--txt:#FFFFFF;--dim:#8FA8C8;--mute:#5A6B8A;--blue:#2D7BFF;--hi:#7FB6FF;--lo:#1E4FCC;--mint:#A6FF3D;--red:#FF3B6B;--amber:#FFC93C;--disp:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;--mono:"JetBrains Mono",ui-monospace,Menlo,monospace;--ease:cubic-bezier(.22,.61,.36,1);--navh:64px}
 *{box-sizing:border-box;margin:0;padding:0}
 html{background:var(--bg);color-scheme:dark;scroll-behavior:smooth}
-body{background:var(--bg);color:#fff;position:relative;font-family:var(--disp);-webkit-font-smoothing:antialiased;overflow-x:hidden;min-height:100vh}
+body{background:var(--bg);color:#fff;position:relative;font-family:var(--disp);-webkit-font-smoothing:antialiased;overflow-x:hidden;min-height:100vh;font-weight:500}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;-webkit-tap-highlight-color:transparent}
 a{color:inherit;text-decoration:none}
 ::selection{background:var(--blue);color:#fff}
@@ -65,7 +65,7 @@ hr{border:0;border-top:1px solid var(--line);margin:40px 0}
 .card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px;text-align:left}
 .grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin:18px 0}
 .row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:18px}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font-weight:700;font-size:16px;padding:14px 22px;border-radius:14px;background:linear-gradient(120deg,#5A9BFF,#1E4FCC);color:#fff;box-shadow:0 10px 30px -12px rgba(45,123,255,.9);transition:filter .15s,transform .1s}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font-weight:700;font-size:16px;padding:14px 22px;border-radius:12px;background:linear-gradient(180deg,#4C8BFF,#2D7BFF);color:#fff;box-shadow:0 8px 30px rgba(45,123,255,.34);transition:filter .15s,transform .1s}
 .btn:hover{filter:brightness(1.1)}.btn:active{transform:scale(.98)}
 .btn.ghost{background:var(--card);border:1px solid var(--line-2);box-shadow:none}
 .mono{font-family:var(--mono)}
@@ -142,7 +142,7 @@ body.lit #radioWrap{transform:none;opacity:1}
 .keys+.keys{margin-top:8px}
 .keys+.keys button{height:44px;font-size:10px}
 .keys button{height:52px;border-radius:12px;background:linear-gradient(180deg,#1A2338,#0D1424);border:1px solid var(--line-2);font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:#fff;box-shadow:inset 0 -4px 0 rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.06)}
-.keys button.play{background:linear-gradient(180deg,#5A9BFF,#1E4FCC);border-color:transparent;font-weight:700}
+.keys button.play{background:linear-gradient(180deg,#4C8BFF,#2D7BFF);border-color:transparent;font-weight:700}
 .keys button.on{color:var(--mint);border-color:rgba(166,255,61,.5)}
 .keys button:active{transform:translateY(2px)}
 .vol{display:flex;align-items:center;gap:12px;margin-top:12px;font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:var(--dim)}
@@ -167,8 +167,11 @@ body.lit #radioWrap{transform:none;opacity:1}
 #miniBar #miniStPrev:hover,#miniBar #miniStNext:hover{color:#fff;border-color:var(--hi)}
 @media (max-width:520px){#miniBar #miniStPrev,#miniBar #miniStNext{display:none}}
 
-#miniBar button{width:44px;height:40px;border-radius:10px;background:linear-gradient(180deg,#1A2338,#0D1424);border:1px solid var(--line-2);font-family:var(--mono);font-size:12px;color:#fff;box-shadow:inset 0 -3px 0 rgba(0,0,0,.5);flex:none}
-#miniBar button.play{background:linear-gradient(180deg,#5A9BFF,#1E4FCC);border-color:transparent}
+#miniBar button{width:44px;height:40px;border-radius:12px;background:transparent;border:1px solid rgba(150,195,255,.30);font-family:var(--mono);font-size:12px;color:#fff;box-shadow:none;flex:none}
+#miniBar button:hover{background:rgba(150,195,255,.06);border-color:rgba(150,195,255,.5)}
+#miniBar button:active{transform:scale(.985)}
+#miniBar button.play{background:linear-gradient(180deg,#4C8BFF,#2D7BFF);border:0;box-shadow:0 8px 30px rgba(45,123,255,.34)}
+#miniBar button.play:hover{background:linear-gradient(180deg,#6BA0FF,#3E86FF)}
 @keyframes spin{to{transform:rotate(360deg)}}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.55}}
 @keyframes skBurst{0%{opacity:0;transform:scale(.3)}22%{opacity:1;transform:scale(1.3)}100%{opacity:.68;transform:scale(1)}}
@@ -253,12 +256,9 @@ body.lit #radioWrap{transform:none;opacity:1}
 
 .go{position:relative;overflow:hidden;isolation:isolate;display:inline-block;
   font-family:Inter,sans-serif;font-size:13.5px;font-weight:800;letter-spacing:-.01em;
-  padding:11px 20px;border-radius:999px;color:#fff;
-  background:linear-gradient(180deg,#6BA6FF 0%,#2D7BFF 46%,#1B45B8 100%);
-  border:1px solid rgba(255,255,255,.14);
-  box-shadow:0 8px 22px -10px rgba(45,123,255,.85),
-             inset 0 1px 0 rgba(255,255,255,.5),
-             inset 0 -8px 14px -9px rgba(4,12,40,.85);
+  padding:11px 20px;border-radius:12px;color:#fff;
+  background:linear-gradient(180deg,#4C8BFF,#2D7BFF);
+  border:0;box-shadow:0 8px 30px rgba(45,123,255,.34);
   transition:box-shadow .25s,transform .08s}
 .go::before{content:"";position:absolute;inset:0;z-index:-1;border-radius:inherit;pointer-events:none;
   background:
@@ -267,9 +267,15 @@ body.lit #radioWrap{transform:none;opacity:1}
     radial-gradient(1.3px 1.3px at 45% 72%, rgba(255,255,255,.8), transparent 60%),
     radial-gradient(1px 1px at 82% 64%, rgba(255,255,255,.6), transparent 60%);
   animation:ctaStars 5.5s ease-in-out infinite}
-.go:hover{box-shadow:0 11px 28px -9px rgba(45,123,255,1),
-             inset 0 1px 0 rgba(255,255,255,.6),
-             inset 0 -8px 14px -9px rgba(4,12,40,.85)}
+.go:hover{background:linear-gradient(180deg,#6BA0FF,#3E86FF)}
+.go:active{background:linear-gradient(180deg,#2D7BFF,#1E4FCC);transform:scale(.985)}
+
+.navb{display:inline-flex;align-items:center;gap:8px}
+.go.ghost{background:transparent!important;border:1px solid rgba(150,195,255,.30)!important;box-shadow:none!important;color:#fff}
+.go.ghost::before,.go.ghost .rk{display:none}
+.go.ghost:hover{background:rgba(150,195,255,.06)!important;border-color:rgba(150,195,255,.5)!important}
+.go.ghost:active{background:rgba(150,195,255,.10)!important;transform:scale(.985)}
+@media (max-width:420px){ .go.ghost{padding-left:12px;padding-right:12px} }
 .go:active{transform:translateY(1px) scale(.99)}
 @keyframes ctaStars{0%,100%{opacity:.55}50%{opacity:1}}
 @media (prefers-reduced-motion:reduce){ .go::before{animation:none;opacity:.8} }
@@ -328,8 +334,8 @@ footer{padding:64px 20px 0;border-top:1px solid var(--line);position:relative;z-
 
 <a class="skip" href="#main">Skip to content</a>
 <nav aria-label="Main">
-  <a href="./" aria-label="MOONX"><svg class="wm" viewBox="0 0 100 22" role="img" aria-label="MOONX" preserveAspectRatio="xMidYMid meet"><text class="wmt" x="50" y="17" text-anchor="middle">MOONX</text></svg></a>
-  <a class="go" href="./#board">Get your ticket</a>
+  <a href="/" aria-label="MOONX"><svg class="wm" viewBox="0 0 100 22" role="img" aria-label="MOONX" preserveAspectRatio="xMidYMid meet"><text class="wmt" x="50" y="17" text-anchor="middle">MOONX</text></svg></a>
+  <span class="navb"><a class="go ghost" href="https://lfg.moonx.fi" title="Already have your access code? Ride in.">Ride in</a><a class="go" href="/#board">Get your ticket</a></span>
 </nav>
 
 <main id="main">
@@ -338,7 +344,7 @@ footer{padding:64px 20px 0;border-top:1px solid var(--line);position:relative;z-
   <h1>wrong exit, cowboy.</h1>
   <p class="lead">You followed a link into a corner of the sky where nothing resolves. No position here, no payout, no board. The way back is one tap. The radio is one more, if you feel like drifting a while.</p>
   <div class="row">
-    <a class="btn" href="./">Back to base</a>
+    <a class="btn" href="/">Back to base</a>
   </div>
   <div class="drift" aria-hidden="true">
     <svg class="hat" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" width="1000" height="520" role="img" aria-label="MOONX hat">
@@ -369,9 +375,9 @@ footer{padding:64px 20px 0;border-top:1px solid var(--line);position:relative;z-
 <footer>
   <div class="tg">where long shots become legends.</div>
   <nav class="cols" aria-label="Footer">
-    <div><b>ABOUT</b><a href="index.html#journey">Radio</a><a href="index.html#faq">FAQ</a><a href="rodeo.html">Moon Rodeo</a></div>
+    <div><b>ABOUT</b><a href="/#journey">Radio</a><a href="/#faq">FAQ</a><a href="/rodeo.html">Moon Rodeo</a></div>
     <div><b>SOCIAL</b><a href="#" rel="me">X/Twitter</a></div>
-    <div><b>LEGAL</b><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms of Service</a></div>
+    <div><b>LEGAL</b><a href="/privacy.html">Privacy Policy</a><a href="/terms.html">Terms of Service</a></div>
   </nav>
   <small>© 2026 MOONX · Non-custodial, on Polygon and Monad · Prices in moonshots. Results may vary. They always do. · Ad astra, cowboy.</small>
   <div class="giant" aria-hidden="true"><svg class="wm" viewBox="0 0 100 22" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><text class="wmt" x="50" y="17" text-anchor="middle">MOONX</text></svg></div>
@@ -458,18 +464,18 @@ footer{padding:64px 20px 0;border-top:1px solid var(--line);position:relative;z-
   function ready(home){
     const fl=document.createElement("link"); fl.rel="stylesheet"; fl.href=home+"fonts/fonts.css"; document.head.appendChild(fl);
     document.documentElement.style.setProperty("--minih", Math.round(mini.getBoundingClientRect().height||62)+"px");
-    document.querySelectorAll('a[href="./"]').forEach(a=>{ a.href=home; });
+    document.querySelectorAll('a[href="/"]').forEach(a=>{ a.href=home; });
   }
   next();
 })();
 </script>
-<script src="assets/js/ga.js" defer></script>
+<script src="/assets/js/ga.js" defer></script>
 <script>
 
 (function(){
   const bar=document.getElementById("miniBar");
   if(!bar) return;
-  document.querySelectorAll('a[href$="#journey"], a[href="index.html#journey"]').forEach(a=>{
+  document.querySelectorAll('a[href$="#journey"], a[href="/#journey"]').forEach(a=>{
     a.setAttribute("href","#miniBar");
     a.addEventListener("click",e=>{
       e.preventDefault();
@@ -480,5 +486,6 @@ footer{padding:64px 20px 0;border-top:1px solid var(--line);position:relative;z-
   });
 })();
 </script>
+<script src="/assets/js/rocket.js" defer></script>
 </body>
 </html>

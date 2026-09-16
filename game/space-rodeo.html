@@ -7,7 +7,7 @@
 <title>Moon Rodeo. Hold on to the beat.</title>
 <meta name="theme-color" content="#03050C">
 <meta name="description" content="Moon Rodeo: ride the rocket on the beats of MOONX Radio. One song, one life, and a place on the board.">
-<link rel="icon" href="../favicon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="icon" href="../favicon-x.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="../apple-touch-icon-x.png">
 <link rel="stylesheet" href="../fonts/fonts.css">
 <script>
 
@@ -33,7 +33,7 @@ h1{text-shadow:0 0 30px rgba(45,123,255,.35)}
 h1{font-weight:800;font-size:clamp(28px,7vw,44px);letter-spacing:-.035em;line-height:1.02;text-align:center;margin-top:12px}
 .sub{color:#B9C7DE;text-align:center;max-width:36ch;margin-top:10px;line-height:1.5;font-size:14px}
 .logo{height:64px;width:auto;margin-top:8px}
-.cta{margin-top:22px;padding:16px 30px;border-radius:16px;background:linear-gradient(120deg,#5A9BFF,#1E4FCC);font-weight:800;box-shadow:0 10px 30px -10px rgba(45,123,255,.8)}
+.cta{margin-top:22px;padding:16px 30px;border-radius:12px;background:linear-gradient(180deg,#4C8BFF,#2D7BFF);font-weight:800;box-shadow:0 8px 30px rgba(45,123,255,.34)}
 .list{width:100%;margin-top:18px;display:grid;gap:8px}
 .row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 14px;border-radius:14px;background:var(--card);border:1px solid var(--line);text-align:left;width:100%}
 .row b{font-size:14px}.row small{display:block;font-family:var(--mono);font-size:9px;letter-spacing:.1em;color:var(--dim);margin-top:4px}
@@ -96,7 +96,7 @@ canvas{display:block;width:100%;height:100%;
 .card .meta{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:14px;font-family:var(--mono);font-size:9px;letter-spacing:.1em;color:var(--dim)}.card .meta b{display:block;color:#fff;font-size:14px;margin-top:3px}
 .btns{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap;justify-content:center}
 .btns button{font-family:var(--mono);font-size:10px;letter-spacing:.1em;padding:12px 14px;border-radius:12px;border:1px solid var(--line2);background:var(--card2)}
-.btns button.p{background:linear-gradient(120deg,#5A9BFF,#1E4FCC);border-color:transparent;color:#fff;font-weight:700}
+.btns button.p{background:linear-gradient(180deg,#4C8BFF,#2D7BFF);border-color:transparent;color:#fff;font-weight:700}
 .tip{font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--dim);margin-top:14px;text-align:center;line-height:1.7}
 
 .syncring{width:150px;height:150px;border-radius:50%;border:3px solid var(--line2);display:grid;place-items:center;margin-top:18px;font-weight:800;font-size:56px;transition:transform .08s,border-color .08s,box-shadow .08s}
@@ -127,15 +127,23 @@ canvas{display:block;width:100%;height:100%;
 .screen{align-items:stretch;padding:0 0 calc(110px + env(safe-area-inset-bottom))}
 .screen>*{margin-left:auto;margin-right:auto}
 .col{width:min(100%,460px);padding:0 16px;box-sizing:border-box}
-.top{position:sticky;top:0;margin-top:env(safe-area-inset-top);z-index:3;display:flex;align-items:center;justify-content:space-between;height:52px;padding:0 8px;background:linear-gradient(180deg,rgba(3,5,12,.95),rgba(3,5,12,.6),rgba(3,5,12,0));width:min(100%,460px)}
-.top .back{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;font-size:16px;color:var(--hi)}
-.top .ttl{font-family:var(--mono);font-size:10px;letter-spacing:.16em;color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:70%}
+.top{position:sticky;top:0;margin-top:env(safe-area-inset-top);z-index:3;display:flex;align-items:center;justify-content:space-between;height:60px;padding:0 10px;background:linear-gradient(180deg,rgba(3,5,12,.95),rgba(3,5,12,.6),rgba(3,5,12,0));width:min(100%,460px)}
+
+.top .back{position:fixed;left:10px;top:max(10px,env(safe-area-inset-top));z-index:6;
+  width:40px;height:40px;border-radius:12px;display:grid;place-items:center;color:#fff;
+  border:1px solid rgba(150,195,255,.30);background:rgba(10,14,26,.7);padding:0;cursor:pointer}
+.top .back svg{display:block}
+.top .back:hover{background:rgba(150,195,255,.08);border-color:rgba(150,195,255,.5)}
+.top .back:active{transform:scale(.985)}
+.top .ttl{font-family:var(--mono);font-size:10px;letter-spacing:.16em;color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:70%;
+
+  position:fixed;left:60px;right:60px;top:max(10px,env(safe-area-inset-top));line-height:40px;text-align:center;pointer-events:none;z-index:6;max-width:none}
 .top .spacer{width:40px}
 .actions{position:fixed;left:0;right:0;bottom:0;z-index:5;padding:12px 16px calc(14px + env(safe-area-inset-bottom));background:linear-gradient(180deg,rgba(3,5,12,0),rgba(3,5,12,.92) 30%);display:none;justify-content:center}
 .actions .in{width:min(100%,460px);display:flex;flex-direction:column;gap:8px}
 .actions .row{display:flex;gap:8px}
 .actions button{font-family:var(--mono);font-size:11px;letter-spacing:.12em;padding:15px 12px;border-radius:14px;border:1px solid var(--line2);background:var(--card2);flex:1}
-.actions button.p{background:linear-gradient(120deg,#5A9BFF,#1E4FCC);border-color:transparent;font-weight:800;font-family:Inter;font-size:15px;letter-spacing:-.01em;box-shadow:0 10px 30px -10px rgba(45,123,255,.8)}
+.actions button.p{background:linear-gradient(180deg,#4C8BFF,#2D7BFF);border-color:transparent;font-weight:800;font-family:Inter;font-size:15px;letter-spacing:-.01em;box-shadow:0 10px 30px -10px rgba(45,123,255,.8)}
 .actions button.mint{color:var(--mint);border-color:rgba(166,255,61,.4)}
 .screen.on ~ .actions[data-for]{display:none}
 h1.sc{font-size:26px;text-align:left;margin:6px 0 0}
@@ -186,8 +194,8 @@ body.light #boots,body.light [data-boots-label]{display:none}
 @media (prefers-reduced-motion:reduce){ body.light.warned #lifeTag{animation:none} }
 body.warned #boots i{animation:none} }
 
-body.light .gear{right:auto;left:14px}
-.gear.exit,body.light .gear.exit{right:14px;left:auto}
+body.light .gear{right:auto;left:10px}
+.gear.exit,body.light .gear.exit{right:10px;left:auto}
 
 .gear[hidden]{display:none!important}
 
@@ -214,12 +222,10 @@ body.sim #simTip{display:block;position:fixed;left:50%;bottom:calc(var(--minih,1
 @keyframes tipIn{from{opacity:0;transform:translate(-50%,8px)}to{opacity:1;transform:translate(-50%,0)}}
 body.sim #boots,body.sim [data-boots-label],body.sim #hudScore,body.sim #hudX,body.sim .xbar{visibility:hidden}
 
-.cta-big,#outro .tk,#joinOk .tk{position:relative;overflow:hidden;isolation:isolate;border-radius:999px;
-  background:linear-gradient(180deg,#6BA6FF 0%,#2D7BFF 46%,#1B45B8 100%);
-  border:1px solid rgba(255,255,255,.14);
-  box-shadow:0 10px 30px -12px rgba(45,123,255,.8),
-             inset 0 1px 0 rgba(255,255,255,.55),
-             inset 0 -10px 18px -10px rgba(4,12,40,.85)}
+.cta-big,#outro .tk,#joinOk .tk{position:relative;overflow:hidden;isolation:isolate;border-radius:12px;
+  background:linear-gradient(180deg,#4C8BFF,#2D7BFF);
+  border:0;
+  box-shadow:0 8px 30px rgba(45,123,255,.34)}
 .cta-big::before,#outro .tk::before,#joinOk .tk::before{content:"";position:absolute;inset:0;z-index:-1;
   border-radius:inherit;pointer-events:none;
   background:
@@ -350,8 +356,8 @@ body.joined .actions[data-for="s-result"] .row{display:none}
 #outro #joinOk .ob{display:grid;grid-template-columns:1fr 1fr;grid-auto-rows:48px;gap:8px;margin-top:14px;align-items:stretch}
 #outro #joinOk .ob>*{display:flex;align-items:center;justify-content:center;height:100%;min-height:0;box-sizing:border-box;margin:0;
   font-family:Inter,sans-serif;font-weight:800;font-size:13.5px;letter-spacing:-.01em;
-  border-radius:999px;padding:0 12px;text-align:center}
-#outro #joinOk .ob .tg{background:var(--card2);border:1px solid var(--line2);color:#fff}
+  border-radius:12px;padding:0 12px;text-align:center}
+#outro #joinOk .ob .tg{background:transparent;border:1px solid var(--line2);color:#fff}
 @media (max-width:420px){ #outro #joinOk .ob{grid-template-columns:1fr} }
 
 #outro{display:none;margin:16px auto 0;width:min(100%,420px);text-align:center}
@@ -361,29 +367,27 @@ body.light #outro{display:block}
 #outro button,#outro a{display:block;width:100%;padding:15px 12px;border-radius:14px;font-weight:800;font-size:15px;letter-spacing:-.01em;text-align:center;text-decoration:none}
 
 #outro [hidden]{display:none}
-#outro .tk{background:linear-gradient(120deg,#5A9BFF,#1E4FCC);border:none;color:#fff}
+#outro .tk{background:linear-gradient(180deg,#4C8BFF,#2D7BFF);border:none;color:#fff}
 #outro .tg{background:var(--card2);border:1px solid var(--line2);color:#fff}
 
 body.embed #s-home .logo,body.embed #s-home .lbl,body.embed #s-home .hero-title,body.embed #s-home .home-sub,body.embed .ver{display:none}
 body.embed #s-home{justify-content:center}
 body.embed #s-home .cta-big{margin-top:0}
 
-#howTo{display:block;margin:12px auto 0;padding:6px 10px;border:0;background:transparent;
-  color:var(--mute);font-family:var(--mono);font-size:9px;letter-spacing:.18em;
-  text-decoration:underline;text-underline-offset:4px;text-decoration-color:var(--line2)}
+#howTo{display:flex;align-items:center;justify-content:center;margin:12px auto 0;min-width:min(78vw,300px);
+  padding:12px 18px;border-radius:12px;border:1px solid rgba(150,195,255,.30);background:transparent;
+  color:#fff;font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-decoration:none;cursor:pointer}
+#howTo:hover{background:rgba(150,195,255,.06);border-color:rgba(150,195,255,.5)}
+#howTo:active{transform:scale(.985)}
 #howTo:active{color:#fff}
 #goBoard{display:none;margin:14px auto 0;padding:11px 18px;border-radius:14px;
   background:var(--card);border:1px solid var(--line2);text-align:center;min-width:min(78vw,300px)}
 body.light
-#howTo{display:block;margin:12px auto 0;padding:6px 10px;border:0;background:transparent;
-  color:var(--mute);font-family:var(--mono);font-size:9px;letter-spacing:.18em;
-  text-decoration:underline;text-underline-offset:4px;text-decoration-color:var(--line2)}
+
 #howTo:active{color:#fff}
 #goBoard{display:block}
 body.embed
-#howTo{display:block;margin:12px auto 0;padding:6px 10px;border:0;background:transparent;
-  color:var(--mute);font-family:var(--mono);font-size:9px;letter-spacing:.18em;
-  text-decoration:underline;text-underline-offset:4px;text-decoration-color:var(--line2)}
+
 #howTo:active{color:#fff}
 #goBoard{margin-top:12px}
 #goBoard .bl{display:block;font-family:var(--mono);font-size:9px;letter-spacing:.2em;color:var(--dim)}
@@ -414,7 +418,7 @@ body.embed
 .setrow .go{font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:var(--hi);white-space:nowrap}
 .setnote{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;color:var(--dim);line-height:1.8;margin-top:20px;text-align:left}
 
-.gear{position:fixed;top:max(14px,env(safe-area-inset-top));right:14px;z-index:6;width:40px;height:40px;border-radius:12px;
+.gear{position:fixed;top:max(10px,env(safe-area-inset-top));right:10px;z-index:6;width:40px;height:40px;border-radius:12px;
   display:grid;place-items:center;border:1px solid var(--line);background:rgba(10,14,26,.7);backdrop-filter:blur(8px);color:var(--dim)}
 .gear:hover,.gear:focus-visible{color:#fff;border-color:var(--line2)}
 .screen:not(.on) ~ .gear{display:grid}
@@ -434,7 +438,7 @@ body.embed
 #pausePane .stats b{display:block;color:#fff;font-size:19px;margin-top:4px;font-variant-numeric:tabular-nums}
 #pausePane .pbtns{display:flex;flex-direction:column;gap:8px;margin-top:24px}
 #pausePane button{font-family:var(--mono);font-size:11px;letter-spacing:.12em;padding:15px 12px;border-radius:14px;border:1px solid var(--line2);background:var(--card2)}
-#pausePane button.p{background:linear-gradient(120deg,#5A9BFF,#1E4FCC);border-color:transparent;font-weight:800;font-family:Inter;font-size:16px;letter-spacing:-.01em}
+#pausePane button.p{background:linear-gradient(180deg,#4C8BFF,#2D7BFF);border-color:transparent;font-weight:800;font-family:Inter;font-size:16px;letter-spacing:-.01em}
 #pausePane button.warn{color:var(--red);border-color:rgba(255,59,107,.35)}
 
 body.paused .screen.on{z-index:11;background:rgba(3,5,12,.94);backdrop-filter:blur(12px)}
@@ -451,8 +455,7 @@ body.paused #hud,body.paused #prog{opacity:0;transition:opacity .2s}
   background:
     radial-gradient(120% 90% at 50% -10%, color-mix(in srgb, var(--sc,#7FB6FF) 20%, transparent), transparent 60%),
     linear-gradient(165deg,#101B2F,#07080F 72%);
-  box-shadow:0 22px 60px -24px color-mix(in srgb, var(--sc,#7FB6FF) 55%, transparent),
-             inset 0 1px 0 rgba(255,255,255,.06)}
+  box-shadow:0 8px 30px rgba(45,123,255,.34)}
 
 #rcard::after{content:"";position:absolute;inset:-40% -60%;pointer-events:none;
   background:linear-gradient(72deg,transparent 42%,rgba(255,255,255,.13) 50%,transparent 58%);
@@ -538,7 +541,7 @@ body.paused #hud,body.paused #prog{opacity:0;transition:opacity .2s}
 </section>
 <div class="actions" data-for="s-hangar"><div class="in"><button class="p" id="hgRide">RIDE</button><div class="row"><button id="hgLegends" data-full>LEGENDS</button><button id="hgPosse" data-full>POSSE</button><button class="mint" id="hgCash" data-full>CASH OUT</button><button class="mint" id="hgTg" hidden>PLAY FOR USDC ON TELEGRAM</button></div></div></div>
 <section class="screen" id="s-legends">
-  <div class="top"><button class="back" id="lgBack">◀</button><span class="ttl">LEGENDS</span><span class="spacer"></span></div>
+  <div class="top"><button class="back" id="lgBack" aria-label="Back"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button><span class="ttl">LEGENDS</span><span class="spacer"></span></div>
   <div class="col">
     <h1 class="sc">two boards.</h1>
     <div class="diff" id="lgTabs"><button data-b="score" aria-pressed="true">BY SCORE<small>points, crescendo</small></button><button data-b="stake" aria-pressed="false">BY USDC<small>what it paid</small></button></div>
@@ -546,7 +549,7 @@ body.paused #hud,body.paused #prog{opacity:0;transition:opacity .2s}
   </div>
 </section>
 <section class="screen" id="s-posse">
-  <div class="top"><button class="back" id="psBack">◀</button><span class="ttl">POSSE</span><span class="spacer"></span></div>
+  <div class="top"><button class="back" id="psBack" aria-label="Back"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button><span class="ttl">POSSE</span><span class="spacer"></span></div>
   <div class="col">
     <h1 class="sc">bring a cowboy in.</h1>
     <p class="sub sc">One tap sends the rodeo to a friend on Telegram. Anyone who rides from your link counts as yours: you both get a full tank and a boot, and on the board you earn up to 0.5% each time they take or sell a shot, never on their losses.</p>
@@ -555,18 +558,18 @@ body.paused #hud,body.paused #prog{opacity:0;transition:opacity .2s}
 </section>
 <div class="actions" data-for="s-posse"><div class="in"><button class="p" id="posseTg">INVITE VIA TELEGRAM</button><button id="posseCopy">COPY LINK</button></div></div>
 <section class="screen" id="s-cashout">
-  <div class="top"><button class="back" id="coBack">◀</button><span class="ttl">CASH OUT</span><span class="spacer"></span></div>
+  <div class="top"><button class="back" id="coBack" aria-label="Back"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button><span class="ttl">CASH OUT</span><span class="spacer"></span></div>
   <div class="col">
     <h1 class="sc">turn it into your first shot.</h1>
     <p class="sub sc">Your stake doesn't leave the rodeo as cash. It leaves as a ticket: create your MOONX account, a wallet only you hold is created with it, and the stake lands there, ready for your first shot.</p>
     <div class="card" style="padding:16px;width:100%;margin-top:16px"><div class="lbl">YOUR STAKE</div><div class="big" id="coStake" style="font-size:40px;color:var(--mint);text-shadow:0 0 18px rgba(166,255,61,.6)">$0.0000</div><div class="tip" id="coNote" style="margin-top:8px">RIDES WITH YOU. NEVER ON YOUR LOSSES.</div></div>
     <input id="coEmail" type="email" placeholder="you@somewhere.sky" autocomplete="email" style="width:100%;margin-top:14px;padding:14px;border-radius:12px;border:1px solid var(--line2);background:var(--card);color:#fff;font:inherit;text-align:center">
-    <div class="tip" style="margin-top:12px;text-align:left">NO CARD. NO GAS. YOUR KEYS. THE BOARD OPENS SOON: YOUR TICKET WAITS IN LINE WITH YOUR STAKE ON IT.</div>
+    <div class="tip" style="margin-top:12px;text-align:left">NO CARD. NO GAS. YOUR KEYS. THE APP IS LIVE: GET YOUR TICKET AND YOUR ACCESS CODE FOLLOWS.</div>
   </div>
 </section>
 <div class="actions" data-for="s-cashout"><div class="in"><button class="p" id="coGo">CASH OUT TO MOONX</button></div></div>
 <section class="screen" id="s-board">
-  <div class="top"><button class="back" id="bdBack">◀</button><span class="ttl">THE BOARD</span><span class="spacer"></span></div>
+  <div class="top"><button class="back" id="bdBack" aria-label="Back"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button><span class="ttl">THE BOARD</span><span class="spacer"></span></div>
   <div class="col">
     <h1 class="sc">the board.</h1>
     <p class="sub sc" id="bdSub">The best rides, in order. Your handle puts you on it.</p>
@@ -576,7 +579,7 @@ body.paused #hud,body.paused #prog{opacity:0;transition:opacity .2s}
   </div>
 </section>
 <section class="screen" id="s-settings">
-  <div class="top"><button class="back" id="stBack">◀</button><span class="ttl">SETTINGS</span><span class="spacer"></span></div>
+  <div class="top"><button class="back" id="stBack" aria-label="Back"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button><span class="ttl">SETTINGS</span><span class="spacer"></span></div>
   <div class="col">
     <h1 class="sc">your ride, your way.</h1>
     <p class="sub sc">Everything here changes what a ride shows you and what it does to your hands. None of it changes what a ride pays: that comes from the beat and from your thumb, and from nothing else.</p>
@@ -598,7 +601,7 @@ body.paused #hud,body.paused #prog{opacity:0;transition:opacity .2s}
   </div>
 </section>
 <section class="screen" id="s-song">
-  <div class="top"><button class="back" id="sgBack">◀</button><span class="ttl" id="stName">THE SETLIST</span><span class="spacer"></span></div>
+  <div class="top"><button class="back" id="sgBack" aria-label="Back"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button><span class="ttl" id="stName">THE SETLIST</span><span class="spacer"></span></div>
   <div class="col">
     <h1 class="sc">pick your beat.</h1>
     <div class="list" id="songs"></div>
@@ -631,7 +634,7 @@ body.paused #hud,body.paused #prog{opacity:0;transition:opacity .2s}
 <div id="prog" hidden><div class="bar"><i id="progFill"></i><b id="progMoon" title="moonshot"></b></div><div class="pt"><span id="progNow">0:00</span><span id="progSec">INTRO</span><span id="progEnd">3:14</span></div></div>
 <div id="judge"></div>
 <section class="screen" id="s-result">
-  <div class="top"><button class="back" id="toHangar">◀</button><span class="ttl">RIDE OVER</span><span class="spacer"></span></div>
+  <div class="top"><button class="back" id="toHangar" aria-label="Back"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button><span class="ttl">RIDE OVER</span><span class="spacer"></span></div>
   <div class="col" style="text-align:center">
     <div class="card" id="rcard" style="margin:8px auto 0">
       <div class="rhead">
@@ -702,6 +705,16 @@ function hookMusic(){}
 
 function musicMiss(){ }
 function musicLift(){}
+
+let FADE_RAF=0;
+function musicFade(cible, ms){
+  if(!AUD) return; cancelAnimationFrame(FADE_RAF);
+  const de=AUD.volume, t0=performance.now();
+  const pas=t=>{ if(!AUD) return; const k=Math.min(1,(t-t0)/ms); const e=1-Math.pow(1-k,3);
+    AUD.volume=Math.max(0,Math.min(1,de+(cible-de)*e)); MUSIC_DUCK=AUD.volume;
+    if(k<1) FADE_RAF=requestAnimationFrame(pas); };
+  FADE_RAF=requestAnimationFrame(pas);
+}
 function musicTick(){ if(!AUD) return;
 
   const want=Math.min(1, 0.90+0.10*Math.min(1,Math.log2(Math.max(1,(R&&R.x)||1))/5.6));
@@ -852,7 +865,7 @@ function startRide(){
   if(ch){
     const a=new Audio(); a.preload="auto"; a.src=AUDIO_BASE+ch.file.replace("../audio/",""); let started=false;
     const notes=ch.notes.filter(n=>n.t>=6.5).map(n=>({...n,hit:null,gold:Math.random()<1/40}));
-    const useReal=()=>{ if(started) return; started=true; AUD=a; a.volume=1; MUSIC_DUCK=1; duckUntil=0; clearTimeout(SILENT_T);  ckOff=null; setLook(); OFF=(META.offset!=null)?META.offset:0.06; rocketLane=1; rocketX=null; FX.parts=[]; FX.banner=null; FX.stars=[]; FX.goldLane=-1; FX.goldNext=0; CAM={hor:0.30,spread:0.105,boost:0,crest:0,lastI:0}; $("hudSong").textContent=song.station+" · "+song.title.toUpperCase(); R={t0:0,notes,streak:0,x:1,saddle:6,stake:0,score:0,lastMiss:-9,boots:(typeof LIGHT!=="undefined"&&LIGHT?1:3),shield:-9,best:0,perf:0,good:0,miss:0,hits:0,ended:false,warned:false,dur:ch.duration,lastBeat:-1,moonshot:false,burst:[],real:true}; R.raw=0; R.dayTarget=dayBest(); R.beatToday=false; R.dropAt=null; R.dropEnd=0; R.dropScore=0; R.inDrop=false; R.dropWarned=false;
+    const useReal=()=>{ if(started) return; started=true; cancelAnimationFrame(FADE_RAF); AUD=a; a.volume=1; MUSIC_DUCK=1; duckUntil=0; clearTimeout(SILENT_T);  ckOff=null; setLook(); OFF=(META.offset!=null)?META.offset:0.06; rocketLane=1; rocketX=null; FX.parts=[]; FX.banner=null; FX.stars=[]; FX.goldLane=-1; FX.goldNext=0; CAM={hor:0.30,spread:0.105,boost:0,crest:0,lastI:0}; $("hudSong").textContent=song.station+" · "+song.title.toUpperCase(); R={t0:0,notes,streak:0,x:1,saddle:6,stake:0,score:0,lastMiss:-9,boots:(typeof LIGHT!=="undefined"&&LIGHT?1:3),shield:-9,best:0,perf:0,good:0,miss:0,hits:0,ended:false,warned:false,dur:ch.duration,lastBeat:-1,moonshot:false,burst:[],real:true}; R.raw=0; R.dayTarget=dayBest(); R.beatToday=false; R.dropAt=null; R.dropEnd=0; R.dropScore=0; R.inDrop=false; R.dropWarned=false;
 
       const first=notes.length?notes[0].t:4; const cardDur=Math.max(1.6,Math.min(3.4,first-0.6));
       if(RIDE_CARD&&SET.titleCard!==false) R.card={t0:0,dur:cardDur,station:RIDE_CARD.station,title:RIDE_CARD.title,artist:RIDE_CARD.artist,meta:RIDE_CARD.meta};
@@ -974,9 +987,10 @@ function draw(){ if(!R) return;
   for(const n of R.notes){ if(n.hit) continue; const d=now-n.t;
 
     const tenue=n.type==="hold"&&(LANE_DOWN[n.lane]>0||KEYS[n.lane]);
+
     if(d>=-GOOD&&d<=GOOD&&n.lane===rocketLane&&(n.type!=="hold"||tenue)){ n.hit="good"; onHit(n,GOOD*0.9,true); continue; }
 
-    if(d>GOOD+Math.max(0,OFF)+0.06){ n.hit="miss"; onMiss(); if(R.ended) return; } }
+    if(!R.learn&&d>GOOD+Math.max(0,OFF)+0.06){ n.hit="miss"; onMiss(); if(R.ended) return; } }
   cx.globalCompositeOperation="source-over";
 
   for(const n of R.notes){ if(!n.holding) continue;
@@ -1100,7 +1114,8 @@ function drawRocket(x,y,s,fl){ cx.save(); cx.translate(x,y); cx.scale(s,s); cons
     for(const [rx,ry,w,h,c] of [[-1,-11,2,1,"#F4F4F4"],[-2,-10,4,2,"#F4F4F4"],[-3,-8,6,8,"#E9EEFF"],[-4,-4,8,4,"#DDE6FF"],[-6,-3,2,5,"#7FB6FF"],[4,-3,2,5,"#7FB6FF"],[-7,0,3,2,"#2D7BFF"],[4,0,3,2,"#2D7BFF"],[-3,0,6,2,"#9FB3D6"]]){ cx.fillStyle=c; cx.fillRect(rx,ry,w,h);} cx.fillStyle="#2D7BFF"; cx.fillRect(-1,-7,2,3); cx.fillStyle="#A6FF3D"; cx.fillRect(-1,-7,1,1); cx.fillStyle="#FFC93C"; cx.fillRect(-3,-8,1,8); cx.restore(); }
 function judge(kind){ const j=$("judge"); j.className=""; j.textContent=kind==="perfect"?"PERFECT":kind==="good"?"GOOD":kind==="hold"?"HELD":"MISS"; if(kind==="hold") kind="perfect"; void j.offsetWidth; j.classList.add(kind[0]); setTimeout(()=>j.className="",220); }
 function onHit(n,dt,auto){ const prevX=R.x;
-  if(R.lastStand){ R.lastStand.got++; if(R.lastStand.got>=R.lastStand.need){ R.lastStand=null; R.saddle=Math.max(R.saddle,4); saddle(); FX.banner={txt:"SAVED",sub:"BACK IN THE SADDLE",c:"#A6FF3D",t:0}; FX.flash=1; FX.flashC="#A6FF3D"; haptic("x"); } } if(!auto){ R.hitsSeen=(R.hitsSeen||0)+1; const k=R.hitsSeen<8?0.4:0.12; OFF=Math.max(-0.2,Math.min(0.2,OFF+(dt-OFF)*k)); } const kind=(!auto&&Math.abs(dt-OFF)<=PERFECT)?"perfect":"good"; n.hit=kind; R.hits++; if(n.type==="hold"&&!auto){ n.holding=true; n.upSince=null; R.holdsSeen=(R.holdsSeen||0)+1; holdTone(n.lane,true); } const cap=6; if(kind==="perfect"){ R.perf++; } else { R.good++; } R.streak++; R.saddle=Math.min(cap,R.saddle+(kind==="perfect"?0.4:0.25)); R.best=Math.max(R.best,R.streak); saddle();
+  if(R.lastStand){ R.lastStand.got++; if(R.lastStand.got>=R.lastStand.need){ R.lastStand=null; R.saddle=Math.max(R.saddle,4); saddle(); FX.banner={txt:"SAVED",sub:"BACK IN THE SADDLE",c:"#A6FF3D",t:0}; FX.flash=1; FX.flashC="#A6FF3D"; haptic("x"); } } if(!auto){ R.hitsSeen=(R.hitsSeen||0)+1; const k=R.hitsSeen<8?0.4:0.12; OFF=Math.max(-0.2,Math.min(0.2,OFF+(dt-OFF)*k)); } const kind=(!auto&&Math.abs(dt-OFF)<=PERFECT)?"perfect":"good"; n.hit=kind; R.hits++;
+    if(n.type==="hold"&&(!auto||LANE_DOWN[n.lane]>0||KEYS[n.lane])){ n.holding=true; n.upSince=null; R.holdsSeen=(R.holdsSeen||0)+1; holdTone(n.lane,true); } const cap=6; if(kind==="perfect"){ R.perf++; } else { R.good++; } R.streak++; R.saddle=Math.min(cap,R.saddle+(kind==="perfect"?0.4:0.25)); R.best=Math.max(R.best,R.streak); saddle();
   if(R.streak>0&&(R.streak===100||(R.streak>100&&(R.streak-100)%100===0))){ if(R.boots<3){ R.boots++; bootsUI(); FX.banner={txt:"BOOT BACK",sub:R.streak+" IN A ROW",c:"#FFC93C",t:0}; FX.flash=1; FX.flashC="#FFC93C"; for(let i=0;i<3;i++) firework(cv.width,cv.height,"#FFC93C"); cheer(); } else { R.stake+=0.01; R.stake=stakeOf(R.raw); R.score+=1000*R.x; FX.banner={txt:argent("+$"+(0.05*R.x).toFixed(2))||("+"+Math.round(1000*R.x).toLocaleString()),sub:R.streak+" IN A ROW · BONUS",c:"#A6FF3D",t:0}; FX.flash=.6; FX.flashC="#A6FF3D"; } }
   else if(R.streak===25||R.streak===200){ FX.banner={txt:R.streak+"!",sub:"IN A ROW",c:"#7FB6FF",t:0}; } if(Math.floor(R.streak)===100&&!R.feverDone){ R.feverDone=true; R.feverUntil=clock()+10; FX.banner={txt:"FEVER",sub:"100 IN A ROW · EVERYTHING ×2 FOR 10 SECONDS",c:"#FFC93C",t:0}; FX.flash=1; FX.flashC="#FFC93C"; for(let i=0;i<5;i++) firework(cv.width,cv.height,"#FFC93C"); cheer(); } R.x=xFor(R.streak); $("hudX").textContent=xTexte(R.x); const gold=n.gold?10:1; const laneGold=(FX.goldLane>=0&&FX.goldLane===n.lane&&clock()<FX.goldUntil)?3:1; const fever=(R.feverUntil&&clock()<R.feverUntil)?2:1; const dropX=R.inDrop?2:1;
   const pace=1/Math.max(60,(R.notes?R.notes.length:250));
@@ -1182,12 +1197,13 @@ cv.addEventListener("pointercancel",e=>ptrDel(e.pointerId));
 document.addEventListener("visibilitychange",()=>{ if(document.hidden){ PTR.clear(); LANE_DOWN[0]=LANE_DOWN[1]=LANE_DOWN[2]=0; dragging=false; lastLane=-1; } });
 function endRide(moon){ if(R.ended) return;
 
-  if(R.learn){ return; } setDayBest(R.score); if(R.real&&(R.hitsSeen||0)>=8){ META.offset=OFF; saveMeta(); } if(moon&&!R.landing){ R.landing=clock(); R.landHold=true; for(let i=0;i<8;i++) firework(cv.width,cv.height,i%2?"#A6FF3D":"#FFC93C"); FX.banner={txt:"MOON",sub:"YOU HELD TO THE LAST NOTE",c:"#A6FF3D",t:0}; setTimeout(()=>{ R.landHold=false; endRide(true); },2600); return; } R.ended=true; cancelAnimationFrame(raf); if(typeof PAUSED!=="undefined"){ PAUSED=false; document.body.classList.remove("paused"); clearInterval(RESUME_T); $("pausePane").classList.remove("on"); $("resume").classList.remove("on"); } $("pauseBtn").classList.remove("on")   ; document.body.classList.remove("riding"); try{ if(bdMoi()) window.__lastRank=bdPoser(R); outroReset(); outroJoin(); requestAnimationFrame(majActH); setTimeout(majActH,400);
+  if(R.learn){ return; } if(!moon) musicFade(0.12, 2000); setDayBest(R.score); if(R.real&&(R.hitsSeen||0)>=8){ META.offset=OFF; saveMeta(); } if(moon&&!R.landing){ R.landing=clock(); R.landHold=true; for(let i=0;i<8;i++) firework(cv.width,cv.height,i%2?"#A6FF3D":"#FFC93C"); FX.banner={txt:"MOON",sub:"YOU HELD TO THE LAST NOTE",c:"#A6FF3D",t:0}; setTimeout(()=>{ R.landHold=false; musicFade(0.12, 2000); endRide(true); },2600); return; } R.ended=true; cancelAnimationFrame(raf); if(typeof PAUSED!=="undefined"){ PAUSED=false; document.body.classList.remove("paused"); clearInterval(RESUME_T); $("pausePane").classList.remove("on"); $("resume").classList.remove("on"); } $("pauseBtn").classList.remove("on")   ; document.body.classList.remove("riding"); try{ if(bdMoi()) window.__lastRank=bdPoser(R); outroReset(); outroJoin(); requestAnimationFrame(majActH); setTimeout(majActH,400);
   requestAnimationFrame(carteVisible); setTimeout(carteVisible,450); setTimeout(carteVisible,1200); }catch(_){} try{ if(window.top!==window.self) parent.postMessage({moonx:"ride-end"},"*"); }catch(_){} if(typeof guardClosing==="function"){ guardClosing(false); } const heldNow=clock(); if(AUD&&!moon){   } $("hud").hidden=true; $("prog").hidden=true; $("ride").classList.remove("on"); $("hudX").classList.remove("moon");
   const held=Math.max(0,Math.min(R.real?heldNow:heldNow-1.2,R.dur)), m=Math.floor(held/60), s=String(Math.floor(held%60)).padStart(2,"0"); const perf=R.hits?Math.round(R.perf/R.hits*100):0;
   const rodBonus=(rideOfDay().slug===song.slug&&META.rideOfDayDone!==today())?2:1; if(rodBonus===2) META.rideOfDayDone=today(); const bonus=(moon?1.5:1)*rodBonus; const stakeNum=R.stake*bonus; const stake=stakeNum.toFixed(4); META.stake+=stakeNum; META.dayStake+=stakeNum; if(META.stations.length>=3&&META.comboDay!==today()){ META.comboDay=today(); META.bootBonus=(META.bootBonus||0)+1; } saveMeta(); setBest(song.slug,R.x);
   $("rcard").className="card "+(moon?"moon":"miss"); $("rcard").style.setProperty("--sc",(typeof COLORS!=="undefined"&&COLORS[station])||"#7FB6FF"); $("rSn").textContent="SR-"+rideNo()+" · "+song.station; $("rTitle").textContent=song.title;
-const peak=Math.max(R.bestX||1, R.x); $("rX").textContent=xTexte(peak); if($("rXsmall")) $("rXsmall").textContent=xTexte(peak); if($("rScoreBig")) $("rScoreBig").textContent=Math.round(R.score||0).toLocaleString("en-US"); $("rSt").textContent=moon?"MOON":"THROWN AT "+m+":"+s; $("rBest").textContent=Math.floor(R.best)    ; const finalScore=Math.round(R.score*(moon?1.5:1));  $("rHeldLine").textContent="HELD "+m+":"+s+(moon?" · MOON BONUS ×1.5":""); const prevBest=Math.max(0,...(META.log||[]).filter(r=>r.slug===song.slug).map(r=>r.score));
+const peak=Math.max(R.bestX||1, R.x); $("rX").textContent=xTexte(peak); if($("rXsmall")) $("rXsmall").textContent=xTexte(peak); if($("rScoreBig")) $("rScoreBig").textContent=Math.round(R.score||0).toLocaleString("en-US"); $("rSt").textContent=moon?"MOON":"THROWN AT "+m+":"+s; $("rBest").textContent=Math.floor(R.best)    ; const finalScore=Math.round(R.score*(moon?1.5:1));  $("rHeldLine").textContent="HELD "+m+":"+s+(moon?" · MOON BONUS ×1.5":"");
+    const prevBest=Math.max(0,...(META.log||[]).filter(r=>r.slug===song.slug&&r.score<1e6).map(r=>r.score));
   { const cible=xTexte(Math.max(2, peak*1.6));
     $("rHeldLine").textContent="YOU HELD "+xTexte(peak)+". NEXT TIME, "+cible+"."; }
   $("rRecord").textContent=(R.dayTarget&&R.score>R.dayTarget)?"NEW BEST TODAY ON THIS BEAT":(finalScore>prevBest)?(prevBest?"NEW RECORD · +"+Math.abs(finalScore-prevBest).toLocaleString("en-US"):"FIRST RIDE ON THIS SONG · YOUR RECORD TO BEAT"):(prevBest-finalScore).toLocaleString("en-US")+" SHORT OF YOUR RECORD · RIDE AGAIN"; META.totalScore=(META.totalScore||0)+finalScore; (META.log=META.log||[]).push({who:META.handle||"",slug:song.slug,title:song.title,station:song.station,score:finalScore,stake:+stake,x:R.x,moon:moon,d:Date.now()}); META.log=META.log.slice(-200); saveMeta(); $("rStake").textContent="$"+stake;
@@ -1339,7 +1355,7 @@ function bdPeindre(a){
   $("bdNote").innerHTML = a.length
     ? (BD_SRC==="serveur"
       ? "EVERY RIDE, EVERYWHERE, SINCE THE FIRST DAY."
-      : "THIS BOARD HOLDS THE RIDES FROM THIS DEVICE. WHEN THE SEASON OPENS IT HOLDS EVERYONE'S, AND YOUR PLACE COMES WITH YOU.")
+      : "THIS BOARD HOLDS THE RIDES FROM THIS DEVICE. THE SHARED BOARD IS OUT OF REACH RIGHT NOW.")
     : "";
 }
 function outroJoin(){
@@ -1348,11 +1364,9 @@ function outroJoin(){
   const w=$("joinWrap"), ok=$("joinOk"), b=$("oTicket");
   if(!w) return;
   if(moi){
-    const a=bdLire(); const r=(window.__lastRank||0);
-    $("joinRank").textContent="#"+(r>0?r:a.length);
-    $("joinLine").innerHTML=(moi.h||"@cowboy")+" \u00b7 "+Math.round((R&&R.score)||0).toLocaleString("en-US")
-      +"<br>THE BEST RIDE TAKES THE TOP SPOT";
-    document.body.classList.remove("joining"); document.body.classList.add("joined"); w.classList.remove("on"); ok.classList.add("on"); b.hidden=true; return;
+
+    document.body.classList.remove("joining"); document.body.classList.add("joined"); w.classList.remove("on"); ok.classList.add("on"); b.hidden=true;
+    annoncerPlace(moi.h||"@cowboy"); return;
   }
   document.body.classList.remove("joining"); document.body.classList.remove("joined"); w.classList.remove("on"); ok.classList.remove("on"); b.hidden=false; $("joinErr").textContent="";
 }
@@ -1398,9 +1412,34 @@ async function supaEnvoyer(run, pseudo){
       })
     });
     if(r.status===409){ const e=new Error("409"); e.pris=true; throw e; }
-    if(!r.ok) return null;
+
+    if(!r.ok){ let why=""; try{ why=String((await r.json()).error||""); }catch(_){}
+      const e=new Error("refus"); e.refus=why||("HTTP "+r.status); throw e; }
     return await r.json();
-  }catch(e){ if(e&&e.pris) throw e; return null; }
+  }catch(e){ if(e&&(e.pris||e.refus)) throw e; const n=new Error("reseau"); n.reseau=true; throw n; }
+}
+
+function annoncerPlace(h){
+  const rk=$("joinRank"), ln=$("joinLine"); const sc=Math.round((R&&R.score)||0).toLocaleString("en-US");
+  if(!SUPA()){ rk.textContent="\u2014"; ln.innerHTML=h+" \u00b7 "+sc+"<br>SAVED ON THIS DEVICE. THE BOARD IS OFFLINE."; return; }
+  rk.textContent="\u2026"; ln.innerHTML=h+" \u00b7 "+sc+"<br>SENDING TO THE BOARD";
+  supaEnvoyer(R,h).then(d=>{
+    const who=(d&&d.handle)||h;
+    if(d&&typeof d.rank==="number"&&d.rank>0){
+      rk.textContent="#"+d.rank;
+      ln.innerHTML=who+" \u00b7 "+sc+"<br>"+(d.rank===1?"TOP OF THE BOARD.":"THE BEST RIDE TAKES THE TOP SPOT.");
+    } else { rk.textContent="\u2014"; ln.innerHTML=who+" \u00b7 "+sc+"<br>ON THE BOARD."; }
+    bdRendre(); try{ majAccueilBoard(); }catch(_){}
+  }).catch(e=>{
+    rk.textContent="\u2014";
+    if(e&&e.pris){
+      document.body.classList.add("joining");
+      $("joinWrap").classList.add("on"); $("joinOk").classList.remove("on");
+      $("joinErr").textContent="THAT HANDLE IS TAKEN. PICK ANOTHER."; haptic("miss"); return;
+    }
+    if(e&&e.refus){ ln.innerHTML=h+" \u00b7 "+sc+"<br>NOT ON THE BOARD: "+String(e.refus).toUpperCase()+"."; return; }
+    ln.innerHTML=h+" \u00b7 "+sc+"<br>BOARD UNREACHABLE. SAVED ON THIS DEVICE.";
+  });
 }
 
 async function supaBoard(n){
@@ -1425,40 +1464,9 @@ if($("joinSend")) $("joinSend").addEventListener("click",()=>{
 
   requestAnimationFrame(majActH); setTimeout(majActH,350);
   window.__lastRank=bdPoser(R, h);
-  const dejaLa=bdLire();
-  $("joinRank").textContent="#"+(window.__lastRank>0?window.__lastRank:dejaLa.length);
-
-  const moiBas=h.toLowerCase();
-  const auTableau=bdLire().find(e=>String(e.h||"").toLowerCase()===moiBas);
-  const meilleur=auTableau?auTableau.s:Math.round((R&&R.score)||0);
-  const battu=Math.round((R&&R.score)||0)>=meilleur;
-  $("joinLine").innerHTML=h+" \u00b7 "+meilleur.toLocaleString("en-US")
-    +"<br>"+(battu?"THAT IS YOUR BEST SO FAR":"YOUR BEST STILL STANDS. RIDE AGAIN TO BEAT IT.");
   $("joinWrap").classList.remove("on"); $("joinOk").classList.add("on"); $("oTicket").hidden=true;
   bdRendre(); haptic("x");
-
-  if(SUPA()) supaEnvoyer(R, h)
-    .then(d=>{
-      if(!d) return;
-
-      if(d.handle && d.handle!==h){
-        try{ const a=JSON.parse(localStorage.getItem("moonx.me")||"{}");
-             localStorage.setItem("moonx.me", JSON.stringify(Object.assign(a,{handle:d.handle})));
-             localStorage.setItem("sr.me", JSON.stringify({h:d.handle, m:m})); }catch(_){}
-        $("joinLine").innerHTML=d.handle+" \u00b7 "+Math.round((R&&R.score)||0).toLocaleString("en-US")
-          +"<br>THE BEST RIDE TAKES THE TOP SPOT";
-      }
-      if(typeof d.rank==="number"&&d.rank>0) $("joinRank").textContent="#"+d.rank;
-      bdRendre();
-    })
-    .catch(e=>{
-
-      if(String(e&&e.message).indexOf("409")>=0){
-        document.body.classList.add("joining");
-        $("joinWrap").classList.add("on"); $("joinOk").classList.remove("on");
-        $("joinErr").textContent="THAT HANDLE IS TAKEN. PICK ANOTHER."; haptic("miss");
-      }
-    });
+  annoncerPlace(h);
 });
 if($("joinSee")) $("joinSee").addEventListener("click",()=>{ bdRendre(); show("s-board"); });
 if($("bdBack")) $("bdBack").addEventListener("click",()=>goBack());
@@ -1505,90 +1513,104 @@ if($("howTo")) $("howTo").addEventListener("click",()=>{
   startLearn(startRide);
 });
 
+let TUTO=null;
 function startLearn(apres){
   LEARN_APRES=apres; LEARN=true;
   setLook(); audio(); AC.resume();
   if(AUD){ AUD.pause(); AUD=null; }
   if(INST){ INST.pause(); INST=null; }
-  const beat=60/(song.bpm||120), t0=AC.currentTime+2.2;
-
-  const notes=[
-    {t:2.4, lane:1, type:"tap",  len:0},
-    {t:7.2, lane:2, type:"hold", len:1.6}
-  ];
-  R={t0, notes, streak:0, x:1, saddle:6, stake:0, score:0, lastMiss:-9, sim:true,
+  const t0=AC.currentTime;
+  R={t0, notes:[], streak:0, x:1, saddle:6, stake:0, score:0, lastMiss:-9, sim:true,
      boots:9, shield:-9, best:0, perf:0, good:0, miss:0, hits:0, ended:false,
-     warned:true, dur:12, lastBeat:-1, moonshot:false, burst:[], real:false, learn:true};
+     warned:true, dur:600, lastBeat:-1, moonshot:false, burst:[], real:false, learn:true};
   R.raw=0; R.dayTarget=0; R.beatToday=false; R.dropAt=null; R.dropEnd=0; R.dropScore=0;
   R.inDrop=false; R.dropWarned=false;
   RIDE_CARD=null;
-  $("hud").hidden=false; $("prog").hidden=false;
+  $("hud").hidden=false; $("prog").hidden=true;
   $("ride").classList.add("on"); $("pauseBtn").classList.add("on");
   document.body.classList.add("riding");
   document.querySelectorAll(".screen").forEach(x=>x.classList.remove("on"));
   document.querySelectorAll(".actions").forEach(a=>a.style.display="none");
   $("hudSong").textContent="HOW IT WORKS"; document.body.classList.add("sim");
   $("hudX").textContent=xTexte(1); $("hudScore").textContent="0";
-  const CMD  = TOUCH ? "TAP THE LANE"        : "PRESS SPACE";
-  const TENU = TOUCH ? "KEEP YOUR FINGER DOWN" : "HOLD SPACE DOWN";
-  const LEVE = TOUCH ? "LIFT YOUR FINGER"      : "RELEASE SPACE";
-  learnDire("WATCH", "THE RIDER MOVES UNDER EACH BUCK");
-  LEARN_T.push(setTimeout(()=>{ if(LEARN) learnDire(CMD, "WHEN THE BUCK REACHES THE LINE"); }, 2600));
-  LEARN_T.push(setTimeout(()=>{ if(LEARN) learnDire("HERE COMES A LONG ONE", "IT SAYS HOLD \u00b7 " + TENU); }, 5600));
-  LEARN_T.push(setTimeout(()=>{ if(LEARN) learnDire("NOW YOU", "ONE MISS AND THE RIDE IS OVER"); }, 10200));
-  LEARN_T.push(setTimeout(()=>{ if(LEARN) learnFin(); }, 12200));
-  scheduleBeats();
 
-  sizeCanvas();
-  saddle();
+  const VOIE=["LEFT","MIDDLE","RIGHT"], FLECHE=["\u2190","","\u2192"];
+  const seDeplacer=(l)=> TOUCH ? "TAP THE "+VOIE[l]+" LANE WITH YOUR FINGER"
+                                : (FLECHE[l]?FLECHE[l]+" ARROW TO THE "+VOIE[l]+" LANE":"ARROWS TO THE MIDDLE LANE");
+  TUTO={ i:0, note:null, attend:false, fin:false, depuis:0,
+    etapes:[
+      {lane:2, type:"tap",  len:0,
+       titre:"GET UNDER IT", sous:seDeplacer(2)+". BEING UNDER THE BUCK WHEN IT CROSSES THE LINE IS ENOUGH."},
+      {lane:0, type:"tap",  len:0,
+       titre:"NOW TAP IT ON THE LINE", sous:(TOUCH?"TAP THE LEFT LANE WITH YOUR FINGER":"\u2190 ARROW, THEN SPACE")+" RIGHT AS IT CROSSES: THAT'S A PERFECT, AND IT PAYS MORE."},
+      {lane:1, type:"hold", len:2.0,
+       titre:"THIS ONE IS LONG", sous:(TOUCH?"HOLD YOUR FINGER ON THE MIDDLE LANE":"ARROWS TO THE MIDDLE, THEN HOLD THE SPACE BAR")+". KEEP IT DOWN UNTIL THE TAIL RUNS OUT."},
+    ]};
+  learnDire("WATCH THE ROAD", "A BUCK IS COMING DOWN THE RIGHT LANE");
+  scheduleBeats();
+  sizeCanvas(); saddle();
   if(typeof raf!=="undefined" && raf) cancelAnimationFrame(raf);
   raf=requestAnimationFrame(draw);
+  learnPose();
   requestAnimationFrame(learnJoue);
 }
 
+function learnPose(){
+  const e=TUTO.etapes[TUTO.i]; const now=clock();
+  const n={t:now+LOOK+0.4, lane:e.lane, type:e.type, len:e.len};
+  R.notes=[n]; TUTO.note=n; TUTO.attend=false; TUTO.depuis=0; TUTO.pct=-1;
+
+  LEARN_T.push(setTimeout(()=>{ if(LEARN&&TUTO&&TUTO.note===n) learnDire(e.titre, e.sous); }, Math.round((LOOK*0.45)*1000)));
+}
 function learnJoue(){
+  if(!LEARN||!R||R.ended||!TUTO) return;
+  const n=TUTO.note, e=TUTO.etapes[TUTO.i], now=clock();
+  const k=$("simKey");
+  if(k){ k.textContent = TOUCH ? "FINGER DOWN" : "SPACE"; k.classList.toggle("on", !!(KEYS[e.lane]||LANE_DOWN[e.lane]>0)); }
+  if(n && n.hit==="miss"){ n.hit=null; }
+  if(n && !n.hit){
 
-  if(LEARN&&R&&!R.ended){
-    const t=clock();
-    const h=R.notes.find(x=>x.type==="hold" && t>=x.t-0.05 && t<=x.t+x.len);
-    const e=$("simTip");
-    const k=$("simKey");
-    if(k) k.textContent = TOUCH ? "FINGER DOWN" : "SPACE";
-    if(h&&e&&!e.dataset.hold){ e.dataset.hold="1"; learnDire(TENU_G, "UNTIL THE TAIL RUNS OUT, THEN " + LEVE_G); }
-    if(!h&&e&&e.dataset.hold){ delete e.dataset.hold; }
-    if(k) k.classList.toggle("on", !!h);
-  }
+    if(now>=n.t){ R.t0=AC.currentTime-n.t; TUTO.attend=true; TUTO.depuis+=1/60;
+      FX.lanePress[e.lane]=Math.max(FX.lanePress[e.lane], 0.35+0.35*Math.abs(Math.sin(performance.now()/260)));
 
-  if(!LEARN||!R||R.ended) return;
-  const now=clock();
-  let n=null, d=9;
-  for(const x of R.notes){ if(x.hit) continue; const dd=x.t-now; if(dd>-0.2&&dd<d){ d=dd; n=x; } }
-  if(n){
-    if(n.lane!==rocketLane) moveLane(n.lane);
-    const aFrapper = (now>=n.t-0.06 && now<=n.t+0.12);
-    if(n.type==="hold"){
-      const tenu = (now>=n.t-0.05 && now<=n.t+n.len+0.05);
-      if(aFrapper && !n.__fx){ n.__fx=1; tapLane(n.lane); haptic("tick"); }
-      KEYS[n.lane]=tenu;
-      if(tenu) FX.lanePress[n.lane]=1;
-    } else {
-      KEYS[n.lane]=false;
-      if(aFrapper && !n.__fx){ n.__fx=1; FX.lanePress[n.lane]=1; haptic("tick"); }
+      if(TUTO.depuis>4){
+        const VOIE=["LEFT","MIDDLE","RIGHT"], FLECHE=["\u2190","","\u2192"];
+        const bouger = FLECHE[e.lane] ? FLECHE[e.lane]+" ARROW" : "THE ARROWS";
+        const geste = e.type==="hold"
+          ? (TOUCH ? "PRESS AND HOLD YOUR FINGER ON THE "+VOIE[e.lane]+" LANE"
+                   : (rocketLane===e.lane ? "HOLD THE SPACE BAR DOWN" : bouger+" TO THE "+VOIE[e.lane]+" LANE, THEN HOLD SPACE"))
+          : (TOUCH ? "TAP THE "+VOIE[e.lane]+" LANE WITH YOUR FINGER, THE BUCK IS WAITING THERE"
+                   : bouger+" TO GET UNDER IT");
+        learnDire(e.titre, geste); TUTO.depuis=-2; }
     }
+  } else if(n && n.type==="tap" && n.hit && !TUTO.fin){
+    TUTO.fin=true;
+
+    if(TUTO.i===0) learnDire(n.hit==="perfect"?"PERFECT, EVEN":"GOOD. THAT'S ALL IT TAKES", "NEXT: THE SAME, BUT TAPPED ON THE LINE");
+    else learnDire(n.hit==="perfect"?"PERFECT":"GOOD", (n.hit==="perfect"?"THAT'S THE MONEY TAP.":"RIGHT ON THE LINE IT WOULD BE A PERFECT.")+" ONE MORE: THE LONG KIND");
+    LEARN_T.push(setTimeout(learnSuivant, 1500));
+  } else if(n && n.type==="hold" && n.hit){
+    if(n.holding){ const pct=Math.max(0,Math.min(100,Math.round(100*(now-n.t)/n.len)));
+      if(pct!==TUTO.pct){ TUTO.pct=pct; const t=$("simTip");
+        if(t) t.innerHTML='<b>'+(TOUCH?"KEEP YOUR FINGER DOWN":"KEEP HOLDING SPACE")+'</b><i>'+pct+'% \u00b7 '+(pct<85?"THE TAIL IS STILL RUNNING":(TOUCH?"ALMOST \u00b7 LIFT WHEN IT ENDS":"ALMOST \u00b7 LET GO WHEN IT ENDS"))+'</i>'; } }
+    if(n.held && !TUTO.fin){ TUTO.fin=true; learnDire("THAT'S A HOLD", "YOU'RE READY"); LEARN_T.push(setTimeout(learnFin, 1500)); }
+    else if(n.dropped && !TUTO.fin){ TUTO.fin=true;
+      learnDire("TOO EARLY", (TOUCH?"KEEP YOUR FINGER DOWN":"KEEP THE SPACE BAR DOWN")+" UNTIL THE TAIL RUNS OUT \u00b7 AGAIN");
+      LEARN_T.push(setTimeout(()=>{ if(LEARN&&TUTO){ TUTO.fin=false; TUTO.relance=false; learnPose(); } }, 1400)); }
   }
   requestAnimationFrame(learnJoue);
 }
 
-function learnCoupe(){
-
-  LEARN=false; LEARN_APRES=null;
-  LEARN_T.forEach(clearTimeout); LEARN_T=[];
-  document.body.classList.remove("sim");
+function learnSuivant(){
+  if(!LEARN||!TUTO) return;
+  TUTO.i++; TUTO.fin=false; TUTO.relance=false;
+  if(TUTO.i>=TUTO.etapes.length){ learnFin(); return; }
+  learnPose();
 }
 
 function learnFin(){
   if(!LEARN) return;
-  LEARN=false; document.body.classList.remove("sim");
+  LEARN=false; TUTO=null; document.body.classList.remove("sim"); $("prog").hidden=false;
   try{ localStorage.setItem("sr.learned","1"); }catch(_){}
   learnDire("HERE WE GO","THE REAL RIDE STARTS NOW");
 
@@ -1686,7 +1708,7 @@ const DAY_LINES=[
 "Reverend Slow Light: hold on to the last note. That's the sermon.",
 "MC Gasless: pirate signal, honest beat.",
 "Dale Resolution: seventy-two hours to resolve. Three minutes to ride.",
-"Joan Oracle: the board opens soon. The road is open now.",
+"Joan Oracle: the board is open. So is the road.",
 "Buck Wildcard: I lost both boots. Never came down.",
 "Morris Cooldown: cooling off is for tickets. Not for rodeos.",
 "Dusty Longshot: one small stake for a cowboy. You know the rest.",

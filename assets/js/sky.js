@@ -66,23 +66,23 @@ window.MoonxSky=(function(){
 
         const breathe=1+0.06*Math.sin(t*0.0006); const g=sctx.createRadialGradient(cx,cy,r*0.6,cx,cy,r*2.6*breathe); g.addColorStop(0,`rgba(233,230,218,${(0.16+0.05*Math.sin(t*0.0006)).toFixed(3)})`); g.addColorStop(1,"rgba(233,230,218,0)"); sctx.fillStyle=g; sctx.beginPath(); sctx.arc(cx,cy,r*2.6*breathe,0,6.283); sctx.fill();
         drawMoon(cx, cy, r); }
-      requestAnimationFrame(skyDraw);
+      raf=requestAnimationFrame(loop);
     }
 
-    try{ const jb=document.querySelector('.jband'), jsec=document.getElementById('journey');
-
-      if(jb && jb.parentElement !== document.body) document.body.appendChild(jb);
-      if(jb&&jsec&&'IntersectionObserver' in window){
-        new IntersectionObserver(es=>{ for(const e of es) jb.classList.toggle('inview', e.isIntersecting); },{threshold:0.05}).observe(jsec);
-      }
-    }catch(_){}
-
-    addEventListener("pointermove",e=>{ tx=(e.clientX/innerWidth-.5)*2; ty=(e.clientY/innerHeight-.5)*2; },{passive:true});
-    addEventListener("deviceorientation",e=>{ if(e.gamma!=null){ tx=Math.max(-1,Math.min(1,e.gamma/30)); ty=Math.max(-1,Math.min(1,(e.beta-45)/30)); } },{passive:true});
+    const onMove=e=>{ tx=(e.clientX/innerWidth-.5)*2; ty=(e.clientY/innerHeight-.5)*2; };
+    const onTilt=e=>{ if(e.gamma!=null){ tx=Math.max(-1,Math.min(1,e.gamma/30)); ty=Math.max(-1,Math.min(1,(e.beta-45)/30)); } };
+    addEventListener("pointermove",onMove,{passive:true});
+    addEventListener("deviceorientation",onTilt,{passive:true});
     addEventListener("resize",skySize,{passive:true}); addEventListener("load",skySize); skySize();
-    if(!opts.fill){ try{ new ResizeObserver(()=>skySize()).observe(sky.parentElement); }catch(_){} }
-    requestAnimationFrame(skyDraw);
-    return {resize:skySize};
+    let ro=null; if(!opts.fill){ try{ ro=new ResizeObserver(()=>skySize()); ro.observe(sky.parentElement); }catch(_){} }
+    let alive=true, raf=0;
+    const loop=t=>{ if(!alive) return; skyDraw(t); };
+    raf=requestAnimationFrame(loop);
+    function stop(){ alive=false; cancelAnimationFrame(raf);
+      removeEventListener("pointermove",onMove); removeEventListener("deviceorientation",onTilt);
+      removeEventListener("resize",skySize); removeEventListener("load",skySize);
+      if(ro) ro.disconnect(); }
+    return {resize:skySize, stop};
   }
   return {mount};
 })();

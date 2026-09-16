@@ -1,7 +1,7 @@
 :root{--bg:#03050C;--card:#0A0E1A;--card-2:#121A2B;--well:rgba(160,200,255,.05);--line:rgba(150,195,255,.16);--line-2:rgba(150,195,255,.30);--txt:#FFFFFF;--dim:#8FA8C8;--mute:#5A6B8A;--blue:#2D7BFF;--hi:#7FB6FF;--lo:#1E4FCC;--mint:#A6FF3D;--red:#FF3B6B;--amber:#FFC93C;--disp:"Inter",system-ui,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace;--ease:cubic-bezier(.22,.61,.36,1);--navh:64px}
 *{box-sizing:border-box;margin:0;padding:0}
 html{background:var(--bg);color-scheme:dark;scroll-behavior:smooth}
-body{background:var(--bg);color:#fff;position:relative;font-family:var(--disp);-webkit-font-smoothing:antialiased;overflow-x:hidden;min-height:100vh}
+body{background:var(--bg);color:#fff;position:relative;font-family:var(--disp);-webkit-font-smoothing:antialiased;overflow-x:hidden;min-height:100vh;font-weight:500}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;-webkit-tap-highlight-color:transparent}
 a{color:inherit;text-decoration:none}
 ::selection{background:var(--blue);color:#fff}
@@ -31,14 +31,18 @@ body>nav .wm{width:118px}
 .wm .wmt{font-family:"Blanka","Elianto","Michroma",system-ui,sans-serif;font-size:16px;letter-spacing:.06em;fill:#fff;stroke:none;font-weight:400}
 nav
 
+.navb{display:inline-flex;align-items:center;gap:8px}
+.go.ghost{background:transparent!important;border:1px solid rgba(150,195,255,.30)!important;box-shadow:none!important;color:#fff}
+.go.ghost::before,.go.ghost .rk{display:none}
+.go.ghost:hover{background:rgba(150,195,255,.06)!important;border-color:rgba(150,195,255,.5)!important}
+.go.ghost:active{background:rgba(150,195,255,.10)!important;transform:scale(.985)}
+@media (max-width:420px){ .go.ghost{padding-left:12px;padding-right:12px} }
 .go{position:relative;overflow:hidden;isolation:isolate;display:inline-block;
   font-family:Inter,sans-serif;font-size:13.5px;font-weight:800;letter-spacing:-.01em;
-  padding:11px 20px;border-radius:999px;color:#fff;
-  background:linear-gradient(180deg,#6BA6FF 0%,#2D7BFF 46%,#1B45B8 100%);
-  border:1px solid rgba(255,255,255,.14);
-  box-shadow:0 8px 22px -10px rgba(45,123,255,.85),
-             inset 0 1px 0 rgba(255,255,255,.5),
-             inset 0 -8px 14px -9px rgba(4,12,40,.85);
+  padding:11px 20px;border-radius:12px;color:#fff;
+  background:linear-gradient(180deg,#4C8BFF,#2D7BFF);
+  border:0;
+  box-shadow:0 8px 30px rgba(45,123,255,.34);
   transition:box-shadow .25s,transform .08s}
 .go::before{content:"";position:absolute;inset:0;z-index:-1;border-radius:inherit;pointer-events:none;
   background:
@@ -48,9 +52,7 @@ nav
     radial-gradient(1px 1px at 82% 64%, rgba(255,255,255,.6), transparent 60%);
   animation:ctaStars 5.5s ease-in-out infinite}
 @keyframes ctaStars{0%,100%{opacity:.55}50%{opacity:1}}
-.go:hover{box-shadow:0 11px 28px -9px rgba(45,123,255,1),
-             inset 0 1px 0 rgba(255,255,255,.6),
-             inset 0 -8px 14px -9px rgba(4,12,40,.85)}
+.go:hover{box-shadow:0 8px 30px rgba(45,123,255,.34)}
 .go:active{transform:translateY(1px) scale(.99)}
 @media (prefers-reduced-motion:reduce){ .go::before{animation:none;opacity:.8} }
 
@@ -67,7 +69,7 @@ hr{border:0;border-top:1px solid var(--line);margin:40px 0}
 .card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px;text-align:left}
 .grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin:18px 0}
 .row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:22px}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font-weight:700;font-size:16px;padding:14px 22px;border-radius:14px;background:linear-gradient(120deg,#5A9BFF,#1E4FCC);color:#fff;box-shadow:0 10px 30px -12px rgba(45,123,255,.9);transition:filter .15s,transform .1s}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font-weight:700;font-size:16px;padding:14px 22px;border-radius:14px;background:linear-gradient(180deg,#4C8BFF,#2D7BFF);color:#fff;box-shadow:0 10px 30px -12px rgba(45,123,255,.9);transition:filter .15s,transform .1s}
 .btn:hover{filter:brightness(1.1)}.btn:active{transform:scale(.98)}
 .btn.ghost{background:var(--card);border:1px solid var(--line-2);box-shadow:none}
 .mono{font-family:var(--mono)}

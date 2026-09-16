@@ -17,12 +17,13 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="favicon.ico" sizes="32x32">
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" href="favicon-x.ico" sizes="32x32">
+<link rel="icon" href="favicon-x.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon-x.png">
 <link rel="manifest" href="site.webmanifest">
 <link rel="stylesheet" href="fonts/fonts.css">
 <script src="assets/js/sky.js"></script>
+<script src="assets/js/rocket.js" defer></script>
 <style>
 @font-face{
   font-family:"Elianto";font-display:swap;
@@ -38,7 +39,7 @@
 :root{--bg:#03050C;--card:#0A0E1A;--card-2:#121A2B;--well:rgba(160,200,255,.05);--line:rgba(150,195,255,.16);--line-2:rgba(150,195,255,.30);--txt:#FFFFFF;--dim:#8FA8C8;--blue:#2D7BFF;--hi:#7FB6FF;--lo:#1E4FCC;--mint:#A6FF3D;--red:#FF3B6B;--amber:#FFC93C;--disp:"Inter",system-ui,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace}
 *{box-sizing:border-box;margin:0;padding:0}
 html{background:#03050C;color-scheme:dark;scroll-behavior:smooth}
-body{background:#03050C;color:#fff;position:relative;font-family:var(--disp);-webkit-font-smoothing:antialiased;overflow-x:hidden;min-height:100vh}
+body{background:#03050C;color:#fff;position:relative;font-family:var(--disp);font-weight:500;-webkit-font-smoothing:antialiased;overflow-x:hidden;min-height:100vh}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;-webkit-tap-highlight-color:transparent}
 input{font:inherit;color:inherit;background:none;border:0;outline:0}
 :focus-visible{outline:2px solid var(--hi);outline-offset:3px;border-radius:8px}
@@ -54,12 +55,10 @@ a{color:inherit;text-decoration:none}
 #gate
 #gateBtn{position:relative;overflow:hidden;isolation:isolate;
   font-family:Inter,sans-serif;font-size:15px;font-weight:800;letter-spacing:-.01em;color:#fff;
-  padding:17px 46px;border-radius:999px;
-  background:linear-gradient(180deg,#6BA6FF 0%,#2D7BFF 46%,#1B45B8 100%);
-  border:1px solid rgba(255,255,255,.14);
-  box-shadow:0 12px 34px -10px rgba(45,123,255,.9),
-             inset 0 1px 0 rgba(255,255,255,.55),
-             inset 0 -10px 18px -10px rgba(4,12,40,.85);
+  padding:17px 46px;border-radius:12px;
+  background:linear-gradient(180deg,#4C8BFF,#2D7BFF);
+  border:0;
+  box-shadow:0 8px 30px rgba(45,123,255,.34);
   transition:box-shadow .25s,transform .08s}
 #gateBtn>*{position:relative;z-index:2}
 #gateBtn::before{content:"";position:absolute;inset:0;z-index:0;border-radius:inherit;pointer-events:none;
@@ -73,12 +72,8 @@ a{color:inherit;text-decoration:none}
     radial-gradient(1.1px 1.1px at 88% 26%, rgba(255,255,255,.75), transparent 62%),
     radial-gradient(1.4px 1.4px at 22% 84%, rgba(255,255,255,.8), transparent 62%);
   animation:ctaStars 3.8s ease-in-out infinite}
-#gateBtn::after{content:"";position:absolute;left:6%;right:6%;top:2px;height:42%;z-index:1;
-  pointer-events:none;border-radius:999px;
-  background:linear-gradient(180deg,rgba(255,255,255,.34),rgba(255,255,255,0))}
-#gateBtn:hover{box-shadow:0 16px 42px -10px rgba(45,123,255,1),
-             inset 0 1px 0 rgba(255,255,255,.65),
-             inset 0 -10px 18px -10px rgba(4,12,40,.85)}
+#gateBtn::after{content:none}
+#gateBtn:hover{box-shadow:0 8px 30px rgba(45,123,255,.34)}
 #gateBtn:active{transform:translateY(1px) scale(.99)}
 #gate small{font-family:var(--mono);font-size:10px;color:#4a5a78;letter-spacing:.12em}
 
@@ -89,12 +84,10 @@ nav img{height:28px}
 
 body>nav .go{position:relative;overflow:hidden;isolation:isolate;
   font-family:Inter,sans-serif;font-size:13.5px;font-weight:800;letter-spacing:-.01em;
-  padding:11px 20px;border-radius:999px;color:#fff;
-  background:linear-gradient(180deg,#6BA6FF 0%,#2D7BFF 46%,#1B45B8 100%);
-  border:1px solid rgba(255,255,255,.14);
-  box-shadow:0 8px 22px -10px rgba(45,123,255,.85),
-             inset 0 1px 0 rgba(255,255,255,.5),
-             inset 0 -8px 14px -9px rgba(4,12,40,.85);
+  padding:11px 20px;border-radius:12px;color:#fff;
+  background:linear-gradient(180deg,#4C8BFF,#2D7BFF);
+  border:0;
+  box-shadow:0 8px 30px rgba(45,123,255,.34);
   transition:box-shadow .25s,transform .08s}
 body>nav .go::before{content:"";position:absolute;inset:0;z-index:-1;border-radius:inherit;pointer-events:none;
   background:
@@ -103,9 +96,7 @@ body>nav .go::before{content:"";position:absolute;inset:0;z-index:-1;border-radi
     radial-gradient(1.3px 1.3px at 45% 72%, rgba(255,255,255,.8), transparent 60%),
     radial-gradient(1px 1px at 82% 64%, rgba(255,255,255,.6), transparent 60%);
   animation:ctaStars 5.5s ease-in-out infinite}
-body>nav .go:hover{box-shadow:0 11px 28px -9px rgba(45,123,255,1),
-             inset 0 1px 0 rgba(255,255,255,.6),
-             inset 0 -8px 14px -9px rgba(4,12,40,.85)}
+body>nav .go:hover{box-shadow:0 8px 30px rgba(45,123,255,.34)}
 body>nav .go:active{transform:translateY(1px) scale(.99)}
 
 main{position:relative;z-index:1}
@@ -123,12 +114,10 @@ body.lit .wordmark,body.lit .hero h1,body.lit .hero .sub{opacity:1;transform:non
 .cta>*,body>nav .go>*{position:relative;z-index:2}
 .cta{position:relative;overflow:hidden;isolation:isolate;
   display:inline-flex;align-items:center;justify-content:center;gap:10px;
-  color:#fff;font-weight:800;font-size:15px;padding:16px 26px;border-radius:999px;
-  background:linear-gradient(180deg,#6BA6FF 0%,#2D7BFF 46%,#1B45B8 100%);
-  border:1px solid rgba(255,255,255,.14);
-  box-shadow:0 10px 30px -10px rgba(45,123,255,.8),
-             inset 0 1px 0 rgba(255,255,255,.55),
-             inset 0 -10px 18px -10px rgba(4,12,40,.85);
+  color:#fff;font-weight:800;font-size:15px;padding:16px 26px;border-radius:12px;
+  background:linear-gradient(180deg,#4C8BFF,#2D7BFF);
+  border:0;
+  box-shadow:0 8px 30px rgba(45,123,255,.34);
   transition:transform .12s,box-shadow .25s,filter .2s}
 .cta::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;border-radius:inherit;
   background:
@@ -141,13 +130,8 @@ body.lit .wordmark,body.lit .hero h1,body.lit .hero .sub{opacity:1;transform:non
   animation:ctaStars 5.5s ease-in-out infinite}
 @keyframes ctaStars{0%,100%{opacity:.55}50%{opacity:1}}
 
-.cta::after{content:"";position:absolute;left:6%;right:6%;top:2px;height:42%;z-index:-1;
-  pointer-events:none;border-radius:999px;
-  background:linear-gradient(180deg,rgba(255,255,255,.34),rgba(255,255,255,0));
-  filter:blur(.3px)}
-.cta:hover{box-shadow:0 14px 38px -10px rgba(45,123,255,.95),
-             inset 0 1px 0 rgba(255,255,255,.65),
-             inset 0 -10px 18px -10px rgba(4,12,40,.85)}
+.cta::after{content:none}
+.cta:hover{box-shadow:0 8px 30px rgba(45,123,255,.34)}
 .cta:active{transform:translateY(1px) scale(.99)}
 
 .cta::before,body>nav .go::before,.go::before,.share a#goRadio::before{
@@ -167,24 +151,10 @@ body.lit .wordmark,body.lit .hero h1,body.lit .hero .sub{opacity:1;transform:non
   animation:ctaStars 3.8s ease-in-out infinite}
 @keyframes ctaStars{0%,100%{opacity:.72}50%{opacity:1}}
 
-.cta .rk,body>nav .go .rk,.go .rk,.share a#goRadio .rk,#gateBtn .rk,.cta-big .rk,#outro .tk .rk{
-  position:absolute;left:0;top:76%;width:15px;height:18px;margin-top:-9px;z-index:0;
-  pointer-events:none;opacity:.95;
-  background:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2210%22%20height%3D%2212%22%20viewBox%3D%220%200%2010%2012%22%20shape-rendering%3D%22crispEdges%22%3E%3Crect%20x%3D%223%22%20y%3D%220%22%20width%3D%224%22%20height%3D%221%22%20fill%3D%22%23F4F4F4%22%2F%3E%3Crect%20x%3D%222%22%20y%3D%221%22%20width%3D%226%22%20height%3D%225%22%20fill%3D%22%23DDE6FF%22%2F%3E%3Crect%20x%3D%220%22%20y%3D%224%22%20width%3D%222%22%20height%3D%223%22%20fill%3D%22%237FB6FF%22%2F%3E%3Crect%20x%3D%228%22%20y%3D%224%22%20width%3D%222%22%20height%3D%223%22%20fill%3D%22%237FB6FF%22%2F%3E%3Crect%20x%3D%224%22%20y%3D%222%22%20width%3D%222%22%20height%3D%222%22%20fill%3D%22%232D7BFF%22%2F%3E%3Crect%20x%3D%223%22%20y%3D%226%22%20width%3D%224%22%20height%3D%223%22%20fill%3D%22%23FFC93C%22%2F%3E%3Crect%20x%3D%224%22%20y%3D%229%22%20width%3D%222%22%20height%3D%223%22%20fill%3D%22%23FF3B6B%22%2F%3E%3C%2Fsvg%3E") no-repeat center/contain;
-  filter:drop-shadow(-7px 0 9px rgba(255,201,60,.8)) drop-shadow(-14px 0 16px rgba(255,59,107,.45));
-  transform:translateX(-40px) rotate(90deg);
-  animation:ctaRocket 12s linear infinite}
-@keyframes ctaRocket{
-  0%   {transform:translateX(-40px) rotate(90deg);opacity:0}
-  4%   {opacity:1}
-  28%  {opacity:1}
-  32%  {transform:translateX(var(--rkw,320px)) rotate(90deg);opacity:0}
-  100% {transform:translateX(var(--rkw,320px)) rotate(90deg);opacity:0}}
-@media (prefers-reduced-motion:reduce){
-  .cta::before,.go::before,body>nav .go::before{animation:none;opacity:.85}
-  .cta .rk,.go .rk,.cta-big .rk,#outro .tk .rk{display:none}}
+@media (prefers-reduced-motion:reduce){ .cta::before,.go::before,body>nav .go::before{animation:none;opacity:.85} }
 
-.cta:hover{filter:brightness(1.06)}.cta:active{transform:scale(.98)}
+.cta:hover,.go:hover{background:linear-gradient(180deg,#6BA0FF,#3E86FF)}
+.cta:active,.go:active{background:linear-gradient(180deg,#2D7BFF,#1E4FCC);transform:scale(.985)}
 .hero .cta{position:relative;z-index:2;margin-top:26px}
 .hint{font-family:var(--mono);font-size:10px;color:var(--dim);letter-spacing:.12em;margin-top:12px;position:relative;z-index:2}
 
@@ -206,7 +176,7 @@ body.lit .wordmark,body.lit .hero h1,body.lit .hero .sub{opacity:1;transform:non
 .mult.landed{border-color:rgba(166,255,61,.5);background:rgba(166,255,61,.08);box-shadow:0 0 34px -8px rgba(166,255,61,.7);color:var(--mint);font-size:30px;text-shadow:0 0 16px rgba(166,255,61,.6)}
 .meta{display:grid;grid-template-columns:1fr 1fr;margin-top:12px;border-top:1px solid var(--line);padding-top:10px}
 .meta div:last-child{border-left:1px solid var(--line);padding-left:12px}
-.meta i{font-style:normal;font-family:var(--mono);font-size:13px;font-weight:700}
+.meta i{font-style:normal;font-family:var(--mono);font-size:13px;font-weight:600}
 .tag{font-family:var(--mono);font-size:9px;letter-spacing:.11em;padding:3px 7px;border-radius:99px;color:var(--hi);background:rgba(45,123,255,.14);border:1px solid rgba(45,123,255,.34);margin-right:6px}
 .rowb{display:flex;gap:8px;margin-top:12px}
 .rowb span{padding:9px 12px;border-radius:12px;border:1px solid var(--line);font-size:12px;font-weight:700;color:var(--hi)}
@@ -220,7 +190,7 @@ h2{font-weight:800;letter-spacing:-.035em;font-size:clamp(32px,5.6vw,56px);line-
 
 #radioWrap{position:relative;z-index:3;width:min(94vw,640px);margin:34px auto 0;transform:translateY(40px);opacity:0;transition:transform 1.2s cubic-bezier(.2,.8,.2,1) .1s,opacity 1s .1s}
 body.lit #radioWrap{transform:none;opacity:1}
-.set{border-radius:28px;background:linear-gradient(180deg,#141C2E,#0A0E1A 60%,#070B14);border:1px solid var(--line-2);box-shadow:0 40px 80px -30px rgba(45,123,255,.45),inset 0 1px 0 rgba(255,255,255,.08);padding:18px 16px 16px;position:relative}
+.set{border-radius:28px;background:linear-gradient(180deg,#141C2E,#0A0E1A 60%,#070B14);border:1px solid var(--line-2);box-shadow:0 8px 30px rgba(45,123,255,.34);padding:18px 16px 16px;position:relative}
 .set::before{content:"";position:absolute;left:24px;right:24px;top:0;height:1px;background:linear-gradient(90deg,transparent,rgba(127,182,255,.6),transparent)}
 
 .glass{position:relative;border-radius:16px;background:#020814;border:1px solid rgba(45,123,255,.7);box-shadow:inset 0 0 40px rgba(45,123,255,.18),0 0 30px -10px rgba(45,123,255,.7);padding:9px 9px 11px;overflow:hidden}
@@ -244,14 +214,14 @@ body.lit #radioWrap{transform:none;opacity:1}
 .mesh{margin-top:14px;height:38px;border-radius:12px;background:repeating-linear-gradient(90deg,#0D1424 0 4px,#050914 4px 8px),#0D1424;border:1px solid var(--line);position:relative;overflow:hidden}
 .mesh::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(0,0,0,.35) 0 2px,transparent 2px 6px)}
 .presets{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:14px}
-.presets button{height:40px;border-radius:9px;background:linear-gradient(180deg,#1A2338,#0D1424);border:1px solid var(--line);font-family:var(--mono);font-size:9px;letter-spacing:.08em;color:var(--dim);box-shadow:inset 0 -3px 0 rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.06);transition:.12s}
+.presets button{height:40px;border-radius:9px;background:linear-gradient(180deg,#1A2338,#0D1424);border:1px solid var(--line);font-family:var(--mono);font-size:9px;letter-spacing:.08em;color:var(--dim);box-shadow:0 8px 30px rgba(45,123,255,.34);transition:.12s}
 .presets button.on{color:#03050C;background:linear-gradient(180deg,#A6FF3D,#5FB01E);border-color:transparent;box-shadow:0 0 18px -4px rgba(166,255,61,.8)}
 .presets button:active{transform:translateY(2px)}
 .keys{display:grid;grid-template-columns:1.2fr 1fr 1.2fr;gap:8px;margin-top:10px}
 .keys+.keys{margin-top:8px}
 .keys+.keys button{height:44px;font-size:10px}
-.keys button{height:52px;border-radius:12px;background:linear-gradient(180deg,#1A2338,#0D1424);border:1px solid var(--line-2);font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:#fff;box-shadow:inset 0 -4px 0 rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.06)}
-.keys button.play{background:linear-gradient(180deg,#5A9BFF,#1E4FCC);border-color:transparent;font-weight:700}
+.keys button{height:52px;border-radius:12px;background:linear-gradient(180deg,#1A2338,#0D1424);border:1px solid var(--line-2);font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:#fff;box-shadow:0 8px 30px rgba(45,123,255,.34)}
+.keys button.play{background:linear-gradient(180deg,#4C8BFF,#2D7BFF);border-color:transparent;font-weight:700}
 .keys button.on{color:var(--mint);border-color:rgba(166,255,61,.5)}
 .keys button:active{transform:translateY(2px)}
 .vol{display:flex;align-items:center;gap:12px;margin-top:12px;font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:var(--dim)}
@@ -274,8 +244,8 @@ body.lit #radioWrap{transform:none;opacity:1}
 .cards{display:grid;gap:16px;padding:40px 16px 20px;max-width:980px;margin:0 auto}
 .card{background:var(--card);border:1px solid var(--line);border-radius:34px;padding:38px 26px 0;overflow:hidden;min-height:480px;display:flex;flex-direction:column;text-align:left;background-image:linear-gradient(150deg,rgba(45,123,255,.10),transparent 62%)}
 
-.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.16em;color:var(--blue);font-weight:700}
-.card .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.16em;color:var(--blue);font-weight:700}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.16em;color:var(--blue);font-weight:600}
+.card .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.16em;color:var(--blue);font-weight:600}
 .card h3{font-weight:800;font-size:clamp(28px,5.6vw,40px);letter-spacing:-.03em;line-height:1.05;margin-top:16px;max-width:15ch}
 .card p{color:#B9C7DE;line-height:1.55;margin-top:12px;max-width:40ch}
 .card .art{margin-top:auto;padding-top:40px;display:flex;justify-content:center;align-items:flex-end}
@@ -286,7 +256,7 @@ body.lit #radioWrap{transform:none;opacity:1}
 .xp.b{color:var(--hi);background:rgba(45,123,255,.12);border-color:rgba(45,123,255,.4)}
 .rank{font-family:var(--mono);font-weight:700;color:var(--hi);width:18px}
 .chips{display:flex;gap:8px;margin-top:12px}
-.chips span{flex:1;text-align:center;padding:10px 0;border-radius:12px;background:var(--card-2);border:1px solid var(--line);font-family:var(--mono);font-size:12px;font-weight:700}
+.chips span{flex:1;text-align:center;padding:10px 0;border-radius:12px;background:var(--card-2);border:1px solid var(--line);font-family:var(--mono);font-size:12px;font-weight:600}
 .chips span.on{border-color:var(--hi);color:var(--hi)}
 .card svg.big{width:min(58%,220px);height:auto;margin-bottom:32px}
 @media (min-width:760px){.cards{grid-template-columns:1fr 1fr}}
@@ -323,9 +293,12 @@ body.lit #radioWrap{transform:none;opacity:1}
 #pos .share{margin-top:18px;display:flex;gap:10px;flex-wrap:wrap}
 #pos
 .share{margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:10px;width:min(100%,514px)}
+
 .share button,.share a{display:flex;align-items:center;justify-content:center;text-align:center;
   font-family:var(--mono);font-size:10px;letter-spacing:.1em;min-height:44px;padding:0 12px;
-  border:1px solid var(--line-2);border-radius:14px;background:var(--card-2);color:var(--dim);
+  border-radius:12px;
+  background:linear-gradient(180deg,rgba(150,195,255,.08),rgba(150,195,255,.01));
+  border:1px solid rgba(150,195,255,.18);color:var(--dim);border-radius:14px;background:var(--card-2);color:var(--dim);
   text-decoration:none;transition:border-color .15s,color .15s,background .15s,transform .08s}
 .share button:hover,.share a:hover{color:#fff;border-color:var(--line-2)}
 .share button:active,.share a:active{transform:scale(.985)}
@@ -333,11 +306,9 @@ body.lit #radioWrap{transform:none;opacity:1}
 .share a#goRadio,.share a#goRodeo{font-family:Inter,sans-serif;font-weight:800;font-size:14px;
   letter-spacing:-.01em;min-height:54px;color:#fff}
 .share a#goRadio{position:relative;overflow:hidden;isolation:isolate;
-  background:linear-gradient(180deg,#6BA6FF 0%,#2D7BFF 46%,#1B45B8 100%);
-  border-color:rgba(255,255,255,.14);border-radius:999px;
-  box-shadow:0 10px 30px -12px rgba(45,123,255,.75),
-             inset 0 1px 0 rgba(255,255,255,.55),
-             inset 0 -10px 18px -10px rgba(4,12,40,.85)}
+  background:linear-gradient(180deg,#4C8BFF,#2D7BFF);
+  border:0;border-radius:12px;
+  box-shadow:0 8px 30px rgba(45,123,255,.34)}
 .share a#goRadio::before{content:"";position:absolute;inset:0;z-index:-1;border-radius:inherit;pointer-events:none;
   background:
     radial-gradient(1.3px 1.3px at 20% 34%, rgba(255,255,255,.9), transparent 60%),
@@ -345,10 +316,10 @@ body.lit #radioWrap{transform:none;opacity:1}
     radial-gradient(1.4px 1.4px at 46% 70%, rgba(255,255,255,.8), transparent 60%),
     radial-gradient(1px 1px at 84% 62%, rgba(255,255,255,.6), transparent 60%);
   animation:ctaStars 5.5s ease-in-out infinite}
-.share a#goRodeo{border-radius:999px}
+.share a#goRodeo{border-radius:12px}
 .share a#goRadio:hover{box-shadow:0 12px 34px -10px rgba(45,123,255,.9)}
-.share a#goRodeo{background:var(--card-2);border-color:var(--line-2)}
-.share a#goRodeo:hover{border-color:var(--hi)}
+.share a#goRodeo{background:transparent;border:1px solid var(--line-2);color:#fff}
+.share a#goRodeo:hover{border-color:rgba(150,195,255,.5)}
 @media (max-width:520px){ .share{grid-template-columns:1fr} }
 .giant{margin:52px 0 0;padding:0;overflow:hidden;line-height:0;opacity:.96;width:100%;box-sizing:border-box}
 footer{padding:64px 20px 0;border-top:1px solid var(--line);position:relative;z-index:1;overflow:hidden}
@@ -372,8 +343,12 @@ footer small{display:block;margin-top:50px;color:#5A6B8A;font-size:12px;font-fam
 #miniBar #miniStPrev,#miniBar #miniStNext{width:36px;font-size:14px;color:var(--dim)}
 #miniBar #miniStPrev:hover,#miniBar #miniStNext:hover{color:#fff;border-color:var(--hi)}
 @media (max-width:520px){#miniBar #miniStPrev,#miniBar #miniStNext{display:none}}
-#miniBar button{width:44px;height:40px;border-radius:10px;background:linear-gradient(180deg,#1A2338,#0D1424);border:1px solid var(--line-2);font-family:var(--mono);font-size:12px;color:#fff;box-shadow:inset 0 -3px 0 rgba(0,0,0,.5);flex:none}
-#miniBar button.play{background:linear-gradient(180deg,#5A9BFF,#1E4FCC);border-color:transparent}
+
+#miniBar button{width:44px;height:40px;border-radius:12px;background:transparent;border:1px solid rgba(150,195,255,.30);font-family:var(--mono);font-size:12px;color:#fff;box-shadow:none;flex:none}
+#miniBar button:hover{background:rgba(150,195,255,.06);border-color:rgba(150,195,255,.5)}
+#miniBar button:active{transform:scale(.985)}
+#miniBar button.play{background:linear-gradient(180deg,#4C8BFF,#2D7BFF);border:0;box-shadow:0 8px 30px rgba(45,123,255,.34)}
+#miniBar button.play:hover{background:linear-gradient(180deg,#6BA0FF,#3E86FF)}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 .sr{position:absolute;left:-9999px}
 
@@ -432,7 +407,9 @@ footer small{display:block;margin-top:50px;color:#5A6B8A;font-size:12px;font-fam
   .rail .tc{background:rgba(166,255,61,.08);border-radius:6px;padding:6px 8px;margin-bottom:12px}
   .rail .ni{padding:10px 10px;border-radius:10px;font-size:13px;font-weight:700;color:var(--dim);margin-top:4px}
   .rail .ni.on{background:rgba(45,123,255,.14);color:#fff;border-left:3px solid var(--blue)}
-  .dmain{padding:18px 20px}
+  .d
+main{--mainPad:20px;padding:18px var(--mainPad)}
+.hero{margin-left:calc(-1 * var(--mainPad));margin-right:calc(-1 * var(--mainPad))}
   .dmain h4{font-weight:800;font-size:22px;letter-spacing:-.03em}
   .drow{display:flex;gap:14px;align-items:center;margin-top:12px}
   .phone{position:absolute;right:calc(50% - min(35vw,450px) - 40px);top:120px;width:250px;transform:rotateX(22deg) rotateY(-10deg)}
@@ -711,7 +688,7 @@ button:active,.posrow:active,.mkrow:active,.lb:active,.rec:active,.memo:active,.
 .say{margin-top:8px;border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:12px;font-weight:700}
 .two{display:flex;gap:8px;margin-top:12px}
 .two span{flex:1;text-align:center;padding:12px 0;border-radius:12px;border:1px solid var(--line-2);font-size:13px;font-weight:700}
-.two span.p{background:linear-gradient(120deg,#5A9BFF,#1E4FCC);border-color:transparent}
+.two span.p{background:linear-gradient(180deg,#4C8BFF,#2D7BFF);border-color:transparent}
 .ladder{display:flex;gap:6px;margin-top:6px}
 .ladder span{font-family:var(--mono);font-size:9px;padding:3px 7px;border-radius:99px;border:1px solid var(--line);color:var(--dim)}
 .pos{border-top:1px solid var(--line);padding:12px 0}
@@ -742,7 +719,12 @@ body.lit .kick{opacity:1}
   .step{min-height:100vh;justify-content:center;padding-bottom:0;max-width:42%;margin:0 0 0 7vw}
   .step::before{display:none}
   .step .eyebrow,.step h3{position:static;bottom:auto}
-  .band{margin-top:-170px;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);width:100vw;padding:210px 20px 44px;box-sizing:border-box;background:linear-gradient(180deg,rgba(3,5,12,0) 0%,rgba(3,5,12,.55) 30%,rgba(3,5,12,.9) 60%,#03050C 100%);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);-webkit-mask-image:linear-gradient(180deg,transparent 0,#000 22%);mask-image:linear-gradient(180deg,transparent 0,#000 22%)} .stage{min-height:800px;align-items:flex-start;padding-top:0;perspective:1500px;perspective-origin:50% 20%;transform-style:preserve-3d;overflow:hidden} .desk{width:min(62vw,880px);max-height:none;transform:rotateX(18deg);transform-origin:50% 0} .phone{position:absolute;right:calc(50% - min(31vw,440px) - 60px);top:40px;width:210px;--pw:210px;aspect-ratio:780/1688;height:auto;margin:0;
+
+.band{padding:210px 20px 44px;box-sizing:border-box;background:linear-gradient(180deg,rgba(3,5,12,0) 0%,rgba(3,5,12,.55) 30%,rgba(3,5,12,.9) 60%,#03050C 100%);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);-webkit-mask-image:linear-gradient(180deg,transparent 0,#000 22%);mask-image:linear-gradient(180deg,transparent 0,#000 22%)}
+.stage{min-height:800px;align-items:flex-start;padding-top:0;perspective:1500px;perspective-origin:50% 20%;transform-style:preserve-3d;overflow:hidden;
+
+  width:calc(100% + 2 * var(--heroPad,20px));margin-left:calc(-1 * var(--heroPad,20px));margin-right:calc(-1 * var(--heroPad,20px));padding-left:var(--heroPad,20px);padding-right:var(--heroPad,20px);box-sizing:border-box}
+.band{left:0;right:0} .desk{width:min(62vw,880px);max-height:none;transform:rotateX(18deg);transform-origin:50% 0} .phone{position:absolute;right:calc(50% - min(31vw,440px) - 60px);top:40px;width:210px;--pw:210px;aspect-ratio:780/1688;height:auto;margin:0;
     transform:rotateX(12deg) rotateY(-14deg) rotateZ(-1deg);transform-origin:50% 50%;
     box-shadow:0 2px 0 rgba(255,255,255,.10) inset,0 -2px 0 rgba(0,0,0,.6) inset,0 0 0 1px rgba(150,195,255,.18),0 26px 50px -18px rgba(0,0,0,.9),0 70px 130px -50px rgba(45,123,255,.55)}
 .phone::after{content:"";position:absolute;inset:0;border-radius:38px;background:linear-gradient(126deg,rgba(255,255,255,.16),rgba(255,255,255,0) 32%,rgba(255,255,255,0) 62%,rgba(150,195,255,.12));pointer-events:none;z-index:3}
@@ -817,7 +799,8 @@ body.lit .kick{opacity:1}
 .proof[hidden]{display:none}
 .proof{position:relative;z-index:2;margin-top:18px;text-align:center;opacity:0;transition:opacity 1s .4s}
 body.lit .proof{opacity:1}
-.pmult{font-weight:800;font-size:clamp(64px,18vw,120px);letter-spacing:-.06em;line-height:.95;color:var(--mint);text-shadow:0 0 30px rgba(166,255,61,.45)}
+
+.pmult{font-family:"Blanka","Elianto",system-ui,sans-serif;font-weight:400;font-size:clamp(60px,17vw,112px);letter-spacing:0;line-height:.95;color:var(--mint);text-shadow:0 0 30px rgba(166,255,61,.45)}
 .ptime{display:inline-block;margin-top:6px;font-family:var(--mono);font-size:11px;letter-spacing:.16em;color:#fff;background:rgba(166,255,61,.14);border:1px solid rgba(166,255,61,.35);border-radius:99px;padding:5px 12px}
 .ptime.c{background:rgba(127,182,255,.14);border-color:rgba(127,182,255,.4)}
 .phead{margin-top:12px;font-weight:800;font-size:clamp(20px,5vw,26px);letter-spacing:-.02em;line-height:1.15;max-width:22ch;margin-left:auto;margin-right:auto}
@@ -849,7 +832,7 @@ body.lit .proof{opacity:1}
 .step{min-height:92vh;display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:14vh;text-align:left;max-width:520px;margin:0 auto;opacity:.16;will-change:opacity,transform}
 
 .step h3{font-weight:800;font-size:clamp(28px,6.4vw,44px);letter-spacing:-.03em;line-height:1.05;margin-top:14px;max-width:16ch}
-.step .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.16em;color:var(--blue);font-weight:700}
+.step .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.16em;color:var(--blue);font-weight:600}
 @media (min-width:900px){
   .jwrap{display:grid;grid-template-columns:1fr 1fr;gap:0}
   .jsticky{height:calc(100vh - 80px);top:80px;order:2}
@@ -925,14 +908,14 @@ section[hidden]{display:none!important}
 .jsheet-row b{color:#A6FF3D;font-family:var(--mono);font-size:11px}
 .jsheet-rate b{color:#fff;font-size:10.5px}
 .jsheet-cta{margin-top:3px;text-align:center;font-weight:800;font-size:12px;color:#04070F;padding:10px;
-  border-radius:11px;background-image:linear-gradient(#5B8BFF,#2D7BFF)}
+  border-radius:11px;background-image:linear-gradient(180deg,#4C8BFF,#2D7BFF)}
 .jsheet-note{margin-top:8px;text-align:center;font-size:9px;color:#6C819E}
 
 #needPlay{position:fixed;left:50%;transform:translateX(-50%);bottom:96px;z-index:60;font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:#04070F;background-image:linear-gradient(#7FB6FF,#2D7BFF);border:0;border-radius:12px;padding:12px 18px;font-weight:800;cursor:pointer}
 #needPlay[hidden]{display:none}
 
 .readout .rline{display:flex;align-items:baseline;gap:10px;margin-bottom:7px;width:100%}
-.readout .rline b{font-family:var(--mono);font-size:13px;letter-spacing:.08em;color:var(--blue);font-weight:700;flex:none}
+.readout .rline b{font-family:var(--mono);font-size:13px;letter-spacing:.08em;color:var(--blue);font-weight:600;flex:none}
 .readout .dj{font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:var(--dim);flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
 .readout .pos{font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--dim);flex:none}
 .readout .mq{display:block;width:100%;overflow:hidden;white-space:nowrap}
@@ -958,7 +941,7 @@ section[hidden]{display:none!important}
   .stage .desk{transform:rotateX(18deg)!important}
 }
 
-.jband .bt .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;color:var(--blue);font-weight:700;margin-bottom:8px}
+.jband .bt .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;color:var(--blue);font-weight:600;margin-bottom:8px}
 .jband .bt h3{font-weight:800;font-size:clamp(24px,6vw,32px);letter-spacing:-.03em;line-height:1.08;margin:0;color:#fff;max-width:16ch}
 .jband::before{content:"";position:fixed;left:0;right:0;bottom:0;height:44svh;background:linear-gradient(180deg,rgba(3,5,12,0),rgba(3,5,12,.82) 40%,rgba(3,5,12,.97) 78%);pointer-events:none}
 
@@ -967,7 +950,7 @@ section[hidden]{display:none!important}
   #journey .step{scroll-snap-align:none}
 }
 
-.pbadge{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.16em}
+.pbadge{font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.16em}
 
 @media (max-width:899px){
   .hero>.pbadge{display:inline-flex;align-items:center;gap:8px;margin:0 auto 26px}
@@ -975,6 +958,13 @@ section[hidden]{display:none!important}
 }
 
 body>nav .go{font-family:Inter,sans-serif;font-size:13.5px;font-weight:800;letter-spacing:-.01em}
+
+.navb{display:inline-flex;align-items:center;gap:8px}
+.go.ghost{background:transparent!important;border:1px solid rgba(150,195,255,.30)!important;box-shadow:none!important;color:#fff}
+.go.ghost::before,.go.ghost .rk{display:none}
+.go.ghost:hover{background:rgba(150,195,255,.06)!important;border-color:rgba(150,195,255,.5)!important}
+.go.ghost:active{background:rgba(150,195,255,.10)!important;transform:scale(.985)}
+@media (max-width:420px){ .go.ghost{padding-left:12px;padding-right:12px} }
 
 #radioSheet .scope{aspect-ratio:16/5.2}
 #radioSheet .presets{gap:5px;margin-top:10px}
@@ -1046,7 +1036,7 @@ body>nav>a:first-child:hover::after,body>nav>a:first-child:focus-visible::after{
 <link rel="preload" as="image" href="assets/shots/dd7871ec76.webp" type="image/webp">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://moonx.fi/#org","name":"MOONX","url":"https://moonx.fi","logo":{"@type":"ImageObject","url":"https://moonx.fi/brand/png/moonx-logo-1024.png","width":1024,"height":1024},"description":"MOONX is a consumer app for prediction markets: a non-custodial wallet, every Polymarket market on one board, and a shot in one tap.","foundingDate":"2026"}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","@id":"https://moonx.fi/#site","name":"MOONX","url":"https://moonx.fi","publisher":{"@id":"https://moonx.fi/#org"},"inLanguage":"en"}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is this gambling?","acceptedAnswer":{"@type":"Answer","text":"No. You are buying a share in a real prediction market, and you can sell it back at any time before it settles. A ticket at 4¢ is worth 4¢ the second after you buy it, not zero. What you pay is the market price, set by everyone trading it, not odds set by a house. MOONX is not the counterparty and does not profit from you losing."}},{"@type":"Question","name":"Where does my money actually go?","acceptedAnswer":{"@type":"Answer","text":"Into your own wallet, on Polygon, in USDC. MOONX never holds it. When you take a shot, the order goes to Polymarket, the venue where the market lives. When it settles, the payout comes back to the same wallet."}},{"@type":"Question","name":"What is a non-custodial wallet, in plain terms?","acceptedAnswer":{"@type":"Answer","text":"A wallet only you can move money out of. It is made on your device when you name your fund. You save one encrypted backup file and set a password only you hold; together they are the only way back in, and you can export the key and walk away with your funds at any moment. No approval from us, ever."}},{"@type":"Question","name":"Do I need crypto to start?","acceptedAnswer":{"@type":"Answer","text":"No. Buy USDC with a card in the app, the way you would buy anything else. If you already hold USDC, send it from any wallet or exchange. And you never pay gas: MOONX covers the network fees."}},{"@type":"Question","name":"What can I lose?","acceptedAnswer":{"@type":"Answer","text":"Exactly what you put on a shot, and nothing more. Ten dollars on a ticket means ten dollars at risk. There is no leverage, no margin call, no debt."}},{"@type":"Question","name":"Why do the payouts look so big?","acceptedAnswer":{"@type":"Answer","text":"Because a long shot is cheap. A ticket at 5¢ pays a dollar if it lands, which is 20x. That also means the market thinks it lands one time in twenty. Big multiples and low odds are the same fact seen from two sides."}},{"@type":"Question","name":"How does MOONX make money?","acceptedAnswer":{"@type":"Answer","text":"A small fee on each shot, disclosed before you take it. If you bring a cowboy in, you earn up to 0.5% each time they take or sell a shot, taken from our side, not theirs."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is this gambling?","acceptedAnswer":{"@type":"Answer","text":"No. You are buying a share in a real prediction market, and you can sell it back at any time before it settles. A ticket at 4¢ is worth 4¢ the second after you buy it, not zero. What you pay is the market price, set by everyone trading it, not odds set by a house. MOONX is not the counterparty and does not profit from you losing."}},{"@type":"Question","name":"Where does my money actually go?","acceptedAnswer":{"@type":"Answer","text":"Into your own wallet, on Polygon, in USDC. MOONX never holds it. When you take a shot, the order goes to Polymarket, the venue where the market lives. When it settles, the payout comes back to the same wallet."}},{"@type":"Question","name":"What is a non-custodial wallet, in plain terms?","acceptedAnswer":{"@type":"Answer","text":"A wallet only you can move money out of. It is made on your device when you name your fund. You save one encrypted backup file and set a password only you hold; together they are the only way back in, and you can export the key and walk away with your funds at any moment. No approval from us, ever."}},{"@type":"Question","name":"Do I need crypto to start?","acceptedAnswer":{"@type":"Answer","text":"No. Buy USDC with a card in the app, the way you would buy anything else. If you already hold USDC, send it from any wallet or exchange. Inside MOONX you never pay gas: every shot, every sale, every payout, we cover the network fees. What it costs to send USDC to us from somewhere else is set by that somewhere else, not by us."}},{"@type": "Question", "name": "Do I have to wait for the market to settle?", "acceptedAnswer": {"@type": "Answer", "text": "No. A shot is a position you can sell any time before it resolves, at the price the market gives it that moment. If your ticket climbed from 5¢ to 30¢, you can take the 6x now instead of waiting for the dollar. If it is going the wrong way, you can sell and keep what is left instead of riding it to zero. Holding to the end is one way to play. It is not the only one."}},{"@type":"Question","name":"What can I lose?","acceptedAnswer":{"@type":"Answer","text":"Exactly what you put on a shot, and nothing more. Ten dollars on a ticket means ten dollars at risk. There is no leverage, no margin call, no debt."}},{"@type":"Question","name":"Why do the payouts look so big?","acceptedAnswer":{"@type":"Answer","text":"Some are big, most are not, and both are the point. A ticket at 5¢ pays a dollar if it lands, which is 20x; a ticket at 90¢ pays a dollar too, which is 1.1x. The market prices every shot at what it thinks the odds are, so a big multiple is just a long shot seen from the other side. Chasing the moonshot is a way of riding, not a number: a 1.1x is a moonshot, a 1000x is a moonshot, and win or lose, the ride is what you keep. Winning big is better, of course. That is why you ride."}},{"@type":"Question","name":"How does MOONX make money?","acceptedAnswer":{"@type":"Answer","text":"A 1% fee on each shot. If you bring a cowboy in, you earn up to 0.5% each time they take or sell a shot, taken from our side, not theirs."}}]}</script>
 </head>
 <body id="top" data-autoresume="1">
 <div id="bgfix" aria-hidden="true"></div>
@@ -1098,7 +1088,7 @@ body>nav>a:first-child:hover::after,body>nav>a:first-child:focus-visible::after{
 <a class="skip" href="#main">Skip to content</a>
 <nav aria-label="Main">
   <a href="#top" aria-label="MOONX"><svg class="wm" viewBox="0 0 100 22" role="img" aria-label="MOONX" preserveAspectRatio="xMidYMid meet"><text class="wmt" x="50" y="17" text-anchor="middle">MOONX</text></svg></a>
-  <a class="go" href="#board">Get your ticket</a>
+  <span class="navb"><a class="go ghost" href="https://lfg.moonx.fi" title="Already have your access code? Ride in.">Ride in</a><a class="go" href="#board">Get your ticket</a></span>
 </nav>
 
 <main id="main">
@@ -1173,15 +1163,16 @@ body>nav>a:first-child:hover::after,body>nav>a:first-child:focus-visible::after{
 
 <section class="sec faq" id="faq">
   <div class="eyebrow" style="font-family:var(--mono);font-size:12px;letter-spacing:.16em;color:var(--blue);font-weight:700">STRAIGHT ANSWERS</div>
-  <h2 style="margin-top:14px">no jargon, just answers.</h2>
+  <h2 style="margin-top:14px">no jargon, just straight talk.</h2>
   <div class="qs">
     <details><summary>Is this gambling?</summary><p>No. You are buying a share in a real prediction market, and you can sell it back at any time before it settles. A ticket at 4¢ is worth 4¢ the second after you buy it, not zero. What you pay is the market price, set by everyone trading it, not odds set by a house. MOONX is not the counterparty and does not profit from you losing.</p></details>
     <details><summary>Where does my money actually go?</summary><p>Into your own wallet, on Polygon, in USDC. MOONX never holds it. When you take a shot, the order goes to Polymarket, the venue where the market lives. When it settles, the payout comes back to the same wallet.</p></details>
     <details><summary>What is a non-custodial wallet, in plain terms?</summary><p>A wallet only you can move money out of. It is made on your device when you name your fund. You save one encrypted backup file and set a password only you hold; together they are the only way back in, and you can export the key and walk away with your funds at any moment. No approval from us, ever.</p></details>
-    <details><summary>Do I need crypto to start?</summary><p>No. Buy USDC with a card in the app, the way you would buy anything else. If you already hold USDC, send it from any wallet or exchange. And you never pay gas: MOONX covers the network fees.</p></details>
+    <details><summary>Do I need crypto to start?</summary><p>No. Buy USDC with a card in the app, the way you would buy anything else. If you already hold USDC, send it from any wallet or exchange. Inside MOONX you never pay gas: every shot, every sale, every payout, we cover the network fees. What it costs to send USDC to us from somewhere else is set by that somewhere else, not by us.</p></details>
+    <details><summary>Do I have to wait for the market to settle?</summary><p>No. A shot is a position you can sell any time before it resolves, at the price the market gives it that moment. If your ticket climbed from 5¢ to 30¢, you can take the 6x now instead of waiting for the dollar. If it is going the wrong way, you can sell and keep what is left instead of riding it to zero. Holding to the end is one way to play. It is not the only one.</p></details>
     <details><summary>What can I lose?</summary><p>Exactly what you put on a shot, and nothing more. Ten dollars on a ticket means ten dollars at risk. There is no leverage, no margin call, no debt.</p></details>
-    <details><summary>Why do the payouts look so big?</summary><p>Because a long shot is cheap. A ticket at 5¢ pays a dollar if it lands, which is 20x. That also means the market thinks it lands one time in twenty. Big multiples and low odds are the same fact seen from two sides.</p></details>
-    <details><summary>How does MOONX make money?</summary><p>A small fee on each shot, disclosed before you take it. If you bring a cowboy in, you earn up to 0.5% each time they take or sell a shot, taken from our side, not theirs.</p></details>
+    <details><summary>Why do the payouts look so big?</summary><p>Some are big, most are not, and both are the point. A ticket at 5¢ pays a dollar if it lands, which is 20x; a ticket at 90¢ pays a dollar too, which is 1.1x. The market prices every shot at what it thinks the odds are, so a big multiple is just a long shot seen from the other side. Chasing the moonshot is a way of riding, not a number: a 1.1x is a moonshot, a 1000x is a moonshot, and win or lose, the ride is what you keep. Winning big is better, of course. That is why you ride.</p></details>
+    <details><summary>How does MOONX make money?</summary><p>A 1% fee on each shot. If you bring a cowboy in, you earn up to 0.5% each time they take or sell a shot, taken from our side, not theirs.</p></details>
   </div>
 </section>
 <section class="close" id="board">
@@ -1201,10 +1192,10 @@ body>nav>a:first-child:hover::after,body>nav>a:first-child:focus-visible::after{
           <div class="sn" id="tkSn">MX-0000</div><div class="pm">YOU ARE ON THE LIST</div>
           <h5>Space cowboy, first ride</h5>
           <div class="num" id="posN">SADDLED UP</div>
-          <div class="st">GO FOR LAUNCH</div>
-          <div class="code" id="tkCode">WE WRITE WHEN THE DOOR OPENS</div>
-          <div class="oc"><i></i>ON-CHAIN AT LAUNCH</div>
-          <div class="inv">NOTHING TO DO NOW BUT WAIT, AND WE ARE BAD AT WAITING.<br>THE RADIO IS ON AND THE RODEO IS OPEN.</div>
+          <div class="st">CODE ON ITS WAY</div>
+          <div class="code" id="tkCode">YOUR ACCESS CODE IS ON ITS WAY</div>
+          <div class="oc"><i></i>LIVE ON-CHAIN</div>
+          <div class="inv">CODES GO OUT IN WAVES. WATCH YOUR INBOX.<br>MEANWHILE THE RADIO IS ON AND THE RODEO IS OPEN.</div>
         </div>
       </div>
       <div class="share"><a id="goRadio" href="#journey">LISTEN TO THE RADIO</a><a id="goRodeo" href="rodeo.html#play">RIDE MOON RODEO</a></div>
@@ -1229,7 +1220,7 @@ body>nav>a:first-child:hover::after,body>nav>a:first-child:focus-visible::after{
 <div id="rsScrim" aria-hidden="true"></div>
 <div id="radioVeil" aria-hidden="true"></div>
 <div id="radioSheet" role="dialog" aria-label="Shuttle radio" aria-hidden="true">
-  <div class="rs-head"><div><b>MOONX Radio</b><span id="rsSub">Ten stations. Sixty-five songs, all of them ours.</span></div><button type="button" id="rsClose" aria-label="Minimise the radio" title="Minimise"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 10l6 6 6-6"/><path d="M5 20h14"/></svg></button></div>
+  <div class="rs-head"><div><b>MOONX Radio</b><span id="rsSub">Ten stations. Sixty-five songs, all of them ours. Ride with the sound on.</span></div><button type="button" id="rsClose" aria-label="Minimise the radio" title="Minimise"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 10l6 6 6-6"/><path d="M5 20h14"/></svg></button></div>
   <div id="sheetSlot"></div>
 </div>
 <button id="needPlay" type="button" hidden>&#9654; TAP TO START THE RADIO</button>
@@ -1675,6 +1666,14 @@ document.getElementById("gateBtn").addEventListener("click",()=>{
 
 MoonxSky.mount(document.getElementById("sky"), {density:150, parallax:16});
 
+try{ const jb=document.querySelector('.jband'), jsec=document.getElementById('journey');
+
+  if(jb && jb.parentElement !== document.body) document.body.appendChild(jb);
+  if(jb&&jsec&&'IntersectionObserver' in window){
+    new IntersectionObserver(es=>{ for(const e of es) jb.classList.toggle('inview', e.isIntersecting); },{threshold:0.05}).observe(jsec);
+  }
+}catch(_){}
+
 (()=>{ const ph=document.querySelector(".stage .phone"), dk=document.querySelector(".stage .desk"); if(!ph||!dk) return;
   const reduce=window.matchMedia("(prefers-reduced-motion: reduce)").matches; if(reduce) return;
   const desktop=()=>window.innerWidth>=900;
@@ -1990,10 +1989,12 @@ function fmtX(x){ if(x>=100) return Math.round(x)+"x";
 function cents(m){ if(m<0.0001) return "<0.01¢"; const c=m*100;
   return (c<10?Math.round(c*100)/100:Math.round(c*10)/10)+"¢"; }
 
+function annee(iso){ return String(iso||"").slice(0,4); }
 function whenOf(l){ if(l.kind==="combo") return String(l.when||"").toUpperCase();
-  return l.open&&l.close
-  ? (l.open===l.close?fmtDate(l.open):fmtDate(l.open)+" → "+fmtDate(l.close))
-  : String(l.when||"").toUpperCase(); }
+  if(!(l.open&&l.close)) return String(l.when||"").toUpperCase();
+  if(l.open===l.close) return fmtDate(l.open)+", "+annee(l.open);
+  if(annee(l.open)===annee(l.close)) return fmtDate(l.open)+" → "+fmtDate(l.close)+", "+annee(l.close);
+  return fmtDate(l.open)+", "+annee(l.open)+" → "+fmtDate(l.close)+", "+annee(l.close); }
 function overlap(a,b){ const s=a.open>b.open?a.open:b.open, e=a.close<b.close?a.close:b.close; return s<=e&&s>=COMBOS_SINCE?s:null; }
 
 function retour(m){ const v=Math.round(100/m); return v>=1e6?"$"+(v/1e6).toFixed(1)+"M":"$"+v.toLocaleString("en-US"); }
@@ -2076,6 +2077,8 @@ function lisible(p, camp){
 
 function buildProofs(legs){ const singles=[],combos=[];
 
+  legs=legs.filter(l=>l.kind!=="combo");
+
   for(const l of legs){ if(l.kind==="combo") continue;
 
     const mm=String(l.what||"").match(/^([\s\S]*?)\s—\s*([^—]{1,24})$/);
@@ -2101,7 +2104,10 @@ function buildProofs(legs){ const singles=[],combos=[];
     const prix=String(l.when||"").match(/([\d.]+¢|<1¢)/g);
     combos.push({m:1/l.m,head:tete,
       meta:"ROLLED · "+(prix&&prix.length===2?prix[0]+" \u2192 "+prix[1]+" · ":"")
-           +(l.open&&l.close?fmtDate(l.open)+" \u2192 "+fmtDate(l.close):String(l.when||"").toUpperCase()),
+           +(l.open&&l.close?(annee(l.open)===annee(l.close)
+               ? fmtDate(l.open)+" \u2192 "+fmtDate(l.close)+", "+annee(l.close)
+               : fmtDate(l.open)+", "+annee(l.open)+" \u2192 "+fmtDate(l.close)+", "+annee(l.close))
+             :String(l.when||"").toUpperCase()),
 
       detail:detailOf(l),combo:true,cat:l.cat,src:l.src,
       held:l.held,open:l.open,close:l.close});
@@ -2123,7 +2129,7 @@ function fmtDate(iso){ const d=new Date(iso+"T12:00:00Z"); return d.toLocaleDate
     const age=p=>{ const d=Date.parse(String(p.close||"")+"T12:00:00Z");
       return isNaN(d)?400:(Date.now()-d)/86400000; };
 
-    const poids=p=>1+3*Math.exp(-age(p)/120);
+    const poids=p=>1+6*Math.exp(-age(p)/90);
     const tirage=proofs.map((p,i)=>({i,k:Math.random()/poids(p)}))
       .sort((x,y)=>x.k-y.k).slice(0,15).map(o=>o.i);
     const tete=(liste,test)=>{ const j=liste.reduce((a,b)=>test(proofs[b],proofs[a])?b:a,liste[0]);
@@ -2205,7 +2211,7 @@ function meMontrer(){
   const sn=document.getElementById("tkSn"); if(sn) sn.textContent="MX-"+mkSerial(myMail||myCode);
   const pm=document.querySelector("#tk .pm"); if(pm) pm.textContent="YOU ARE ON THE LIST";
   const code=document.getElementById("tkCode");
-  if(code) code.textContent="WE WRITE WHEN THE DOOR OPENS";
+  if(code) code.textContent="YOUR ACCESS CODE IS ON ITS WAY";
   pos.style.display="block"; wl.style.display="none";
   return true;
 }
@@ -2248,16 +2254,6 @@ const X_HANDLE = "";
   });
 })();
 
-(function(){
-  const cibles=document.querySelectorAll(".cta, body>nav .go, .share a#goRadio, #gateBtn");
-  cibles.forEach(b=>{
-    if(b.querySelector(".rk")) return;
-    const i=document.createElement("i"); i.className="rk"; i.setAttribute("aria-hidden","true");
-    b.appendChild(i);
-    const maj=()=>i.style.setProperty("--rkw", (b.getBoundingClientRect().width+40)+"px");
-    maj(); addEventListener("resize", maj);
-  });
-})();
 try{ meMontrer(); }catch(_){}
 document.getElementById("goRadio").addEventListener("click",e=>{
   e.preventDefault();
@@ -2336,7 +2332,7 @@ document.getElementById("saveCard").addEventListener("click",()=>{
   x.fillStyle="#A6FF3D"; x.shadowColor="#A6FF3D"; x.shadowBlur=34;
   x.font="800 104px Inter, sans-serif"; x.fillText("SADDLED UP",CX,900); x.shadowBlur=0;
   x.fillStyle="#A6FF3D"; x.font="700 22px JetBrains Mono, monospace";
-  x.fillText("GO FOR LAUNCH",CX,946);
+  x.fillText("CODE ON ITS WAY",CX,946);
 
   x.fillStyle="#8FA8C8"; x.font="700 20px JetBrains Mono, monospace";
   x.fillText("THE RADIO IS ON AND THE RODEO IS OPEN.",CX,1046);

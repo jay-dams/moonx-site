@@ -57,21 +57,21 @@
     if (document.getElementById("consentBar")) return;
     var css = document.createElement("style");
     css.textContent =
-      "#consentBar{position:fixed;left:12px;right:12px;bottom:12px;z-index:60;" +
-      "display:flex;flex-wrap:wrap;align-items:center;gap:12px;justify-content:center;" +
-      "padding:14px 16px;border-radius:16px;border:1px solid var(--line-2,rgba(150,195,255,.3));" +
-      "background:var(--card,#0B1220);box-shadow:0 20px 50px -20px rgba(0,0,0,.9);" +
-      "font-family:var(--mono,monospace);font-size:10px;letter-spacing:.11em;" +
-      "color:var(--dim,#8FA8C8);line-height:1.8}" +
-      "#consentBar p{margin:0;max-width:60ch;text-align:center}" +
-      "#consentBar a{color:var(--hi,#5A9BFF)}" +
+      "#consentBar{position:fixed;right:14px;bottom:14px;z-index:60;max-width:min(92vw,360px);" +
+      "display:flex;flex-direction:column;gap:10px;padding:14px 16px;border-radius:18px;" +
+      "border:1px solid var(--line-2,rgba(150,195,255,.3));background:var(--card,#0B1220);" +
+      "box-shadow:0 18px 40px -18px rgba(0,0,0,.9);" +
+      "font-family:var(--sans,Inter,system-ui,sans-serif);font-size:13.5px;line-height:1.45;color:#fff}" +
+      "#consentBar p{margin:0}" +
+      "#consentBar small{display:block;margin-top:4px;font-family:var(--mono,monospace);font-size:10px;" +
+      "letter-spacing:.1em;color:var(--dim,#8FA8C8)}" +
+      "#consentBar small a{color:var(--dim,#8FA8C8);text-decoration:underline;text-underline-offset:3px}" +
       "#consentBar .b{display:flex;gap:8px}" +
-      "#consentBar button{font-family:var(--mono,monospace);font-size:10px;letter-spacing:.11em;" +
-      "padding:11px 16px;border-radius:12px;border:1px solid var(--line-2,rgba(150,195,255,.3));" +
+      "#consentBar button{flex:1;font:inherit;font-weight:700;font-size:13px;padding:10px 12px;" +
+      "border-radius:12px;border:1px solid var(--line-2,rgba(150,195,255,.3));" +
       "background:transparent;color:var(--dim,#8FA8C8);cursor:pointer}" +
-      "#consentBar button#cOk{background:linear-gradient(180deg,#6BA6FF,#1B45B8);color:#fff;border-color:transparent}" +
-      "@media(max-width:640px){#consentBar{flex-direction:column}#consentBar .b{width:100%}" +
-      "#consentBar .b button{flex:1}}";
+      "#consentBar button#cOk{background:linear-gradient(180deg,#4C8BFF,#2D7BFF);color:#fff;border-color:transparent}" +
+      "@media(max-width:640px){#consentBar{left:14px;right:14px;max-width:none}}";
     document.head.appendChild(css);
 
     var d = document.createElement("div");
@@ -79,10 +79,11 @@
     d.setAttribute("role", "dialog");
     d.setAttribute("aria-label", "Analytics consent");
     d.innerHTML =
-      '<p>WE WOULD LIKE TO COUNT VISITS, NOTHING MORE. NO ADS, NO PROFILING.<br>' +
-      'SAY NO AND THE SITE WORKS EXACTLY THE SAME. <a href="privacy.html">WHAT WE STORE</a></p>' +
-      '<span class="b"><button type="button" id="cNo">DECLINE</button>' +
-      '<button type="button" id="cOk">ACCEPT</button></span>';
+      '<p>Howdy. Mind if we count you in? Just visits, nothing else. No ads, no tracking, ' +
+      'and saying no changes nothing.' +
+      '<small><a href="privacy.html">WHAT WE KEEP</a></small></p>' +
+      '<span class="b"><button type="button" id="cNo">Ride on</button>' +
+      '<button type="button" id="cOk">Count me in</button></span>';
     document.body.appendChild(d);
     document.getElementById("cOk").addEventListener("click", accepter);
     document.getElementById("cNo").addEventListener("click", refuser);
