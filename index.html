@@ -6,12 +6,12 @@
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#03050C">
 <title>MOONX | Where long shots become legends</title>
-<meta name="description" content="Without a crypto PhD, trade any prediction market in a tap.">
+<meta name="description" content="Trading Polymarket for the 99%. Chase the X on any prediction market, in a tap.">
 <link rel="canonical" href="https://moonx.fi/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="MOONX">
 <meta property="og:title" content="MOONX | Where long shots become legends">
-<meta property="og:description" content="Without a crypto PhD, trade any prediction market in a tap.">
+<meta property="og:description" content="Trading Polymarket for the 99%. Chase the X on any prediction market, in a tap.">
 <meta property="og:url" content="https://moonx.fi/">
 <meta property="og:image" content="https://moonx.fi/og-image.png">
 <meta property="og:image:width" content="1200">
@@ -797,7 +797,9 @@ body.lit .kick{opacity:1}
 .pbadge{position:absolute;left:max(20px, calc((100% - 980px) / 2));top:calc(var(--navh, 64px) + 12px);z-index:3;display:inline-flex;align-items:center;gap:8px;padding:6px 10px 6px 8px;border-radius:99px;border:1px solid var(--line-2);background:rgba(10,14,26,.85);font-family:var(--mono);font-size:8px;letter-spacing:.16em;color:var(--dim);text-decoration:none}
 .pbadge .pmk{width:14px;height:14px;display:block}.pbadge b{font-weight:800;font-size:11px;letter-spacing:0;color:#fff}
 @media (min-width:900px){.pbadge{font-size:9px;padding:8px 12px 8px 10px}.pbadge .pmk{width:16px;height:16px}}
-.kick2{position:relative;z-index:2;font-weight:800;font-size:clamp(28px,6.4vw,54px);letter-spacing:-.035em;line-height:1.02;margin-top:14px;max-width:15ch}
+
+.kick2{position:relative;z-index:2;font-weight:800;font-size:clamp(26px,4.4vw,44px);letter-spacing:-.035em;line-height:1.05;margin-top:10px;max-width:16ch}
+.kick2[hidden]{display:none}
 
 .tagline{position:relative;z-index:2;margin:16px auto 0;max-width:min(92vw,64ch);color:var(--dim,#8FA8C8);font-size:clamp(17px,1.6vw,22px);line-height:1.4;font-weight:500;text-align:center}
 .pline[hidden]{display:none}
@@ -811,6 +813,8 @@ body.lit .proof{opacity:1}
 .phead{margin-top:12px;font-weight:800;font-size:clamp(20px,5vw,26px);letter-spacing:-.02em;line-height:1.15;max-width:22ch;margin-left:auto;margin-right:auto}
 .pmeta{margin-top:8px;font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--hi)}
 .pline{margin:8px auto 0;max-width:34ch;color:#B9C7DE;font-size:14px;line-height:1.45}
+.pmeta .psrcl{color:inherit;text-decoration:none;border-bottom:1px solid transparent}
+.pmeta .psrcl:hover{border-bottom-color:currentColor}
 .psrc{display:inline-block;margin-top:10px;font-family:var(--mono);font-size:9px;letter-spacing:.14em;color:rgba(143,168,200,.6)}
 
 .journey{position:relative;z-index:1;padding:20px 0 40px}
@@ -961,19 +965,29 @@ section[hidden]{display:none!important}
 @media (max-width:899px){
 
   body.jcar .jwrap,body.jcar .jband{display:none}
-  .jcarousel{display:flex;gap:16px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;
-    -webkit-overflow-scrolling:touch;padding:8px 20px 12px;scrollbar-width:none}
+
+  .jcarousel{display:flex;gap:20px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;
+    -webkit-overflow-scrolling:touch;padding:6px 20px 4px;scrollbar-width:none}
   .jcarousel::-webkit-scrollbar{display:none}
-  .jcard{flex:0 0 100%;scroll-snap-align:center;scroll-snap-stop:always;display:flex;flex-direction:column;align-items:center;gap:18px}
-  .jcard .jphone{position:relative;width:min(64vw,250px)!important;height:auto!important;--pw:min(64vw,250px);aspect-ratio:780/1688;margin:0}
+
+  .jcard{flex:0 0 84%;scroll-snap-align:center;scroll-snap-stop:always;display:flex;flex-direction:column;align-items:center;gap:14px}
+
+  .jcard:first-child{margin-left:8%} .jcard:last-child{margin-right:8%}
+
+  html{scroll-snap-type:y proximity}
+  .jcarousel{scroll-snap-align:start;scroll-margin-top:calc(var(--navh,64px) + 4px)}
+  .jcard .jphone{position:relative;--jh:min(calc(100svh - var(--navh,64px) - var(--minih,62px) - 200px),640px);
+    height:var(--jh)!important;width:auto!important;aspect-ratio:780/1688;--pw:calc(var(--jh) * 0.462);margin:0;max-width:78vw}
   .jcard .jscreen{position:relative;width:100%;height:100%;overflow:hidden;background:#03050C}
   .jcard .scr{opacity:1!important;transform:none!important;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top}
   .jcard .step{min-height:0;opacity:1!important;transform:none!important;padding:0;justify-content:flex-start;text-align:center;max-width:none;margin:0;width:100%}
-  .jcard .step h3{max-width:none;margin:8px auto 0;font-size:clamp(22px,5.8vw,30px)}
+  .jcard .step h3{max-width:none;margin:6px auto 0;font-size:clamp(19px,5vw,26px);line-height:1.1}
   .jcard .step .eyebrow{position:static}
   .jdots{display:flex;justify-content:center;gap:7px;padding:2px 0 10px}
   .jdots i{width:6px;height:6px;border-radius:3px;background:rgba(150,195,255,.28);transition:width .2s,background .2s}
   .jdots i.on{width:18px;background:#2D7BFF}
+  .jhint{font-family:var(--mono);font-size:10px;letter-spacing:.16em;color:var(--dim);text-align:center;padding:0 0 8px;transition:opacity .3s}
+  body.jswiped .jhint{opacity:0}
 
   .hero>.pbadge{position:static;display:inline-flex;align-items:center;gap:8px;margin:0 auto 26px}
   .hero>.pbadge .pmk{width:15px;height:15px;display:block;flex:0 0 auto}
@@ -1129,9 +1143,9 @@ body>nav>a:first-child:hover::after,body>nav>a:first-child:focus-visible::after{
   <div class="glow" aria-hidden="true"></div>
 
   <div class="wordmark"><svg class="wm" viewBox="14 0 72 22" role="img" aria-label="MOONX" preserveAspectRatio="xMidYMid meet"><text class="wmt" x="50" y="17" text-anchor="middle">MOONX</text></svg></div>
-  <p class="kick2" id="kick2">where long shots become legends.</p>
+  <p class="kick2" id="kick2" hidden>where long shots become legends.</p>
 
-  <p class="tagline">Without a crypto PhD, trade any prediction market in a tap.</p>
+  <p class="tagline">Trading Polymarket for the 99%. Chase the X on any prediction market, in a tap.</p>
   <div class="proof" id="proof" hidden>
     <div class="pmult" id="pMult">4.5x</div>
     <div class="ptime" id="pTime">IN 90 MINUTES</div>
@@ -1180,7 +1194,9 @@ body>nav>a:first-child:hover::after,body>nav>a:first-child:focus-visible::after{
   });
   const dots=document.createElement("div"); dots.className="jdots"; dots.setAttribute("aria-hidden","true");
   steps.forEach((_,i)=>{ const d=document.createElement("i"); if(!i) d.className="on"; dots.appendChild(d); });
-  wrap.after(car); car.after(dots); document.body.classList.add("jcar");
+  const hint=document.createElement("div"); hint.className="jhint"; hint.textContent="SWIPE \u2192 10 STEPS"; hint.setAttribute("aria-hidden","true");
+  wrap.after(car); car.after(dots); dots.after(hint); document.body.classList.add("jcar");
+  car.addEventListener("scroll",()=>document.body.classList.add("jswiped"),{passive:true,once:true});
   let raf=0;
   car.addEventListener("scroll",()=>{ if(raf) return; raf=requestAnimationFrame(()=>{ raf=0;
     const w=car.firstElementChild.getBoundingClientRect().width+16; const i=Math.round(car.scrollLeft/w);
@@ -2126,7 +2142,7 @@ function jambe(txt, max){
   return court(t,max);
 }
 
-function detailOf(l){ return "$100 in, "+retour(l.m)+" back."; }
+function detailOf(l, camp){ return (camp?"$100 on "+camp:"$100 in")+", "+retour(l.m)+" back."; }
 
 function lisible(p, camp){
   const h=p&&p.head?String(p.head).trim():"";
@@ -2156,10 +2172,12 @@ function buildProofs(legs){ const singles=[],combos=[];
 
     const mm=String(l.what||"").match(/^([\s\S]*?)\s—\s*([^—]{1,24})$/);
     const brut=mm?mm[1]:String(l.what||"");
-    const head=duel(brut, mm?mm[2].trim():null)||titre(brut);
+    let head=duel(brut, mm?mm[2].trim():null)||titre(brut);
     const camp=mm?mm[2].trim().toUpperCase():"YES";
+    if(head&&/^(YES|NO)$/.test(camp)&&/^(will|who|which|does|do|is|are|can|has|have|should|what|when)\b/i.test(head)&&!/\?$/.test(head)) head+="?";
+
     const c={m:1/l.m,head,
-     meta:camp+" AT "+cents(l.m)+" · "+whenOf(l),detail:detailOf(l),combo:false,cat:l.cat||"",held:l.held||""};
+     meta:camp+" AT "+cents(l.m)+" · "+whenOf(l),detail:detailOf(l,camp),combo:false,cat:l.cat||"",held:l.held||"",src:l.src||""};
     if(lisible(c,camp)) singles.push(c); }
 
   for(const l of legs){
@@ -2197,7 +2215,9 @@ function fmtDate(iso){ const d=new Date(iso+"T12:00:00Z"); return d.toLocaleDate
 
   const lignes=el=>{ const cs=getComputedStyle(el); return Math.round(el.getBoundingClientRect().height/(parseFloat(cs.lineHeight)||parseFloat(cs.fontSize)*1.15)); };
   const tientEnDeux=()=>{ Hd.style.fontSize=""; if(lignes(Hd)<=2) return true; Hd.style.fontSize="calc("+getComputedStyle(Hd).fontSize+" * .88)"; return lignes(Hd)<=2; };
-  const showP=p=>{ M.textContent=fmtX(p.m); Hd.textContent=p.head; Me.textContent=p.meta; L.textContent=p.detail;
+  const showP=p=>{ M.textContent=fmtX(p.m); Hd.textContent=p.head; L.textContent=p.detail;
+
+    Me.textContent=""; if(p.src){ const a=document.createElement("a"); a.href=p.src; a.target="_blank"; a.rel="noopener"; a.className="psrcl"; a.title="Open this market on Polymarket"; a.textContent=p.meta+" \u2197"; Me.appendChild(a); } else Me.textContent=p.meta;
     if(!tientEnDeux()){ p.__trop=(p.__trop||0)+1; if(proofs.length>1&&p.__trop<3){ showP(next()); return; } } if(T){ T.textContent=p.held?"IN "+p.held.toUpperCase():""; T.style.display=p.held?"inline-block":"none"; T.classList.toggle("c",!!p.combo); } S.hidden=true; M.style.color=p.combo?"#7FB6FF":"#A6FF3D"; M.style.textShadow=p.combo?"0 0 30px rgba(127,182,255,.45)":"0 0 30px rgba(166,255,61,.45)"; };
 
   function start(legs){ if(!Array.isArray(legs)||!legs.length) return; LEGS=legs; proofs=buildProofs(LEGS);
@@ -2218,7 +2238,7 @@ function fmtDate(iso){ const d=new Date(iso+"T12:00:00Z"); return d.toLocaleDate
     const neuf=dignes.length?tete(tirage,(x,y)=>x.m>=4&&(y.m<4||age(x)<age(y)))
               :(tirage.length?tete(tirage,(x,y)=>age(x)<age(y)):null);
     order=[gros,...(neuf!==null?[neuf]:[]),...tirage];
-    K.hidden=true; P.hidden=false; showP(next()); M.style.transition="opacity .35s"; L.style.transition="opacity .35s"; [Hd,Me].forEach(e=>e.style.transition="opacity .4s");
+    P.hidden=false; showP(next()); M.style.transition="opacity .35s"; L.style.transition="opacity .35s"; [Hd,Me].forEach(e=>e.style.transition="opacity .4s");
     let paused=false; P.addEventListener("pointerdown",()=>{ paused=true; setTimeout(()=>paused=false,15000); });
     setInterval(()=>{ if(paused) return; [M,Hd,Me,L].forEach(e=>e.style.opacity=0); setTimeout(()=>{ showP(next()); [M,Hd,Me,L].forEach(e=>e.style.opacity=1); },400); },12000); }
   if(window.PROOFS&&window.PROOFS.length){ start(window.PROOFS); }
