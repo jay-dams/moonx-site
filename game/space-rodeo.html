@@ -1,5 +1,9 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="color-scheme" content="dark">
+<html lang="en"><head><meta charset="utf-8">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="color-scheme" content="dark">
 <title>Moon Rodeo. Hold on to the beat.</title>
 <meta name="theme-color" content="#03050C">
 <meta name="description" content="Moon Rodeo: ride the rocket on the beats of MOONX Radio. One song, one life, and a place on the board.">
@@ -313,6 +317,7 @@ body.light .actions[data-for="s-result"] .row button{padding:12px 8px;font-size:
 .bdrow .rk{font-family:var(--mono);font-size:12px;letter-spacing:.1em;color:var(--dim);width:34px;flex:none}
 .bdrow.me .rk{color:var(--hi)}
 .bdrow .who{flex:1;min-width:0;font-weight:700;font-size:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bdrow .who .when{display:block;font-family:var(--mono);font-weight:400;font-size:10px;letter-spacing:.12em;color:var(--dim);margin-top:2px}
 .bdrow .sc{font-family:var(--mono);font-size:14px;font-weight:700;white-space:nowrap}
 .bdrow .xx{font-family:var(--mono);font-size:10px;color:var(--dim);margin-left:8px}
 #bdEmpty{font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:var(--dim);
@@ -760,7 +765,9 @@ let QUAL=TOUCH?1:2;
 let fpsN=0, fpsT=performance.now(), FRAME_NO=0;
 function fpsTick(){ fpsN++; FRAME_NO++; const now=performance.now(); if(now-fpsT>2000){ const fps=fpsN*1000/(now-fpsT); fpsN=0; fpsT=now;
   if(fps<50&&QUAL>0){ QUAL--; if(QUAL===0&&DPR>1.25){ DPR=1.25; sizeCanvas(); } } } }
-function sizeCanvas(){ cv.width=Math.round(innerWidth*DPR); cv.height=Math.round(innerHeight*DPR); }
+
+function vpH(){ return (window.visualViewport&&visualViewport.height)||innerHeight; }
+function sizeCanvas(){ cv.width=Math.round(innerWidth*DPR); cv.height=Math.round(vpH()*DPR); }
 const BL=document.createElement("canvas"), bx2=BL.getContext("2d"), BL2=document.createElement("canvas"), bx3=BL2.getContext("2d");
 function bloom(){ const W=cv.width,H=cv.height; const w=Math.max(2,Math.round(W/6)), h=Math.max(2,Math.round(H/6)), w2=Math.max(2,Math.round(w/3)), h2=Math.max(2,Math.round(h/3));
   if(BL.width!==w){ BL.width=w; BL.height=h; BL2.width=w2; BL2.height=h2; }
@@ -961,7 +968,8 @@ function draw(){ if(!R) return;
     const late=now>n.t-0.12&&now<n.t+0.19&&n.lane!==rocketLane; drawBuck(x,y,n.gold?"#FFFFFF":(late?"#FF3B6B":LANE_C[n.lane]),dp*sc*(n.gold?1.25:1)); if(n.gold){ cx.fillStyle="#fff"; cx.globalAlpha=0.5+0.5*Math.sin(now*20); cx.fillRect(x-22*dp*sc,y-2*dp,4*dp,4*dp); cx.fillRect(x+18*dp*sc,y-2*dp,4*dp,4*dp); cx.globalAlpha=1; } }
   for(const n of R.notes){ if(n.hit) continue; const d=now-n.t;
 
-    if(d>=-GOOD&&d<=GOOD&&n.lane===rocketLane&&n.type!=="hold"){ n.hit="good"; onHit(n,GOOD*0.9,true); continue; }
+    const tenue=n.type==="hold"&&(LANE_DOWN[n.lane]>0||KEYS[n.lane]);
+    if(d>=-GOOD&&d<=GOOD&&n.lane===rocketLane&&(n.type!=="hold"||tenue)){ n.hit="good"; onHit(n,GOOD*0.9,true); continue; }
 
     if(d>GOOD+Math.max(0,OFF)+0.06){ n.hit="miss"; onMiss(); if(R.ended) return; } }
   cx.globalCompositeOperation="source-over";
@@ -1125,7 +1133,9 @@ function saddle(){ bootsUI(); const kids=[...$("saddle").children]; kids.forEach
 function laneFromX(x){
   const r=cv.getBoundingClientRect();
   if(!r.width) return rocketLane;
-  return Math.max(0,Math.min(2,Math.floor((x-r.left)/r.width*3)));
+  const px=(x-r.left)/r.width;
+  const demi=(0.04+CAM.spread)/2;
+  return px<0.5-demi?0:(px<0.5+demi?1:2);
 }
 function tapLane(lane, move){ if(!R||R.ended) return;
   if(lane!==rocketLane) whoosh();
@@ -1270,10 +1280,12 @@ function bdLire(){
     if(!v || Number(e.s||0)>Number(v.s||0)) par.set(k,e);
   }
   const net=[...par.values()].sort((x,y)=>Number(y.s||0)-Number(x.s||0));
-  if(net.length!==a.length){ try{ localStorage.setItem("sr.board", JSON.stringify(net.slice(0,50))); }catch(_){} }
+  if(net.length!==a.length){ try{ localStorage.setItem("sr.board", JSON.stringify(net.slice(0,BOARD_N))); }catch(_){} }
   return net;
 }
-function bdEcrire(a){ try{ localStorage.setItem("sr.board", JSON.stringify(a.slice(0,50))); }catch(_){} }
+
+const BOARD_N=10;
+function bdEcrire(a){ try{ localStorage.setItem("sr.board", JSON.stringify(a.slice(0,BOARD_N))); }catch(_){} }
 function bdMoi(){
 
   try{ const a=JSON.parse(localStorage.getItem("moonx.me")||"null");
@@ -1301,8 +1313,8 @@ function bdPoser(run, pseudo){
 let BD_SRC="local";
 function bdRendre(){
   $("bdSub").textContent = "The best rides, in order. Your handle puts you on it.";
-  if(SUPA()) supaBoard(50).then(rows=>{
-    if(Array.isArray(rows) && rows.length){ BD_SRC="serveur"; bdPeindre(rows.map(r=>({h:r.handle,s:r.score,x:r.multiple}))); }
+  if(SUPA()) supaBoard(BOARD_N).then(rows=>{
+    if(Array.isArray(rows) && rows.length){ BD_SRC="serveur"; bdPeindre(rows.map(r=>({h:r.handle,s:r.score,x:r.multiple,t:r.created_at}))); }
   }).catch(()=>{});
 
   BD_SRC="local"; bdPeindre(bdLire());
@@ -1310,9 +1322,12 @@ function bdRendre(){
 function bdPeindre(a){
   const moi=bdMoi(), L=$("bdList"), vide=$("bdEmpty");
   if(!L) return;
+
+  const jour=t=>{ const d=new Date(typeof t==="number"?t:String(t||"")); if(isNaN(d)) return "";
+    return d.toLocaleDateString("en-US",{month:"short",day:"numeric"}).toUpperCase(); };
   L.innerHTML=a.map((e,i)=>`<div class="bdrow${moi&&e.h===moi.h?" me":""}">
       <span class="rk">${String(i+1).padStart(2,"0")}</span>
-      <span class="who">${(e.h||"@cowboy").replace(/[<&]/g,"")}</span>
+      <span class="who">${(e.h||"@cowboy").replace(/[<&]/g,"")}${jour(e.t)?`<span class="when">${jour(e.t)}</span>`:""}</span>
       <span class="sc">${e.s.toLocaleString("en-US")}<span class="xx">${e.x}x</span></span>
     </div>`).join("");
   vide.style.display=a.length?"none":"block";
@@ -1375,7 +1390,7 @@ async function supaEnvoyer(run, pseudo){
 }
 
 async function supaBoard(n){
-  const r=await fetch(SUPA_URL+"/rest/v1/board?select=handle,score,multiple,song&order=score.desc&limit="+(n||50),
+  const r=await fetch(SUPA_URL+"/rest/v1/board?select=handle,score,multiple,created_at&order=score.desc&limit="+(n||BOARD_N),
     {headers:{apikey:SUPA_KEY,authorization:"Bearer "+SUPA_KEY}});
   if(!r.ok) throw new Error("board "+r.status);
   return r.json();
@@ -1822,6 +1837,7 @@ function guardClosing(on){ try{ if(!TG) return; if(on) TG.enableClosingConfirmat
 
 requestAnimationFrame(idleDraw);
 addEventListener("resize",()=>{ sizeCanvas(); });
+if(window.visualViewport) visualViewport.addEventListener("resize",()=>{ sizeCanvas(); });
 </script>
 
 </body></html>

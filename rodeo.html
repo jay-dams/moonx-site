@@ -41,6 +41,11 @@ main{max-width:1120px;padding-bottom:40px}
 .frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block}
 
 .frame.full{position:fixed;top:0;left:0;right:0;bottom:auto;width:100%;height:100svh;z-index:60;max-width:none;max-height:none;margin:0;border-radius:0;border:0;aspect-ratio:auto}
+.a2hs{margin:12px auto 0;max-width:640px;padding:10px 14px;border:1px solid var(--line-2);border-radius:12px;
+  background:rgba(10,14,26,.72);font-size:13px;line-height:1.45;color:var(--dim);display:flex;gap:10px;align-items:center}
+.a2hs b{color:#fff}
+.a2hs .share{display:inline-block;width:18px;height:18px;line-height:16px;text-align:center;border:1px solid var(--dim);border-radius:4px;font-size:12px;margin:0 2px}
+.a2hs button{margin-left:auto;background:none;border:1px solid var(--line-2);color:#fff;border-radius:99px;padding:5px 10px;font:inherit;font-size:12px;cursor:pointer;flex:0 0 auto}
 .frame.full .fs{top:max(10px,env(safe-area-inset-top));right:max(10px,env(safe-area-inset-right))}
 .frame .fs{position:absolute;right:10px;top:10px;z-index:2;width:38px;height:38px;border-radius:12px;
   background:rgba(3,5,12,.72);border:1px solid var(--line-2);color:var(--dim);display:grid;place-items:center;backdrop-filter:blur(8px)}
@@ -83,6 +88,7 @@ main{max-width:1120px;padding-bottom:40px}
   padding:3px 0;text-align:left;font-size:13px}
 #arcPod li i{font-family:var(--mono);font-size:9px;letter-spacing:.1em;color:var(--dim);font-style:normal}
 #arcPod li b{font-weight:800;color:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#arcPod li b em{display:block;font-family:var(--mono);font-style:normal;font-weight:400;font-size:9px;letter-spacing:.12em;color:var(--dim);margin-top:1px}
 #arcPod li s{font-family:var(--mono);font-size:11px;color:var(--dim);text-decoration:none;
   font-variant-numeric:tabular-nums}
 #arcPod li:first-child b,#arcPod li:first-child s{color:var(--mint)}
@@ -149,6 +155,12 @@ main{max-width:1120px;padding-bottom:40px}
     <iframe id="game" loading="lazy" src="game/space-rodeo.html?light" title="Moon Rodeo, the MOONX rhythm game" allow="autoplay; fullscreen; clipboard-write"></iframe>
   </div>
 
+  <p class="a2hs" id="a2hs" hidden>
+    <b>Full screen on iPhone:</b> tap <span class="share" aria-hidden="true">&#x2191;</span>
+    Share, then <b>Add to Home Screen</b>. Moon Rodeo opens with no browser bars.
+    <button type="button" id="a2hsOk" aria-label="Got it">Got it</button>
+  </p>
+
     </div>
 
   <section class="arc">
@@ -180,28 +192,39 @@ main{max-width:1120px;padding-bottom:40px}
   const isFull=()=>document.fullscreenElement===frame||frame.classList.contains("full");
   function label(){ const f=isFull(); btn.setAttribute("aria-label", f?"Leave fullscreen":"Play fullscreen"); btn.title=f?"Leave fullscreen":"Fullscreen"; }
 
-  function vh(){ frame.style.height=(window.visualViewport?visualViewport.height:innerHeight)+"px"; }
-  let scrollY=0;
-  function lock(on){
-    if(on){ scrollY=window.scrollY;
-      document.body.style.position="fixed"; document.body.style.top=(-scrollY)+"px";
-      document.body.style.left="0"; document.body.style.right="0"; document.body.style.width="100%";
-      vh(); addEventListener("resize",vh); if(window.visualViewport) visualViewport.addEventListener("resize",vh);
-    } else {
-      document.body.style.position=""; document.body.style.top=""; document.body.style.left="";
-      document.body.style.right=""; document.body.style.width=""; frame.style.height="";
-      removeEventListener("resize",vh); if(window.visualViewport) visualViewport.removeEventListener("resize",vh);
-      window.scrollTo(0,scrollY);
-    }
-  }
+  const RF = HTMLElement.prototype.requestFullscreen
+          || HTMLElement.prototype.webkitRequestFullscreen;
+  const EF = document.exitFullscreen || document.webkitExitFullscreen;
+  const enPlein = () => document.fullscreenElement || document.webkitFullscreenElement;
+
   function enter(){
-    if(frame.requestFullscreen) frame.requestFullscreen().catch(()=>{ frame.classList.add("full"); lock(true); });
-    else { frame.classList.add("full"); lock(true); }
-    setTimeout(label,60);
+
+    if(RF){
+      try{
+        const r = RF.call(frame);
+        if(r && r.catch) r.catch(()=>ouvrirLeJeu());
+        setTimeout(()=>{ if(!enPlein()) ouvrirLeJeu(); }, 400);
+      }catch(_){ ouvrirLeJeu(); }
+      setTimeout(label,60); return;
+    }
+
+    ouvrirLeJeu();
   }
-  function leave(){ if(document.fullscreenElement) document.exitFullscreen().catch(()=>{});
-    if(frame.classList.contains("full")){ frame.classList.remove("full"); lock(false); }
-    setTimeout(label,60); }
+
+  (function(){
+    const a=document.getElementById("a2hs"); if(!a) return;
+    const iosSafari = "standalone" in navigator && /iPhone/.test(navigator.userAgent);
+    if(!iosSafari || navigator.standalone || RF) return;
+    let vu=false; try{ vu=localStorage.getItem("moonx.a2hs")==="1"; }catch(_){}
+    if(vu) return;
+    a.hidden=false;
+    document.getElementById("a2hsOk").addEventListener("click",()=>{ a.hidden=true; try{ localStorage.setItem("moonx.a2hs","1"); }catch(_){} });
+  })();
+  function ouvrirLeJeu(){
+    const f = frame.querySelector("iframe");
+    location.href = (f && f.getAttribute("src")) || "game/space-rodeo.html";
+  }
+  function leave(){ if(enPlein() && EF) EF.call(document); setTimeout(label,60); }
   btn.addEventListener("click",()=>{ isFull()?leave():enter(); });
   document.addEventListener("fullscreenchange",label);
   addEventListener("keydown",e=>{ if(e.key==="f"||e.key==="F"){ isFull()?leave():enter(); } else if(e.key==="Escape"&&frame.classList.contains("full")) leave(); });
@@ -286,14 +309,19 @@ if(location.hash==="#play"){ const f=document.getElementById("frame");
   const pod=document.getElementById("arcPod");
   if(!pod) return;
 
+  const TOP=10;
   function peindre(a){
     if(!a||!a.length) return;
-    pod.innerHTML=a.slice(0,3).map((e,i)=>"<li><i>"+String(i+1).padStart(2,"0")+"</i><b>"
-      +String(e.handle||e.h||"@cowboy").replace(/[<&]/g,"")+"</b><s>"
+
+    const jour=t=>{ const d=new Date(typeof t==="number"?t:String(t||"")); if(isNaN(d)) return "";
+      return d.toLocaleDateString("en-US",{month:"short",day:"numeric"}).toUpperCase(); };
+    pod.innerHTML=a.slice(0,TOP).map((e,i)=>"<li><i>"+String(i+1).padStart(2,"0")+"</i><b>"
+      +String(e.handle||e.h||"@cowboy").replace(/[<&]/g,"")
+      +(jour(e.created_at||e.t)?"<em>"+jour(e.created_at||e.t)+"</em>":"")+"</b><s>"
       +Number(e.score||e.s||0).toLocaleString("en-US")+"</s></li>").join("");
   }
   if(window.SUPA_URL&&window.SUPA_KEY){
-    fetch(window.SUPA_URL+"/rest/v1/board?select=handle,score&order=score.desc&limit=3",
+    fetch(window.SUPA_URL+"/rest/v1/board?select=handle,score,created_at&order=score.desc&limit="+TOP,
       {headers:{apikey:window.SUPA_KEY,authorization:"Bearer "+window.SUPA_KEY},cache:"no-store"})
       .then(r=>r.ok?r.json():null).then(peindre).catch(()=>{});
   } else {
