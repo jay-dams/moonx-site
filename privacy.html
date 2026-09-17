@@ -13,6 +13,7 @@
 <meta property="og:title" content="MOONX | Privacy, what we collect and what we never do">
 <meta property="og:description" content="What MOONX collects, what it never collects, where your keys live, how long anything is kept, and how to get your data out or delete it.">
 <meta property="og:url" content="https://moonx.fi/privacy.html">
+<meta name="twitter:site" content="@moonxfi">
 <meta property="og:image" content="https://moonx.fi/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="favicon-x.ico" sizes="32x32">
@@ -72,7 +73,9 @@ li{margin:7px 0}
   <div class="grid">
     <div class="card"><h3>Your email</h3><p>Given at signup, and only if you give it: the game never asks
     for it. It is used to send you your access code, and for the few messages an account needs once you
-    have one. It is stored by Supabase, our database host, on servers in the European Union.</p></div>
+    have one. Alongside it we keep where you came from when you signed up: the campaign tag on
+    the link you clicked, or the site that sent you, kept for thirty days on your device before that.
+    It tells us which door works. It is not shared with anyone. It is stored by Supabase, our database host, on servers in the European Union.</p></div>
     <div class="card"><h3>The handle on a ride</h3><p>The name you type at the end of a ride, sent with
     your score so the board can show it. It is attached to the ride, not to you: nothing links two rides
     unless you also left an email.</p></div>
@@ -166,7 +169,7 @@ li{margin:7px 0}
   <div class="tg">where long shots become legends.</div>
   <nav class="cols" aria-label="Footer">
     <div><b>ABOUT</b><a href="index.html#journey">Radio</a><a href="index.html#faq">FAQ</a><a href="rodeo.html">Moon Rodeo</a></div>
-    <div><b>SOCIAL</b><a href="#" rel="me">X/Twitter</a></div>
+    <div><b>SOCIAL</b><a href="https://x.com/moonxfi" rel="me" target="_blank">X/Twitter</a></div>
     <div><b>LEGAL</b><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms of Service</a></div>
   </nav>
   <small>© 2026 MOONX · Non-custodial, on Polygon and Monad · Prices in moonshots. Results may vary. They always do. · Ad astra, cowboy.</small>
@@ -243,6 +246,7 @@ li{margin:7px 0}
   });
 })();
 </script>
+<script src="assets/js/attr.js"></script>
 <script src="assets/js/rocket.js" defer></script>
 </body>
 </html>

@@ -13,6 +13,8 @@
   function gtag() { window.dataLayer.push(arguments); }
   window.gtag = gtag;
 
+  window.MOONX_EVENT = function (name, params) { try { gtag("event", name, params || {}); } catch (_) {} };
+
   gtag("consent", "default", {
     ad_storage: "denied",
     ad_user_data: "denied",

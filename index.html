@@ -6,13 +6,14 @@
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#03050C">
 <title>MOONX | Where long shots become legends</title>
-<meta name="description" content="Trading Polymarket for the 99%. Chase the X on any prediction market, in seconds.">
+<meta name="description" content="Trading on Polymarket for the 99%. Chase the X on any prediction market, in seconds.">
 <link rel="canonical" href="https://moonx.fi/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="MOONX">
 <meta property="og:title" content="MOONX | Where long shots become legends">
-<meta property="og:description" content="Trading Polymarket for the 99%. Chase the X on any prediction market, in seconds.">
+<meta property="og:description" content="Trading on Polymarket for the 99%. Chase the X on any prediction market, in seconds.">
 <meta property="og:url" content="https://moonx.fi/">
+<meta name="twitter:site" content="@moonxfi">
 <meta property="og:image" content="https://moonx.fi/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -23,6 +24,7 @@
 <link rel="manifest" href="site.webmanifest">
 <link rel="stylesheet" href="fonts/fonts.css">
 <script src="assets/js/sky.js"></script>
+<script src="assets/js/attr.js"></script>
 <script src="assets/js/rocket.js" defer></script>
 <style>
 @font-face{
@@ -804,6 +806,8 @@ body.lit .kick{opacity:1}
 .tagline{position:relative;z-index:2;margin:16px auto 0;max-width:min(92vw,64ch);text-align:center;display:flex;flex-direction:column;gap:4px}
 .tagline strong{color:#DCE4F2;font-weight:600;font-size:clamp(20px,1.9vw,26px);line-height:1.25;letter-spacing:-.01em}
 .tagline span{color:var(--dim,#8FA8C8);font-weight:500;font-size:clamp(15px,1.3vw,18px);line-height:1.4}
+
+.tagline .xb{font-family:"Blanka","Elianto",sans-serif;font-weight:400;color:var(--mint,#A6FF3D);font-size:1.15em;line-height:1;vertical-align:-.04em;letter-spacing:0;padding:0 .04em}
 .pline[hidden]{display:none}
 .proof[hidden]{display:none}
 .proof{position:relative;z-index:2;margin-top:40px;text-align:center;opacity:0;transition:opacity 1s .4s}
@@ -1147,7 +1151,7 @@ body>nav>a:first-child:hover::after,body>nav>a:first-child:focus-visible::after{
   <div class="wordmark"><svg class="wm" viewBox="14 0 72 22" role="img" aria-label="MOONX" preserveAspectRatio="xMidYMid meet"><text class="wmt" x="50" y="17" text-anchor="middle">MOONX</text></svg></div>
   <p class="kick2" id="kick2" hidden>where long shots become legends.</p>
 
-  <p class="tagline"><strong>Trading Polymarket for the 99%.</strong><span>Chase the X on any prediction market, in seconds.</span></p>
+  <p class="tagline"><strong>Trading on Polymarket for the 99%.</strong><span>Chase the <b class="xb">X</b> on any prediction market, in seconds.</span></p>
   <div class="proof" id="proof" hidden>
     <div class="pmult" id="pMult">4.5x</div>
     <div class="ptime" id="pTime">IN 90 MINUTES</div>
@@ -1283,7 +1287,7 @@ body>nav>a:first-child:hover::after,body>nav>a:first-child:focus-visible::after{
 <footer>
   <div class="tg">where long shots become legends.</div>
   <nav class="cols" aria-label="Footer">
-    <div><b>ABOUT</b><a href="#journey" id="footRadio">Radio</a><a href="#faq">FAQ</a><a href="rodeo.html">Moon Rodeo</a></div><div><b>SOCIAL</b><a href="#" rel="me">X/Twitter</a></div><div><b>LEGAL</b><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms of Service</a></div>
+    <div><b>ABOUT</b><a href="#journey" id="footRadio">Radio</a><a href="#faq">FAQ</a><a href="rodeo.html">Moon Rodeo</a></div><div><b>SOCIAL</b><a href="https://x.com/moonxfi" rel="me" target="_blank">X/Twitter</a></div><div><b>LEGAL</b><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms of Service</a></div>
   </nav>
   <small>© 2026 MOONX · Non-custodial, on Polygon and Monad · Prices in moonshots. Results may vary. They always do. · Ad astra, cowboy.</small>
   <div class="giant" aria-hidden="true"><svg class="wm" viewBox="0 0 100 22" role="img" aria-label="MOONX" preserveAspectRatio="xMidYMid meet"><text class="wmt" x="50" y="17" text-anchor="middle">MOONX</text></svg></div>
@@ -2340,14 +2344,16 @@ wl.addEventListener("submit",e=>{ e.preventDefault(); const v=document.getElemen
   if(window.SUPA_URL&&window.SUPA_KEY){
     fetch(window.SUPA_URL+"/functions/v1/signup",{method:"POST",
       headers:{"content-type":"application/json","authorization":"Bearer "+window.SUPA_KEY},
-      body:JSON.stringify({email:v, source:"waitlist"})})
+      body:JSON.stringify({email:v, source:"waitlist", attr:(window.MOONX_ATTR?window.MOONX_ATTR():null)})})
       .then(r=>r.ok?r.json():null)
-      .then(d=>{ if(d&&d.code){ myCode=d.code; meEcrire({code:d.code}); document.getElementById("tkSn").textContent="MX-"+mkSerial(myMail||d.code); } })
+      .then(d=>{ if(d&&d.code){ myCode=d.code; meEcrire({code:d.code}); document.getElementById("tkSn").textContent="MX-"+mkSerial(myMail||d.code);
+
+        if(window.MOONX_EVENT) MOONX_EVENT("sign_up",{method:"ticket"}); } })
       .catch(()=>{});
   } });
 document.getElementById("email").addEventListener("input",()=>err.textContent="");
 
-const X_HANDLE = "";
+const X_HANDLE = "moonxfi";
 (function(){
   const b=document.getElementById("followX");
   if(!b) return;
