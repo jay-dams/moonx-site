@@ -349,6 +349,9 @@ body.lit #radioWrap{transform:none;opacity:1}
 .slowForm input{flex:1;min-width:0;background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:12px 14px;color:#fff;font-family:var(--mono);font-size:13px}
 .slowBtn{background:transparent;border:1px solid var(--line-2);border-radius:12px;padding:12px 18px;color:#fff;font-family:Inter,sans-serif;font-weight:800;cursor:pointer}
 .slowDone{margin-top:12px;font-family:var(--mono);font-size:12px;letter-spacing:.04em;color:var(--mint)}
+.already{margin-top:22px;padding-top:18px;border-top:1px solid var(--line);font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--dim)}
+.already a{color:#7FB6FF;text-decoration:underline;text-underline-offset:3px}
+.already a:hover{color:#fff}
 .dealerShare{position:relative;z-index:2;margin:20px auto 0;width:min(100%,560px);max-width:560px;display:grid;grid-template-columns:1fr 1fr;gap:14px}
 @media (max-width:600px){ .dealerCard{padding:24px 16px;margin-left:16px;margin-right:16px} .dealerShare{width:calc(100% - 32px)} }
 .field input{flex:1;min-width:200px;padding:15px 16px;border:1px solid var(--line-2);border-radius:14px;font-size:15px;background:var(--well)}
@@ -1223,6 +1226,7 @@ section[hidden]{display:none!important}
    meme mot sur un meme ecran, ce n'est pas une hierarchie, c'est une incoherence. Seule la
    TAILLE distingue les deux boutons, et c'est la bonne facon de hierarchiser. */
 body>nav .go{font-family:Inter,sans-serif;font-size:13.5px;font-weight:800;letter-spacing:-.01em}
+@media (max-width:600px){ body>nav .go{font-size:12px;padding-left:12px;padding-right:12px;white-space:nowrap} }
 /* Les deux boutons de la nav. "Play" est la variante ghost de l'app (.mx-btn--ghost):
    transparent, bord bleute, texte blanc; il ne dispute pas la primaute a "Get a code".
    Il mene a l'app, lfg.moonx.fi, pour qui a deja son code d'acces. */
@@ -1383,7 +1387,7 @@ body>nav>a:first-child:hover::after,body>nav>a:first-child:focus-visible::after{
 <a class="skip" href="#main">Skip to content</a>
 <nav aria-label="Main">
   <a href="#top" aria-label="MOONX"><svg class="wm" viewBox="0 0 100 22" role="img" aria-label="MOONX" preserveAspectRatio="xMidYMid meet"><text class="wmt" x="50" y="17" text-anchor="middle">MOONX</text></svg></a>
-  <span class="navb"><a class="go ghost" href="https://lfg.moonx.fi" title="Already have your access code? Play.">Play</a><a class="go" href="#board">Get a code</a></span>
+  <span class="navb"><a class="go ghost" href="https://lfg.moonx.fi" title="Already have your access code? Ride in.">Ride in</a><a class="go" href="#board">Ask for an access code</a></span>
 </nav>
 
 <main id="main">
@@ -1517,8 +1521,8 @@ body>nav>a:first-child:hover::after,body>nav>a:first-child:focus-visible::after{
     <div class="lbl">You didn't get this from me</div>
     <h5 class="dealerLine">The doors are closed. The dealer's got the keys.</h5>
     <p class="dealerSub">Answer one question. He hands you a code.</p>
-    <a class="cta dealerCta" id="askTicket" href="https://t.me/moonxdealer_bot" target="_blank" rel="noopener">Ask for an access code</a>
-    <div class="dealerHint">Opens Telegram. One code, one person. No refunds.</div>
+    <a class="cta dealerCta" id="askTicket" href="https://t.me/moonxdealer_bot" target="_blank" rel="noopener">Talk to the dealer</a>
+    <div class="dealerHint">Opens Telegram. Free. One code, one person.</div>
     <div class="slow">
       <button type="button" class="slowLink" id="slowOpen">No Telegram? Leave your email instead.</button>
       <form id="slowForm" class="slowForm" novalidate hidden>
@@ -1528,6 +1532,7 @@ body>nav>a:first-child:hover::after,body>nav>a:first-child:focus-visible::after{
       </form>
       <div class="slowDone" id="slowDone" hidden>Noted. The dealer will find you. Telegram is faster, though.</div>
     </div>
+    <div class="already">Already have a code? <a href="https://lfg.moonx.fi">Ride in</a></div>
   </div>
   <div class="share dealerShare"><a id="goRadio" href="#journey">LISTEN TO THE RADIO</a><a id="goRodeo" href="rodeo.html#play">PLAY MOON RODEO</a></div>
   <div class="s" id="rodeoStake" style="display:none;margin-top:10px;color:var(--mint)"></div>
