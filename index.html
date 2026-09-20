@@ -333,6 +333,9 @@ body.lit #radioWrap{transform:none;opacity:1}
 
 .boardCard{position:relative;z-index:2;border:1px solid var(--line);border-radius:22px;padding:30px 22px;background:var(--card);max-width:560px;margin:34px auto 0;text-align:left}
 .field{display:flex;gap:10px;flex-wrap:wrap}
+/* AUCUNE FUSEE ni ciel etoile dans la section du dealer ni dans la rangee radio/rodeo:
+   le script rocket.js peut changer, cette regle tient. */
+#board .rk, .dealerCard .rk, .share .rk, #goRadio::before, #goRodeo::before{display:none!important;content:none!important;animation:none!important}
 .dealerCard{text-align:center;padding:28px 20px}
 .dealerLine{font-family:Inter,sans-serif;font-weight:800;font-size:clamp(22px,4.2vw,28px);letter-spacing:-.03em;line-height:1.12;color:#fff;margin:10px 0 8px}
 .dealerSub{font-family:var(--mono);font-size:12px;letter-spacing:.04em;color:var(--dim);margin:0 0 20px}
@@ -960,9 +963,7 @@ body.lit .kick{opacity:1}
    which put it far from the logo as soon as the screen was wide. */
 .pbadge{position:absolute;left:max(20px, calc((100% - 980px) / 2));top:calc(var(--navh, 64px) + 12px);z-index:3;display:inline-flex;align-items:center;gap:8px;padding:6px 10px 6px 8px;border-radius:99px;border:1px solid var(--line-2);background:rgba(10,14,26,.85);font-family:var(--mono);font-size:8px;letter-spacing:.16em;color:var(--dim);text-decoration:none}
 .pbadge .pmk{width:14px;height:14px;display:block}.pbadge b{font-weight:800;font-size:14px;letter-spacing:0;color:#fff}
-@media (min-width:900px){.pbadge{font-size:11px;padding:10px 16px 10px 13px;letter-spacing:.14em}
-.goShort{display:none}
-@media (max-width:600px){ .goLong{display:none} .goShort{display:inline} }.pbadge .pmk{width:20px;height:20px}}
+@media (min-width:900px){.pbadge{font-size:11px;padding:10px 16px 10px 13px;letter-spacing:.14em}.pbadge .pmk{width:20px;height:20px}}
 /* LA PROMESSE SOUS LE LOGO, TOUJOURS. Elle etait un repli cache des que les chiffres arrivaient.
    Structure de FOMO sans la copier: le logo, la promesse en une phrase, l'explication en une
    ligne, puis les chiffres. */
@@ -1222,8 +1223,8 @@ section[hidden]{display:none!important}
    meme mot sur un meme ecran, ce n'est pas une hierarchie, c'est une incoherence. Seule la
    TAILLE distingue les deux boutons, et c'est la bonne facon de hierarchiser. */
 body>nav .go{font-family:Inter,sans-serif;font-size:13.5px;font-weight:800;letter-spacing:-.01em}
-/* Les deux boutons de la nav. "Ride in" est la variante ghost de l'app (.mx-btn--ghost):
-   transparent, bord bleute, texte blanc; il ne dispute pas la primaute a "Get your ticket".
+/* Les deux boutons de la nav. "Play" est la variante ghost de l'app (.mx-btn--ghost):
+   transparent, bord bleute, texte blanc; il ne dispute pas la primaute a "Get a code".
    Il mene a l'app, lfg.moonx.fi, pour qui a deja son code d'acces. */
 .navb{display:inline-flex;align-items:center;gap:8px}
 .go.ghost{background:transparent!important;border:1px solid rgba(150,195,255,.30)!important;box-shadow:none!important;color:#fff}
@@ -1382,7 +1383,7 @@ body>nav>a:first-child:hover::after,body>nav>a:first-child:focus-visible::after{
 <a class="skip" href="#main">Skip to content</a>
 <nav aria-label="Main">
   <a href="#top" aria-label="MOONX"><svg class="wm" viewBox="0 0 100 22" role="img" aria-label="MOONX" preserveAspectRatio="xMidYMid meet"><text class="wmt" x="50" y="17" text-anchor="middle">MOONX</text></svg></a>
-  <span class="navb"><a class="go ghost" href="https://lfg.moonx.fi" title="Already have your access code? Ride in.">Ride in</a><a class="go" href="#board"><span class="goLong">Ask for an access code</span><span class="goShort">Get a code</span></a></span>
+  <span class="navb"><a class="go ghost" href="https://lfg.moonx.fi" title="Already have your access code? Play.">Play</a><a class="go" href="#board">Get a code</a></span>
 </nav>
 
 <main id="main">

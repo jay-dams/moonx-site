@@ -12,7 +12,7 @@
   function style(){ if(document.getElementById("rkCss")) return; var st=document.createElement("style"); st.id="rkCss"; st.textContent=CSS; document.head.appendChild(st); }
   function poser(){
     style();
-    var cibles=document.querySelectorAll(".cta:not(.dealerCta), body>nav .go:not(.ghost), #gateBtn, .btn"   /* ni LISTEN TO THE RADIO ni le bouton du dealer */   /* pas LISTEN TO THE RADIO: le fondateur ne veut ni etoiles ni fusee dessus */);
+    var cibles=document.querySelectorAll(".cta:not(.dealerCta), body>nav .go:not(.ghost), #gateBtn, .btn");   /* jamais dans la section du dealer ni la rangee radio/rodeo */
     Array.prototype.forEach.call(cibles, function(b){
       if(b.querySelector(".rk")) return;
       var i=document.createElement("i"); i.className="rk"; i.setAttribute("aria-hidden","true");

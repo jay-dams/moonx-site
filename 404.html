@@ -292,7 +292,7 @@ body.lit #radioWrap{transform:none;opacity:1}
 .go:hover{background:linear-gradient(180deg,#6BA0FF,#3E86FF)}
 .go:active{background:linear-gradient(180deg,#2D7BFF,#1E4FCC);transform:scale(.985)}
 /* La 404 porte toute sa CSS en ligne, sans site.css: les deux boutons de la nav y sont donc
-   redits, a l'identique des autres pages. Ride in est la variante ghost de l'app. */
+   redits, a l'identique des autres pages. "Play" est la variante ghost de l'app. */
 .navb{display:inline-flex;align-items:center;gap:8px}
 .go.ghost{background:transparent!important;border:1px solid rgba(150,195,255,.30)!important;box-shadow:none!important;color:#fff}
 .go.ghost::before,.go.ghost .rk{display:none}
@@ -361,8 +361,6 @@ footer{padding:64px 20px 0;border-top:1px solid var(--line);position:relative;z-
   70%{box-shadow:0 0 0 14px rgba(127,182,255,0)}
   100%{box-shadow:0 0 0 0 rgba(127,182,255,0)}}
 @media (prefers-reduced-motion:reduce){ #miniBar.ping{animation:none} }
-.goShort{display:none}
-@media (max-width:600px){ .goLong{display:none} .goShort{display:inline} }
 </style>
 
 </head>
@@ -373,7 +371,7 @@ footer{padding:64px 20px 0;border-top:1px solid var(--line);position:relative;z-
 <a class="skip" href="#main">Skip to content</a>
 <nav aria-label="Main">
   <a href="/" aria-label="MOONX"><svg class="wm" viewBox="0 0 100 22" role="img" aria-label="MOONX" preserveAspectRatio="xMidYMid meet"><text class="wmt" x="50" y="17" text-anchor="middle">MOONX</text></svg></a>
-  <span class="navb"><a class="go ghost" href="https://lfg.moonx.fi" title="Already have your access code? Ride in.">Ride in</a><a class="go" href="https://t.me/moonxdealer_bot" target="_blank" rel="noopener"><span class="goLong">Ask for an access code</span><span class="goShort">Get a code</span></a></span>
+  <span class="navb"><a class="go ghost" href="https://lfg.moonx.fi" title="Already have your access code? Play.">Play</a><a class="go" href="https://t.me/moonxdealer_bot" target="_blank" rel="noopener">Get a code</a></span>
 </nav>
 
 <main id="main">
