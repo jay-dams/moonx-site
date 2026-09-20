@@ -336,7 +336,7 @@ body.lit #radioWrap{transform:none;opacity:1}
 /* AUCUNE FUSEE ni ciel etoile dans la section du dealer ni dans la rangee radio/rodeo:
    le script rocket.js peut changer, cette regle tient. */
 #board .rk, .dealerCard .rk, .share .rk, #goRadio::before, #goRodeo::before{display:none!important;content:none!important;animation:none!important}
-.dealerCard{text-align:center;padding:28px 20px}
+.dealerCard{text-align:center;padding:28px 20px;scroll-margin-top:calc(var(--navh, 64px) + 24px)}
 .dealerLine{font-family:Inter,sans-serif;font-weight:800;font-size:clamp(22px,4.2vw,28px);letter-spacing:-.03em;line-height:1.12;color:#fff;margin:10px 0 8px}
 .dealerSub{font-family:var(--mono);font-size:12px;letter-spacing:.04em;color:var(--dim);margin:0 0 20px}
 .dealerCta{display:inline-flex;font-size:16px;padding:14px 28px}
@@ -1387,7 +1387,7 @@ body>nav>a:first-child:hover::after,body>nav>a:first-child:focus-visible::after{
 <a class="skip" href="#main">Skip to content</a>
 <nav aria-label="Main">
   <a href="#top" aria-label="MOONX"><svg class="wm" viewBox="0 0 100 22" role="img" aria-label="MOONX" preserveAspectRatio="xMidYMid meet"><text class="wmt" x="50" y="17" text-anchor="middle">MOONX</text></svg></a>
-  <span class="navb"><a class="go ghost" href="https://lfg.moonx.fi" title="Already have your access code? Ride in.">Ride in</a><a class="go" href="#board">Ask for an access code</a></span>
+  <span class="navb"><a class="go ghost" href="https://lfg.moonx.fi" title="Already have your access code? Ride in.">Ride in</a><a class="go" href="#ask">Ask for an access code</a></span>
 </nav>
 
 <main id="main">
@@ -1413,7 +1413,7 @@ body>nav>a:first-child:hover::after,body>nav>a:first-child:focus-visible::after{
     <div class="pline" id="pLine">$100 in, $2,000 back.</div>
     <div class="psrc" id="pSrc" hidden></div>
   </div>
-  <a class="cta" href="#board">Ask for an access code</a>
+  <a class="cta" href="#ask">Ask for an access code</a>
   <div class="stage">
     <div class="desk" aria-hidden="true"><picture><source srcset="assets/shots/45b377bc54.webp" type="image/webp"><img class="" src="assets/shots/45b377bc54.png" width="1920" height="1200" alt="MOONX on a laptop and a phone: the feed of shots, the board of markets, and a position paying its multiple." style="display:block;width:100%;height:auto" loading="lazy" decoding="async"></picture></div>
     <div class="phone" aria-label="MOONX app preview: the markets board">
@@ -1517,7 +1517,7 @@ body>nav>a:first-child:hover::after,body>nav>a:first-child:focus-visible::after{
   <div class="glow" aria-hidden="true"></div>
   <h2 style="position:relative;z-index:2">built to chase the alpha. zero complexity.</h2>
   <p class="lead" style="position:relative;z-index:2">No jargon, no gas, no seed phrase. The moonshot of a lifetime is one tap away.</p>
-  <div class="boardCard dealerCard">
+  <div class="boardCard dealerCard" id="ask">
     <div class="lbl">You didn't get this from me</div>
     <h5 class="dealerLine">The doors are closed. The dealer's got the keys.</h5>
     <p class="dealerSub">Answer one question. He hands you a code.</p>
