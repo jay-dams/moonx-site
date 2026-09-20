@@ -32,18 +32,22 @@
  "description":"A rhythm game on the MOONX radio. One song, one life, and your handle on the board."}
 </script>
 <style>
-
+/* the page is the site's shared base; only the frame that holds the game is local to it */
 main{max-width:1120px;padding-bottom:40px}
 .hero-lead{max-width:56ch}
-
+/* the game frame: a phone-shaped window that takes the height the device can spare, and never
+   more. Three lanes under one thumb want a tall window, not a wide one. */
 .frame{position:relative;width:100%;max-width:520px;margin:26px auto 0;border-radius:26px;overflow:hidden;
   border:1px solid var(--line-2);background:#03050C;box-shadow:0 40px 90px -50px rgba(45,123,255,.8);
   aspect-ratio:9/16;max-height:calc(100vh - var(--navh) - 190px);max-height:calc(100svh - var(--navh) - 190px)}
 .frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block}
-
+/* `height` est pose en pixels par le script depuis la hauteur VISIBLE, pas depuis `inset:0`:
+   sur telephone, la fenetre de mise en page est plus haute que ce qu'on voit, et le bas du
+   jeu -- les voies -- finissait sous la barre d'adresse. */
 .frame.full{position:fixed;top:0;left:0;right:0;bottom:auto;width:100%;height:100vh;height:100svh;z-index:60;max-width:none;max-height:none;margin:0;border-radius:0;border:0;aspect-ratio:auto}
 .frame.full .fs{top:max(10px,env(safe-area-inset-top));right:max(10px,env(safe-area-inset-right))}
-
+/* Meme grille que les commandes du jeu (retour, engrenage, sortie): 40 px, a 10 px des bords,
+   meme bord, meme fond, icone blanche. Avant: 38 px, gris, 4 px plus bas que le retour. */
 .frame .fs{position:absolute;right:10px;top:10px;z-index:2;width:40px;height:40px;border-radius:12px;
   background:rgba(10,14,26,.7);border:1px solid rgba(150,195,255,.30);color:#fff;display:grid;place-items:center;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
 .frame .fs:hover{color:#fff;border-color:var(--hi)}
@@ -51,7 +55,9 @@ main{max-width:1120px;padding-bottom:40px}
 .framebar{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:14px;flex-wrap:wrap;
   font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;color:var(--mute)}
 .framebar b{color:var(--dim);font-weight:700}
-
+/* `.keys` designe deux choses ici: la grille de commandes de la RADIO (fragment partage) et
+   les indications clavier de cette page. On scope la regle locale a son conteneur, au lieu de
+   renommer -- renommer dans le balisage touchait les deux, ils portent le meme nom. */
 .frame ~ .keys, main > .keys{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:14px}
 .keys kbd{font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--dim);background:var(--card);
   border:1px solid var(--line-2);border-bottom-width:2px;border-radius:8px;padding:7px 10px}
@@ -67,6 +73,9 @@ main{max-width:1120px;padding-bottom:40px}
 .rules li::before{content:"";position:absolute;left:4px;top:20px;width:7px;height:7px;border-radius:2px;background:var(--blue)}
 .rules li:last-child{border-bottom:0}
 
+/* ===== le bandeau arcade ===== */
+/* Le bandeau suit la largeur du cadre du jeu: une ligne posee sous lui, pas une banniere qui
+   le deborde. Meme valeur que `.frame`, pour qu'un changement de l'un suive l'autre. */
 .arc{margin:22px auto 0;width:100%;max-width:520px}
 .arc .arcbar{border-radius:20px}
 .arc .arcslot{padding:14px 16px}
@@ -103,12 +112,15 @@ main{max-width:1120px;padding-bottom:40px}
 .arcbtn:hover{border-color:var(--hi);color:#fff}
 @media (max-width:760px){ .arcbar{grid-template-columns:1fr} }
 
+/* un battement bref quand on vient de l'appeler: on doit voir OU on a ete envoye */
 #miniBar.ping{animation:miniPing 1.1s ease-out}
 @keyframes miniPing{
   0%{box-shadow:0 0 0 0 rgba(127,182,255,.55)}
   70%{box-shadow:0 0 0 14px rgba(127,182,255,0)}
   100%{box-shadow:0 0 0 0 rgba(127,182,255,0)}}
 @media (prefers-reduced-motion:reduce){ #miniBar.ping{animation:none} }
+.goShort{display:none}
+@media (max-width:600px){ .goLong{display:none} .goShort{display:inline} }
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://moonx.fi/"},{"@type":"ListItem","position":2,"name":"Moon Rodeo","item":"https://moonx.fi/rodeo.html"}]}</script>
 <style>
@@ -119,7 +131,8 @@ main{max-width:1120px;padding-bottom:40px}
 .rules li{counter-increment:r;position:relative;padding-left:40px;margin-bottom:12px;list-style:none;
   font-size:15px;line-height:1.65;color:var(--dim)}
 .rules li b{color:#fff;font-weight:800}
-
+/* site.css donne un fond bleu et 7px de haut a tous les li::before (la puce des pages de
+   texte). Ici on veut un numero, pas une puce: on remet tout a plat avant de dessiner. */
 .rules li::before{content:counter(r,decimal-leading-zero);position:absolute;left:0;top:2px;
   width:30px;height:auto;background:none;border-radius:0;text-align:left;
   font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:var(--hi);font-weight:700}
@@ -137,7 +150,7 @@ main{max-width:1120px;padding-bottom:40px}
 <a class="skip" href="#main">Skip to content</a>
 <nav aria-label="Main">
   <a href="index.html" aria-label="MOONX, home"><svg class="wm" viewBox="0 0 100 22" role="img" aria-label="MOONX" preserveAspectRatio="xMidYMid meet"><text class="wmt" x="50" y="17" text-anchor="middle">MOONX</text></svg></a>
-  <span class="navb"><a class="go ghost" href="https://lfg.moonx.fi" title="Already have your access code? Ride in.">Ride in</a><a class="go" href="index.html#board">Get your ticket</a></span>
+  <span class="navb"><a class="go ghost" href="https://lfg.moonx.fi" title="Already have your access code? Ride in.">Ride in</a><a class="go" href="https://t.me/moonxdealer_bot" target="_blank" rel="noopener"><span class="goLong">Ask for an access code</span><span class="goShort">Get a code</span></a></span>
 </nav>
 
 <main id="main">
@@ -149,11 +162,21 @@ main{max-width:1120px;padding-bottom:40px}
     <button class="fs" id="fsBtn" aria-label="Play fullscreen" title="Fullscreen">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
     </button>
-    <iframe id="game" loading="lazy" src="game/space-rodeo.html?light" title="Moon Rodeo, the MOONX rhythm game" allow="autoplay; fullscreen; clipboard-write"></iframe>
+    <iframe id="game" loading="lazy" src="../game/space-rodeo.html?light" title="Moon Rodeo, the MOONX rhythm game" allow="autoplay; fullscreen; clipboard-write"></iframe>
   </div>
+
+  <!-- Les regles, sous le jeu. Le jeu affiche "HOLD" en ambre sur les trois premiers seulement,
+       et il y en a onze sur trois cent quatre-vingt-quatre: une regle vue trois fois ne
+       s'apprend pas. Quelqu'un qui ne sait pas qu'on maintient perd sans comprendre pourquoi. -->
+  
 
     </div>
 
+  <!-- Le bandeau arcade. Il montre ce qui est VRAI a l'instant: le temps qu'il reste avant la
+       remise a zero, et qui mene aujourd'hui. Sans ces deux informations ce ne serait qu'une
+       decoration; avec elles, c'est une raison de rejouer maintenant. -->
+  <!-- Le tableau du jour. Pas de lot, pas d'horloge: on joue, on laisse son pseudo, et le
+       meilleur est en haut. Le reste viendra quand la mecanique quotidienne sera prete. -->
   <section class="arc">
     <div class="arcbar arcsolo">
       <div class="arcslot arcpod">
@@ -177,19 +200,30 @@ main{max-width:1120px;padding-bottom:40px}
 </footer>
 
 <script>
-
+/* Fullscreen: the real API where it exists (desktop, Android), and a fixed-inset fallback where it
+   does not (iOS Safari refuses fullscreen on anything but a video). Either way the game keeps its
+   own canvas sizing: it listens to its own resize event inside the frame. */
 (function(){
   const frame=document.getElementById("frame"), btn=document.getElementById("fsBtn");
   const isFull=()=>document.fullscreenElement===frame||frame.classList.contains("full");
   function label(){ const f=isFull(); btn.setAttribute("aria-label", f?"Leave fullscreen":"Play fullscreen"); btn.title=f?"Leave fullscreen":"Fullscreen"; }
-
+  /* ON NE SUPPOSE RIEN, ON DEMANDE A L'APPAREIL.
+     L'etat du plein ecran sur iOS est contradictoire selon les sources et les versions: iPad
+     le supporte depuis Safari 16.4 avec le prefixe webkit, l'iPhone l'a recu en beta 17.2
+     derriere un drapeau, des developpeurs l'ont vu marcher en 17.4, et des projets recents le
+     testent encore "au cas ou". Personne ne peut trancher a l'avance.
+     Et une detection par "c'est tactile donc pas de plein ecran" etait pire que le doute:
+     elle supprimait le VRAI plein ecran sur Android Chrome, qui le supporte entierement.
+     On detecte donc la capacite sur le prototype, pas l'appareil. Trois chemins, du meilleur
+     au moins bon, et chaque appareil prend le meilleur qu'il a. */
   const RF = HTMLElement.prototype.requestFullscreen
           || HTMLElement.prototype.webkitRequestFullscreen;
   const EF = document.exitFullscreen || document.webkitExitFullscreen;
   const enPlein = () => document.fullscreenElement || document.webkitFullscreenElement;
 
   function enter(){
-
+    /* 1. LA VRAIE API quand elle existe: bureau, Android, iPad, et iPhone le jour ou Apple
+          l'ouvrira. Le `catch` couvre le cas ou elle existe mais refuse. */
     if(RF){
       try{
         const r = RF.call(frame);
@@ -198,12 +232,13 @@ main{max-width:1120px;padding-bottom:40px}
       }catch(_){ ouvrirLeJeu(); }
       setTimeout(label,60); return;
     }
-
+    /* 2. SINON on ouvre le jeu en pleine page. Le jeu est une page autonome: sans iframe,
+          sans position fixe et sans hauteur a deviner, il occupe tout ce qui est visible. */
     ouvrirLeJeu();
   }
   function ouvrirLeJeu(){
     const f = frame.querySelector("iframe");
-    location.href = (f && f.getAttribute("src")) || "game/space-rodeo.html";
+    location.href = (f && f.getAttribute("src")) || "../game/space-rodeo.html";
   }
   function leave(){ if(enPlein() && EF) EF.call(document); setTimeout(label,60); }
   btn.addEventListener("click",()=>{ isFull()?leave():enter(); });
@@ -211,7 +246,10 @@ main{max-width:1120px;padding-bottom:40px}
   addEventListener("keydown",e=>{ if(e.key==="f"||e.key==="F"){ isFull()?leave():enter(); } else if(e.key==="Escape"&&frame.classList.contains("full")) leave(); });
 })();
 </script>
-
+<!-- the radio: the same player as the home (mini bar at the bottom, the full set in the sheet). This block
+     is a copy of assets/radio/radio.html; regenerate all three radio files with tools/extract_radio.py -->
+<!-- MOONX radio: the same player as the home. Mini bar at the bottom, the full set in the sheet.
+     Needs assets/radio/radio.css and radio.js (site root). Generated by tools/extract_radio.py from index.html. -->
 <div id="miniBar" role="region" aria-label="Now playing">
   <div class="set">
     <button type="button" class="glass" id="miniGlass" aria-label="Open the radio"><b id="miniStation">K-HAT 101.7</b><div class="mq" id="miniMqWrap"><span id="miniNow">Chasing X · Della &amp; the Long Shots</span></div><i class="tune">TUNE</i></button>
@@ -224,7 +262,7 @@ main{max-width:1120px;padding-bottom:40px}
 </div>
 <div id="radioVeil" aria-hidden="true"></div>
 <div id="radioSheet" role="dialog" aria-label="Shuttle radio" aria-hidden="true">
-  <div class="rs-head"><div><b>MOONX Radio</b><span id="rsSub">Ten stations. Sixty-five songs, all of them ours.</span></div><button type="button" id="rsClose" aria-label="Minimise the radio" title="Minimise"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 10l6 6 6-6"/><path d="M5 20h14"/></svg></button></div>
+  <div class="rs-head"><div><b>MOONX Radio</b><span id="rsSub">Ten stations, sixty-five songs, built for posterity.</span></div><button type="button" id="rsClose" aria-label="Minimise the radio" title="Minimise"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 10l6 6 6-6"/><path d="M5 20h14"/></svg></button></div>
   <div id="sheetSlot"><div id="radioWrap">
     <div class="set">
       <div class="glass">
@@ -267,7 +305,9 @@ main{max-width:1120px;padding-bottom:40px}
 <script>addEventListener("load",()=>{ if(window.MoonxSky) MoonxSky.mount(document.querySelector(".skycv"),{fill:true, always:true, density:320, parallax:18, moon:false}); });</script>
 <script src="radio.js"></script>
 <script>
-
+/* Deux sources de son sur une meme page ne peuvent pas jouer ensemble. Le jeu previent la page
+   quand une course commence; la radio se met en pause et reprend a la fin si elle jouait.
+   La radio reste presente dans tous les cas: on change de page, on la retrouve, c'est la regle. */
 (function(){
   var reprendre=false;
   addEventListener("message",function(e){
@@ -285,18 +325,29 @@ if(location.hash==="#play"){ const f=document.getElementById("frame");
 </script>
 <script src="assets/js/ga.js" defer></script>
 <script>
-
+/* Le compte a rebours vers minuit UTC, et le podium du jour. Les deux viennent de la meme
+   source que le classement du jeu: si l'un ment, l'autre ment aussi, donc ils ne peuvent pas
+   se contredire. */
 (function(){
-
+  /* LA PAGE NE LISAIT JAMAIS LE SERVEUR. Le code testait `window.SUPA_URL && window.SUPA_KEY`
+     et retombait sinon sur le tableau local de l'appareil. Ces deux variables n'ont jamais ete
+     definies ici: elles vivaient dans le jeu. Resultat, le classement de la page ne montrait
+     que les courses de CE telephone, donc une ligne, la sienne, alors que le serveur en
+     rendait deux. La cle anon est publique par conception; seule la vue `board` est lisible
+     avec elle, et rien n'est inscriptible. */
   window.SUPA_URL="https://xcyqdfhnpntcloimotoo.supabase.co";
   window.SUPA_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhjeXFkZmhucG50Y2xvaW1vdG9vIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODkzMzQ4NjQsImV4cCI6MjEwNDkxMDg2NH0.9UcRNt5xW1bGEussS9Ca0DrrdfD35y5X-P4zr0NCU2k";
   const pod=document.getElementById("arcPod");
   if(!pod) return;
 
+  /* LE TOP 10, pas un podium de trois. Le serveur s'il est branche, sinon les courses de cet
+     appareil. On n'invente jamais de noms: un tableau vide dit qu'il est vide, et c'est une
+     invitation. Tant qu'une seule personne a couru, il n'y a qu'une ligne, et c'est la
+     verite -- le classement se remplit avec les joueurs, pas avec du remplissage. */
   const TOP=10;
   function peindre(a){
     if(!a||!a.length) return;
-
+    /* La date de la course sous le pseudo: on voit quand la place a ete prise. */
     const jour=t=>{ const d=new Date(typeof t==="number"?t:String(t||"")); if(isNaN(d)) return "";
       return d.toLocaleDateString("en-US",{month:"short",day:"numeric"}).toUpperCase(); };
     pod.innerHTML=a.slice(0,TOP).map((e,i)=>"<li><i>"+String(i+1).padStart(2,"0")+"</i><b>"
@@ -315,7 +366,8 @@ if(location.hash==="#play"){ const f=document.getElementById("frame");
 })();
 </script>
 <script>
-
+/* Le lien "Radio" du pied, sur les pages qui portent la barre: on ne quitte pas la page pour
+   ecouter ce qui joue deja en bas de l'ecran. */
 (function(){
   const bar=document.getElementById("miniBar");
   if(!bar) return;

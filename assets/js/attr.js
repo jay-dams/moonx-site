@@ -1,3 +1,9 @@
+/* Attribution: where a visitor came from, kept 30 days, sent with the signup.
+   Two sources, in this order. The UTM tags, when the link was tagged (?utm_source=...): precise,
+   but only present if we put them there. Else the referrer the browser sends (x.com,
+   polymarket.com): automatic, but often empty from mobile apps and messengers. Else "direct".
+   FIRST touch wins: the source that brought someone here the first time is the one credited,
+   even if they come back later through another door. Shared by every page. */
 (function(){
   var KEY="moonx.attr", DAYS=30;
   function lire(){ try{ var a=JSON.parse(localStorage.getItem(KEY)||"null"); if(a&&a.at&&Date.now()-a.at<DAYS*86400000) return a; }catch(_){} return null; }
@@ -13,7 +19,7 @@
     ecrire(interne?{src:"direct",med:"none",ref:"",landing:location.pathname,at:Date.now()}:{src:ref,med:"referral",ref:ref,landing:location.pathname,at:Date.now()});
   }
   function ecrire(a){ try{ localStorage.setItem(KEY,JSON.stringify(a)); }catch(_){} }
-
+  /* The links into the app carry the same tags: lfg.moonx.fi then knows where a rider came from. */
   function propager(){
     var a=lire(); if(!a||!a.src||a.src==="direct") return;
     var p=new URLSearchParams(); p.set("utm_source",a.src); if(a.med) p.set("utm_medium",a.med); if(a.cmp) p.set("utm_campaign",a.cmp); if(a.cnt) p.set("utm_content",a.cnt);

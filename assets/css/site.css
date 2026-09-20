@@ -1,3 +1,6 @@
+/* MOONX, shared base for every page that is not the home page: tokens, type, nav, footer, buttons.
+   The home page keeps its own inline CSS (it is one file on purpose); these rules are copied from it
+   so a second page looks like the first. Change a token here and in index.html together. */
 :root{--bg:#03050C;--card:#0A0E1A;--card-2:#121A2B;--well:rgba(160,200,255,.05);--line:rgba(150,195,255,.16);--line-2:rgba(150,195,255,.30);--txt:#FFFFFF;--dim:#8FA8C8;--mute:#5A6B8A;--blue:#2D7BFF;--hi:#7FB6FF;--lo:#1E4FCC;--mint:#A6FF3D;--red:#FF3B6B;--amber:#FFC93C;--disp:"Inter",system-ui,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace;--ease:cubic-bezier(.22,.61,.36,1);--navh:64px}
 *{box-sizing:border-box;margin:0;padding:0}
 html{background:var(--bg);color-scheme:dark;scroll-behavior:smooth}
@@ -6,11 +9,14 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;-webki
 a{color:inherit;text-decoration:none}
 ::selection{background:var(--blue);color:#fff}
 img,svg{display:block;max-width:100%}
-
+/* stars: a fixed layer, cheap, the same sky on every page */
+/* the same night as the home: a dark wash with a faint blue band down the middle, fixed behind
+   everything, then the star canvas on top of it. */
 #bgfix{position:fixed;inset:0;z-index:-1;pointer-events:none;background-color:#03050C;
   background-image:linear-gradient(180deg,rgba(14,42,85,0) 0%,rgba(14,42,85,0) 8%,rgba(14,42,85,.14) 24%,rgba(14,42,85,.14) 78%,rgba(14,42,85,0) 95%)}
 canvas.skycv{position:fixed;inset:0;z-index:0;pointer-events:none}
-
+/* the CSS star layer is the fallback for a page without JavaScript: once the canvas is up,
+   it steps aside so the two do not stack */
 body:has(canvas.skycv) .sky{opacity:.35}
 .sky{position:fixed;inset:0;z-index:0;pointer-events:none;background:
  radial-gradient(1px 1px at 12% 18%,rgba(255,255,255,.9) 50%,transparent 51%),
@@ -22,15 +28,20 @@ body:has(canvas.skycv) .sky{opacity:.35}
  radial-gradient(1px 1px at 8% 92%,rgba(255,255,255,.5) 50%,transparent 51%),
  radial-gradient(1px 1px at 55% 12%,rgba(255,255,255,.5) 50%,transparent 51%),
  radial-gradient(ellipse at 50% -20%,rgba(45,123,255,.18),transparent 60%)}
-
+/* nav, identical to the home page */
 .skip{position:fixed;left:-9999px;top:8px;z-index:99;background:var(--blue);color:#fff;padding:12px 18px;border-radius:10px;font-weight:700}
 .skip:focus{left:12px}
 :focus-visible{outline:2px solid var(--hi);outline-offset:3px;border-radius:6px}
-body>nav{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;align-items:center;justify-content:space-between;background:rgba(3,5,12,.86);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border-bottom:1px solid var(--line);padding:14px max(20px, calc((100% - 980px) / 2))}
+body>nav{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;align-items:center;justify-content:space-between;background:rgba(3,5,12,.86);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border-bottom:1px solid var(--line);/* same column as the content, at any width */padding:14px max(20px, calc((100% - 980px) / 2))}
 body>nav .wm{width:118px}
 .wm .wmt{font-family:"Blanka","Elianto","Michroma",system-ui,sans-serif;font-size:16px;letter-spacing:.06em;fill:#fff;stroke:none;font-weight:400}
-nav
-
+nav /* Meme matiere que sur la home: verre bombe, reflet, epaisseur, et nos etoiles.
+   Sans ca, le bouton le plus visible du site changeait d'aspect d'une page a l'autre. */
+/* Meme typographie que le bouton du hero: deux polices pour un meme libelle, ce n'est pas une
+   hierarchie, c'est une incoherence. Seule la taille distingue les deux. */
+/* Les deux boutons de la nav. "Ride in" est la variante ghost de l'app (.mx-btn--ghost):
+   transparent, bord bleute, texte blanc; il ne dispute pas la primaute a "Get your ticket".
+   Il mene a l'app, lfg.moonx.fi, pour qui a deja son code d'acces. */
 .navb{display:inline-flex;align-items:center;gap:8px}
 .go.ghost{background:transparent!important;border:1px solid rgba(150,195,255,.30)!important;box-shadow:none!important;color:#fff}
 .go.ghost::before,.go.ghost .rk{display:none}
@@ -55,7 +66,8 @@ nav
 .go:hover{box-shadow:0 8px 30px rgba(45,123,255,.34)}
 .go:active{transform:translateY(1px) scale(.99)}
 @media (prefers-reduced-motion:reduce){ .go::before{animation:none;opacity:.8} }
-
+/* page frame */
+/* every page is centred, like the home: one column, text and blocks on the axis */
 main{position:relative;z-index:1;padding:calc(var(--navh) + 56px) 20px calc(var(--minih,62px) + 60px);max-width:980px;margin:0 auto;text-align:center}
 .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--blue);font-weight:700;text-transform:uppercase}
 h1{font-weight:800;letter-spacing:-.04em;font-size:clamp(38px,7vw,76px);line-height:.98;margin:14px auto 18px;max-width:14ch}
@@ -74,9 +86,17 @@ hr{border:0;border-top:1px solid var(--line);margin:40px 0}
 .btn.ghost{background:var(--card);border:1px solid var(--line-2);box-shadow:none}
 .mono{font-family:var(--mono)}
 .dim{color:var(--dim)}.mint{color:var(--mint)}
-
+/* footer, identical to the home page */
+/* Le footer est opaque, comme sur la home. Les pages secondaires montent un ciel plein
+   ecran en position fixed derriere tout; sans fond, les etoiles traversaient le footer et
+   la home ne leur ressemblait plus. Meme couleur que le corps, donc meme rendu qu'en bas
+   de la home, ou le lavis de #bgfix est deja eteint. */
 footer{padding:64px 20px 0;border-top:1px solid var(--line);position:relative;z-index:1;overflow:hidden;
-
+  /* Fond plat, identique a celui de la home. Mesure a l'appui: sur la home, le footer rend
+     (3,5,12) a toutes les hauteurs de fenetre, donc elle masque deja le lavis de #bgfix.
+     Une premiere tentative repeignait ce lavis dans le footer des pages secondaires: elles
+     sont alors devenues PLUS CLAIRES que la home, (4,10,22) contre (3,5,12). Le fond plat est
+     la bonne valeur, et il empeche le ciel des pages secondaires de traverser le footer. */
   background:var(--bg)}
 footer>*{max-width:980px;margin-left:auto;margin-right:auto}
 footer .tg{font-weight:800;font-size:clamp(22px,4.5vw,32px);letter-spacing:-.03em;color:#8FA8C8;margin-top:14px}
@@ -88,9 +108,10 @@ footer small{display:block;margin-top:50px;color:#5A6B8A;font-size:12px;font-fam
 .giant .wm{width:100%;max-width:none;margin:0;display:block}
 .giant{max-width:none;width:100%;margin:52px 0 0;padding:0;overflow:hidden;line-height:0;box-sizing:border-box}
 .giant .wm{width:100%;max-width:none;margin:0;transform:none;display:block}
-.giant .wm .wmt{font-size:21px;fill:#0D1424}
+.giant .wm .wmt{font-size:21px;fill:#0D1424}   /* the wordmark sinks into the background: present, not shouting */
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 
+/* la pastille du lot, dans la nav et dans le pied */
 .pz{display:inline-flex;align-items:center;gap:5px;margin-left:8px;padding:3px 8px;
   border-radius:999px;font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.1em;
   color:#03050C;background:linear-gradient(120deg,#A6FF3D,#6FE01E);
@@ -105,6 +126,9 @@ footer small{display:block;margin-top:50px;color:#5A6B8A;font-size:12px;font-fam
 @media (prefers-reduced-motion:reduce){ .pz,.pz i{animation:none} }
 @media (max-width:760px){ .pz{display:none} }
 
+/* L'oeuf de Paques: le chapeau se pose sur le logo au survol. Il arrive de plus haut en
+   tournant un peu, comme s'il venait d'etre lance. Il ne prend aucune place dans la mise en
+   page (position absolue) et ne gene jamais le clic (pointer-events:none). */
 body>nav>a:first-child{position:relative;display:inline-block}
 body>nav>a:first-child::after{content:"";position:absolute;left:45%;top:-2px;
   width:42px;height:22px;margin-left:-21px;pointer-events:none;

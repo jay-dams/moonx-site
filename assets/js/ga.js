@@ -1,7 +1,24 @@
+/* Google Analytics, et rien avant le consentement.
+
+   Etat par defaut: GA_ID vide -> ce fichier ne fait STRICTEMENT rien. Pas de requete, pas de
+   cookie, pas de bandeau. Le site reste exactement celui d'aujourd'hui.
+
+   Une fois GA_ID rempli:
+     - le Consent Mode v2 demarre avec TOUT refuse, avant meme le chargement de gtag;
+     - un bandeau demande. Tant qu'on n'a pas repondu, aucune requete ne part vers Google;
+     - "Accept" passe le consentement a granted et charge gtag;
+     - "Decline" ecrit le refus et ne charge jamais rien. Le refus est respecte au retour.
+
+   Pourquoi dans cet ordre: le Consent Mode ne sert a rien s'il est pose APRES gtag. La plupart
+   des integrations ratees font exactement ca et envoient un premier evenement avant la reponse.
+
+   La reponse est gardee dans localStorage, pas dans un cookie: un site qui pose un cookie pour
+   se souvenir qu'on refuse les cookies, c'est une blague qu'on ne fera pas. */
+
 (function () {
   "use strict";
 
-  var GA_ID = "G-Z2QVDGTL5P";
+  var GA_ID = "G-Z2QVDGTL5P";  /* <- vide = rien ne se passe. */
   var CLE = "moonx.consent";
 
   if (!GA_ID) return;
@@ -12,9 +29,11 @@
   window.dataLayer = window.dataLayer || [];
   function gtag() { window.dataLayer.push(arguments); }
   window.gtag = gtag;
-
+  /* One door for the site's own events: the signup, later a share or a ride. Safe to call
+     before consent: gtag queues, and nothing leaves without analytics_storage granted. */
   window.MOONX_EVENT = function (name, params) { try { gtag("event", name, params || {}); } catch (_) {} };
 
+  /* Tout refuse, avant tout le reste. */
   gtag("consent", "default", {
     ad_storage: "denied",
     ad_user_data: "denied",
@@ -55,6 +74,12 @@
   if (deja === "granted") { charger(); return; }
   if (deja === "denied") return;
 
+  /* Le bandeau. Il emprunte les variables du site: pas une boite grise posee par-dessus. */
+  /* LA BANNIERE, VERSION COWBOY DE L'ESPACE. La precedente etait une barre pleine largeur, en
+     capitales, sur deux lignes: le ton d'un avertissement, sur un site qui n'est que jeu.
+     Ici: une petite pastille en bas a droite, une phrase, deux boutons courts. Le sens
+     juridique ne bouge pas -- on compte les visites, rien d'autre, refuser ne change rien --
+     mais il est dit comme un cowboy le dirait. */
   function bandeau() {
     if (document.getElementById("consentBar")) return;
     var css = document.createElement("style");
@@ -90,6 +115,7 @@
     document.getElementById("cOk").addEventListener("click", accepter);
     document.getElementById("cNo").addEventListener("click", refuser);
   }
+
 
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", bandeau);

@@ -21,14 +21,22 @@
 <meta property="og:image" content="https://moonx.fi/og-image.png">
 <meta property="og:url" content="https://moonx.fi/404.html">
 <style>
-
+/* Le lien d'evitement se cache hors de l'ecran et ne revient qu'au clavier. Sans cette regle
+   il s'affichait en clair en haut a gauche de la page, ce que personne n'avait vu: la 404
+   inline tout son CSS pour tenir sans feuille externe, et celle-ci n'avait pas suivi. */
 .skip{position:fixed;left:-9999px;top:8px;z-index:99;background:var(--blue,#2D7BFF);color:#fff;
   padding:12px 18px;border-radius:10px;font-weight:700;text-decoration:none}
 .skip:focus{left:12px}
 :focus-visible{outline:2px solid var(--hi,#7FB6FF);outline-offset:3px;border-radius:6px}
 
+/* A 404 is served for any path, and sometimes opened straight from a folder. It cannot count on a
+   stylesheet, a font file or an image resolving, so it carries them: the shared base is inlined,
+   the hat is inline SVG, the wordmark font is embedded. Only the radio fetches, and it looks for
+   the site root by itself. */
 @font-face{font-family:"Blanka";font-display:swap;src:url("data:font/woff2;base64,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") format("woff2")}
-
+/* MOONX, shared base for every page that is not the home page: tokens, type, nav, footer, buttons.
+   The home page keeps its own inline CSS (it is one file on purpose); these rules are copied from it
+   so a second page looks like the first. Change a token here and in index.html together. */
 :root{--bg:#03050C;--card:#0A0E1A;--card-2:#121A2B;--well:rgba(160,200,255,.05);--line:rgba(150,195,255,.16);--line-2:rgba(150,195,255,.30);--txt:#FFFFFF;--dim:#8FA8C8;--mute:#5A6B8A;--blue:#2D7BFF;--hi:#7FB6FF;--lo:#1E4FCC;--mint:#A6FF3D;--red:#FF3B6B;--amber:#FFC93C;--disp:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;--mono:"JetBrains Mono",ui-monospace,Menlo,monospace;--ease:cubic-bezier(.22,.61,.36,1);--navh:64px}
 *{box-sizing:border-box;margin:0;padding:0}
 html{background:var(--bg);color-scheme:dark;scroll-behavior:smooth}
@@ -37,7 +45,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;-webki
 a{color:inherit;text-decoration:none}
 ::selection{background:var(--blue);color:#fff}
 img,svg{display:block;max-width:100%}
-
+/* stars: a fixed layer, cheap, the same sky on every page */
 .sky{position:fixed;inset:0;z-index:0;pointer-events:none;background:
  radial-gradient(1px 1px at 12% 18%,rgba(255,255,255,.9) 50%,transparent 51%),
  radial-gradient(1px 1px at 78% 8%,rgba(255,255,255,.7) 50%,transparent 51%),
@@ -48,11 +56,13 @@ img,svg{display:block;max-width:100%}
  radial-gradient(1px 1px at 8% 92%,rgba(255,255,255,.5) 50%,transparent 51%),
  radial-gradient(1px 1px at 55% 12%,rgba(255,255,255,.5) 50%,transparent 51%),
  radial-gradient(ellipse at 50% -20%,rgba(45,123,255,.18),transparent 60%)}
-
+/* nav, identical to the home page */
 body>nav{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:14px max(20px, calc((100% - 980px) / 2));background:rgba(3,5,12,.86);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
 body>nav .wm{width:118px}
 .wm .wmt{font-family:"Blanka","Elianto","Michroma",system-ui,sans-serif;font-size:16px;letter-spacing:.06em;fill:#fff;stroke:none;font-weight:400}
 
+/* page frame */
+/* every page is centred, like the home: one column, text and blocks on the axis */
 main{position:relative;z-index:1;padding:calc(var(--navh) + 56px) 20px calc(var(--minih,62px) + 60px);max-width:980px;margin:0 auto;text-align:center}
 .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--blue);font-weight:700;text-transform:uppercase}
 h1{font-weight:800;letter-spacing:-.04em;font-size:clamp(38px,7vw,76px);line-height:.98;margin:14px auto 18px;max-width:14ch}
@@ -71,9 +81,13 @@ hr{border:0;border-top:1px solid var(--line);margin:40px 0}
 .btn.ghost{background:var(--card);border:1px solid var(--line-2);box-shadow:none}
 .mono{font-family:var(--mono)}
 .dim{color:var(--dim)}.mint{color:var(--mint)}
-
+/* footer, identical to the home page */
 footer{padding:64px 20px 0;border-top:1px solid var(--line);position:relative;z-index:1;overflow:hidden;
-
+  /* Fond plat, identique a celui de la home. Mesure a l'appui: sur la home, le footer rend
+     (3,5,12) a toutes les hauteurs de fenetre, donc elle masque deja le lavis de #bgfix.
+     Une premiere tentative repeignait ce lavis dans le footer des pages secondaires: elles
+     sont alors devenues PLUS CLAIRES que la home, (4,10,22) contre (3,5,12). Le fond plat est
+     la bonne valeur, et il empeche le ciel des pages secondaires de traverser le footer. */
   background:var(--bg)}
 footer>*{max-width:980px;margin-left:auto;margin-right:auto}
 footer .tg{font-weight:800;font-size:clamp(22px,4.5vw,32px);letter-spacing:-.03em;color:#8FA8C8;margin-top:14px}
@@ -85,6 +99,7 @@ footer small{display:block;margin-top:50px;color:#5A6B8A;font-size:12px;font-fam
 .giant .wm{width:100%;max-width:none;margin:0;display:block}
 .giant .wm .wmt{font-size:21px;fill:#0D1424}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
 
 html,body{height:100%}
 :root{--minih:62px}
@@ -103,23 +118,26 @@ h1{margin:8px auto 10px}
 .freq{font-family:var(--mono);font-size:12px;letter-spacing:.18em;color:var(--dim);display:flex;gap:14px;align-items:center;justify-content:center;margin-top:10px}
 .freq i{width:9px;height:9px;border-radius:50%;background:var(--red);box-shadow:0 0 12px var(--red);display:inline-block}
 .freq.lock i{background:var(--mint);box-shadow:0 0 12px var(--mint)}
-
+/* the hat, adrift under the text: the 404 is the one page of the site allowed to wear it */
 .drift{position:relative;width:100%;height:min(34vw,200px);display:flex;align-items:center;justify-content:center;margin:14px 0 26px}
 .drift .hat{width:min(72vw,380px);height:auto;animation:tumble 14s ease-in-out infinite;filter:drop-shadow(0 30px 60px rgba(45,123,255,.25))}
 @keyframes tumble{0%{transform:translate(0,0) rotate(-5deg)}25%{transform:translate(14px,-14px) rotate(3deg)}50%{transform:translate(-6px,-24px) rotate(7deg)}75%{transform:translate(-16px,-8px) rotate(-2deg)}100%{transform:translate(0,0) rotate(-5deg)}}
 @media (max-width:899px){main{min-height:auto;justify-content:flex-start;padding-bottom:40px}}
 @media (min-width:900px) and (max-height:820px){.code{font-size:clamp(64px,10vw,104px)}.drift{height:104px;margin:6px 0 16px}.drift .hat{width:300px}.lead{font-size:15px}main{padding-top:calc(var(--navh) + 16px)}}
 
+/* ---- the radio, the same rules as the home ---- */
+/* MOONX radio, the same rules as the home page. Generated by tools/extract_radio.py from index.html: do not edit here. */
+/* RADIO */
 #radioWrap{position:relative;z-index:3;width:min(94vw,640px);margin:34px auto 0;transform:translateY(40px);opacity:0;transition:transform 1.2s cubic-bezier(.2,.8,.2,1) .1s,opacity 1s .1s}
 body.lit #radioWrap{transform:none;opacity:1}
 .set{border-radius:28px;background:linear-gradient(180deg,#141C2E,#0A0E1A 60%,#070B14);border:1px solid var(--line-2);box-shadow:0 40px 80px -30px rgba(45,123,255,.45),inset 0 1px 0 rgba(255,255,255,.08);padding:18px 16px 16px;position:relative}
 .set::before{content:"";position:absolute;left:24px;right:24px;top:0;height:1px;background:linear-gradient(90deg,transparent,rgba(127,182,255,.6),transparent)}
-
+/* the tuner frame shares its edges with the buttons underneath: no extra inset */
 .glass{position:relative;border-radius:16px;background:#020814;border:1px solid rgba(45,123,255,.7);box-shadow:inset 0 0 40px rgba(45,123,255,.18),0 0 30px -10px rgba(45,123,255,.7);padding:9px 9px 11px;overflow:hidden}
 .scope{position:relative;border-radius:12px;overflow:hidden;background:#020814}
 .scope canvas{width:100%;height:auto;display:block;touch-action:none;user-select:none;cursor:ew-resize}
 .crt{position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(0,0,0,.18) 0 2px,transparent 2px 4px);mix-blend-mode:multiply}
-
+/* one inset for the whole tuner: telemetry, readout, time and bars line up on the same edges */
 .tele{display:flex;align-items:center;gap:10px;padding:10px 0 0;font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:var(--dim)}
 .tele b{font-weight:700;color:var(--hi)}
 .led{width:8px;height:8px;border-radius:50%;background:#FFC93C;box-shadow:0 0 8px #FFC93C;flex:none}
@@ -156,7 +174,7 @@ body.lit #radioWrap{transform:none;opacity:1}
 #klines p{font-weight:500;font-size:17px;line-height:1.45;color:#7E93B4;padding:2px 0}
 #klines p.now{color:#fff;font-weight:800}
 #klines p.done{color:#8FA8C8}
-
+/* sticky mini radio */
 #miniBar{position:fixed;left:10px;right:10px;bottom:10px;z-index:30;transform:translateY(130%);transition:transform .35s}
 #miniBar.on{transform:none}
 #miniBar .set{padding:10px 12px;border-radius:18px;display:flex;align-items:center;gap:10px;background:linear-gradient(180deg,#141C2E,#0A0E1A)}
@@ -167,7 +185,10 @@ body.lit #radioWrap{transform:none;opacity:1}
 #miniBar #miniStPrev,#miniBar #miniStNext{width:36px;font-size:14px;color:var(--dim)}
 #miniBar #miniStPrev:hover,#miniBar #miniStNext:hover{color:#fff;border-color:var(--hi)}
 @media (max-width:520px){#miniBar #miniStPrev,#miniBar #miniStNext{display:none}}
-
+/* on a small phone the sheet is the way: the bar keeps four targets, not six */
+/* Les touches du mini-lecteur avaient un relief de clavier: degrade sombre et ombre interne
+   en bas, la meme famille que le biseau retire des boutons. Ghost pour les quatre touches de
+   navigation, solid pour la lecture, comme partout. */
 #miniBar button{width:44px;height:40px;border-radius:12px;background:transparent;border:1px solid rgba(150,195,255,.30);font-family:var(--mono);font-size:12px;color:#fff;box-shadow:none;flex:none}
 #miniBar button:hover{background:rgba(150,195,255,.06);border-color:rgba(150,195,255,.5)}
 #miniBar button:active{transform:scale(.985)}
@@ -211,13 +232,13 @@ body.lit #radioWrap{transform:none;opacity:1}
 #gate #radioWrap .set{padding:12px 12px 12px}
 #gate #radioWrap .keys{grid-template-columns:1fr 1fr 1fr}
 #gate #radioWrap #karaoke.on{display:block;max-height:200px}
-
+/* the radio sheet and bar keep the proportions of the entry screen */
 #radioSheet{max-width:640px;left:0;right:0;margin:0 auto;border-radius:24px 24px 0 0}
 #miniBar{max-width:640px;left:0;right:0;margin:0 auto;width:calc(100% - 20px)}
-
+/* shown only if the browser blocks playback despite the gesture */
 #needPlay{position:fixed;left:50%;transform:translateX(-50%);bottom:96px;z-index:60;font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:#04070F;background-image:linear-gradient(#7FB6FF,#2D7BFF);border:0;border-radius:12px;padding:12px 18px;font-weight:800;cursor:pointer}
 #needPlay[hidden]{display:none}
-
+/* the radio readout: station and DJ on one line, the track big, the artist under it */
 .readout .rline{display:flex;align-items:baseline;gap:10px;margin-bottom:7px;width:100%}
 .readout .rline b{font-family:var(--mono);font-size:13px;letter-spacing:.08em;color:var(--blue);font-weight:700;flex:none}
 .readout .dj{font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:var(--dim);flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
@@ -225,7 +246,7 @@ body.lit #radioWrap{transform:none;opacity:1}
 .readout .mq{display:block;width:100%;overflow:hidden;white-space:nowrap}
 .readout #dispNow{display:inline-block;font-weight:800;font-size:15px;letter-spacing:-.01em;color:#fff}
 .readout .artist{display:block;width:100%;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;color:var(--dim);margin-top:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-
+/* time and progress, the way a deck shows them */
 .readout .tline{display:flex;align-items:center;gap:9px;margin-top:8px;font-family:var(--mono);font-size:10px;color:var(--dim)}
 .readout .tbar{flex:1;height:3px;cursor:pointer;padding:7px 0;background-clip:content-box;border-radius:2px;background:rgba(150,195,255,.16);overflow:hidden}
 .readout .tbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#7FB6FF,#2D7BFF);transition:width .25s linear}
@@ -238,7 +259,7 @@ body.lit #radioWrap{transform:none;opacity:1}
 #klines p i{font-style:normal;color:inherit;transition:color .12s}
 #klines p.now i.sung{color:var(--mint)}
 #klines p.now i{color:#fff}
-
+/* the panel is a control surface, not a page: everything a little tighter so it fits without scrolling */
 #radioSheet .scope{aspect-ratio:16/5.2}
 #radioSheet .presets{gap:5px;margin-top:10px}
 #radioSheet .presets button{padding:8px 4px;font-size:9px}
@@ -251,7 +272,7 @@ body.lit #radioWrap{transform:none;opacity:1}
 #karaoke{max-height:220px}
 #karBtn[disabled]{opacity:.35;pointer-events:none}
 #gate #radioWrap{width:100%}
-
+/* the sheet minimises, so its control reads as a chevron rather than a dismissal */
 #rsClose{display:flex;align-items:center;justify-content:center;color:var(--dim)}
 #rsClose:hover{color:#fff}
 
@@ -270,7 +291,8 @@ body.lit #radioWrap{transform:none;opacity:1}
   animation:ctaStars 5.5s ease-in-out infinite}
 .go:hover{background:linear-gradient(180deg,#6BA0FF,#3E86FF)}
 .go:active{background:linear-gradient(180deg,#2D7BFF,#1E4FCC);transform:scale(.985)}
-
+/* La 404 porte toute sa CSS en ligne, sans site.css: les deux boutons de la nav y sont donc
+   redits, a l'identique des autres pages. Ride in est la variante ghost de l'app. */
 .navb{display:inline-flex;align-items:center;gap:8px}
 .go.ghost{background:transparent!important;border:1px solid rgba(150,195,255,.30)!important;box-shadow:none!important;color:#fff}
 .go.ghost::before,.go.ghost .rk{display:none}
@@ -280,7 +302,9 @@ body.lit #radioWrap{transform:none;opacity:1}
 .go:active{transform:translateY(1px) scale(.99)}
 @keyframes ctaStars{0%,100%{opacity:.55}50%{opacity:1}}
 @media (prefers-reduced-motion:reduce){ .go::before{animation:none;opacity:.8} }
-
+/* L'oeuf de Paques: le chapeau se pose sur le logo au survol. Il arrive de plus haut en
+   tournant un peu, comme s'il venait d'etre lance. Il ne prend aucune place dans la mise en
+   page (position absolue) et ne gene jamais le clic (pointer-events:none). */
 body>nav>a:first-child{position:relative;display:inline-block}
 body>nav>a:first-child::after{content:"";position:absolute;left:45%;top:-2px;
   width:42px;height:22px;margin-left:-21px;pointer-events:none;
@@ -294,6 +318,9 @@ body>nav>a:first-child:hover::after,body>nav>a:first-child:focus-visible::after{
   body>nav>a:first-child:hover::after{transform:translate(-3px,-8px) rotate(-7deg)}}
 @media (hover:none){ body>nav>a:first-child::after{display:none} }
 
+/* ===== reprises telles quelles de assets/css/site.css: la 404 inline son CSS et
+   n'heritait donc ni du pied ni de la pastille. Une copie, pas une interpretation. ===== */
+/* la pastille du lot, dans la nav et dans le pied */
 .pz{display:inline-flex;align-items:center;gap:5px;margin-left:8px;padding:3px 8px;
   border-radius:999px;font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.1em;
   color:#03050C;background:linear-gradient(120deg,#A6FF3D,#6FE01E);
@@ -312,20 +339,30 @@ footer, buttons.
    so a second page looks like the first. Change a token here and in index.html together. */
 :root{--bg:#03050C;--card:#0A0E1A;--card-2:#121A2B;--well:rgba(160,200,255,.05);--line:rgba(150,195,255,.16);--line-2:rgba(150,195,255,.30);--txt:#FFFFFF;--dim:#8FA8C8;--mute:#5A6B8A;--blue:#2D7BFF;--hi:#7FB6FF;--lo:#1E4FCC;--mint:#A6FF3D;--red:#FF3B6B;--amber:#FFC93C;--disp:"Inter",system-ui,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace;--ease:cubic-bezier(.22,.61,.36,1);--navh:64px}
 footer, identical to the home page */
-
+/* Le footer est opaque, comme sur la home. Les pages secondaires montent un ciel plein
+   ecran en position fixed derriere tout; sans fond, les etoiles traversaient le footer et
+   la home ne leur ressemblait plus. Meme couleur que le corps, donc meme rendu qu'en bas
+   de la home, ou le lavis de #bgfix est deja eteint. */
 footer{padding:64px 20px 0;border-top:1px solid var(--line);position:relative;z-index:1;overflow:hidden;
-
+  /* Fond plat, identique a celui de la home. Mesure a l'appui: sur la home, le footer rend
+     (3,5,12) a toutes les hauteurs de fenetre, donc elle masque deja le lavis de #bgfix.
+     Une premiere tentative repeignait ce lavis dans le footer des pages secondaires: elles
+     sont alors devenues PLUS CLAIRES que la home, (4,10,22) contre (3,5,12). Le fond plat est
+     la bonne valeur, et il empeche le ciel des pages secondaires de traverser le footer. */
   background:var(--bg)}
 
 .giant{max-width:none;width:100%;margin:52px 0 0;padding:0;overflow:hidden;line-height:0;box-sizing:border-box}
 .giant .wm{width:100%;max-width:none;margin:0;transform:none;display:block}
 
+/* un battement bref quand on vient de l'appeler: on doit voir OU on a ete envoye */
 #miniBar.ping{animation:miniPing 1.1s ease-out}
 @keyframes miniPing{
   0%{box-shadow:0 0 0 0 rgba(127,182,255,.55)}
   70%{box-shadow:0 0 0 14px rgba(127,182,255,0)}
   100%{box-shadow:0 0 0 0 rgba(127,182,255,0)}}
 @media (prefers-reduced-motion:reduce){ #miniBar.ping{animation:none} }
+.goShort{display:none}
+@media (max-width:600px){ .goLong{display:none} .goShort{display:inline} }
 </style>
 
 </head>
@@ -336,7 +373,7 @@ footer{padding:64px 20px 0;border-top:1px solid var(--line);position:relative;z-
 <a class="skip" href="#main">Skip to content</a>
 <nav aria-label="Main">
   <a href="/" aria-label="MOONX"><svg class="wm" viewBox="0 0 100 22" role="img" aria-label="MOONX" preserveAspectRatio="xMidYMid meet"><text class="wmt" x="50" y="17" text-anchor="middle">MOONX</text></svg></a>
-  <span class="navb"><a class="go ghost" href="https://lfg.moonx.fi" title="Already have your access code? Ride in.">Ride in</a><a class="go" href="/#board">Get your ticket</a></span>
+  <span class="navb"><a class="go ghost" href="https://lfg.moonx.fi" title="Already have your access code? Ride in.">Ride in</a><a class="go" href="https://t.me/moonxdealer_bot" target="_blank" rel="noopener"><span class="goLong">Ask for an access code</span><span class="goShort">Get a code</span></a></span>
 </nav>
 
 <main id="main">
@@ -383,7 +420,8 @@ footer{padding:64px 20px 0;border-top:1px solid var(--line);position:relative;z-
   <small>© 2026 MOONX · Non-custodial, on Polygon and Monad · Prices in moonshots. Results may vary. They always do. · Ad astra, cowboy.</small>
   <div class="giant" aria-hidden="true"><svg class="wm" viewBox="0 0 100 22" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><text class="wmt" x="50" y="17" text-anchor="middle">MOONX</text></svg></div>
 </footer>
-
+<!-- MOONX radio: the same player as the home. Mini bar at the bottom, the full set in the sheet.
+     Needs assets/radio/radio.css and radio.js (site root). Generated by tools/extract_radio.py from index.html. -->
 <div id="miniBar" role="region" aria-label="Now playing">
   <div class="set">
     <button type="button" class="glass" id="miniGlass" aria-label="Open the radio"><b id="miniStation">K-HAT 101.7</b><div class="mq" id="miniMqWrap"><span id="miniNow">Chasing X · Della &amp; the Long Shots</span></div><i class="tune">TUNE</i></button>
@@ -396,7 +434,7 @@ footer{padding:64px 20px 0;border-top:1px solid var(--line);position:relative;z-
 </div>
 <div id="radioVeil" aria-hidden="true"></div>
 <div id="radioSheet" role="dialog" aria-label="Shuttle radio" aria-hidden="true">
-  <div class="rs-head"><div><b>MOONX Radio</b><span id="rsSub">Ten stations. Sixty-five songs, all of them ours.</span></div><button type="button" id="rsClose" aria-label="Minimise the radio" title="Minimise"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 10l6 6 6-6"/><path d="M5 20h14"/></svg></button></div>
+  <div class="rs-head"><div><b>MOONX Radio</b><span id="rsSub">Ten stations, sixty-five songs, built for posterity.</span></div><button type="button" id="rsClose" aria-label="Minimise the radio" title="Minimise"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 10l6 6 6-6"/><path d="M5 20h14"/></svg></button></div>
   <div id="sheetSlot"><div id="radioWrap">
     <div class="set">
       <div class="glass">
@@ -437,18 +475,27 @@ footer{padding:64px 20px 0;border-top:1px solid var(--line);position:relative;z-
 </div>
 <button id="needPlay" type="button" hidden>&#9654; TAP TO START THE RADIO</button>
 <script>
-
+/* ---------- the sky: the hero's own starfield (assets/js/sky.js), mounted full-window ----------
+   The 404 is served from any path, and it inlines everything else, but the sky is worth a fetch:
+   one engine for the whole site means the hero and this page can never drift apart. If the file
+   cannot be found (the page opened straight from a folder), the CSS star layer stays and the page
+   is still a night sky, just a still one. */
 (function(){
   const c=document.getElementById("stars");
-  function go(){ if(window.MoonxSky){ MoonxSky.mount(c,{fill:true, always:true, density:260, parallax:18, moon:false});     return true; } return false; }
+  function go(){ if(window.MoonxSky){ MoonxSky.mount(c,{fill:true, always:true, density:260, parallax:18, moon:false});   /* the hat is this page's moon */ return true; } return false; }
   if(go()) return;
-  const bases=["./", "/", "../", "/landing/"];
+  const bases=["./", "/", "../", "/landing/"];   /* its own folder first: one request, no console noise */
   (function next(i){ if(i>=bases.length){ c.remove(); return; }
     const sc=document.createElement("script"); sc.src=bases[i]+"assets/js/sky.js";
     sc.onload=()=>{ if(!go()) next(i+1); }; sc.onerror=()=>{ sc.remove(); next(i+1); };
     document.head.appendChild(sc); })(0);
 })();
 
+/* ---------- the radio: the same engine as the home, loaded from the home folder ----------
+   radio.js sits next to index.html. A 404 can be served from any depth, or opened from a folder, so
+   the folder is found by trying to load the script itself from each candidate: a script tag loads
+   over http and over file alike, where fetch would be refused. Audio paths in the manifest are
+   relative to that folder: the engine resolves them from MOONX_BASE. */
 (function(){
   const mini=document.getElementById("miniBar"); if(mini) mini.classList.add("on");
   const pl=document.getElementById("miniPlay"); if(pl) pl.textContent="\u25B6";
@@ -472,7 +519,8 @@ footer{padding:64px 20px 0;border-top:1px solid var(--line);position:relative;z-
 </script>
 <script src="/assets/js/ga.js" defer></script>
 <script>
-
+/* Le lien "Radio" du pied, sur les pages qui portent la barre: on ne quitte pas la page pour
+   ecouter ce qui joue deja en bas de l'ecran. */
 (function(){
   const bar=document.getElementById("miniBar");
   if(!bar) return;
