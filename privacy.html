@@ -25,10 +25,10 @@
 <script src="assets/js/sky.js" defer></script>
 <link rel="stylesheet" href="assets/radio/radio.css">
 <style>
-/* a written page: text on the left inside the centred column, so long copy is readable */
+
 main{text-align:left}
 main>.eyebrow,main>h1,main>.lead,main>.stamp{text-align:center}
-/* the date sits under the lead, on the axis, quiet */
+
 .stamp{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;color:var(--mute);margin:18px auto 0}
 h1{max-width:16ch}
 h2{margin:52px 0 12px;max-width:22ch;text-align:left;scroll-margin-top:calc(var(--navh) + 18px)}
@@ -42,6 +42,9 @@ li{margin:7px 0}
 .lead{max-width:64ch;margin-left:auto;margin-right:auto}
 .mono{font-family:var(--mono)}
 @media (max-width:600px){ body>nav .go{font-size:12px;padding-left:12px;padding-right:12px;white-space:nowrap} }
+
+
+#miniBar .glass .mq,#miniBar .glass .tune,.tune,#consentBar a,.perma a{font-size:11px!important}
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://moonx.fi/"},{"@type":"ListItem","position":2,"name":"Privacy Policy","item":"https://moonx.fi/privacy.html"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","dateModified":"2026-09-11","@id":"https://moonx.fi/privacy.html#page","name":"Privacy Policy","url":"https://moonx.fi/privacy.html","isPartOf":{"@id":"https://moonx.fi/#site"},"publisher":{"@id":"https://moonx.fi/#org"},"inLanguage":"en"}</script>
@@ -54,7 +57,7 @@ li{margin:7px 0}
 <a class="skip" href="#main">Skip to content</a>
 <nav aria-label="Main">
   <a href="index.html" aria-label="MOONX"><svg class="wm" viewBox="0 0 100 22" role="img" aria-label="MOONX" preserveAspectRatio="xMidYMid meet"><text class="wmt" x="50" y="17" text-anchor="middle">MOONX</text></svg></a>
-  <span class="navb"><a class="go ghost" href="https://lfg.moonx.fi" title="Already have your access code? Ride in.">Ride in</a><a class="go" href="index.html#ask">Ask for an access code</a></span>
+  <span class="navb"><a class="go ghost" href="https://lfg.moonx.fi" title="Already have an access code? Log in.">Log in</a><a class="go" href="index.html#ask">Get early access</a></span>
 </nav>
 
 <main id="main">
@@ -77,11 +80,9 @@ li{margin:7px 0}
     have one. Alongside it we keep where you came from when you signed up: the campaign tag on
     the link you clicked, or the site that sent you, kept for thirty days on your device before that.
     It tells us which door works. It is not shared with anyone. It is stored by Supabase, our database host, on servers in the European Union.</p></div>
-    <div class="card"><h3>The handle on a ride</h3><p>The name you type at the end of a ride, sent with
-    your score so the board can show it. It is attached to the ride, not to you: nothing links two rides
+    <div class="card"><h3>Your name on the leaderboard</h3><p>The name you type at the end of a game, sent with your score so the leaderboard can show it. It is attached to the ride, not to you: nothing links two rides
     unless you also left an email.</p></div>
-    <div class="card"><h3>The name of your fund</h3><p>You choose it. It appears on your card and on the
-    board if you land a shot worth showing. It is not your legal name unless you make it one.</p></div>
+    <div class="card"><h3>The name of your fund</h3><p>You choose it. It appears on your card and in the feed if you make a trade worth showing. It is not your legal name unless you make it one.</p></div>
     <div class="card"><h3>Your region</h3><p>Read at signup from your connection, to tell you what is
     available where you are. We keep the answer, not a history of where you have been.</p></div>
     <div class="card"><h3>An invitation code</h3><p>If you arrived through somebody's link, we keep which
@@ -118,15 +119,14 @@ li{margin:7px 0}
     <li><span class="mono">sr.best</span> your best multiple per song.</li>
     <li><span class="mono">sr.daily</span> whether today's ride has been used.</li>
     <li><span class="mono">sr.handle</span> the name you ride under, if you set one.</li>
-    <li><span class="mono">sr.board</span> the rides you finished on this device, so the board is not
-    empty before the season opens.</li>
+    <li><span class="mono">sr.board</span> the games you finished on this device, so the leaderboard is not empty before the season opens.</li>
     <li><span class="mono">moonx.me</span> the last handle you used, and your email if you left one.</li>
     <li><span class="mono">moonx.consent</span> your answer to the analytics question.</li>
   </ul>
   <p>Clearing your browser data clears all of it, and the game starts fresh.</p>
 
   <h2>what is public for ever.</h2>
-  <p>Every shot, every payout and every withdrawal is a transaction on a public blockchain. Anyone who
+  <p>Every trade, every payout and every withdrawal is a transaction on a public blockchain. Anyone who
   knows your wallet address can read all of it, permanently, and nobody, including us, can delete or
   amend it. This is the trade a non-custodial market makes: no company between you and your money, and
   no company able to erase the record either.</p>
@@ -147,7 +147,7 @@ li{margin:7px 0}
   <h2>how long we keep it.</h2>
   <p>Your email and fund name for as long as the account is open, and for a short period after you close
   it so a duplicate signup or a dispute can be resolved. Support messages for two years. The region
-  answer until it changes. On-chain records for ever, because they are not ours to keep or to remove.</p>
+  answer until it changes. Blockchain records, for ever, because they are not ours to keep or to remove.</p>
 
   <h2>what you can ask for.</h2>
   <p>A copy of what we hold, a correction, a deletion, a machine-readable export, or a stop to a
@@ -167,20 +167,18 @@ li{margin:7px 0}
 </main>
 
 <footer>
-  <div class="tg">where long shots become legends.</div>
+  <div class="tg">The moonshot of a lifetime is one tap away.</div>
   <nav class="cols" aria-label="Footer">
-    <div><b>ABOUT</b><a href="index.html#journey">Radio</a><a href="index.html#faq">FAQ</a><a href="rodeo.html">Moon Rodeo</a></div>
+    <div><b>ABOUT</b><a href="index.html#journey">Radio</a><a href="index.html#faq">FAQ</a></div>
     <div><b>SOCIAL</b><a href="https://x.com/moonxfi" rel="me" target="_blank">X</a><a href="https://www.youtube.com/@moonxfi" rel="me" target="_blank">YouTube</a><a href="https://www.instagram.com/moonx.fi" rel="me" target="_blank">Instagram</a></div>
     <div><b>LEGAL</b><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms of Service</a></div>
   </nav>
-  <small>© 2026 MOONX · Non-custodial, on Polygon and Monad · Prices in moonshots. Results may vary. They always do. · Ad astra, cowboy.</small>
+  <small>© 2026 MOONX · Your money stays in your wallet · Trades run on Polymarket · Trading involves risk.</small>
   <div class="giant" aria-hidden="true"><svg class="wm" viewBox="0 0 100 22" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><text class="wmt" x="50" y="17" text-anchor="middle">MOONX</text></svg></div>
 </footer>
 
-<!-- the radio: the same player as the home (mini bar at the bottom, the full set in the sheet). This block
-     is a copy of assets/radio/radio.html; regenerate all three radio files with tools/extract_radio.py -->
-<!-- MOONX radio: the same player as the home. Mini bar at the bottom, the full set in the sheet.
-     Needs assets/radio/radio.css and radio.js (site root). Generated by tools/extract_radio.py from index.html. -->
+
+
 <div id="miniBar" role="region" aria-label="Now playing">
   <div class="set">
     <button type="button" class="glass" id="miniGlass" aria-label="Open the radio"><b id="miniStation">K-HAT 101.7</b><div class="mq" id="miniMqWrap"><span id="miniNow">Chasing X · Della &amp; the Long Shots</span></div><i class="tune">TUNE</i></button>
@@ -233,25 +231,9 @@ li{margin:7px 0}
 <button id="needPlay" type="button" hidden>&#9654; TAP TO START THE RADIO</button>
 <script>document.getElementById("miniBar").classList.add("on");</script>
 <script src="radio.js"></script>
-<script>addEventListener("load",()=>{ if(window.MoonxSky) MoonxSky.mount(document.querySelector(".skycv"),{fill:true, always:true, density:320, parallax:18, moon:false}); });</script>
+<script>addEventListener("load",()=>{if(window.MoonxSky)MoonxSky.mount(document.querySelector(".skycv"),{fill:true,always:true,density:320,parallax:18,moon:false})});</script>
 <script src="assets/js/ga.js" defer></script>
-<script>
-/* Le lien "Radio" du pied, sur les pages qui portent la barre: on ne quitte pas la page pour
-   ecouter ce qui joue deja en bas de l'ecran. */
-(function(){
-  const bar=document.getElementById("miniBar");
-  if(!bar) return;
-  document.querySelectorAll('a[href$="#journey"], a[href="index.html#journey"]').forEach(a=>{
-    a.setAttribute("href","#miniBar");
-    a.addEventListener("click",e=>{
-      e.preventDefault();
-      const g=document.getElementById("miniGlass");
-      if(g){ g.click(); return; }
-      bar.scrollIntoView({behavior:"smooth", block:"nearest"});
-    });
-  });
-})();
-</script>
+<script>(function(){const bar=document.getElementById("miniBar");if(!bar)return;document.querySelectorAll('a[href$="#journey"], a[href="index.html#journey"]').forEach(a=>{a.setAttribute("href","#miniBar");a.addEventListener("click",e=>{e.preventDefault();const g=document.getElementById("miniGlass");if(g){g.click();return}bar.scrollIntoView({behavior:"smooth",block:"nearest"})})})})();</script>
 <script src="assets/js/attr.js"></script>
 <script src="assets/js/rocket.js" defer></script>
 </body>

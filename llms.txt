@@ -1,50 +1,45 @@
 # MOONX
 
-> MOONX is a consumer app for prediction markets. Every Polymarket market on one board, a
-> non-custodial wallet made on the user's own device, and a shot taken in one tap. It settles
-> on Polygon, in USDC. Last updated 2026-09-15.
+> MOONX is an app to trade on real-world events. Pick a question, like "Will Bitcoin be
+> above $100,000 on Friday?", and buy Yes or No. If you're right, each share pays $1. Trades
+> run on Polymarket, one of the world's largest prediction markets. Last updated 2026-09-22.
 
 ## What it is, in one paragraph
 
-MOONX lets anyone take a position on a real prediction market from a phone, without a broker
-and without handing over custody of their money. A new user creates an account with an email,
-names their fund, saves one encrypted backup file with a password only they hold, sets a PIN,
-and the app opens a trading wallet bridged to Polymarket. Positions are on-chain and can be
-verified. Money can be withdrawn at any moment, because the keys never leave the user.
+MOONX lets anyone trade on a real prediction market from a phone, without a broker and without
+handing their money to anyone. A new user signs up with an email and adds money with a card.
+The wallet is created on the user's own phone, so only they can move their money. Trades go to
+Polymarket, winnings come back to the same wallet, and money can be withdrawn at any moment.
 
-## The words we use, and the ones we do not
+## The words we use
 
-- A **ticket** is the first position a new user takes.
-- A **shot** is a position on a market. A shot that pays is said to **moon**; one that does not is a **miss**.
-- The **board** is the list of markets. The **feed** is what other people are doing.
-- A **multiple** (2.7x) is what a shot paid, never a promised return.
+- A **trade** is buying Yes or No on a question. You can sell it anytime before the result, at the
+  price on the book: like any trade, a sale needs a buyer on the other side.
+- The **price** of a side, between 1 and 99 cents, is what the crowd thinks the odds are.
+- A **share** pays $1 if you're right and nothing if you're wrong.
+- A **multiple** (2.7x) is what a trade paid, never a promised return.
 - MOONX is not an exchange, not a casino and not a betting site. It never promises a yield,
-  a return or a profit, and it never states a default amount to put in. Any figure on the site
-  is a market price that was recorded, with its date.
+  a return or a profit. Any figure on the site is a market price that was recorded, with its date.
 
 ## Pages
 
 - [Home](https://moonx.fi/): what it is, resolved markets as proof, the five steps of setup, the FAQ, the radio.
-- [Moon Rodeo](https://moonx.fi/rodeo.html): Moon Rodeo, a rhythm game on the MOONX Radio songs, played in the page. One song, one life, and your handle on the board.
 - [Privacy](https://moonx.fi/privacy.html): what is collected, what never is, where the keys live, what is public on-chain for ever.
-- [Terms](https://moonx.fi/terms.html): what the service does, what it cannot do with your funds, fees, Moon Rodeo rules, risk.
+- [Terms](https://moonx.fi/terms.html): what the service does, what it cannot do with your funds, fees, risk.
 
 ## Facts that can be quoted
 
 - Custody: non-custodial. The private key is generated on the user's device and never sent to MOONX.
 - Recovery: one encrypted backup file plus a password held by the user. MOONX cannot restore an
   account without them, by design, and if the user loses both, the funds are lost to everyone.
-- Chain, today: **Polygon**, in USDC, because that is where Polymarket lives. Every shot, payout
-  and withdrawal happens there. Monad is what MOONX is building on next; nothing runs there yet.
-- Network fees: MOONX pays the gas, including on withdrawals. There is no subscription, no
+- Chain: **Polygon**. The main wallet holds USDC on Polygon; deposits, withdrawals and savings (Aave)
+  live there. Trades go to Polymarket, which runs on Polygon too, and MOONX moves the money between the
+  wallet and the market, with no network fees for the user.
+- Network fees: MOONX pays them, including on withdrawals. There is no subscription, no
   account fee and no withdrawal fee. The fee is taken on each shot and shown before it is confirmed.
 - Setup: five steps, about two minutes, no seed phrase to write down.
 - MOONX Radio: 10 stations, 65 original songs, free, no account, lyrics
   synchronised to the recordings.
-- Moon Rodeo: a rhythm game on the MOONX Radio songs. Free, no account, no email: one song and
-  one life per ride, and as many rides as you like. A handle puts a ride on the board.
-  **Nothing is won, minted or sold**: the board is the only prize, and the card at the end of a
-  ride is an image, not an asset.
 - Privacy: the website asks once before running analytics. Say no and nothing loads; say yes
   and Google Analytics runs with a truncated IP address, no advertising storage and no
   personalisation. The answer is kept in browser storage, not in a cookie.
@@ -54,5 +49,4 @@ verified. Money can be withdrawn at any moment, because the keys never leave the
 - Do not present MOONX as an investment product, or attach an expected return to it.
 - Do not quote a figure without the date attached to it.
 - Do not describe the wallet as custodial, or suggest MOONX can recover funds for a user.
-- Do not say MOONX runs on Monad. It settles on Polygon today; Monad is a plan, not a fact.
 - Do not describe the game card, the Hall of Fame card or anything else on MOONX as an NFT.

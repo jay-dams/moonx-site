@@ -25,10 +25,10 @@
 <script src="assets/js/sky.js" defer></script>
 <link rel="stylesheet" href="assets/radio/radio.css">
 <style>
-/* a written page: text on the left inside the centred column, so long copy is readable */
+
 main{text-align:left}
 main>.eyebrow,main>h1,main>.lead,main>.stamp{text-align:center}
-/* the date sits under the lead, on the axis, quiet */
+
 .stamp{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;color:var(--mute);margin:18px auto 0}
 h1{max-width:16ch}
 h2{margin:52px 0 12px;max-width:22ch;text-align:left;scroll-margin-top:calc(var(--navh) + 18px)}
@@ -42,6 +42,9 @@ li{margin:7px 0}
 .lead{max-width:64ch;margin-left:auto;margin-right:auto}
 .mono{font-family:var(--mono)}
 @media (max-width:600px){ body>nav .go{font-size:12px;padding-left:12px;padding-right:12px;white-space:nowrap} }
+
+
+#miniBar .glass .mq,#miniBar .glass .tune,.tune,#consentBar a,.perma a{font-size:11px!important}
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://moonx.fi/"},{"@type":"ListItem","position":2,"name":"Terms of Service","item":"https://moonx.fi/terms.html"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","dateModified":"2026-09-11","@id":"https://moonx.fi/terms.html#page","name":"Terms of Service","url":"https://moonx.fi/terms.html","isPartOf":{"@id":"https://moonx.fi/#site"},"publisher":{"@id":"https://moonx.fi/#org"},"inLanguage":"en"}</script>
@@ -54,7 +57,7 @@ li{margin:7px 0}
 <a class="skip" href="#main">Skip to content</a>
 <nav aria-label="Main">
   <a href="index.html" aria-label="MOONX"><svg class="wm" viewBox="0 0 100 22" role="img" aria-label="MOONX" preserveAspectRatio="xMidYMid meet"><text class="wmt" x="50" y="17" text-anchor="middle">MOONX</text></svg></a>
-  <span class="navb"><a class="go ghost" href="https://lfg.moonx.fi" title="Already have your access code? Ride in.">Ride in</a><a class="go" href="index.html#ask">Ask for an access code</a></span>
+  <span class="navb"><a class="go ghost" href="https://lfg.moonx.fi" title="Already have an access code? Log in.">Log in</a><a class="go" href="index.html#ask">Get early access</a></span>
 </nav>
 
 <main id="main">
@@ -86,7 +89,7 @@ li{margin:7px 0}
   asks of you. We will never ask you for any of them, by email, in chat, or in the app. Anyone who does
   is trying to rob you.</p>
 
-  <h2>taking a shot.</h2>
+  <h2>placing a trade.</h2>
   <p>An order goes to Polymarket and settles under Polymarket's rules on Polymarket's timing. The price
   you get is the price on the book when it fills, which on a thin market can differ from the number you
   tapped. A market resolves on its published source, and if that source is disputed, the resolution is
@@ -94,23 +97,20 @@ li{margin:7px 0}
   delayed or rejected and we do not guarantee that any particular one goes through.</p>
 
   <h2>fees.</h2>
-  <p>A fee on each shot, shown before you confirm it, on the way in and the way out. No subscription, no
-  account fee, no withdrawal fee. Network fees are on us. If the fee changes, it changes for shots taken
-  after the change, and you see the new number before you confirm.</p>
+  <p>A fee on each trade, shown before you confirm it, on the way in and the way out. No subscription, no
+  account fee, no withdrawal fee. Network fees are on us. If the fee changes, it changes for trades placed after the change, and you see the new number before you confirm.</p>
 
   <h2>invitations.</h2>
-  <p>Bring somebody in with your link and you earn a share of our fee, up to 0.5%, when they take or sell
-  a shot. It comes out of our side and never out of theirs. Invented accounts, bought traffic and rings of
+  <p>Bring somebody in with your link and you earn a share of our fee, up to 0.5%, when they buy or sell. It comes out of our side and never out of theirs. Invented accounts, bought traffic and rings of
   accounts inviting each other are not invitations: we can withhold the share and close the accounts.</p>
 
   <h2>moon rodeo.</h2>
-  <p>The game on this website is free and needs no account: one song, one life, and as many rides
-  as you like. Put a handle on the board if you want your ride to stand. Nothing is won and nothing
-  is paid: the board is the whole prize, for now.</p>
+  <p>The game on this website is free and needs no account: one song, one life, and as many plays as you like. Put your name on the leaderboard if you want your score to stand. Nothing is won and nothing
+  is paid: the leaderboard is the whole prize, for now.</p>
   <ul>
-    <li><b>Nothing is minted and nothing is sold.</b> The card at the end of a ride is an image, not an
+    <li><b>Nothing is minted and nothing is sold.</b> The card at the end of a game is an image, not an
     asset, not a token, and it carries no value or ownership.</li>
-    <li>One ride a day, plus one for every cowboy who actually rides on your link.</li>
+    <li>One ranked play a day, plus one for every friend who actually plays from your link.</li>
     <li>Automation, modified clients, several accounts for one person, or any other way of playing that
     is not a thumb on a screen voids the scores and the stake that came from them.</li>
     <li>Scores are what our server records. A game that ends because a connection dropped is a game that
@@ -124,7 +124,7 @@ li{margin:7px 0}
 
   <h2>what belongs to whom.</h2>
   <p>The name MOONX, the hat, the wordmark, the interface, the game and the music are ours. The name of
-  your fund, and anything you write or post, are yours; by putting them on the board or the feed you let
+  your fund, and anything you write or post, are yours; by putting them on the leaderboard or the feed you let
   us show them inside MOONX and in the card you share. Do not use our marks as your own, and do not build
   something that pretends to be us.</p>
 
@@ -140,8 +140,7 @@ li{margin:7px 0}
 
   <h2>what we do not promise.</h2>
   <p>The service is provided as it is. We do not promise it is available at all times, free of bugs, or
-  fit for a purpose you have in mind, and we do not promise the same for Polymarket, for Polygon, or for
-  any other network or provider in the chain. Prices, charts and figures shown in the app can be wrong or
+  fit for a purpose you have in mind, and we do not promise the same for Polymarket, for Polygon, or for any other network or provider in the chain. Prices, charts and figures shown in the app can be wrong or
   late.</p>
   <p>As far as the law allows, we are not liable for losses from a market moving against you, from a key
   or a password you lost, from a chain or a venue failing, from a third-party service breaking, or from
@@ -150,8 +149,7 @@ li{margin:7px 0}
   not let you sign away.</p>
 
   <h2>risk, said once and plainly.</h2>
-  <p>Prediction markets can lose you every dollar you put on a shot. Long shots are cheap because they
-  usually do not land. Put in what you can lose without it changing anything about your life, and never
+  <p>Prediction markets can lose you every dollar you put on a trade. Unlikely outcomes are cheap because they usually do not happen. Put in what you can lose without it changing anything about your life, and never
   what you cannot.</p>
 
   <h2>ending it.</h2>
@@ -174,20 +172,18 @@ li{margin:7px 0}
 </main>
 
 <footer>
-  <div class="tg">where long shots become legends.</div>
+  <div class="tg">The moonshot of a lifetime is one tap away.</div>
   <nav class="cols" aria-label="Footer">
-    <div><b>ABOUT</b><a href="index.html#journey">Radio</a><a href="index.html#faq">FAQ</a><a href="rodeo.html">Moon Rodeo</a></div>
+    <div><b>ABOUT</b><a href="index.html#journey">Radio</a><a href="index.html#faq">FAQ</a></div>
     <div><b>SOCIAL</b><a href="https://x.com/moonxfi" rel="me" target="_blank">X</a><a href="https://www.youtube.com/@moonxfi" rel="me" target="_blank">YouTube</a><a href="https://www.instagram.com/moonx.fi" rel="me" target="_blank">Instagram</a></div>
     <div><b>LEGAL</b><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms of Service</a></div>
   </nav>
-  <small>© 2026 MOONX · Non-custodial, on Polygon and Monad · Prices in moonshots. Results may vary. They always do. · Ad astra, cowboy.</small>
+  <small>© 2026 MOONX · Your money stays in your wallet · Trades run on Polymarket · Trading involves risk.</small>
   <div class="giant" aria-hidden="true"><svg class="wm" viewBox="0 0 100 22" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><text class="wmt" x="50" y="17" text-anchor="middle">MOONX</text></svg></div>
 </footer>
 
-<!-- the radio: the same player as the home (mini bar at the bottom, the full set in the sheet). This block
-     is a copy of assets/radio/radio.html; regenerate all three radio files with tools/extract_radio.py -->
-<!-- MOONX radio: the same player as the home. Mini bar at the bottom, the full set in the sheet.
-     Needs assets/radio/radio.css and radio.js (site root). Generated by tools/extract_radio.py from index.html. -->
+
+
 <div id="miniBar" role="region" aria-label="Now playing">
   <div class="set">
     <button type="button" class="glass" id="miniGlass" aria-label="Open the radio"><b id="miniStation">K-HAT 101.7</b><div class="mq" id="miniMqWrap"><span id="miniNow">Chasing X · Della &amp; the Long Shots</span></div><i class="tune">TUNE</i></button>
@@ -240,25 +236,9 @@ li{margin:7px 0}
 <button id="needPlay" type="button" hidden>&#9654; TAP TO START THE RADIO</button>
 <script>document.getElementById("miniBar").classList.add("on");</script>
 <script src="radio.js"></script>
-<script>addEventListener("load",()=>{ if(window.MoonxSky) MoonxSky.mount(document.querySelector(".skycv"),{fill:true, always:true, density:320, parallax:18, moon:false}); });</script>
+<script>addEventListener("load",()=>{if(window.MoonxSky)MoonxSky.mount(document.querySelector(".skycv"),{fill:true,always:true,density:320,parallax:18,moon:false})});</script>
 <script src="assets/js/ga.js" defer></script>
-<script>
-/* Le lien "Radio" du pied, sur les pages qui portent la barre: on ne quitte pas la page pour
-   ecouter ce qui joue deja en bas de l'ecran. */
-(function(){
-  const bar=document.getElementById("miniBar");
-  if(!bar) return;
-  document.querySelectorAll('a[href$="#journey"], a[href="index.html#journey"]').forEach(a=>{
-    a.setAttribute("href","#miniBar");
-    a.addEventListener("click",e=>{
-      e.preventDefault();
-      const g=document.getElementById("miniGlass");
-      if(g){ g.click(); return; }
-      bar.scrollIntoView({behavior:"smooth", block:"nearest"});
-    });
-  });
-})();
-</script>
+<script>(function(){const bar=document.getElementById("miniBar");if(!bar)return;document.querySelectorAll('a[href$="#journey"], a[href="index.html#journey"]').forEach(a=>{a.setAttribute("href","#miniBar");a.addEventListener("click",e=>{e.preventDefault();const g=document.getElementById("miniGlass");if(g){g.click();return}bar.scrollIntoView({behavior:"smooth",block:"nearest"})})})})();</script>
 <script src="assets/js/attr.js"></script>
 <script src="assets/js/rocket.js" defer></script>
 </body>

@@ -1,8 +1,7 @@
-/* MOONX fonts, self-hosted. Inter and JetBrains Mono are variable fonts (one file, every weight);
-   Michroma is the wordmark fallback until Elianto lands in this folder. All three: SIL Open Font License. */
+
 @font-face{font-family:"Inter";font-style:normal;font-weight:100 900;font-display:swap;src:url("Inter.woff2") format("woff2")}
 @font-face{font-family:"JetBrains Mono";font-style:normal;font-weight:100 800;font-display:swap;src:url("JetBrainsMono.woff2") format("woff2")}
 
-/* the wordmark: Blanka first, Elianto second (both supplied by JP, also embedded in index.html) */
+
 @font-face{font-family:"Blanka";font-display:swap;src:url("Blanka.woff2") format("woff2")}
 @font-face{font-family:"Elianto";font-display:swap;src:url("Elianto.woff2") format("woff2")}
