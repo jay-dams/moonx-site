@@ -1318,8 +1318,33 @@ body>nav>a:first-child:hover::after,body>nav>a:first-child:focus-visible::after{
 .why .wgrid.w3 .wimg picture,.why .wgrid.w3 .wimg .wmock{max-width:390px;margin-left:auto;margin-right:auto}
 
 .screen-img img{object-position:50% 0}
+
+.phone .live{display:none;flex-direction:column;height:100%;background:#03050C;overflow:hidden}
+.phone .live .lv-top{display:block;width:100%;height:auto;position:relative;z-index:2;transform:none!important;border-radius:0!important;object-fit:initial}
+.phone .live .lv-vp{position:relative;flex:1;overflow:hidden}
+.phone .live .lv-list{will-change:transform;animation:mx-fil 13s infinite}
+.phone .live .lv-list img{display:block;width:100%;height:auto;transform:none!important;border-radius:0!important;object-fit:initial}
+@keyframes mx-fil{
+ 0%,12%{transform:translateY(0);animation-timing-function:cubic-bezier(.65,0,.35,1)}
+ 20%,40%{transform:translateY(-16.392%);animation-timing-function:cubic-bezier(.65,0,.35,1)}
+ 48%,68%{transform:translateY(-32.784%);animation-timing-function:cubic-bezier(.65,0,.35,1)}
+ 76%,100%{transform:translateY(-50%)}}
+@keyframes mx-flotte{0%,100%{translate:0 0}50%{translate:0 -7px}}
+@media (max-width:899px){
+ .phone .screen-img>picture{display:none}
+ .phone .live{display:flex}
+ .stage .phone{transform:none!important;animation:mx-flotte 7s ease-in-out infinite}
+}
+@media (prefers-reduced-motion:reduce){.phone .live .lv-list,.stage .phone{animation:none!important}}
 .boardCard .lbl,#miniBar .glass .mq,#miniBar .glass .tune,.tune,#consentBar a{font-size:11px!important}
-</style>
+
+
+.band .tw{display:inline-block;text-align:left;white-space:nowrap}
+.band .tw-car{display:inline-block;width:2px;height:.95em;margin-left:3px;background:#A6FF3D;vertical-align:-.1em;animation:mx-car 1s steps(1) infinite}
+@keyframes mx-car{50%{opacity:0}}
+.band .gain{color:var(--mint,#A6FF3D);font-weight:700}
+.band .tw-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (prefers-reduced-motion:reduce){.band .tw-car{display:none}}</style>
 <link rel="preload" as="image" href="assets/shots/dd7871ec76.webp" type="image/webp">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://moonx.fi/#org","name":"MOONX","url":"https://moonx.fi","logo":{"@type":"ImageObject","url":"https://moonx.fi/brand/png/moonx-logo-1024.png","width":1024,"height":1024},"description":"MOONX is a consumer app for prediction markets: a non-custodial wallet, every Polymarket market on one board, and a shot in one tap.","foundingDate":"2026","sameAs":["https://x.com/moonxfi","https://www.youtube.com/@moonxfi","https://www.instagram.com/moonx.fi"]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","@id":"https://moonx.fi/#site","name":"MOONX","url":"https://moonx.fi","publisher":{"@id":"https://moonx.fi/#org"},"inLanguage":"en"}</script>
@@ -1391,7 +1416,7 @@ body>nav>a:first-child:hover::after,body>nav>a:first-child:focus-visible::after{
   <p class="kick2" id="kick2" hidden>The moonshot of a lifetime is one tap away.</p>
   
   
-  <p class="tagline"><strong>where you can predict what happens next.</strong><span>Sports, politics, the news. Answer Yes or No. If you're right, each ticket pays $1.</span></p> <p class="onpm"><span>All of <svg class="pmk" role="img" aria-label="Polymarket" width="512" height="512" viewBox="0 0 512 512" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"> <path d="M375.84 389.422C375.84 403.572 375.84 410.647 371.212 414.154C366.585 417.662 359.773 415.75 346.15 411.927L127.22 350.493C119.012 348.19 114.907 347.038 112.534 343.907C110.161 340.776 110.161 336.513 110.161 327.988V184.012C110.161 175.487 110.161 171.224 112.534 168.093C114.907 164.962 119.012 163.81 127.22 161.507L346.15 100.072C359.773 96.2495 366.585 94.338 371.212 97.8455C375.84 101.353 375.84 108.428 375.84 122.578V389.422ZM164.761 330.463L346.035 381.337V279.595L164.761 330.463ZM139.963 306.862L321.201 256L139.963 205.138V306.862ZM164.759 181.537L346.035 232.406V130.663L164.759 181.537Z" fill="white"/> </svg><b>Polymarket</b>, with a social feed. Built for everyone.</span></p> <a class="cta" href="#ask">Get early access</a> 
+  <p class="tagline"><strong>where you predict what happens next.</strong><span>Sports, politics, the news. Answer Yes or No. If you're right, each ticket pays $1.</span></p> <p class="onpm"><span>All of <svg class="pmk" role="img" aria-label="Polymarket" width="512" height="512" viewBox="0 0 512 512" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"> <path d="M375.84 389.422C375.84 403.572 375.84 410.647 371.212 414.154C366.585 417.662 359.773 415.75 346.15 411.927L127.22 350.493C119.012 348.19 114.907 347.038 112.534 343.907C110.161 340.776 110.161 336.513 110.161 327.988V184.012C110.161 175.487 110.161 171.224 112.534 168.093C114.907 164.962 119.012 163.81 127.22 161.507L346.15 100.072C359.773 96.2495 366.585 94.338 371.212 97.8455C375.84 101.353 375.84 108.428 375.84 122.578V389.422ZM164.761 330.463L346.035 381.337V279.595L164.761 330.463ZM139.963 306.862L321.201 256L139.963 205.138V306.862ZM164.759 181.537L346.035 232.406V130.663L164.759 181.537Z" fill="white"/> </svg><b>Polymarket</b>, with a social feed. Built for everyone.</span></p> <a class="cta" href="#ask">Get early access</a> 
   <div class="proof" id="proof" hidden>
     <div class="pmult" id="pMult">4.5x</div>
     <div class="ptime" id="pTime">IN 90 MINUTES</div>
@@ -1405,11 +1430,11 @@ body>nav>a:first-child:hover::after,body>nav>a:first-child:focus-visible::after{
     <div class="desk" aria-hidden="true"><picture><source srcset="assets/shots/hero-desktop-v8.webp" type="image/webp"><img class="" src="assets/shots/hero-desktop-v8.png" width="1920" height="1200" alt="MOONX on a laptop and a phone: the Moonshots feed, and taking a shot." style="display:block;width:100%;height:auto" loading="lazy" decoding="async"></picture></div>
     
     <div class="phone" aria-label="MOONX app preview">
-  <div class="screen screen-img"><picture><source media="(max-width:899px)" srcset="assets/shots/hero-phone-feed-v1.webp" type="image/webp"><source media="(max-width:899px)" srcset="assets/shots/hero-phone-feed-v1.png"><source srcset="assets/shots/hero-phone-v4.webp" type="image/webp"><img class="" src="assets/shots/hero-phone-v4.png" width="780" height="1688" alt="The MOONX app on a phone: the Moonshots feed, with shots that landed." loading="eager" fetchpriority="high" decoding="async"></picture></div>
+  <div class="screen screen-img"><picture><source media="(max-width:899px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACw="><source srcset="assets/shots/hero-phone-v4.webp" type="image/webp"><img class="" src="assets/shots/hero-phone-v4.png" width="780" height="1688" alt="The MOONX app on a phone: taking a shot." loading="eager" fetchpriority="high" decoding="async"></picture><div class="live" role="img" aria-label="The MOONX app on a phone: the Moonshots feed, with shots that landed."><img class="lv-top" src="assets/shots/hero-live-top-v1.webp" width="780" height="316" alt="" decoding="async" fetchpriority="high"><div class="lv-vp"><div class="lv-list"><img src="assets/shots/hero-live-list-v1.webp" width="780" height="2306" alt="" decoding="async"><img src="assets/shots/hero-live-list-v1.webp" width="780" height="2306" alt="" decoding="async"></div></div></div></div>
     </div>
     <div class="fade" aria-hidden="true"></div>
     <div class="band">
-      <h1 class="tg-h">the X is how much you get back.</h1> <p class="sub">$10 on a <span class="xb">50x</span> is $500. On MOONX, we chase the <span class="xb">X</span>.</p>
+      <h1 class="tg-h">the X is how much you get back.</h1> <p class="sub">$10 on a <span class="tw" aria-hidden="true"><span class="tw-live"><span class="xb">50x</span> is $500.</span><i class="tw-car"></i></span><span class="tw-sr">50x is $500. 1.5x is +50%.</span> On MOONX, we chase the <span class="xb">X</span>.</p>
     </div>
   </div>
 </header>
@@ -1526,5 +1551,6 @@ body>nav>a:first-child:hover::after,body>nav>a:first-child:focus-visible::after{
 <script src="assets/js/ga.js" defer></script>
 <script>(function(){var REG=[[".tagline strong",22],[".tagline span",12],[".onpm",11],[".band .tg-h",22],[".band .sub",12]];function lignes(el){var cs=getComputedStyle(el),lh=parseFloat(cs.lineHeight);if(!lh)lh=parseFloat(cs.fontSize)*1.2;return Math.round(el.getBoundingClientRect().height/lh)}function ajuste(){var large=innerWidth>=560;REG.forEach(function(r){var el=document.querySelector(r[0]);if(!el)return;el.style.fontSize="";el.style.whiteSpace="";var fs=parseFloat(getComputedStyle(el).fontSize),n=0;if(large){while(el.scrollWidth>el.clientWidth+1&&fs>r[1]&&n++<120){fs-=.5;el.style.fontSize=fs+"px"}if(el.scrollWidth>el.clientWidth+1){el.style.whiteSpace="normal"}}else{while(lignes(el)>2&&fs>r[1]&&n++<120){fs-=.5;el.style.fontSize=fs+"px"}}})}ajuste();if(document.fonts&&document.fonts.ready)document.fonts.ready.then(ajuste);var t;addEventListener("resize",function(){clearTimeout(t);t=setTimeout(ajuste,120)})})();</script>
 <script>(function(){var st=document.querySelector("header .stage"),bd=st&&st.querySelector(".band");if(!bd)return;function marge(){var H=window.innerHeight,m=84,c=document.getElementById("consentBar");if(c){var cs=getComputedStyle(c),r=c.getBoundingClientRect();if(cs.display!=="none"&&cs.visibility!=="hidden"&&r.height>0&&r.top<H)m=Math.max(m,H-r.top+12)}return m}function ajuste(){st.style.height="";st.style.minHeight="";st.style.overflow="";var H=window.innerHeight,y=window.scrollY||0,b=bd.getBoundingClientRect(),haut=b.top+y,bas=b.bottom+y,m=marge();if(haut>=H||bas<=H-m)return;var s=st.getBoundingClientRect(),h=s.height,cible=h-(bas-(H-m));if(cible>=380){st.style.height=cible+"px";st.style.minHeight="0";st.style.overflow="hidden"}else{st.style.minHeight=h+(H-haut)+"px"}}var t;function plus_tard(){clearTimeout(t);t=setTimeout(ajuste,120)}ajuste();window.addEventListener("load",ajuste);if(document.fonts&&document.fonts.ready)document.fonts.ready.then(ajuste);window.addEventListener("resize",plus_tard);window.addEventListener("orientationchange",plus_tard);setTimeout(ajuste,900)})();</script>
+<script>(function(){var el=document.querySelector(".band .tw");if(!el)return;var live=el.querySelector(".tw-live");var V=[[["50x","xb"],[" is $500.",""]],[["1.5x","xb"],[" is ",""],["+50%","gain"],[".",""]]];var L=function(v){var n=0;v.forEach(function(s){n+=s[0].length});return n};var rend=function(v,n){var h="";for(var i=0;i<v.length&&n>0;i++){var t=v[i][0].slice(0,n);n-=t.length;h+=v[i][1]?'<span class="'+v[i][1]+'">'+t+"</span>":t}live.innerHTML=h};var k=0,n=L(V[0]),en_route=false,t;function fixe(){el.style.width="";var w=0;V.forEach(function(v){rend(v,L(v));w=Math.max(w,el.getBoundingClientRect().width)});el.style.width=Math.ceil(w)+"px";rend(V[k],n)}function pas(){if(n===L(V[k])&&!en_route){en_route=true;t=setTimeout(function(){efface()},2600);return}}function efface(){if(n>0){n--;rend(V[k],n);t=setTimeout(efface,32)}else{k=(k+1)%V.length;t=setTimeout(tape,250)}}function tape(){if(n<L(V[k])){n++;rend(V[k],n);t=setTimeout(tape,65)}else{en_route=false;pas()}}var go=function(){fixe();if(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches)return;if("IntersectionObserver"in window){var o=new IntersectionObserver(function(e){if(e[0].isIntersecting){o.disconnect();pas()}});o.observe(el)}else pas()};if(document.fonts&&document.fonts.ready)document.fonts.ready.then(go);else window.addEventListener("load",go);var r;window.addEventListener("resize",function(){clearTimeout(r);r=setTimeout(fixe,150)})})();</script>
 </body>
 </html>
