@@ -144,7 +144,7 @@ h2{scroll-margin-top:calc(var(--navh) + 18px)}
   <h2>still nothing?</h2>
   <p>Write to <span class="mono">hello@moonx.fi</span>, or read the <a href="terms.html" class="ul">terms</a> and the <a href="privacy.html" class="ul">privacy policy</a>, which are written in the same plain words as this page.</p>
 
-<script>(function(){function openTarget(){var h=location.hash.slice(1);if(!h)return;var el=document.getElementById(h);if(!el)return;if(el.tagName==="DETAILS"){el.open=true;requestAnimationFrame(function(){el.scrollIntoView({block:"start",behavior:"instant"})})}}addEventListener("hashchange",openTarget);if(document.readyState==="loading")addEventListener("DOMContentLoaded",openTarget);else openTarget();document.addEventListener("toggle",function(e){var d=e.target;if(d.tagName!=="DETAILS"||!d.open||!d.id)return;if(location.hash.slice(1)!==d.id)history.replaceState(null,"","#"+d.id)},true)})();</script></main>
+<script>(function(){function e(){var e=location.hash.slice(1);if(!e)return;var t=document.getElementById(e);if(!t)return;if(t.tagName==="DETAILS"){t.open=true;requestAnimationFrame(function(){t.scrollIntoView({block:"start",behavior:"instant"})})}}addEventListener("hashchange",e);if(document.readyState==="loading")addEventListener("DOMContentLoaded",e);else e();document.addEventListener("toggle",function(e){var t=e.target;if(t.tagName!=="DETAILS"||!t.open||!t.id)return;if(location.hash.slice(1)!==t.id)history.replaceState(null,"","#"+t.id)},true)})();</script></main>
 
 <footer>
   <div class="tg">The moonshot of a lifetime is one tap away.</div>
@@ -213,6 +213,6 @@ h2{scroll-margin-top:calc(var(--navh) + 18px)}
 <script src="radio.js"></script>
 <script>addEventListener("load",()=>{if(window.MoonxSky)MoonxSky.mount(document.querySelector(".skycv"),{fill:true,always:true,density:320,parallax:18,moon:false})});</script>
 <script src="assets/js/ga.js" defer></script>
-<script>(function(){const bar=document.getElementById("miniBar");if(!bar)return;document.querySelectorAll('a[href$="#journey"], a[href="index.html#journey"]').forEach(a=>{a.setAttribute("href","#miniBar");a.addEventListener("click",e=>{e.preventDefault();const g=document.getElementById("miniGlass");if(g){g.click();return}bar.scrollIntoView({behavior:"smooth",block:"nearest"})})})})();</script>
+<script>(function(){const e=document.getElementById("miniBar");if(!e)return;document.querySelectorAll('a[href$="#journey"], a[href="index.html#journey"]').forEach(t=>{t.setAttribute("href","#miniBar");t.addEventListener("click",t=>{t.preventDefault();const n=document.getElementById("miniGlass");if(n){n.click();return}e.scrollIntoView({behavior:"smooth",block:"nearest"})})})})();</script>
 </body>
 </html>
