@@ -8,7 +8,7 @@
 
 MOONX lets anyone trade on a real prediction market from a phone, without a broker and without
 handing their money to anyone. A new user signs up with an email and adds money with a card.
-The wallet is created on the user's own phone, so only they can move their money. Trades go to
+The wallet is created on the user's own device, so only they can move their money. Trades go to
 Polymarket, winnings come back to the same wallet, and money can be withdrawn at any moment.
 
 ## The words we use
@@ -32,6 +32,9 @@ Polymarket, winnings come back to the same wallet, and money can be withdrawn at
 - Custody: non-custodial. The private key is generated on the user's device and never sent to MOONX.
 - Recovery: one encrypted backup file plus a password held by the user. MOONX cannot restore an
   account without them, by design, and if the user loses both, the funds are lost to everyone.
+- Switching device (computer or phone): log in with the email on the other device and upload the
+  backup file; the password unlocks the same wallet. The user then sets a PIN for that device (the
+  same one or a new one); the PIN approves every trade and every money move.
 - Chain: **Polygon**. The main wallet holds USDC on Polygon; deposits, withdrawals and savings (Aave)
   live there. Trades go to Polymarket, which runs on Polygon too, and MOONX moves the money between the
   wallet and the market, with no network fees for the user.
