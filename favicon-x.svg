@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="MOONX">
+<defs><filter id="g" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="2.2"/></filter></defs>
+<rect width="64" height="64" rx="14" fill="#000000"/>
+<g transform="translate(12.475 51.840) scale(0.049600 -0.049600)">
+<path d="M752 800H592C590 800 584 799 583 797L394 530L310 647H124C183 564 241 481 300 400L26 15C20 8 24 0 34 0H194C196 0 202 1 203 3L394 270L477 153H663C604 236 545 319 486 400L762 785C767 792 763 800 752 800Z" fill="#A0F838" filter="url(#g)" opacity=".8"/>
+<path d="M752 800H592C590 800 584 799 583 797L394 530L310 647H124C183 564 241 481 300 400L26 15C20 8 24 0 34 0H194C196 0 202 1 203 3L394 270L477 153H663C604 236 545 319 486 400L762 785C767 792 763 800 752 800Z" fill="#A0F838"/>
+</g>
+</svg>
