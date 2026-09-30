@@ -84,6 +84,10 @@ footer .cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr
 footer .cols b{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.16em;color:#5A6B8A;margin-bottom:14px}
 footer .cols a{display:block;font-size:15px;margin:10px 0}
 footer small{display:block;margin-top:50px;color:#5A6B8A;font-size:12px;font-family:var(--mono);line-height:1.6}
+footer small.listed{margin-top:6px}
+footer small a{color:#8FA8C8;text-decoration:underline;text-decoration-color:rgba(143,168,200,.3);text-underline-offset:3px;transition:color .2s,text-decoration-color .2s}
+footer small a:hover{color:#fff;text-decoration-color:currentColor}
+@media (pointer:coarse){footer small.listed a{display:inline-block;padding-block:10px}}
 .giant{margin:52px 0 0;padding:0;overflow:hidden;line-height:0;opacity:.96;width:100%}
 .giant .wm{width:100%;max-width:none;margin:0;display:block}
 .giant .wm .wmt{font-size:21px;fill:#0D1424}
@@ -317,11 +321,7 @@ body>nav>a:first-child:hover::after,body>nav>a:first-child:focus-visible::after{
 @keyframes pzDot{0%,100%{opacity:.35}50%{opacity:1}}
 @media (prefers-reduced-motion:reduce){ .pz,.pz i{animation:none} }
 @media (max-width:760px){ .pz{display:none} }
-footer, buttons.
-   The home page keeps its own inline CSS (it is one file on purpose); these rules are copied from it
-   so a second page looks like the first. Change a token here and in index.html together. */
 :root{--bg:#03050C;--card:#0A0E1A;--card-2:#121A2B;--well:rgba(160,200,255,.05);--line:rgba(150,195,255,.16);--line-2:rgba(150,195,255,.30);--txt:#FFFFFF;--dim:#8FA8C8;--mute:#5A6B8A;--blue:#2D7BFF;--hi:#7FB6FF;--lo:#1E4FCC;--mint:#A6FF3D;--red:#FF3B6B;--amber:#FFC93C;--disp:"Inter",system-ui,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace;--ease:cubic-bezier(.22,.61,.36,1);--navh:64px}
-footer, identical to the home page */
 
 footer{padding:64px 20px 0;border-top:1px solid var(--line);position:relative;z-index:1;overflow:hidden;
   
@@ -396,6 +396,7 @@ footer{padding:64px 20px 0;border-top:1px solid var(--line);position:relative;z-
     <div><b>LEGAL</b><a href="/privacy.html">Privacy Policy</a><a href="/terms.html">Terms of Service</a></div>
   </nav>
   <small>© 2026 MOONX · Your money stays in your wallet · Trades run on Polymarket · Trading involves risk.</small>
+  <small class="listed">Listed on the <a href="https://polymart.app" target="_blank" rel="noopener">Polymarket Tools Directory</a></small>
   <div class="giant" aria-hidden="true"><svg class="wm" viewBox="0 0 100 22" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><text class="wmt" x="50" y="17" text-anchor="middle">MOONX</text></svg></div>
 </footer>
 

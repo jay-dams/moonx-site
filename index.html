@@ -359,6 +359,10 @@ footer .cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr
 footer .cols b{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.16em;color:#5A6B8A;margin-bottom:14px}
 footer .cols a{display:block;font-size:15px;margin:10px 0}
 footer small{display:block;margin-top:50px;color:#5A6B8A;font-size:12px;font-family:var(--mono);line-height:1.6}
+footer small.listed{margin-top:6px}
+footer small a{color:#8FA8C8;text-decoration:underline;text-decoration-color:rgba(143,168,200,.3);text-underline-offset:3px;transition:color .2s,text-decoration-color .2s}
+footer small a:hover{color:#fff;text-decoration-color:currentColor}
+@media (pointer:coarse){footer small.listed a{display:inline-block;padding-block:10px}}
 
 
 #miniBar{position:fixed;left:10px;right:10px;bottom:10px;z-index:30;transform:translateY(130%);transition:transform .35s}
@@ -1538,6 +1542,7 @@ body>nav>a:first-child:hover::after,body>nav>a:first-child:focus-visible::after{
     <div><b>ABOUT</b><a href="#journey" id="footRadio">Radio</a><a href="#faq">FAQ</a></div><div><b>SOCIAL</b><a href="https://x.com/moonxfi" rel="me" target="_blank">X</a><a href="https://www.youtube.com/@moonxfi" rel="me" target="_blank">YouTube</a><a href="https://www.instagram.com/moonx.fi" rel="me" target="_blank">Instagram</a></div><div><b>LEGAL</b><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms of Service</a></div>
   </nav>
   <small>© 2026 MOONX · Your money stays in your wallet · Trades run on Polymarket · Trading involves risk.</small>
+  <small class="listed">Listed on the <a href="https://polymart.app" target="_blank" rel="noopener">Polymarket Tools Directory</a></small>
   <div class="giant" aria-hidden="true"><svg class="wm" viewBox="0 0 100 22" role="img" aria-label="MOONX" preserveAspectRatio="xMidYMid meet"><text class="wmt" x="50" y="17" text-anchor="middle">MOONX</text></svg></div>
 </footer>
 <div style="height:120px"></div>
