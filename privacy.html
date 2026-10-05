@@ -5,13 +5,13 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#03050C">
-<title>MOONX | Privacy, what we collect and what we never do</title>
-<meta name="description" content="What MOONX collects, what it never collects, where your keys live, how long anything is kept, and how to get your data out or delete it.">
+<title>MOONX | Privacy Policy</title>
+<meta name="description" content="Privacy Policy for MOONX: what we collect, what we never collect, and who else sees your data.">
 <link rel="canonical" href="https://moonx.fi/privacy.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="MOONX">
-<meta property="og:title" content="MOONX | Privacy, what we collect and what we never do">
-<meta property="og:description" content="What MOONX collects, what it never collects, where your keys live, how long anything is kept, and how to get your data out or delete it.">
+<meta property="og:title" content="MOONX | Privacy Policy">
+<meta property="og:description" content="Privacy Policy for MOONX: what we collect, what we never collect, and who else sees your data.">
 <meta property="og:url" content="https://moonx.fi/privacy.html">
 <meta name="twitter:site" content="@moonxfi">
 <meta property="og:image" content="https://moonx.fi/og-image.png">
@@ -25,29 +25,49 @@
 <script src="assets/js/sky.js" defer></script>
 <link rel="stylesheet" href="assets/radio/radio.css">
 <style>
-
 main{text-align:left}
-main>.eyebrow,main>h1,main>.lead,main>.stamp{text-align:center}
-
-.stamp{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;color:var(--mute);margin:18px auto 0}
-h1{max-width:16ch}
-h2{margin:52px 0 12px;max-width:22ch;text-align:left;scroll-margin-top:calc(var(--navh) + 18px)}
-p,li{margin-left:0;margin-right:0;max-width:70ch}
-ul{text-align:left;margin:12px 0 12px}
-li{margin:7px 0}
-.grid{margin:20px 0}
-.card h3{margin:0 0 8px;font-size:17px}
-.card p{font-size:14.5px;line-height:1.6}
-.row{justify-content:flex-start;margin-top:44px}
-.lead{max-width:64ch;margin-left:auto;margin-right:auto}
-.mono{font-family:var(--mono)}
-@media (max-width:600px){ body>nav .go{font-size:12px;padding-left:12px;padding-right:12px;white-space:nowrap} }
-
+.legal{--read:#C4D3E6;--blue-hi:#7FB6FF;--blue-bg:rgba(45,123,255,.16);--blue-line:rgba(45,123,255,.42);--red-bg:rgba(255,59,107,.10);--red-line:rgba(255,59,107,.40);max-width:760px;margin:0 auto;color:var(--read);font-size:15px;line-height:1.55}
+.legal h1.doc-title{font-weight:800;font-size:clamp(32px,5.2vw,44px);line-height:1.08;letter-spacing:-.03em;color:#fff;margin:0 0 16px;max-width:none;text-align:left}
+.legal .doc-meta{display:flex;flex-wrap:wrap;align-items:center;gap:10px;font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--dim);margin-bottom:22px}
+.legal .doc-meta .sep{opacity:.45}
+.legal p{margin-left:0;margin-right:0;max-width:none}
+.legal .doc-intro{font-size:16px;line-height:1.55;color:var(--read);max-width:64ch}
+.legal .callout{border:1px solid var(--line);border-radius:16px;padding:22px 24px;margin:36px 0;background:var(--card)}
+.legal .callout--warn{border-color:var(--blue-line);background:linear-gradient(0deg,var(--blue-bg),var(--blue-bg)),var(--card)}
+.legal .callout--risk{border-color:var(--red-line);background:linear-gradient(0deg,var(--red-bg),var(--red-bg)),var(--card)}
+.legal .callout-title{display:flex;align-items:center;gap:9px;font-family:var(--mono);font-size:11.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-bottom:13px}
+.legal .callout--warn .callout-title{color:var(--blue-hi)}
+.legal .callout--risk .callout-title{color:var(--red)}
+.legal .callout p{font-size:14px;line-height:1.55;color:var(--read);margin-bottom:11px}
+.legal .callout p:last-child{margin-bottom:0}
+.legal ul{list-style:none;padding-left:0;max-width:none;text-align:left}
+.legal .callout ul{margin:10px 0 13px;display:grid;gap:6px}
+.legal li{margin:0;max-width:none;position:relative;padding-left:18px;color:var(--read)}
+.legal .callout li{font-size:14px;line-height:1.55}
+.legal li::before{content:"";position:absolute;left:2px;top:.66em;width:6px;height:6px;border-radius:50%;background:var(--dim);opacity:.7}
+.legal .callout .nb{color:#fff;font-weight:600}
+.legal .sec{margin-top:48px;scroll-margin-top:calc(var(--navh) + 18px)}
+.legal .sec-head{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+.legal .sec-num{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--blue-hi);letter-spacing:.08em}
+.legal .sec-rule{flex:1;height:1px;background:var(--line)}
+.legal h2.sec-title{font-weight:800;font-size:clamp(21px,2.8vw,24px);line-height:1.2;letter-spacing:-.02em;color:#fff;margin:0 0 14px;max-width:none;text-align:left}
+.legal .sec-body p{margin-bottom:14px;color:var(--read);font-size:15px;line-height:1.6}
+.legal .sec-body p:last-child{margin-bottom:0}
+.legal .sec-body ul{margin:4px 0 14px;display:grid;gap:8px}
+.legal .sec-body li{font-size:15px;line-height:1.6}
+.legal .term{color:var(--blue-hi);font-weight:600}
+.legal .emph{color:#fff;font-weight:600}
+.legal a.link{color:var(--blue-hi);border-bottom:1px solid var(--blue-line);transition:border-color .14s,color .14s}
+.legal a.link:hover{color:#fff;border-bottom-color:var(--blue-hi)}
+.legal .contact{margin-top:56px;padding-top:28px;border-top:1px solid var(--line)}
+.legal .contact .eyebrow{display:block;margin:0 0 12px;color:var(--blue-hi);font-weight:500;letter-spacing:.14em;max-width:none}
+.legal .contact p{color:var(--read);font-size:15px;line-height:1.6;max-width:66ch}
+@media (max-width:600px){ .legal .callout{padding:18px} body>nav .go{font-size:12px;padding-left:12px;padding-right:12px;white-space:nowrap} }
 
 #miniBar .glass .mq,#miniBar .glass .tune,.tune,#consentBar a,.perma a{font-size:11px!important}
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://moonx.fi/"},{"@type":"ListItem","position":2,"name":"Privacy Policy","item":"https://moonx.fi/privacy.html"}]}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","dateModified":"2026-09-11","@id":"https://moonx.fi/privacy.html#page","name":"Privacy Policy","url":"https://moonx.fi/privacy.html","isPartOf":{"@id":"https://moonx.fi/#site"},"publisher":{"@id":"https://moonx.fi/#org"},"inLanguage":"en"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","dateModified":"2026-10-05","@id":"https://moonx.fi/privacy.html#page","name":"Privacy Policy","url":"https://moonx.fi/privacy.html","isPartOf":{"@id":"https://moonx.fi/#site"},"publisher":{"@id":"https://moonx.fi/#org"},"inLanguage":"en"}</script>
 </head>
 <body data-autoresume="1" class="lit">
 <div id="bgfix" aria-hidden="true"></div>
@@ -61,109 +81,169 @@ li{margin:7px 0}
 </nav>
 
 <main id="main">
-  <div class="eyebrow">PRIVACY</div>
-  <h1>your keys, and almost nothing else.</h1>
-  <p class="lead">The short version: we hold an email, the name of your fund and the region you are in.
-  We do not hold your money, your key, your backup password or your PIN, and we could not hand them over
-  if anyone asked. This website sets no cookies unless you say yes to one question, and the answer
-  is remembered on your machine, not in a cookie.</p>
-  <p class="stamp">LAST UPDATED 29 September 2026</p>
+<article class="legal">
 
-  <h2>who this is about.</h2>
-  <p>MOONX is the one deciding what happens to the data described here. Write to
-  <span class="mono">hello@moonx.fi</span> about any of it, including to ask us to delete it.</p>
-
-  <h2>what we collect.</h2>
-  <div class="grid">
-    <div class="card"><h3>Your email</h3><p>Given at signup, and only if you give it: the game never asks
-    for it. It is used to sign you in, and for the few messages
-    an account needs. Alongside it we keep where you came from when you signed up: the campaign tag on
-    the link you clicked, or the site that sent you, kept for thirty days on your device before that.
-    It tells us which door works. It is not shared with anyone. It is stored by Supabase, our database host, on servers in the European Union.</p></div>
-    <div class="card"><h3>Your name on the leaderboard</h3><p>The name you type at the end of a game, sent with your score so the leaderboard can show it. It is attached to the ride, not to you: nothing links two rides
-    unless you also left an email.</p></div>
-    <div class="card"><h3>The name of your fund</h3><p>You choose it. It appears on your card and in the feed if you make a trade worth showing. It is not your legal name unless you make it one.</p></div>
-    <div class="card"><h3>Your region</h3><p>Read at signup from your connection, to tell you what is
-    available where you are. We keep the answer, not a history of where you have been.</p></div>
-    <div class="card"><h3>An invitation code</h3><p>If you arrived through somebody's link, we keep which
-    link, so their rides and their share are counted.</p></div>
-    <div class="card"><h3>What you write to us</h3><p>Support messages and anything you attach to them,
-    kept while the question is open and for a while after in case it comes back.</p></div>
-    <div class="card"><h3>Your wallet address</h3><p>Public by nature. We hold it so the app knows which
-    fund is yours. It is not a secret and it never was.</p></div>
+  <div class="doc-head">
+    <h1 class="doc-title">Privacy Policy</h1>
+    <div class="doc-meta">
+      <span>Effective date: 1 September 2026</span>
+      <span class="sep">·</span>
+      <span>MoonX · Hong Kong SAR</span>
+    </div>
+    <p class="doc-intro">
+      This Privacy Policy explains how MoonX collects, uses and protects your personal data when you use our website and app. It is written in plain language. If something is unclear, contact us.
+    </p>
   </div>
 
-  <h2>what we never collect.</h2>
-  <p>Your <b>private key</b>, your <b>backup password</b>, your <b>PIN</b>, and any file that could rebuild them.
-  These are made on your device and stay there. This is not a policy we could relax later: the app is built
-  so that they never reach us, which is also why we cannot restore an account for you.</p>
-  <p>We do not collect your legal name, your date of birth, a document, a selfie, a phone number, your
-  contacts, your location beyond the region check, or anything from another app on your device.</p>
+  <div class="callout callout--warn" role="note">
+    <p class="callout-title"><span aria-hidden="true">⚠</span> Important · your keys and third parties</p>
+    <p>MoonX is non-custodial software. <span class="nb">We never collect or hold your wallet keys, your backup, your backup password, your PIN or your funds.</span></p>
+    <p>When you trade, add funds or earn yield, you deal with independent third parties: Polymarket, our Payment Partners, the Aave lending protocol and the Polygon blockchain. They may collect and process your data independently of MoonX, under their own policies, and we have no control over what they do with it.</p>
+    <p>Everything your wallet does on a blockchain is public and permanent. This policy covers only the data that MoonX itself processes.</p>
+  </div>
 
-  <h2>what this website stores on your machine.</h2>
-  <p><b>Nothing runs until you say so.</b> On your first visit we ask one question: may we count visits.
-  Say no and nothing loads, nothing is sent, and we do not ask again. Say yes and the pages load Google
-  Analytics, which sets its own cookies to count you once rather than twice.</p>
-  <p>We ask Google for the plainest version of that: <b>your IP address is truncated before it is stored</b>,
-  advertising storage and personalisation stay switched off, and we never send them your email, your handle
-  or anything you typed. We look at how many people came and which pages they opened. Nothing else.</p>
-  <p>Your answer is kept in browser storage under <span class="mono">moonx.consent</span>, not in a cookie:
-  setting a cookie to remember that you refuse cookies would be a joke. Clear your browser storage and we
-  will ask again. No advertising pixels, no third-party trackers, no fingerprinting, and apart from Google
-  Analytics if you allowed it, the pages load fonts, images and code from this domain and from nowhere else.</p>
-  <p>Moon Rodeo saves a few values on your own device, in browser storage, so the game remembers you
-  between rides. They never leave the machine and there is no account behind them:</p>
-  <ul>
-    <li><span class="mono">sr.set</span> your settings: lyrics, title card, screen shake, vibration.</li>
-    <li><span class="mono">sr.meta</span> the input delay the game learned from your taps.</li>
-    <li><span class="mono">sr.best</span> your best multiple per song.</li>
-    <li><span class="mono">sr.daily</span> whether today's ride has been used.</li>
-    <li><span class="mono">sr.handle</span> the name you ride under, if you set one.</li>
-    <li><span class="mono">sr.board</span> the games you finished on this device, so the leaderboard is not empty before the season opens.</li>
-    <li><span class="mono">moonx.me</span> the last handle you used, and your email if you left one.</li>
-    <li><span class="mono">moonx.consent</span> your answer to the analytics question.</li>
-  </ul>
-  <p>Clearing your browser data clears all of it, and the game starts fresh.</p>
+  <section class="sec" id="who">
+    <div class="sec-head"><span class="sec-num">01</span><span class="sec-rule"></span></div>
+    <h2 class="sec-title">Who we are</h2>
+    <div class="sec-body">
+      <p>MoonX is operated from Hong Kong and is the data controller for the personal data described in this policy.</p>
+      <p>Because we are based in Hong Kong, the <span class="term">Personal Data (Privacy) Ordinance (Cap. 486)</span> ("PDPO") is the primary law that applies to our processing of your personal data. If you are located in the European Union, the additional rights and protections in Section 12 (GDPR) also apply to you.</p>
+      <p>For data-protection enquiries, contact us at <a class="link" href="mailto:legal@moonx.fi">legal@moonx.fi</a>.</p>
+    </div>
+  </section>
 
-  <h2>what is public for ever.</h2>
-  <p>Every trade, every payout and every withdrawal is a transaction on a public blockchain. Anyone who
-  knows your wallet address can read all of it, permanently, and nobody, including us, can delete or
-  amend it. This is the trade a non-custodial market makes: no company between you and your money, and
-  no company able to erase the record either.</p>
+  <section class="sec" id="collect">
+    <div class="sec-head"><span class="sec-num">02</span><span class="sec-rule"></span></div>
+    <h2 class="sec-title">Data we collect</h2>
+    <div class="sec-body">
+      <p><span class="term">Account data:</span> your email address, used to create your account, verify it and sign you in, and the settings you choose.</p>
+      <p><span class="term">Passkeys:</span> if you add a passkey (your face, your fingerprint or a security key), we store only the public credential your device creates. Your biometrics never leave your device and never reach us.</p>
+      <p><span class="term">Your Fund:</span> the name you give your Fund, your profile, and the Shots you choose to show or share.</p>
+      <p><span class="term">Wallet data:</span> your wallet addresses and your Payout Wallets list, so the app knows which Fund is yours, and the public on-chain activity of those addresses (balances, trades, transfers, yield), which the app reads to show you your positions and your ledger.</p>
+      <p><span class="term">Referral data:</span> if you joined through someone's link, which link it was and when you joined. If people join through yours, the trade fees their trades generate, so that your referral earnings can be calculated and paid.</p>
+      <p><span class="term">Alerts:</span> if you turn on alerts on Telegram, the Telegram account or chat identifier needed to send them.</p>
+      <p><span class="term">Usage and device data:</span> information about how you use MoonX, such as screens viewed, features used, timestamps, device and browser type, and your IP address.</p>
+      <p><span class="term">Communications:</span> if you contact us, the messages and anything you attach to them.</p>
+      <p><span class="term">Identity information:</span> we do not generally collect it. If we are required by law or by a competent authority to verify your identity, we will collect only what that requires and tell you at the time.</p>
+      <p><span class="emph">We never collect your wallet keys, your encrypted backup, your backup password or your PIN.</span> They are created on your device and stay there. The app is built so that they never reach us, which is also why we cannot restore a wallet for you.</p>
+    </div>
+  </section>
 
-  <h2>who else touches it.</h2>
-  <ul>
-    <li><b>Polymarket</b>, the venue where the markets live, receives the orders your wallet signs.</li>
-    <li><b>The card provider</b> used to buy USDC runs its own checks and holds whatever it needs for
-    them. That relationship is between you and them, and its rules are theirs.</li>
-    <li><b>Supabase</b>, our database host, stores the email and the handle described above, on servers
-    in the European Union.</li>
-    <li><b>Google Analytics</b>, and only if you allowed it, receives a truncated IP address and the page
-    you opened. Never your email, never your handle, never anything you typed.</li>
-    <li><b>Our email provider</b> handles the sending of sign-in links and receipts.</li>
-  </ul>
-  <p>Nobody buys this data from us, because we do not sell it, and we do not trade it for services either.</p>
+  <section class="sec" id="use">
+    <div class="sec-head"><span class="sec-num">03</span><span class="sec-rule"></span></div>
+    <h2 class="sec-title">How we use your data</h2>
+    <div class="sec-body">
+      <p>We use your data to provide and improve MoonX: to operate your account and sign you in, to show you your Fund, your positions and your ledger, to pass the orders your wallet signs to Polymarket, to calculate and pay referral earnings, to send alerts you asked for, and to answer you when you write to us.</p>
+      <p>We use usage and analytics data to understand how MoonX is used and to make it better. We do not sell your personal data.</p>
+      <p>We use your email address to send service messages and security alerts, and, with your consent, product updates. You can opt out of product updates at any time.</p>
+    </div>
+  </section>
 
-  <h2>how long we keep it.</h2>
-  <p>Your email and fund name for as long as the account is open, and for a short period after you close
-  it so a duplicate signup or a dispute can be resolved. Support messages for two years. The region
-  answer until it changes. Blockchain records, for ever, because they are not ours to keep or to remove.</p>
+  <section class="sec" id="visible">
+    <div class="sec-head"><span class="sec-num">04</span><span class="sec-rule"></span></div>
+    <h2 class="sec-title">What other people can see</h2>
+    <div class="sec-body">
+      <p><span class="term">Your public profile:</span> your Fund name, and Shots worth showing, can appear on the Feed, on Legends, on your Fund's profile and on cards you share. Your Fund name is not your legal name unless you make it one.</p>
+      <p><span class="term">The person who referred you:</span> if you joined through someone's link, they see your Fund name, a masked version of your email address (for example <span class="emph">to•••ks@gmail.com</span>) and the date you joined, and later the referral earnings your trades generate for them. The masking happens on our side, and they never see your full address.</p>
+      <p><span class="term">Anyone on the blockchain:</span> see Section 6.</p>
+    </div>
+  </section>
 
-  <h2>what you can ask for.</h2>
-  <p>A copy of what we hold, a correction, a deletion, a machine-readable export, or a stop to a
-  particular use. Write to <span class="mono">hello@moonx.fi</span> and we will answer within thirty days.
-  Deleting your MOONX account does not touch your wallet: the funds and the key remain yours, and the
-  chain keeps its record. If you are in the European Union or the United Kingdom, you also have the
-  right to complain to your national data protection authority.</p>
+  <section class="sec" id="sharing">
+    <div class="sec-head"><span class="sec-num">05</span><span class="sec-rule"></span></div>
+    <h2 class="sec-title">Data sharing</h2>
+    <div class="sec-body">
+      <p>We share your data only where necessary to operate the service.</p>
+      <p><span class="term">Our processors:</span> technology partners that run parts of MoonX on our behalf, including hosting and database, email delivery and analytics (Google LLC, via Google Analytics). They may use your data only to perform services for us, under an appropriate data-processing agreement, and are prohibited from using it for their own purposes, including marketing to you. A full, current list is available on request at <a class="link" href="mailto:legal@moonx.fi">legal@moonx.fi</a>.</p>
+      <p><span class="term">Independent third parties:</span> the following are not our processors. Your data relationship with them is governed by their own policies, not this one:</p>
+      <ul>
+        <li><span class="emph">Polymarket</span> receives the orders your wallet signs, and your wallet address.</li>
+        <li><span class="emph">Payment Partners</span> (currently Stripe and Swapped, provided through Calm Treasury, calmtreasury.xyz) handle card, mobile-wallet and bank purchases of USDC. They collect your payment details, and may run their own identity checks, directly; we never receive your card details.</li>
+        <li><span class="emph">Aave</span>, if you use the Yield Wallet, and the <span class="emph">Polygon</span> network, which record your wallet's transactions publicly.</li>
+        <li><span class="emph">Telegram</span>, if you turn on alerts there.</li>
+      </ul>
+      <p>We do not sell, rent or trade your personal data. We may share data with law-enforcement or regulatory authorities where required by law, and with a successor entity in a merger, acquisition or sale of assets, under this policy.</p>
+    </div>
+  </section>
 
-  <h2>children.</h2>
-  <p>MOONX is not for anyone under eighteen. We do not knowingly hold anything about a minor, and if we
-  learn we do, we delete it.</p>
+  <section class="sec" id="onchain">
+    <div class="sec-head"><span class="sec-num">06</span><span class="sec-rule"></span></div>
+    <h2 class="sec-title">Wallet and on-chain data</h2>
+    <div class="sec-body">
+      <p>Your wallet is self-custodial and is created on your own device. <span class="emph">We never collect or store your wallet keys or funds, and we have no ability to access or move them.</span></p>
+      <p>Every trade, payout, gift, deposit and withdrawal is a transaction on a public blockchain. Anyone who knows your wallet address can read all of it, permanently, and nobody, including us, can edit, delete or reverse it. Linking your Fund name to your wallet address, for example on Legends or a shared card, can make that activity easier to attribute to you.</p>
+    </div>
+  </section>
 
-  <h2>when this changes.</h2>
-  <p>The date at the top moves and the account holders get an email if the change matters. We do not
-  make quiet edits to this page.</p>
+  <section class="sec" id="retention">
+    <div class="sec-head"><span class="sec-num">07</span><span class="sec-rule"></span></div>
+    <h2 class="sec-title">Data retention</h2>
+    <div class="sec-body">
+      <p>We retain your account data for as long as your account is active, and for 12 months after closure. Referral and fee records are kept for as long as needed to pay earnings and meet our accounting obligations. Communications are retained for 24 months. Analytics data is retained in anonymised form for 24 months. Retention periods may be extended where required by applicable law.</p>
+      <p>Closing your MoonX account does not touch your wallet: the funds and the keys remain yours, and the blockchain keeps its record, which is not ours to remove.</p>
+    </div>
+  </section>
 
+  <section class="sec" id="rights">
+    <div class="sec-head"><span class="sec-num">08</span><span class="sec-rule"></span></div>
+    <h2 class="sec-title">Your rights</h2>
+    <div class="sec-body">
+      <p>Under the PDPO, you have the right to request access to the personal data we hold about you, to request correction of inaccurate data, and to ask how your data is used. Depending on your location and applicable law, you may also have rights to delete, restrict, port or object to certain processing.</p>
+      <p>To exercise any of these rights, contact us at <a class="link" href="mailto:legal@moonx.fi">legal@moonx.fi</a>. We will respond within the timeframe required by applicable law, and in any event within 30 days.</p>
+      <p>You have the right to lodge a complaint with a data-protection authority. In Hong Kong, this is the <span class="term">Privacy Commissioner for Personal Data (PCPD)</span>, reachable via <a class="link" href="https://www.pcpd.org.hk" target="_blank" rel="noopener">pcpd.org.hk</a>. EU residents may also contact their local supervisory authority (see Section 12).</p>
+      <p>MoonX does not make solely automated decisions that produce legal or similarly significant effects concerning you.</p>
+    </div>
+  </section>
+
+  <section class="sec" id="security">
+    <div class="sec-head"><span class="sec-num">09</span><span class="sec-rule"></span></div>
+    <h2 class="sec-title">Security</h2>
+    <div class="sec-body">
+      <p>We implement technical and organisational measures designed to reduce the risk of unauthorised access to, loss of, or disclosure of your personal data. No system is completely secure, and we cannot guarantee absolute security.</p>
+      <p>Your wallet keys are generated and held on your own device and are designed never to be transmitted to or stored by MoonX. This reflects the architectural design of the software, not a guarantee against every possible failure; securing your device, your backup, your backup password and your PIN is your responsibility. <span class="emph">We will never ask you for them.</span></p>
+      <p>In the event of a data breach that is likely to result in a risk to your rights and freedoms, we will notify you and the relevant authority within 72 hours of becoming aware, where required by applicable law.</p>
+    </div>
+  </section>
+
+  <section class="sec" id="cookies">
+    <div class="sec-head"><span class="sec-num">10</span><span class="sec-rule"></span></div>
+    <h2 class="sec-title">Cookies, storage and analytics</h2>
+    <div class="sec-body">
+      <p>MoonX uses strictly necessary cookies and browser storage to operate the service, including keeping you signed in, security tokens, remembering where you are in setup, and settings such as your MoonX Radio station and volume. We do not use advertising or tracking cookies.</p>
+      <p>We use Google Analytics to collect anonymised data about how MoonX is used, including pages viewed, session duration, approximate (country-level) location, and device and browser type. IP addresses are anonymised before processing. Where the law requires your consent for analytics, we ask for it first and load nothing until you agree.</p>
+    </div>
+  </section>
+
+  <section class="sec" id="children">
+    <div class="sec-head"><span class="sec-num">11</span><span class="sec-rule"></span></div>
+    <h2 class="sec-title">Children and changes to this policy</h2>
+    <div class="sec-body">
+      <p><span class="term">Children:</span> MoonX is not for anyone under 18. We do not knowingly collect personal data about a minor, and if we learn that we have, we delete it.</p>
+      <p><span class="term">Changes:</span> we may update this Privacy Policy from time to time. We will notify you of material changes by updating the effective date at the top of this page and, where appropriate, by email. For material changes, such as new data uses or new third-party sharing, we will endeavour to notify you by email at least 14 days before the change takes effect, where reasonably practicable. Continued use of MoonX after changes take effect constitutes acceptance of the revised policy.</p>
+    </div>
+  </section>
+
+  <section class="sec" id="gdpr">
+    <div class="sec-head"><span class="sec-num">12</span><span class="sec-rule"></span></div>
+    <h2 class="sec-title">European Union users · GDPR</h2>
+    <div class="sec-body">
+      <p><span class="term">Applicability:</span> although MoonX is operated from Hong Kong, the EU General Data Protection Regulation (GDPR) applies to our processing of personal data of individuals located in the European Union, in accordance with Article 3 GDPR. If you are located in the EU, the rights and protections set out in this section apply to you.</p>
+      <p><span class="term">EU Representative:</span> in accordance with Article 27 GDPR, MoonX has appointed Mr. Pedro Sanchez as EU Representative, located in the European Union. EU users may contact our EU Representative at <a class="link" href="mailto:legal@moonx.fi">legal@moonx.fi</a>, marked for his attention.</p>
+      <p><span class="term">Data transfers from the EU to Hong Kong:</span> Hong Kong is not recognised by the European Commission as providing an adequate level of data protection. Where we transfer personal data from the EU to Hong Kong or to other countries without an adequacy decision, we do so on the basis of Standard Contractual Clauses (SCCs) adopted by the European Commission, or another valid transfer mechanism under Chapter V GDPR. You may request a copy of the applicable transfer mechanism at <a class="link" href="mailto:legal@moonx.fi">legal@moonx.fi</a>.</p>
+      <p><span class="term">Legal bases for processing:</span> we process EU users' personal data on the following bases under Article 6 GDPR: contract performance (Art. 6(1)(b)) for operating your account, your Fund and the referral programme; legal obligation (Art. 6(1)(c)) for any verification required by law; legitimate interests (Art. 6(1)(f)) for security, fraud prevention and showing your public profile; and consent (Art. 6(1)(a)) for analytics where required and for optional communications. You may withdraw consent at any time without affecting prior processing.</p>
+      <p><span class="term">Your GDPR rights:</span> as an EU resident you have the right to access, rectify, erase, restrict and port your personal data, and to object to processing based on legitimate interests. To exercise these rights, contact <a class="link" href="mailto:legal@moonx.fi">legal@moonx.fi</a>. We will respond within 30 days. Erasure cannot reach data recorded on a public blockchain, which no one can delete.</p>
+      <p><span class="term">Right to complain:</span> you have the right to lodge a complaint with your local EU supervisory authority. A full list of EU data-protection authorities is available at <a class="link" href="https://edpb.europa.eu/about-edpb/about-edpb/members_en" target="_blank" rel="noopener">edpb.europa.eu</a>.</p>
+    </div>
+  </section>
+
+  <div class="contact">
+    <p class="eyebrow">Contact</p>
+    <p>
+      Privacy questions or data requests? Write to <a class="link" href="mailto:legal@moonx.fi">legal@moonx.fi</a>. EU Representative: Mr. Pedro Sanchez, at the same address.
+    </p>
+  </div>
+
+  </article>
 </main>
 
 <footer>

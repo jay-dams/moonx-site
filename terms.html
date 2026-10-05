@@ -5,13 +5,13 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#03050C">
-<title>MOONX | Terms, your wallet and your keys</title>
-<meta name="description" content="The rules of using MOONX: what the service does, what it never does with your funds, what you agree to, and the limits that apply to prediction markets.">
+<title>MOONX | Terms of Service</title>
+<meta name="description" content="Terms of Service for MOONX: non-custodial software that gives you access to prediction markets and other DeFi protocols from a wallet only you hold.">
 <link rel="canonical" href="https://moonx.fi/terms.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="MOONX">
-<meta property="og:title" content="MOONX | Terms, your wallet and your keys">
-<meta property="og:description" content="The rules of using MOONX: what the service does, what it never does with your funds, what you agree to, and the limits that apply to prediction markets.">
+<meta property="og:title" content="MOONX | Terms of Service">
+<meta property="og:description" content="Terms of Service for MOONX: non-custodial software that gives you access to prediction markets and other DeFi protocols from a wallet only you hold.">
 <meta property="og:url" content="https://moonx.fi/terms.html">
 <meta name="twitter:site" content="@moonxfi">
 <meta property="og:image" content="https://moonx.fi/og-image.png">
@@ -25,29 +25,49 @@
 <script src="assets/js/sky.js" defer></script>
 <link rel="stylesheet" href="assets/radio/radio.css">
 <style>
-
 main{text-align:left}
-main>.eyebrow,main>h1,main>.lead,main>.stamp{text-align:center}
-
-.stamp{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;color:var(--mute);margin:18px auto 0}
-h1{max-width:16ch}
-h2{margin:52px 0 12px;max-width:22ch;text-align:left;scroll-margin-top:calc(var(--navh) + 18px)}
-p,li{margin-left:0;margin-right:0;max-width:70ch}
-ul{text-align:left;margin:12px 0 12px}
-li{margin:7px 0}
-.grid{margin:20px 0}
-.card h3{margin:0 0 8px;font-size:17px}
-.card p{font-size:14.5px;line-height:1.6}
-.row{justify-content:flex-start;margin-top:44px}
-.lead{max-width:64ch;margin-left:auto;margin-right:auto}
-.mono{font-family:var(--mono)}
-@media (max-width:600px){ body>nav .go{font-size:12px;padding-left:12px;padding-right:12px;white-space:nowrap} }
-
+.legal{--read:#C4D3E6;--blue-hi:#7FB6FF;--blue-bg:rgba(45,123,255,.16);--blue-line:rgba(45,123,255,.42);--red-bg:rgba(255,59,107,.10);--red-line:rgba(255,59,107,.40);max-width:760px;margin:0 auto;color:var(--read);font-size:15px;line-height:1.55}
+.legal h1.doc-title{font-weight:800;font-size:clamp(32px,5.2vw,44px);line-height:1.08;letter-spacing:-.03em;color:#fff;margin:0 0 16px;max-width:none;text-align:left}
+.legal .doc-meta{display:flex;flex-wrap:wrap;align-items:center;gap:10px;font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--dim);margin-bottom:22px}
+.legal .doc-meta .sep{opacity:.45}
+.legal p{margin-left:0;margin-right:0;max-width:none}
+.legal .doc-intro{font-size:16px;line-height:1.55;color:var(--read);max-width:64ch}
+.legal .callout{border:1px solid var(--line);border-radius:16px;padding:22px 24px;margin:36px 0;background:var(--card)}
+.legal .callout--warn{border-color:var(--blue-line);background:linear-gradient(0deg,var(--blue-bg),var(--blue-bg)),var(--card)}
+.legal .callout--risk{border-color:var(--red-line);background:linear-gradient(0deg,var(--red-bg),var(--red-bg)),var(--card)}
+.legal .callout-title{display:flex;align-items:center;gap:9px;font-family:var(--mono);font-size:11.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-bottom:13px}
+.legal .callout--warn .callout-title{color:var(--blue-hi)}
+.legal .callout--risk .callout-title{color:var(--red)}
+.legal .callout p{font-size:14px;line-height:1.55;color:var(--read);margin-bottom:11px}
+.legal .callout p:last-child{margin-bottom:0}
+.legal ul{list-style:none;padding-left:0;max-width:none;text-align:left}
+.legal .callout ul{margin:10px 0 13px;display:grid;gap:6px}
+.legal li{margin:0;max-width:none;position:relative;padding-left:18px;color:var(--read)}
+.legal .callout li{font-size:14px;line-height:1.55}
+.legal li::before{content:"";position:absolute;left:2px;top:.66em;width:6px;height:6px;border-radius:50%;background:var(--dim);opacity:.7}
+.legal .callout .nb{color:#fff;font-weight:600}
+.legal .sec{margin-top:48px;scroll-margin-top:calc(var(--navh) + 18px)}
+.legal .sec-head{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+.legal .sec-num{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--blue-hi);letter-spacing:.08em}
+.legal .sec-rule{flex:1;height:1px;background:var(--line)}
+.legal h2.sec-title{font-weight:800;font-size:clamp(21px,2.8vw,24px);line-height:1.2;letter-spacing:-.02em;color:#fff;margin:0 0 14px;max-width:none;text-align:left}
+.legal .sec-body p{margin-bottom:14px;color:var(--read);font-size:15px;line-height:1.6}
+.legal .sec-body p:last-child{margin-bottom:0}
+.legal .sec-body ul{margin:4px 0 14px;display:grid;gap:8px}
+.legal .sec-body li{font-size:15px;line-height:1.6}
+.legal .term{color:var(--blue-hi);font-weight:600}
+.legal .emph{color:#fff;font-weight:600}
+.legal a.link{color:var(--blue-hi);border-bottom:1px solid var(--blue-line);transition:border-color .14s,color .14s}
+.legal a.link:hover{color:#fff;border-bottom-color:var(--blue-hi)}
+.legal .contact{margin-top:56px;padding-top:28px;border-top:1px solid var(--line)}
+.legal .contact .eyebrow{display:block;margin:0 0 12px;color:var(--blue-hi);font-weight:500;letter-spacing:.14em;max-width:none}
+.legal .contact p{color:var(--read);font-size:15px;line-height:1.6;max-width:66ch}
+@media (max-width:600px){ .legal .callout{padding:18px} body>nav .go{font-size:12px;padding-left:12px;padding-right:12px;white-space:nowrap} }
 
 #miniBar .glass .mq,#miniBar .glass .tune,.tune,#consentBar a,.perma a{font-size:11px!important}
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://moonx.fi/"},{"@type":"ListItem","position":2,"name":"Terms of Service","item":"https://moonx.fi/terms.html"}]}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","dateModified":"2026-09-11","@id":"https://moonx.fi/terms.html#page","name":"Terms of Service","url":"https://moonx.fi/terms.html","isPartOf":{"@id":"https://moonx.fi/#site"},"publisher":{"@id":"https://moonx.fi/#org"},"inLanguage":"en"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","dateModified":"2026-10-05","@id":"https://moonx.fi/terms.html#page","name":"Terms of Service","url":"https://moonx.fi/terms.html","isPartOf":{"@id":"https://moonx.fi/#site"},"publisher":{"@id":"https://moonx.fi/#org"},"inLanguage":"en"}</script>
 </head>
 <body data-autoresume="1" class="lit">
 <div id="bgfix" aria-hidden="true"></div>
@@ -61,114 +81,317 @@ li{margin:7px 0}
 </nav>
 
 <main id="main">
-  <div class="eyebrow">TERMS OF SERVICE</div>
-  <h1>what we do, and what we cannot do.</h1>
-  <p class="lead">Plain rules for a product where the money is never ours. Using MOONX means agreeing to
-  them. If a line here does not suit you, do not open a fund.</p>
-  <p class="stamp">LAST UPDATED 11 September 2026</p>
+<article class="legal">
 
-  <h2>what MOONX is.</h2>
-  <p>MOONX is software. It shows you the prediction markets on <b>Polymarket</b>, helps your device make and
-  keep a wallet, and passes the orders your wallet signs to that venue. It pays the network fees so you
-  do not have to.</p>
-  <p>MOONX is <b>not</b> a broker, a bank, an exchange, a custodian, an investment adviser or a bookmaker.
-  We never take the other side of your position and we make nothing from you losing. Nothing on this site
-  or in the app is financial advice, and no number anywhere on it is a promise of a return.</p>
+  <div class="doc-head">
+    <h1 class="doc-title">Terms of Service</h1>
+    <div class="doc-meta">
+      <span>Effective date: 1 September 2026</span>
+      <span class="sep">·</span>
+      <span>MoonX · Hong Kong SAR</span>
+    </div>
+    <p class="doc-intro">
+      These Terms of Service govern your access to and use of MoonX: non-custodial software that helps your device create and keep a self-custodial wallet, and gives you access to third-party DeFi markets and protocols: today Polymarket for prediction markets and Aave for yield, and others we may add in the future. MoonX shows you those markets and passes the transactions you sign to them. By creating an account or using MoonX you agree to these terms.
+    </p>
+  </div>
 
-  <h2>who can use it.</h2>
-  <p>You must be at least eighteen, and old enough where you live if that is more. You must not be in a
-  country where these markets are restricted, or on a sanctions list. It is on you to know where you stand.
-  One account per person.</p>
+  <div class="callout callout--warn" role="note">
+    <p class="callout-title"><span aria-hidden="true">⚠</span> Important warning · please read before continuing</p>
+    <p>MoonX is non-custodial software. It lets you browse third-party markets, such as Polymarket, and place trades on them from a wallet that you alone control.</p>
+    <p><span class="nb">We never take custody of your funds, never hold your wallet keys, and never take the other side of your trades.</span> Every shot is one you choose and confirm yourself. MoonX does not trade for you.</p>
+    <p>By using MoonX you accept that you may experience:</p>
+    <ul>
+      <li>Loss of some or all of the money you put into a shot, or into your wallet</li>
+      <li>Permanent loss of your funds if you lose your backup file or its password</li>
+      <li>Failures, delays or errors in MoonX, Polymarket, the blockchain, or any other third-party service</li>
+      <li>Loss or exposure of personal data</li>
+    </ul>
+    <p>Prediction-market trading may be regulated, restricted or unlawful where you live. You are responsible for making sure your use is legal in your jurisdiction. Only put in what you can lose without it changing anything about your life.</p>
+  </div>
 
-  <h2>your wallet is yours, with everything that means.</h2>
-  <p>The wallet is created on your device. The private key, the encrypted backup file, the password to
-  that file and your PIN are yours alone. We do not hold copies, we cannot recover them, and we cannot
-  move, freeze or unfreeze a single dollar in that wallet.</p>
-  <p>So: <b>if you lose the backup file or its password, the funds are lost, permanently, to everyone
-  including us.</b> Keeping them safe is your responsibility and it is the only one this product really
-  asks of you. We will never ask you for any of them, by email, in chat, or in the app. Anyone who does
-  is trying to rob you.</p>
+  <section class="sec" id="definitions">
+    <div class="sec-head"><span class="sec-num">01</span><span class="sec-rule"></span></div>
+    <h2 class="sec-title">Definitions</h2>
+    <div class="sec-body">
+      <p><span class="term">"MoonX", "we", "us"</span> means the non-custodial software and services operated from Hong Kong SAR, accessible at moonx.fi and through the MoonX app, that let a User browse Prediction Markets and other Third-Party Protocols and transact on them from a self-custodial Wallet. <span class="emph">MoonX does not take custody of funds and does not operate any Prediction Market, blockchain, lending protocol or payment service.</span></p>
+      <p><span class="term">"User", "you"</span> means any person who accesses or uses MoonX.</p>
+      <p><span class="term">"Fund"</span> means your MoonX account and the Wallet, positions and public profile linked to it. It is a name for your own account only. It is not a fund in any legal or financial sense (see Section 3).</p>
+      <p><span class="term">"Wallet"</span> means the self-custodial blockchain wallet created on your device when you set up your Fund, including your main wallet and, if you use one, your Yield Wallet. You alone hold its keys; we never have access to them.</p>
+      <p><span class="term">"Backup"</span> means the encrypted backup file of your wallet keys, sealed with a backup password that you choose. Together with your PIN and any passkeys you add, the Backup is how you secure and restore your Wallet.</p>
+      <p><span class="term">"Shot"</span> means a position in an outcome of a Prediction Market that you buy through MoonX.</p>
+      <p><span class="term">"Moon"</span> means a Shot that resolves your way: you were right, the outcome you bought settles on Polymarket, and each share of it pays USD 1 (in USDC). Any figure showing what a Shot would pay if it moons is arithmetic on the current price, not a forecast or a promise.</p>
+      <p><span class="term">"Prediction Market"</span> means a third-party market or venue, currently Polymarket, on which you may place orders through MoonX. It is not operated by MoonX.</p>
+      <p><span class="term">"Yield Wallet"</span> means the optional part of your Wallet that deposits USDC into a third-party lending protocol (currently Aave) to earn a variable rate.</p>
+      <p><span class="term">"Third-Party Protocol"</span> means any third-party decentralised finance (DeFi) market, venue or protocol that you can use through MoonX. Today these are Polymarket, as a Prediction Market, and Aave, as a lending protocol. We may add others in the future (see Section 2). None of them is operated by MoonX.</p>
+      <p><span class="term">"Payment Partner"</span> means a third party that lets you buy USDC with a card, a mobile wallet or a bank transfer and delivers it to your Wallet. Today these are Stripe and Swapped, provided through Calm Treasury (calmtreasury.xyz), a third-party service that connects MoonX to them. None of them is operated by MoonX.</p>
+      <p><span class="term">"Payout Wallets"</span> means the list of external addresses, up to five, to which your Wallet may send withdrawals.</p>
+      <p><span class="term">"MoonX Radio"</span> means the music streamed on our website and in MoonX, including its songs, recordings, lyrics, artist names and presenters, all of which are generated with artificial intelligence (see Section 14).</p>
+      <p><span class="term">"Referral Link"</span> means the personal link that lets another person open a Fund of their own and be counted as your referral.</p>
+    </div>
+  </section>
 
-  <h2>placing a trade.</h2>
-  <p>An order goes to Polymarket and settles under Polymarket's rules on Polymarket's timing. The price
-  you get is the price on the book when it fills, which on a thin market can differ from the number you
-  tapped. A market resolves on its published source, and if that source is disputed, the resolution is
-  handled by the venue, not by us. Blockchains and third-party services fail sometimes: an order can be
-  delayed or rejected and we do not guarantee that any particular one goes through.</p>
+  <section class="sec" id="service">
+    <div class="sec-head"><span class="sec-num">02</span><span class="sec-rule"></span></div>
+    <h2 class="sec-title">The MoonX service</h2>
+    <div class="sec-body">
+      <p>MoonX is software. It helps your device create and keep a self-custodial Wallet, shows you the markets on Third-Party Protocols (today Polymarket and Aave) with their live prices and rates, and passes the transactions your Wallet signs to them. We pay the blockchain network fees on your MoonX transactions so that you do not have to (see Section 11).</p>
+      <p><span class="emph">You make every decision.</span> MoonX has no trading agent, bot or automated strategy acting for you. Nothing is bought, sold, moved or withdrawn from your Wallet unless you choose it and confirm it. We never take custody of, hold, or have access to your funds, your Wallet or your wallet keys, and we do not execute transactions ourselves.</p>
+      <p><span class="term">Beta:</span> MoonX is new software, offered in beta and on a best-efforts basis. We do not guarantee uninterrupted availability and may modify, suspend or discontinue any part of it at any time, with reasonable notice where practicable. There is no service-level guarantee.</p>
+      <p><span class="term">Third-Party Protocols, today and in the future:</span> MoonX currently gives you access to Polymarket, for prediction markets, and Aave, for the Yield Wallet. <span class="emph">We may add other DeFi markets and protocols in the future</span>, such as other prediction markets, exchanges, or lending and yield protocols, and we may remove one. Any protocol we add will be a third party, not operated or controlled by us, with its own rules, terms, fees and risks. These Terms apply to your use of it through MoonX in the same way as they apply to Polymarket and Aave, and the app will show you which protocol a transaction goes to before you confirm it.</p>
+      <p>MoonX is not available to restricted persons as set out in Section 4.</p>
+    </div>
+  </section>
 
-  <h2>fees.</h2>
-  <p>A fee on each trade, shown before you confirm it, on the way in and the way out. No subscription, no
-  account fee, no withdrawal fee. Network fees are on us. If the fee changes, it changes for trades placed after the change, and you see the new number before you confirm.</p>
+  <section class="sec" id="not-a-fund">
+    <div class="sec-head"><span class="sec-num">03</span><span class="sec-rule"></span></div>
+    <h2 class="sec-title">Not a fund, not a broker, and no advice</h2>
+    <div class="sec-body">
+      <p><span class="emph">The word "Fund" in MoonX is a name for your own account, not a financial product.</span> Your Fund is not a hedge fund, collective investment scheme, managed account or pooled investment vehicle of any kind, and naming it (for example "Moonlight Pension Fund") does not make it one. We do not pool, manage, invest or control anyone's money. Each User self-custodies and self-directs their own Wallet.</p>
+      <p>MoonX is <span class="emph">not</span> a broker, a bank, an exchange, a custodian, an investment adviser or a bookmaker. We never take the other side of your position and we make nothing from you losing.</p>
+      <p>MoonX does not provide investment, financial, legal, tax, accounting or gambling advice. Prices, potential payouts, the Feed, Legends and anything another User shows or shares are information, not a recommendation or solicitation to enter into any transaction. You alone are responsible for your decisions.</p>
+      <p>No fiduciary, advisory, brokerage, custodial or money-management relationship is created between you and us.</p>
+    </div>
+  </section>
 
-  <h2>invitations.</h2>
-  <p>Bring somebody in with your link and you earn a share of our fee, up to 0.5%, when they buy or sell. It comes out of our side and never out of theirs. Invented accounts, bought traffic and rings of
-  accounts inviting each other are not invitations: we can withhold the share and close the accounts.</p>
+  <section class="sec" id="eligibility">
+    <div class="sec-head"><span class="sec-num">04</span><span class="sec-rule"></span></div>
+    <h2 class="sec-title">Eligibility and registration</h2>
+    <div class="sec-body">
+      <p>You must be at least 18 years of age, or the legal age of majority in your country if higher, to use MoonX. By creating an account you represent that you meet this requirement.</p>
+      <p>You are responsible for keeping your account sign-in (your email, passkeys and PIN) secure and for all activity that occurs under your account.</p>
+      <p><span class="term">Jurisdictional restrictions:</span> MoonX is not available to: (i) persons located in, ordinarily resident in, or nationals of the United States of America or its territories; (ii) persons located in or nationals of the People's Republic of China (mainland China); (iii) persons located in or ordinarily resident in the Hong Kong Special Administrative Region (Hong Kong SAR); (iv) persons located in, ordinarily resident in, or nationals of the United Kingdom of Great Britain and Northern Ireland; (v) persons located in, ordinarily resident in, or nationals of any country or territory subject to comprehensive sanctions or embargoes administered by the US Office of Foreign Assets Control (OFAC) or the United Nations, currently Cuba, Iran, North Korea, and the Crimea, Donetsk and Luhansk regions of Ukraine, as such programmes are updated from time to time; (vi) persons located in, ordinarily resident in, or nationals of Russia or Belarus; and (vii) persons located in any jurisdiction in which Polymarket restricts or blocks access to its markets, as Polymarket updates that list from time to time. By using MoonX you represent and warrant that you do not fall into any of the above categories, and that you will not use a VPN or any other means to disguise your location.</p>
+      <p><span class="term">Sanctions:</span> You represent and warrant that you are not subject to sanctions under the United Nations Sanctions Ordinance (Cap. 537) of Hong Kong, OFAC, the European Union, or any other applicable regime, and that you will not use MoonX to breach or circumvent any sanctions.</p>
+      <p>We do not generally collect identity information. However, we reserve the right to require identity verification at any time where we consider it necessary, or where we are required to do so by law or by a competent authority. We may suspend or terminate accounts where verification cannot be completed or where prohibited use is suspected.</p>
+    </div>
+  </section>
 
-  <h2>moon rodeo.</h2>
-  <p>The game on this website is free and needs no account: one song, one life, and as many plays as you like. Put your name on the leaderboard if you want your score to stand. Nothing is won and nothing
-  is paid: the leaderboard is the whole prize, for now.</p>
-  <ul>
-    <li><b>Nothing is minted and nothing is sold.</b> The card at the end of a game is an image, not an
-    asset, not a token, and it carries no value or ownership.</li>
-    <li>One ranked play a day, plus one for every friend who actually plays from your link.</li>
-    <li>Automation, modified clients, several accounts for one person, or any other way of playing that
-    is not a thumb on a screen voids the scores and the stake that came from them.</li>
-    <li>Scores are what our server records. A game that ends because a connection dropped is a game that
-    ended.</li>
-  </ul>
+  <section class="sec" id="wallet">
+    <div class="sec-head"><span class="sec-num">05</span><span class="sec-rule"></span></div>
+    <h2 class="sec-title">Your wallet and self-custody</h2>
+    <div class="sec-body">
+      <p><span class="emph">Your Wallet is self-custodial.</span> It is created on your device, and its keys are generated and kept there. We do not hold copies of your wallet keys, your Backup, your backup password or your PIN, and we have no ability to move, freeze, unfreeze or access a single dollar in your Wallet, at any time.</p>
+      <p>Your wallet keys leave your device only as your encrypted Backup, sealed with the backup password you choose. That password is never sent to us, so it can never be read, reset or recovered from our side. <span class="emph">If you lose your Backup or its password, your funds are permanently lost, to everyone, including us. We cannot reset, recover, freeze or restore them.</span> Keeping your Backup, your backup password, your PIN and your device safe is your responsibility.</p>
+      <p><span class="emph">We will never ask you for your Backup, your backup password or your PIN</span>, by email, in chat, on Telegram or in the app. Anyone who does is trying to rob you.</p>
+      <p><span class="term">Payout Wallets:</span> Withdrawals from your Wallet can only go to an address on your Payout Wallets list. This is a safeguard that runs in your Wallet, not a service we operate. You are responsible for every address you add: a withdrawal sent to a wrong or compromised address cannot be reversed.</p>
+      <p><span class="term">Polymarket permissions:</span> To trade, your Wallet signs a permission that lets Polymarket accept your orders. It does not give MoonX any access to your funds.</p>
+      <p><span class="term">Logging out and closing the app</span> does not affect your Wallet. Your money and your open Shots are on chain and stay where they are; only your Backup gets you back in on a new device.</p>
+    </div>
+  </section>
 
-  <h2>the radio.</h2>
-  <p>The songs, the recordings and the words are MOONX's own work, streamed here for listening. Playing
-  them on this site is welcome. Downloading, ripping, re-uploading, or using them in anything you publish
-  is not, unless we have said yes in writing.</p>
+  <section class="sec" id="shots">
+    <div class="sec-head"><span class="sec-num">06</span><span class="sec-rule"></span></div>
+    <h2 class="sec-title">Taking a shot on Polymarket</h2>
+    <div class="sec-body">
+      <p>When you take or sell a Shot, your Wallet signs an order and MoonX passes it to Polymarket. <span class="emph">The order is placed, matched and settled by Polymarket, under Polymarket's rules and on Polymarket's timing.</span> Your use of Polymarket is also subject to Polymarket's own terms, including its geographic restrictions, and you are responsible for complying with them.</p>
+      <p>The price you get is the price on the book when your order fills, which on a thin or fast-moving market can differ from the number you tapped. Prices shown in MoonX come from Polymarket and can be late or wrong. A limit or sell order may fill partly, late, or not at all.</p>
+      <p>A market resolves on its published rules and source. Resolution, including any dispute, clarification, delay or reversal, is handled by the venue and its resolution process, not by us. We cannot change, appeal or reverse an outcome.</p>
+      <p>Blockchains and third-party services fail sometimes. An order can be delayed or rejected, and we do not guarantee that any particular order is placed, filled or settled.</p>
+    </div>
+  </section>
 
-  <h2>what belongs to whom.</h2>
-  <p>The name MOONX, the hat, the wordmark, the interface, the game and the music are ours. The name of
-  your fund, and anything you write or post, are yours; by putting them on the leaderboard or the feed you let
-  us show them inside MOONX and in the card you share. Do not use our marks as your own, and do not build
-  something that pretends to be us.</p>
+  <section class="sec" id="risk">
+    <div class="sec-head"><span class="sec-num">07</span><span class="sec-rule"></span></div>
+    <h2 class="sec-title">Trading and market risk</h2>
+    <div class="sec-body">
+      <p><span class="emph">Prediction markets can lose you every dollar you put into a Shot.</span> Unlikely outcomes are cheap because they usually do not happen. Prices can move sharply, positions can become worthless, markets may resolve against you, outcomes may be disputed, and on-chain transactions are irreversible.</p>
+      <div class="callout callout--risk" role="note">
+        <p class="callout-title"><span aria-hidden="true">⚠</span> Risk, said once and plainly</p>
+        <p>A Moon on the Feed or a figure on Legends shows what happened to someone else, once. It says nothing about what will happen to you. Most long shots miss. Put in only what you can lose entirely, and never what you cannot.</p>
+      </div>
+      <p>There is no deposit insurance, investor-compensation scheme or guarantee of any kind. Your funds are not protected. Past performance is not indicative of future results.</p>
+      <p><span class="term">Smart-contract risk:</span> blockchains and smart contracts, including those of Polymarket, Aave, any other Third-Party Protocol, the USDC issuer and the Polygon network, may contain bugs or vulnerabilities, may be exploited, or may fail. We are not liable for losses arising from them.</p>
+      <p><span class="term">Stablecoin risk:</span> your balance is held in USDC, a stablecoin issued by a third party. It may lose its peg, be frozen by its issuer, or become unavailable. We do not issue or control it.</p>
+    </div>
+  </section>
 
-  <h2>things you must not do.</h2>
-  <ul>
-    <li>Use MOONX for money laundering, sanctions evasion, or with money that is not honestly yours.</li>
-    <li>Trade on a market you can influence or settle, or on information you hold because you are not
-    supposed to have it.</li>
-    <li>Attack, scrape at volume, reverse engineer or overload the service, or try to reach an account
-    that is not yours.</li>
-    <li>Impersonate us or anyone else, in a fund name or anywhere else.</li>
-  </ul>
+  <section class="sec" id="adding-funds">
+    <div class="sec-head"><span class="sec-num">08</span><span class="sec-rule"></span></div>
+    <h2 class="sec-title">Adding funds and Payment Partners</h2>
+    <div class="sec-body">
+      <p>You can add money to your Wallet by sending USDC to it from another app or wallet, or by buying USDC through a Payment Partner with a card, a mobile wallet or a bank transfer.</p>
+      <p><span class="term">Sending USDC:</span> your Wallet receives USDC on the Polygon network only. <span class="emph">Funds sent on another network, or in another token, may be permanently lost</span>, and we cannot recover them. It is your responsibility to check that the app or wallet you send from supports USDC on Polygon.</p>
+      <p><span class="term">Buying with a Payment Partner:</span> card, mobile-wallet and bank purchases are provided by Stripe and Swapped through Calm Treasury (calmtreasury.xyz). The purchase is a contract between you and those providers, under their own terms. They may run their own identity checks, may refuse, delay or reverse a purchase, and charge their own fees, which are shown before you pay. We never receive or hold your card details or your fiat money. The USDC is delivered straight to your Wallet.</p>
+      <p><span class="emph">MoonX assumes no liability for Calm Treasury, Stripe, Swapped or any other Payment Partner</span>, including for a purchase that fails, is delayed, refused or reversed, for the rate or fees they charge, for USDC that is not delivered, for their identity checks, or for how they handle your data. Any claim about a purchase must be made to the provider concerned.</p>
+      <p>Minimum and maximum amounts, available methods, speeds and fees vary by Payment Partner and by region, and are shown in the app before you confirm.</p>
+    </div>
+  </section>
 
-  <h2>what we do not promise.</h2>
-  <p>The service is provided as it is. We do not promise it is available at all times, free of bugs, or
-  fit for a purpose you have in mind, and we do not promise the same for Polymarket, for Polygon, or for any other network or provider in the chain. Prices, charts and figures shown in the app can be wrong or
-  late.</p>
-  <p>As far as the law allows, we are not liable for losses from a market moving against you, from a key
-  or a password you lost, from a chain or a venue failing, from a third-party service breaking, or from
-  anyone getting hold of your device. Where liability cannot be excluded, it is limited to the fees you
-  paid us in the twelve months before the claim. Nothing here removes a right the law gives you and does
-  not let you sign away.</p>
+  <section class="sec" id="yield">
+    <div class="sec-head"><span class="sec-num">09</span><span class="sec-rule"></span></div>
+    <h2 class="sec-title">The Yield Wallet</h2>
+    <div class="sec-body">
+      <p>If you choose to move money to your Yield Wallet, your Wallet deposits USDC into a third-party lending protocol, currently Aave. <span class="emph">Aave is not operated by MoonX, and a deposit into it is not a bank deposit or a savings account.</span></p>
+      <p>While it is in the Yield Wallet your USDC is lent out through the protocol. The rate is <span class="emph">variable</span>, is set by the protocol, not by us, and changes all the time; any rate shown in MoonX is the current rate and not a promise of what you will earn. Withdrawals depend on the protocol having liquidity available, and may be delayed.</p>
+      <p>Lending protocols carry their own risks, including smart-contract failure, exploits, bad debt and loss of the stablecoin's peg, any of which can reduce or wipe out what you deposited. We do not guarantee the return of any amount you move to the Yield Wallet.</p>
+    </div>
+  </section>
 
-  <h2>risk, said once and plainly.</h2>
-  <p>Prediction markets can lose you every dollar you put on a trade. Unlikely outcomes are cheap because they usually do not happen. Put in what you can lose without it changing anything about your life, and never
-  what you cannot.</p>
+  <section class="sec" id="local-law">
+    <div class="sec-head"><span class="sec-num">10</span><span class="sec-rule"></span></div>
+    <h2 class="sec-title">Your responsibility for local law</h2>
+    <div class="sec-body">
+      <p><span class="emph">You are solely responsible for making sure that your use of MoonX, including trading on prediction markets and using the Yield Wallet, is lawful where you are located and resident.</span></p>
+      <p>Prediction-market trading is regulated, restricted or prohibited in many jurisdictions and may be treated as gambling or as a regulated financial activity. In some jurisdictions, including Hong Kong, regulators have indicated that trading on prediction markets may constitute regulated activity or unlawful gambling. The legal position is uncertain and changes quickly. If your use would be unlawful where you are, you must not use MoonX.</p>
+      <p><span class="term">Tax:</span> you are responsible for determining, reporting and paying any taxes arising from your activity, including on winnings, yield and referral earnings. We do not provide tax advice and do not withhold, collect or report taxes on your behalf.</p>
+    </div>
+  </section>
 
-  <h2>ending it.</h2>
-  <p>Close your account whenever you like. We can suspend or close an account that breaks these terms, or
-  stop serving a region we are told to stop serving. In every one of those cases <b>your wallet stays
-  yours</b>: the key is on your device, the funds and the positions remain reachable with your backup, and
-  no closure by us can touch them.</p>
+  <section class="sec" id="fees">
+    <div class="sec-head"><span class="sec-num">11</span><span class="sec-rule"></span></div>
+    <h2 class="sec-title">Fees and subscription</h2>
+    <div class="sec-body">
+      <p><span class="term">Trade fee:</span> MoonX earns a fee on the Shots you take and sell through it, <span class="emph">paid to us by Polymarket</span> and usually between 0.5% and 1% of the trade value, depending on the market and the type of order. Any fee that forms part of what you pay is included in the price shown before you confirm. <span class="emph">We never take custody of your funds to collect it.</span> The fee helps us cover the network fees we pay for you. If the fee changes, the new fee applies only to trades placed after the change.</p>
+      <p><span class="term">Subscription:</span> there is currently no subscription, no account fee and no withdrawal fee. <span class="emph">We may introduce a subscription in the future.</span> Before any subscription is charged we will publish its price and terms, and give existing Users at least 30 days' notice. A subscription will never be required to access your Wallet or withdraw your funds.</p>
+      <p><span class="term">Network fees:</span> <span class="emph">we pay the blockchain network (gas) fees on your MoonX transactions</span>, so your Wallet does not need to hold any other token to trade, add funds, move money or withdraw. If we ever stop or limit this, we will give you reasonable notice first, after which network fees are paid by your Wallet directly to the network.</p>
+      <p><span class="term">Third-party fees:</span> other fees charged by a Payment Partner, a Prediction Market, a lending protocol, or the app or wallet you send from are charged by those third parties, not by us.</p>
+    </div>
+  </section>
 
-  <h2>when these change.</h2>
-  <p>The date at the top moves, and account holders get an email if the change matters. Continuing to use
-  MOONX after that is how you accept the new version. If a court finds one clause unenforceable, the rest
-  still stands.</p>
+  <section class="sec" id="referrals">
+    <div class="sec-head"><span class="sec-num">12</span><span class="sec-rule"></span></div>
+    <h2 class="sec-title">Referrals</h2>
+    <div class="sec-body">
+      <p>When someone opens a Fund through your Referral Link, they become your referral. <span class="emph">You earn 25% of the trade fees MoonX collects on your referrals' trades</span>, for as long as their Fund runs. This is the standard rate.</p>
+      <p><span class="term">Boosted rate:</span> your rate is boosted to <span class="emph">50%</span> once at least five of your referrals are active, meaning each has taken at least 10 Shots through MoonX. Only Shots count: selling a Shot, moving money to the Yield Wallet, and other transactions do not. The boosted rate applies to fees on trades placed after you qualify, and is not applied retroactively. The rate that applies to you is shown in the app. It comes out of our share and never out of theirs: a referral pays exactly the same fees as anyone else. You earn on their trading, never on their losses or their winnings.</p>
+      <p><span class="term">Payment:</span> referral earnings build up over each calendar month and are paid in USDC into your main wallet on or around the 1st of the following month. A month under USD 5 is not paid and rolls into the next month. Earnings are not yours until they are paid.</p>
+      <p><span class="term">Abuse:</span> invented accounts, referring yourself, bought or incentivised traffic, spam, misleading claims about MoonX or about returns, and rings of accounts referring each other are not referrals. We may withhold or reverse referral earnings connected with abuse, and suspend or close the accounts involved.</p>
+      <p>When you share your link, you must not present MoonX as an investment, promise any return, or send it to people in a restricted jurisdiction (Section 4). We may change, pause or end the referral programme at any time with notice; changes apply to earnings from trades placed after the change.</p>
+    </div>
+  </section>
 
-  <h2>which law applies.</h2>
-  <p>These terms are governed by the law of <b>France</b>, and its courts are where a dispute is heard, without taking away any protection the law of the country you live in gives you and cannot sign away.</p>
+  <section class="sec" id="public">
+    <div class="sec-head"><span class="sec-num">13</span><span class="sec-rule"></span></div>
+    <h2 class="sec-title">Your public profile, gifts and alerts</h2>
+    <div class="sec-body">
+      <p><span class="term">Public profile:</span> your Fund name, and Shots worth showing, may appear on the Feed, on Legends, on your Fund's profile and on the cards you share. Your Fund name must not impersonate anyone, include someone else's name or brand, or be offensive or unlawful. We may change or remove a Fund name that breaks this rule.</p>
+      <p><span class="term">Gifts:</span> if you gift a Shot or a share of one, your Wallet sends it on chain to the recipient. A gift is a transfer from you, not from MoonX, and like any on-chain transfer it cannot be reversed. You are responsible for making sure the recipient is eligible to use MoonX and to receive it.</p>
+      <p><span class="term">Alerts:</span> if you turn on alerts on Telegram or elsewhere, they are for convenience only and may be late, missing or wrong. Telegram is a third party with its own terms.</p>
+    </div>
+  </section>
 
-  <h2>talking to us.</h2>
-  <p>Write to <span class="mono">hello@moonx.fi</span>.</p>
+  <section class="sec" id="radio">
+    <div class="sec-head"><span class="sec-num">14</span><span class="sec-rule"></span></div>
+    <h2 class="sec-title">MoonX Radio and AI-generated content</h2>
+    <div class="sec-body">
+      <p><span class="emph">Everything on MoonX Radio is generated with artificial intelligence</span>: the music, the recordings, the vocals, the lyrics, the station and artist names, the presenters and their voices. The artists, bands and presenters are fictional. They are not real people, do not represent any real person, and any resemblance to a real artist, voice, song or person is unintended.</p>
+      <p>MoonX Radio is entertainment. Nothing in a song, a lyric or a presenter's line is advice, a prediction, a recommendation to take any Shot, or a statement about any market, and nothing in it is a promise of any outcome.</p>
+      <p>The radio is streamed for listening on our website and in MoonX, free of charge. You may not download, rip, record, re-upload, distribute, sell, or use it in anything you publish, or use it to train any AI model, unless we have agreed in writing. To the extent any rights subsist in it, they belong to MoonX.</p>
+      <p>AI-generated content can occasionally contain errors or produce something we did not intend. If you believe a track or a lyric is offensive, infringes your rights or sounds like a real person, write to <a class="link" href="mailto:legal@moonx.fi">legal@moonx.fi</a> with the subject line "Radio" and we will review it and remove it where appropriate.</p>
+    </div>
+  </section>
 
+  <section class="sec" id="acceptable-use">
+    <div class="sec-head"><span class="sec-num">15</span><span class="sec-rule"></span></div>
+    <h2 class="sec-title">Acceptable use</h2>
+    <div class="sec-body">
+      <p>You agree not to use MoonX:</p>
+      <ul>
+        <li>for any unlawful purpose, including money laundering, terrorist financing, fraud, unlawful gambling or the circumvention of sanctions, or with money that is not honestly yours;</li>
+        <li>to trade on a market whose outcome you can influence or settle, or on material non-public information you hold in breach of a duty or a law;</li>
+        <li>to manipulate a market, or to wash-trade with yourself or others;</li>
+        <li>to attack, overload, scrape at volume, reverse engineer or interfere with the service, or to try to reach an account or data that is not yours;</li>
+        <li>to impersonate us or anyone else, in a Fund name or anywhere else;</li>
+        <li>if you are a restricted person under Section 4.</li>
+      </ul>
+      <p>We may suspend or terminate accounts found to be in breach of these Terms, including accounts operated by restricted persons or used for prohibited activities, without prior notice.</p>
+    </div>
+  </section>
+
+  <section class="sec" id="licence">
+    <div class="sec-head"><span class="sec-num">16</span><span class="sec-rule"></span></div>
+    <h2 class="sec-title">Software licence</h2>
+    <div class="sec-body">
+      <p>Subject to these Terms, we grant you a limited, revocable, non-exclusive, non-transferable licence to use the MoonX website and app for your own personal use of the service.</p>
+      <p>You may not resell, sublicense, rent, reverse engineer (except to the extent permitted by law), tamper with, or remove proprietary notices from the software, or use it to build or operate a competing service or something that presents itself as MoonX.</p>
+      <p><span class="term">Third-party and open-source components:</span> the software includes third-party and open-source components that are licensed to you under their own terms, which prevail in respect of those components.</p>
+      <p>We may provide updates from time to time but are not obliged to provide updates, maintenance or support.</p>
+    </div>
+  </section>
+
+  <section class="sec" id="ip">
+    <div class="sec-head"><span class="sec-num">17</span><span class="sec-rule"></span></div>
+    <h2 class="sec-title">Intellectual property</h2>
+    <div class="sec-body">
+      <p>MoonX and its branding, including the MoonX name, wordmark, interface and MoonX Radio, are the intellectual property of MoonX. You may not use them without our prior written permission.</p>
+      <p>Your Fund name, and anything you write or post, remain yours. By putting them on the Feed, Legends or a shared card, you grant us a non-exclusive, royalty-free licence to show them inside MoonX and on those cards for as long as they are there.</p>
+      <p><span class="term">Third-party marks:</span> Polymarket, Aave, USDC, Polygon, Calm Treasury, Stripe, Swapped, Telegram and the other names shown in MoonX belong to their owners. Their use does not imply endorsement.</p>
+      <p>To report intellectual property infringement, contact us at <a class="link" href="mailto:legal@moonx.fi">legal@moonx.fi</a> with the subject line "IP Claim". We aim to investigate and respond within 14 business days, though we cannot guarantee this timeframe in all circumstances.</p>
+    </div>
+  </section>
+
+  <section class="sec" id="liability">
+    <div class="sec-head"><span class="sec-num">18</span><span class="sec-rule"></span></div>
+    <h2 class="sec-title">Disclaimers and limitation of liability</h2>
+    <div class="sec-body">
+      <p>MoonX is provided "as is" and "as available", without warranty of any kind, whether express or implied, including any implied warranties of merchantability, fitness for a particular purpose, non-infringement, availability or security, and including any warranty that the software will operate uninterrupted or error-free, that prices or figures shown are accurate or timely, or that any Shot will be profitable. We make no promise of any kind about Polymarket, Aave, Polygon, the USDC issuer, any Payment Partner, or any other network or provider in the chain.</p>
+      <p>To the maximum extent permitted by law, MoonX shall not be liable for any direct, indirect, incidental, special or consequential damages arising from your use of MoonX, including losses arising from a market moving or resolving against you, blockchain or transaction failures, smart-contract vulnerabilities, the acts or omissions of any third party (Prediction Markets, lending protocols, Payment Partners including Calm Treasury, Stripe and Swapped, stablecoin issuers or networks), funds sent to a wrong address or network, or a Backup, password, PIN or device that you lost or that someone else got hold of.</p>
+      <p>To the extent permitted by law, the total aggregate liability of MoonX to you for any claim arising out of or relating to these Terms shall not exceed the total fees paid by you to MoonX in the three (3) months preceding the event giving rise to the claim. Where no fees have been paid, liability is limited to HKD 500.</p>
+      <p><span class="emph">Nothing in these Terms excludes or limits any liability that cannot be excluded or limited under the laws of Hong Kong</span>, including liability for death or personal injury caused by negligence, or for fraud or fraudulent misrepresentation. Where the Control of Exemption Clauses Ordinance (Cap. 71) applies, the exclusions and limits in this Section apply only to the extent they are fair and reasonable. Nothing here removes a right that the law of your place of residence gives you and does not let you sign away.</p>
+    </div>
+  </section>
+
+  <section class="sec" id="indemnification">
+    <div class="sec-head"><span class="sec-num">19</span><span class="sec-rule"></span></div>
+    <h2 class="sec-title">Indemnification</h2>
+    <div class="sec-body">
+      <p>You agree to indemnify and hold harmless MoonX and its officers, employees and agents from and against any claims, losses, liabilities, damages, costs and expenses (including reasonable legal fees) arising out of or relating to: your use of the service; your breach of these Terms; your violation of any law (including gambling, securities, sanctions, anti-money-laundering or tax law); anything you publish or share through MoonX, including your Referral Link; or your infringement of any third-party right.</p>
+    </div>
+  </section>
+
+  <section class="sec" id="termination">
+    <div class="sec-head"><span class="sec-num">20</span><span class="sec-rule"></span></div>
+    <h2 class="sec-title">Termination and suspension</h2>
+    <div class="sec-body">
+      <p>You may close your account and stop using MoonX at any time.</p>
+      <p>We may suspend or terminate your access at any time for breach of these Terms, suspected prohibited or unlawful use, restricted-person status, or where required by law, and we may stop serving a region where we are required or decide to.</p>
+      <p><span class="emph">Because MoonX is non-custodial, closure or termination does not affect your Wallet, your keys or your funds.</span> They remain solely under your control, and your funds and open positions remain reachable with your Backup, through any compatible wallet software. Contact us at <a class="link" href="mailto:legal@moonx.fi">legal@moonx.fi</a> for details if this applies to you. Referral earnings not yet paid at termination for breach are forfeited.</p>
+      <p>Provisions that by their nature should survive termination, including Definitions, fees due, intellectual property, disclaimers, limitation of liability, indemnification and governing law, survive termination.</p>
+    </div>
+  </section>
+
+  <section class="sec" id="changes">
+    <div class="sec-head"><span class="sec-num">21</span><span class="sec-rule"></span></div>
+    <h2 class="sec-title">Changes to these terms</h2>
+    <div class="sec-body">
+      <p>We may update these Terms from time to time. We will notify you of material changes by updating the effective date at the top of this page and, where appropriate, by email. Continued use of MoonX after changes take effect constitutes acceptance of the revised Terms.</p>
+      <p>We may send you product updates and newsletters. Where we do so, we will obtain your prior consent where required and provide an easy opt-out in every message.</p>
+    </div>
+  </section>
+
+  <section class="sec" id="governing-law">
+    <div class="sec-head"><span class="sec-num">22</span><span class="sec-rule"></span></div>
+    <h2 class="sec-title">Governing law and dispute resolution</h2>
+    <div class="sec-body">
+      <p>These Terms shall be governed by and construed in accordance with the laws of Hong Kong SAR, without regard to its conflict of law provisions.</p>
+      <p>Any dispute, controversy or claim arising out of or relating to these Terms, or the breach, termination or invalidity thereof, shall be referred to and finally resolved by arbitration administered by the Hong Kong International Arbitration Centre (HKIAC) in accordance with the HKIAC Administered Arbitration Rules in force at the time. The seat of arbitration shall be Hong Kong, the language shall be English, and the tribunal shall consist of one arbitrator.</p>
+      <p><span class="emph">This arbitration agreement applies only to the extent that binding arbitration is permitted and enforceable for you.</span> If you are a consumer or retail user and the mandatory law of your place of residence prohibits binding pre-dispute arbitration or guarantees your right to bring proceedings in your local courts, that protection prevails. Where binding arbitration does not apply, the courts of Hong Kong SAR shall have exclusive jurisdiction, without removing any protection the law of your place of residence gives you that cannot be signed away. Either party may seek interim or injunctive relief from a court of competent jurisdiction.</p>
+    </div>
+  </section>
+
+  <section class="sec" id="general">
+    <div class="sec-head"><span class="sec-num">23</span><span class="sec-rule"></span></div>
+    <h2 class="sec-title">General provisions</h2>
+    <div class="sec-body">
+      <p><span class="term">Entire agreement:</span> these Terms, together with the <a class="link" href="privacy.html">Privacy Policy</a>, constitute the entire agreement between you and MoonX in relation to the service and supersede all prior representations, discussions and agreements, whether written or oral.</p>
+      <p><span class="term">Severability:</span> if any provision of these Terms is found by a court or arbitrator to be invalid, unlawful or unenforceable, that provision shall be modified to the minimum extent necessary to make it enforceable, or severed if modification is not possible. The remaining provisions shall continue in full force and effect.</p>
+      <p><span class="term">Force majeure:</span> MoonX shall not be liable for any failure or delay in performance arising from causes beyond our reasonable control, including blockchain network failures, smart-contract vulnerabilities, outages of Polymarket or other third-party infrastructure, cyberattacks, acts of God, governmental or regulatory actions, or internet disruptions.</p>
+      <p><span class="term">Waiver:</span> failure by MoonX to enforce any provision of these Terms on any occasion shall not constitute a waiver of our right to enforce that provision on any future occasion or to enforce any other provision.</p>
+      <p><span class="term">Assignment:</span> MoonX may assign or transfer its rights and obligations under these Terms to any successor entity, including in connection with a merger, acquisition or sale of assets, without your consent. You may not assign or transfer your rights or obligations without our prior written consent.</p>
+      <p><span class="term">Third-party rights:</span> these Terms do not confer any rights on any third party. The Contracts (Rights of Third Parties) Ordinance (Cap. 623) of Hong Kong shall not apply to these Terms.</p>
+      <p><span class="term">Notices and electronic communications:</span> you consent to receive communications from us electronically. We may give notice to you by email or in the app; you may give notice to us at <a class="link" href="mailto:legal@moonx.fi">legal@moonx.fi</a> or by any other means we publish.</p>
+      <p><span class="term">Language:</span> these Terms are written in English. If we provide a translation, the English version prevails to the extent permitted by law.</p>
+      <p><span class="term">Privacy Policy:</span> your use of MoonX is also governed by our <a class="link" href="privacy.html">Privacy Policy</a>, which is incorporated into these Terms by reference. By using MoonX you confirm you have read and understood it.</p>
+    </div>
+  </section>
+
+  <div class="contact">
+    <p class="eyebrow">Contact</p>
+    <p>
+      Questions about these Terms? Write to <a class="link" href="mailto:legal@moonx.fi">legal@moonx.fi</a>.
+    </p>
+  </div>
+
+  </article>
 </main>
 
 <footer>
