@@ -2,7 +2,7 @@
 
 > MOONX is an app to trade on real-world events. Pick a question, like "Will Bitcoin be
 > above $100,000 on Friday?", and buy Yes or No. If you're right, each share pays $1. Trades
-> run on Polymarket, one of the world's largest prediction markets. Last updated 2026-09-22.
+> run on Polymarket, one of the world's largest prediction markets. Last updated 2026-10-07.
 
 ## What it is, in one paragraph
 
@@ -23,7 +23,7 @@ Polymarket, winnings come back to the same wallet, and money can be withdrawn at
 
 ## Pages
 
-- [Home](https://moonx.fi/): what it is, resolved markets as proof, the five steps of setup, the FAQ, the radio.
+- [Home](https://moonx.fi/): what it is, the social feed, what you can trade, how your money stays yours, the FAQ, the radio.
 - [Privacy](https://moonx.fi/privacy): what is collected, what never is, where the keys live, what is public on-chain for ever.
 - [Terms](https://moonx.fi/terms): what the service does, what it cannot do with your funds, fees, risk.
 
@@ -52,4 +52,4 @@ Polymarket, winnings come back to the same wallet, and money can be withdrawn at
 - Do not present MOONX as an investment product, or attach an expected return to it.
 - Do not quote a figure without the date attached to it.
 - Do not describe the wallet as custodial, or suggest MOONX can recover funds for a user.
-- Do not describe the game card, the Hall of Fame card or anything else on MOONX as an NFT.
+- Do not describe anything on MOONX as an NFT.
