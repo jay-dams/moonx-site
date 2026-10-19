@@ -1452,6 +1452,9 @@ h1.tagline{font-size:inherit;font-weight:inherit}
 .xb > *{position:relative;z-index:1;flex:none}
 .xb-hit{position:absolute!important;inset:0;z-index:2!important;background:none;border:0;padding:0;cursor:pointer;-webkit-tap-highlight-color:transparent}
 .xb-hit:focus-visible{outline:none}
+/* La pastille et le bandeau defilant sont decoratifs: ils laissent passer le clic
+   vers .xb-hit, sinon la moitie gauche de la banniere n'ouvre pas les regles. */
+.xa-tag,.xb-track{pointer-events:none}
 .xb:has(.xb-hit:focus-visible){outline:2px solid #7FB6FF;outline-offset:-3px}
 .xa-tag{align-self:stretch;display:flex;align-items:center;gap:6px;padding:0 22px 0 18px;background:#FF3B6B;color:#fff;font:900 13px/1 "Inter",sans-serif;letter-spacing:.06em;text-transform:uppercase;
   clip-path:polygon(0 0,100% 0,calc(100% - 12px) 100%,0 100%);z-index:3!important;animation:xaKick 3.2s infinite}
