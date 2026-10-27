@@ -68,9 +68,54 @@ main{text-align:left}
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://moonx.fi/"},{"@type":"ListItem","position":2,"name":"Terms of Service","item":"https://moonx.fi/terms"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","dateModified":"2026-10-07","@id":"https://moonx.fi/terms#page","name":"Terms of Service","url":"https://moonx.fi/terms","isPartOf":{"@id":"https://moonx.fi/#site"},"publisher":{"@id":"https://moonx.fi/#org"},"inLanguage":"en"}</script>
+<link rel="stylesheet" href="assets/css/contest-v1.css">
 </head>
 <body data-autoresume="1" class="lit">
 <div id="bgfix" aria-hidden="true"></div>
+<div class="xb" id="cb" role="region" aria-label="Live challenge: $500">
+  <button type="button" class="xb-hit" data-cb-rules aria-label="$500 challenge: beat MoonXOR's 27x. See the challenge rules"></button>
+  <span class="xa-tag"><b>$500</b> Beat the #1</span>
+  <div class="xb-track" aria-label="Beat MoonXOR's 27x. Win $500. No deadline. First one wins. Friend wins? You get $100. Starts at just over $1."><div class="xb-run" aria-hidden="true"><span> <b>Beat <span class="xa-av"></span>MoonXOR&#8217;s 27x</b> <i>&#9733;</i> Win <b class="xm">$500</b> <i>&#9733;</i> No deadline <i>&#9733;</i> First one wins <i>&#9733;</i> Friend wins? <b class="xm">+$100</b> <i>&#9733;</i> Starts at just over $1 <i>&#9733;</i></span><span> <b>Beat <span class="xa-av"></span>MoonXOR&#8217;s 27x</b> <i>&#9733;</i> Win <b class="xm">$500</b> <i>&#9733;</i> No deadline <i>&#9733;</i> First one wins <i>&#9733;</i> Friend wins? <b class="xm">+$100</b> <i>&#9733;</i> Starts at just over $1 <i>&#9733;</i></span></div></div>
+  <a class="xb-go lnk lnk--standalone" href="https://lfg.moonx.fi/users/sign_up" target="_blank" rel="noopener">Take your shot<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+  <button type="button" class="xb-x" aria-label="Close the banner" data-cb-close><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+</div>
+<div class="cbr" id="cbr">
+  <div class="cbr-s" role="dialog" aria-modal="true" aria-labelledby="cbr-t"><div class="cbr-grab" aria-hidden="true"></div>
+    <span class="cbr-live"><i></i>Live now</span>
+    <h3 id="cbr-t">Beat the #1. Win <span class="xm">$500</span>.</h3>
+    <p class="cbr-sb"><b>MoonXOR</b> holds #1 with <b>27x</b>. One trade could <span class="w">put you there.</span></p>
+    <div class="cbr-board">
+      <div class="cbr-lb"><span class="cbr-rk r1">1</span><span class="cbr-av" role="img" aria-label="MoonXOR's avatar"></span><span class="cbr-id"><span class="cbr-nm">MoonXOR</span><span class="cbr-meta"><span class="cbr-tag">Beat this for $500</span></span></span><span class="cbr-mult">27x</span></div>
+      <div class="cbr-lb you"><span class="cbr-rk">&ndash;</span><span class="cbr-av seat" aria-hidden="true">?</span><span class="cbr-id"><span class="cbr-nm">You?</span><span class="cbr-meta">The next #1</span></span><span class="cbr-mult">Over 27x</span></div>
+    </div>
+    <ol class="cbr-rules">
+      <li><b>Beat 27x.</b> The first trade to show a multiple higher than 27x on the MOONX leaderboard wins $500.</li>
+      <li><b>Any size counts.</b> Trades opened on MOONX from Oct 15, 2026, at any size. It starts with just over a dollar.</li>
+      <li><b>Busy markets only.</b> Only trades on markets with at least $5,000 in Polymarket 24h volume at the time the trade is opened count toward the leaderboard.</li>
+      <li><b>Paid instantly.</b> Once the market resolves and the multiple is confirmed, $500 lands in your main wallet.</li>
+      <li><b>Friend wins? +$100.</b> If the winner joined MOONX with your invite link, you get $100 in your main wallet.</li>
+      <li><b>No deadline. First one wins.</b> If two trades beat 27x, the one placed first wins. It ends when 27x is beaten, and the new #1 is announced on X and Telegram.</li>
+    </ol>
+    <div class="cbr-row">
+      <button type="button" class="cbr-cta ghost" data-cbr-x>Got it</button>
+      <a class="cbr-cta tinted" href="https://lfg.moonx.fi/users/sign_up" target="_blank" rel="noopener">Take your shot</a>
+    </div>
+  </div>
+</div>
+<script>(function(){
+  var cb=document.getElementById("cb"),r=document.getElementById("cbr"),root=document.documentElement,last=null;
+  function sync(){root.style.setProperty("--cbh",(cb.hidden?0:cb.offsetHeight)+"px")}
+  if(window.ResizeObserver)new ResizeObserver(sync).observe(cb);addEventListener("resize",sync);sync();
+  function open(b){last=b;r.classList.add("on");r.querySelector("[data-cbr-x]").focus()}
+  function shut(){r.classList.remove("on");if(last){last.focus();last=null}}
+  document.addEventListener("click",function(e){
+    var t=e.target;
+    if(t.closest("[data-cb-rules]"))return open(t.closest("[data-cb-rules]"));
+    if(t.closest("[data-cbr-x]")||t===r)return shut();
+    if(t.closest("[data-cb-close]")){cb.hidden=true;sync()}
+  });
+  addEventListener("keydown",function(e){if(e.key==="Escape"&&r.classList.contains("on"))shut()});
+})();</script>
 <div class="sky" aria-hidden="true"></div>
 <canvas class="skycv" aria-hidden="true"></canvas>
 
@@ -402,7 +447,7 @@ main{text-align:left}
   <div class="tg">The moonshot of a lifetime is one tap away.</div>
   <nav class="cols" aria-label="Footer">
     <div><b>ABOUT</b><a href="index.html#journey">Radio</a><a href="index.html#faq">FAQ</a></div>
-    <div><b>SOCIAL</b><a href="https://x.com/moonxfi" rel="me" target="_blank">X</a><a href="https://www.youtube.com/@moonxfi" rel="me" target="_blank">YouTube</a><a href="https://www.instagram.com/moonx.fi" rel="me" target="_blank">Instagram</a></div>
+    <div><b>LEARN</b><a href="/learn/">All guides</a><a href="/learn/#answers">Quick answers</a><a href="/learn/what-is-a-prediction-market">Prediction markets</a><a href="/learn/how-polymarket-works">How Polymarket works</a><a href="/learn/polymarket-fees">Polymarket fees</a></div><div><b>SOCIAL</b><a href="https://x.com/moonxfi" rel="me" target="_blank">X</a><a href="https://www.youtube.com/@moonxfi" rel="me" target="_blank">YouTube</a><a href="https://www.instagram.com/moonx.fi" rel="me" target="_blank">Instagram</a></div>
     <div><b>LEGAL</b><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms of Service</a></div>
   </nav>
   <small>© 2026 MOONX · Your money stays in your wallet · Trades run on Polymarket · Trading involves risk.</small>

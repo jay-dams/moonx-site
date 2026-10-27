@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#03050C">
+<title>Polymarket fees explained (2026), with examples | MOONX</title>
+<meta name="description" content="Polymarket&#x27;s taker fee by category, the formula, what it costs in cents on a real trade, when there is no fee, and what MOONX adds on top.">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
+<link rel="canonical" href="https://moonx.fi/learn/polymarket-fees">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="MOONX">
+<meta property="og:title" content="Polymarket fees explained (2026), with examples | MOONX">
+<meta property="og:description" content="Polymarket&#x27;s taker fee by category, the formula, what it costs in cents on a real trade, when there is no fee, and what MOONX adds on top.">
+<meta property="og:url" content="https://moonx.fi/learn/polymarket-fees">
+<meta property="og:image" content="https://moonx.fi/assets/learn/og/polymarket-fees-v1.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-27">
+<meta property="article:modified_time" content="2026-10-27">
+<meta property="article:section" content="How Polymarket works">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@moonxfi">
+<link rel="icon" href="/favicon-x.ico" sizes="32x32">
+<link rel="icon" href="/favicon-x.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon-x.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="alternate" type="application/rss+xml" title="MOONX guides" href="/learn/feed.xml">
+<link rel="stylesheet" href="/fonts/fonts.css">
+<link rel="stylesheet" href="/assets/css/site-v2.css">
+<link rel="stylesheet" href="/assets/radio/radio.css">
+<link rel="stylesheet" href="/assets/css/contest-v1.css">
+<link rel="stylesheet" href="/assets/css/learn-v2.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://moonx.fi/learn/polymarket-fees#article","headline":"Polymarket fees explained, with real numbers","description":"Polymarket's taker fee by category, the formula, what it costs in cents on a real trade, when there is no fee, and what MOONX adds on top.","image":"https://moonx.fi/assets/learn/og/polymarket-fees-v1.png","datePublished":"2026-10-27","dateModified":"2026-10-27","author":{"@type":"Organization","name":"MOONX Team","url":"https://moonx.fi/learn/"},"publisher":{"@id":"https://moonx.fi/#org"},"mainEntityOfPage":"https://moonx.fi/learn/polymarket-fees","isPartOf":{"@id":"https://moonx.fi/#site"},"inLanguage":"en","articleSection":"How Polymarket works","wordCount":826}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://moonx.fi/"},{"@type":"ListItem","position":2,"name":"Learn","item":"https://moonx.fi/learn/"},{"@type":"ListItem","position":3,"name":"Polymarket fees explained, with real numbers","item":"https://moonx.fi/learn/polymarket-fees"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Does Polymarket charge a fee to withdraw?","acceptedAnswer":{"@type":"Answer","text":"No. Polymarket charges nothing to deposit or withdraw. The exchange, card provider or bridge you use may charge its own fee."}},{"@type":"Question","name":"Do I pay a fee if I win?","acceptedAnswer":{"@type":"Answer","text":"No. Fees are charged when a trade matches, on the way in and on the way out if you sell. When a market resolves, winning shares pay $1 each with no fee."}},{"@type":"Question","name":"Why is the fee bigger on cheap shares?","acceptedAnswer":{"@type":"Answer","text":"In dollars it isn't: it peaks at 50¢. But as a percentage of what you spend it's the rate times (1 − price), so a 5¢ share pays close to the full rate."}},{"@type":"Question","name":"Which Polymarket markets have no fee?","acceptedAnswer":{"@type":"Answer","text":"Geopolitics and world events markets have a taker rate of zero, according to Polymarket's documentation."}}]}</script>
+</head>
+<body class="lit lrn">
+<div id="bgfix" aria-hidden="true"></div>
+<div class="xb" id="cb" role="region" aria-label="Live challenge: $500">
+  <button type="button" class="xb-hit" data-cb-rules aria-label="$500 challenge: beat MoonXOR's 27x. See the challenge rules"></button>
+  <span class="xa-tag"><b>$500</b> Beat the #1</span>
+  <div class="xb-track" aria-label="Beat MoonXOR's 27x. Win $500. No deadline. First one wins. Friend wins? You get $100. Starts at just over $1."><div class="xb-run" aria-hidden="true"><span> <b>Beat <span class="xa-av"></span>MoonXOR&#8217;s 27x</b> <i>&#9733;</i> Win <b class="xm">$500</b> <i>&#9733;</i> No deadline <i>&#9733;</i> First one wins <i>&#9733;</i> Friend wins? <b class="xm">+$100</b> <i>&#9733;</i> Starts at just over $1 <i>&#9733;</i></span><span> <b>Beat <span class="xa-av"></span>MoonXOR&#8217;s 27x</b> <i>&#9733;</i> Win <b class="xm">$500</b> <i>&#9733;</i> No deadline <i>&#9733;</i> First one wins <i>&#9733;</i> Friend wins? <b class="xm">+$100</b> <i>&#9733;</i> Starts at just over $1 <i>&#9733;</i></span></div></div>
+  <a class="xb-go lnk lnk--standalone" href="https://lfg.moonx.fi/users/sign_up" target="_blank" rel="noopener">Take your shot<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+  <button type="button" class="xb-x" aria-label="Close the banner" data-cb-close><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+</div>
+<div class="cbr" id="cbr">
+  <div class="cbr-s" role="dialog" aria-modal="true" aria-labelledby="cbr-t"><div class="cbr-grab" aria-hidden="true"></div>
+    <span class="cbr-live"><i></i>Live now</span>
+    <h3 id="cbr-t">Beat the #1. Win <span class="xm">$500</span>.</h3>
+    <p class="cbr-sb"><b>MoonXOR</b> holds #1 with <b>27x</b>. One trade could <span class="w">put you there.</span></p>
+    <div class="cbr-board">
+      <div class="cbr-lb"><span class="cbr-rk r1">1</span><span class="cbr-av" role="img" aria-label="MoonXOR's avatar"></span><span class="cbr-id"><span class="cbr-nm">MoonXOR</span><span class="cbr-meta"><span class="cbr-tag">Beat this for $500</span></span></span><span class="cbr-mult">27x</span></div>
+      <div class="cbr-lb you"><span class="cbr-rk">&ndash;</span><span class="cbr-av seat" aria-hidden="true">?</span><span class="cbr-id"><span class="cbr-nm">You?</span><span class="cbr-meta">The next #1</span></span><span class="cbr-mult">Over 27x</span></div>
+    </div>
+    <ol class="cbr-rules">
+      <li><b>Beat 27x.</b> The first trade to show a multiple higher than 27x on the MOONX leaderboard wins $500.</li>
+      <li><b>Any size counts.</b> Trades opened on MOONX from Oct 15, 2026, at any size. It starts with just over a dollar.</li>
+      <li><b>Busy markets only.</b> Only trades on markets with at least $5,000 in Polymarket 24h volume at the time the trade is opened count toward the leaderboard.</li>
+      <li><b>Paid instantly.</b> Once the market resolves and the multiple is confirmed, $500 lands in your main wallet.</li>
+      <li><b>Friend wins? +$100.</b> If the winner joined MOONX with your invite link, you get $100 in your main wallet.</li>
+      <li><b>No deadline. First one wins.</b> If two trades beat 27x, the one placed first wins. It ends when 27x is beaten, and the new #1 is announced on X and Telegram.</li>
+    </ol>
+    <div class="cbr-row">
+      <button type="button" class="cbr-cta ghost" data-cbr-x>Got it</button>
+      <a class="cbr-cta tinted" href="https://lfg.moonx.fi/users/sign_up" target="_blank" rel="noopener">Take your shot</a>
+    </div>
+  </div>
+</div>
+<script>(function(){
+  var cb=document.getElementById("cb"),r=document.getElementById("cbr"),root=document.documentElement,last=null;
+  function sync(){root.style.setProperty("--cbh",(cb.hidden?0:cb.offsetHeight)+"px")}
+  if(window.ResizeObserver)new ResizeObserver(sync).observe(cb);addEventListener("resize",sync);sync();
+  function open(b){last=b;r.classList.add("on");r.querySelector("[data-cbr-x]").focus()}
+  function shut(){r.classList.remove("on");if(last){last.focus();last=null}}
+  document.addEventListener("click",function(e){
+    var t=e.target;
+    if(t.closest("[data-cb-rules]"))return open(t.closest("[data-cb-rules]"));
+    if(t.closest("[data-cbr-x]")||t===r)return shut();
+    if(t.closest("[data-cb-close]")){cb.hidden=true;sync()}
+  });
+  addEventListener("keydown",function(e){if(e.key==="Escape"&&r.classList.contains("on"))shut()});
+})();</script>
+<a class="skip" href="#main">Skip to content</a>
+<nav aria-label="Main">
+  <a href="/" aria-label="MOONX"><svg class="wm" viewBox="0 0 100 22" role="img" aria-label="MOONX" preserveAspectRatio="xMidYMid meet"><text class="wmt" x="50" y="17" text-anchor="middle">MOONX</text></svg></a>
+  <span class="navb"><a class="go ghost" href="https://lfg.moonx.fi">Log in</a><a class="go" href="https://lfg.moonx.fi/users/sign_up">Create account</a></span>
+</nav>
+<main id="main" class="lm">
+<article class="art">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/learn/">Learn</a><span aria-hidden="true">/</span><span aria-current="page">Polymarket fees</span></nav>
+<span class="kick">How Polymarket works</span>
+<h1>Polymarket fees explained, with real numbers</h1>
+<p class="dek">Polymarket charges a fee on most trades, and it is not a flat percentage. It depends on the category and on the price you trade at. Here is the formula, a table in plain percentages, and a full example from buy to sell.</p>
+<div class="meta"><span>By MOONX Team</span><i>·</i><span>Updated <time datetime="2026-10-27">27 October 2026</time></span><i>·</i><span>4 min read</span></div>
+<div class="box ans"><b class="lbl">Short answer</b><p>On most Polymarket markets, the trader whose order fills right away (the taker) pays a fee of shares × rate × price × (1 − price). Rates go from 0 for geopolitics to 0.07 for crypto. As a share of the money you spend, that&#x27;s the rate times (1 − price): about 3.5% at 50¢ on a crypto market, 2.5% on sports, 2% on politics. Makers pay nothing, and there is no fee when a market resolves.</p></div>
+<nav class="toc" aria-label="On this page"><b>ON THIS PAGE</b><ol><li><a href="#who-pays-and-when">Who pays, and when</a></li><li><a href="#the-formula">The formula</a></li><li><a href="#the-rate-for-each-category">The rate for each category</a></li><li><a href="#what-you-pay-as-a-percentage">What you pay, as a percentage</a></li><li><a href="#a-full-example-from-buy-to-sell">A full example, from buy to sell</a></li><li><a href="#ways-the-fee-gets-smaller">Ways the fee gets smaller</a></li><li><a href="#what-moonx-adds">What MOONX adds</a></li><li><a href="#common-questions">Common questions</a></li></ol></nav>
+<h2 id="who-pays-and-when">Who pays, and when</h2><p>Polymarket uses an order book. Some orders wait in the book (they <b>make</b> liquidity). Others fill against them right away (they <b>take</b> liquidity). According to Polymarket&#x27;s documentation, <b>takers pay a fee on most markets and makers pay none</b>. The fee is applied when the trade matches, in dollars.</p><p>There is no fee when a market resolves and your winning shares pay $1. Polymarket also charges nothing to deposit or withdraw, though the service you use to move money may charge its own fee.</p><h2 id="the-formula">The formula</h2><p>For a trade of <b>C</b> shares at a price <b>p</b>:</p><p><code>fee = C × rate × p × (1 − p)</code></p><p>Because of the p × (1 − p) part, the fee in dollars is highest at 50¢ and shrinks toward the extremes. There is a simpler way to read it: divided by what you spend (C × p), the fee is just <b>rate × (1 − p)</b> of your stake.</p><h2 id="the-rate-for-each-category">The rate for each category</h2><div class="tw"><table><thead><tr><th scope="col">Category</th><th class="n" scope="col">Taker rate</th><th class="n" scope="col">Fee at 50¢, per 100 shares</th></tr></thead><tbody><tr><td>Crypto</td><td class="n">0.07</td><td class="n">$1.75</td></tr><tr><td>Sports</td><td class="n">0.05</td><td class="n">$1.25</td></tr><tr><td>Economics, culture, weather, other</td><td class="n">0.05</td><td class="n">$1.25</td></tr><tr><td>Finance, politics, tech, mentions</td><td class="n">0.04</td><td class="n">$1.00</td></tr><tr><td>Combos (several outcomes in one trade)</td><td class="n">0.05</td><td class="n">$1.25</td></tr><tr><td>Geopolitics and world events</td><td class="n">0</td><td class="n">$0</td></tr></tbody></table></div><p>Rates as published in Polymarket&#x27;s fee documentation, checked on 27 October 2026. Polymarket can change them, so check its page before relying on a number.</p><h2 id="what-you-pay-as-a-percentage">What you pay, as a percentage</h2><p>This is the table most people actually want: the fee as a share of the money you put in.</p><div class="tw"><table><thead><tr><th class="n" scope="col">Price you buy at</th><th class="n" scope="col">Crypto</th><th class="n" scope="col">Sports</th><th class="n" scope="col">Politics</th></tr></thead><tbody><tr><td class="n">5¢</td><td class="n">6.65%</td><td class="n">4.75%</td><td class="n">3.80%</td></tr><tr><td class="n">20¢</td><td class="n">5.60%</td><td class="n">4.00%</td><td class="n">3.20%</td></tr><tr><td class="n">50¢</td><td class="n">3.50%</td><td class="n">2.50%</td><td class="n">2.00%</td></tr><tr><td class="n">80¢</td><td class="n">1.40%</td><td class="n">1.00%</td><td class="n">0.80%</td></tr><tr><td class="n">95¢</td><td class="n">0.35%</td><td class="n">0.25%</td><td class="n">0.20%</td></tr></tbody></table></div><p>The pattern matters: <b>cheap shares carry the highest fee in percentage terms.</b> A long shot on a crypto market costs almost 7% of your stake to enter. A near-certain favourite costs a fraction of a percent. When you sell, the same rule applies to what you receive.</p><h2 id="a-full-example-from-buy-to-sell">A full example, from buy to sell</h2><div class="box ex"><b class="lbl">Worked example</b><p>You put <b>$20</b> on Yes at <b>50¢</b> in a football market. You get <b>40 shares</b>.</p><ul><li>Polymarket fee: 40 × 0.05 × 0.50 × 0.50 = <b>$0.50</b></li><li>MOONX fee, 1% of $20: <b>$0.20</b></li></ul><p>Total fees to get in: about <b>$0.70</b>.</p><p><b>If you hold and Yes wins:</b> you receive $40, with no fee at resolution. Fees included, your profit is about <b>$19.30</b>.</p><p><b>If you sell at 70¢ before the end:</b> 40 shares bring in $28. Polymarket&#x27;s fee is 40 × 0.05 × 0.70 × 0.30 = $0.42 and MOONX&#x27;s is $0.28, so you receive about <b>$27.30</b>. Your profit is about <b>$6.60</b>, locked in whatever happens next. Numbers are rounded, and the app shows the exact amounts before you confirm.</p></div><h2 id="ways-the-fee-gets-smaller">Ways the fee gets smaller</h2><ul><li><b>Higher prices cost less.</b> As a share of your stake, the fee is rate × (1 − price), so it shrinks as the price rises toward $1. Cheap long shots carry the biggest fee.</li><li><b>Geopolitics is free.</b> Those markets carry no taker fee.</li><li><b>Make instead of take.</b> On Polymarket directly, a limit order that waits in the book pays no fee, and makers can earn rebates. The trade-off is that it may never fill.</li><li><b>Hold to the end.</b> If you&#x27;re confident, holding to resolution avoids the fee on the way out.</li></ul><p>Polymarket also runs a Taker Rebate Program that returns part of the fees to active traders, in tiers. See its documentation for the current levels.</p><h2 id="what-moonx-adds">What MOONX adds</h2><p>MOONX charges <b>1% of the trade value</b> when you buy and when you sell, and shows the full cost before you confirm. There is <b>no fee when a market resolves</b>, no subscription, no account fee and no withdrawal fee. MOONX also pays the network (gas) fees on your transactions, so you never need to hold another token. Card payment partners may charge their own fee when you add money.</p><p>Part of MOONX&#x27;s fee goes back to users: if a friend joins through your link, you earn 25% of MOONX&#x27;s fee on their trades. More in <a class="x" href="/learn/earn-with-moonx">earn with MOONX</a>.</p><h2 id="common-questions">Common questions</h2><h3 id="does-polymarket-charge-a-fee-to-withdraw">Does Polymarket charge a fee to withdraw?</h3><p>No. Polymarket charges nothing to deposit or withdraw. The exchange, card provider or bridge you use may charge its own fee.</p><h3 id="do-i-pay-a-fee-if-i-win">Do I pay a fee if I win?</h3><p>No. Fees are charged when a trade matches, on the way in and on the way out if you sell. When a market resolves, winning shares pay $1 each with no fee.</p><h3 id="why-is-the-fee-bigger-on-cheap-shares">Why is the fee bigger on cheap shares?</h3><p>In dollars it isn&#x27;t: it peaks at 50¢. But as a percentage of what you spend it&#x27;s the rate times (1 − price), so a 5¢ share pays close to the full rate.</p><h3 id="which-polymarket-markets-have-no-fee">Which Polymarket markets have no fee?</h3><p>Geopolitics and world events markets have a taker rate of zero, according to Polymarket&#x27;s documentation.</p><h2 id="sources">Sources</h2><ol><li><a class="x" href="https://docs.polymarket.com/trading/fees" target="_blank" rel="noopener">Polymarket documentation: fees</a></li><li><a class="x" href="https://docs.polymarket.com/programs/maker-rebates" target="_blank" rel="noopener">Polymarket documentation: Maker Rebates Program</a></li><li><a class="x" href="https://docs.polymarket.com/programs/taker-rebates" target="_blank" rel="noopener">Polymarket documentation: Taker Rebate Program</a></li><li><a class="x" href="/terms">MOONX Terms of Service, section 11: fees</a></li></ol>
+<aside class="cta2" aria-label="Try MOONX"><h2 id="try-moonx">Try it on MOONX</h2><p>Every Polymarket market in one feed. Buy Yes or No in a few taps, sell whenever you want, and keep your money in a wallet only you control.</p><div class="row"><a class="btn" href="https://lfg.moonx.fi/users/sign_up">Create account</a><a class="btn ghost" href="/">See how it works</a></div><small>18+ only. Not available everywhere, including the US and the UK: see the <a href="/terms">Terms</a>. Trading involves risk: only put in what you can afford to lose.</small></aside>
+<h2 id="keep-reading">Keep reading</h2><div class="rel"><a class="card lk" href="/learn/prediction-market-odds"><em>Basics</em><b>Prediction market odds: how a price becomes a payout</b><span>Price to probability to payout: the full table, decimal and American odds, and what fees change.</span></a><a class="card lk" href="/learn/sell-before-the-result"><em>Strategy</em><b>Selling before the result: take profit or cut a loss on Polymarket</b><span>How to lock in a gain or limit a loss before the end, and what price you really get.</span></a><a class="card lk" href="/learn/how-polymarket-works"><em>Basics</em><b>How does Polymarket work? Shares, prices and payouts</b><span>The order book, the price you see versus the price you pay, minimums, settlement, and where apps fit in.</span></a></div><h2 id="quick-answers">Quick answers on this topic</h2><ul class="qa"><li><a href="/learn/how-do-polymarket-sports-markets-work">How do Polymarket sports markets work?</a></li><li><a href="/learn/how-long-does-polymarket-take-to-pay-out">How long does Polymarket take to pay out?</a></li><li><a href="/learn/what-are-polymarket-up-or-down-markets">What are Polymarket Up or Down markets?</a></li><li><a href="/learn/what-are-polymarket-rewards">What are Polymarket rewards and rebates?</a></li><li><a href="/learn/what-chain-is-polymarket-on">What blockchain is Polymarket on?</a></li><li><a href="/learn/what-happens-if-a-polymarket-market-is-unclear">What happens if a Polymarket market is unclear?</a></li><li><a href="/learn/what-is-uma-on-polymarket">What is UMA on Polymarket?</a></li><li><a href="/learn/what-is-a-polymarket-builder">What is a Polymarket builder?</a></li><li><a href="/learn/what-is-a-combo-on-polymarket">What is a combo on Polymarket?</a></li><li><a href="/learn/what-is-a-limit-order-on-polymarket">What is a limit order on Polymarket?</a></li><li><a href="/learn/what-is-liquidity-on-polymarket">What is liquidity on Polymarket?</a></li><li><a href="/learn/what-is-pusd">What is pUSD on Polymarket?</a></li><li><a href="/learn/what-is-slippage-on-polymarket">What is slippage on Polymarket?</a></li><li><a href="/learn/polymarket-minimum-bet">What is the minimum bet on Polymarket?</a></li><li><a href="/learn/what-is-the-spread-on-polymarket">What is the spread on Polymarket?</a></li><li><a href="/learn/what-is-volume-on-polymarket">What is volume on Polymarket?</a></li></ul>
+</article>
+</main>
+<footer>
+  <div class="tg">The moonshot of a lifetime is one tap away.</div>
+  <nav class="cols" aria-label="Footer">
+    <div><b>ABOUT</b><a href="/#journey">Radio</a><a href="/#faq">FAQ</a></div><div><b>LEARN</b><a href="/learn/">All guides</a><a href="/learn/#answers">Quick answers</a><a href="/learn/what-is-a-prediction-market">Prediction markets</a><a href="/learn/how-polymarket-works">How Polymarket works</a><a href="/learn/polymarket-fees">Polymarket fees</a></div><div><b>SOCIAL</b><a href="https://x.com/moonxfi" rel="me" target="_blank">X</a><a href="https://www.youtube.com/@moonxfi" rel="me" target="_blank">YouTube</a><a href="https://www.instagram.com/moonx.fi" rel="me" target="_blank">Instagram</a></div><div><b>LEGAL</b><a href="/privacy">Privacy Policy</a><a href="/terms">Terms of Service</a></div>
+  </nav>
+  <small>© 2026 MOONX · Your money stays in your wallet · Trades run on Polymarket · Trading involves risk.</small>
+  <small class="listed">Listed on the <a href="https://polymart.app" target="_blank" rel="noopener">Polymarket Tools Directory</a></small>
+  <div class="giant" aria-hidden="true"><svg class="wm" viewBox="0 0 100 22" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><text class="wmt" x="50" y="17" text-anchor="middle">MOONX</text></svg></div>
+</footer>
+<div id="miniBar" role="region" aria-label="Now playing">
+  <div class="set">
+    <button type="button" class="glass" id="miniGlass" aria-label="Open the radio"><b id="miniStation">K-HAT 101.7</b><div class="mq" id="miniMqWrap"><span id="miniNow">Chasing X · Della &amp; the Long Shots</span></div><i class="tune">TUNE</i></button>
+    <button type="button" id="miniPrev" aria-label="Previous track">◀</button>
+    <button type="button" id="miniPlay" class="play" aria-label="Play or pause">II</button>
+    <button type="button" id="miniNext" aria-label="Next track">▶</button>
+  </div>
+</div>
+<div id="radioVeil" aria-hidden="true"></div>
+<div id="radioSheet" role="dialog" aria-label="Shuttle radio" aria-hidden="true">
+  <div class="rs-head"><div><b>MOONX Radio</b><span id="rsSub">Ten stations, sixty-five songs, built for posterity.</span></div><button type="button" id="rsClose" aria-label="Minimise the radio" title="Minimise"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 10l6 6 6-6"/><path d="M5 20h14"/></svg></button></div>
+  <div id="sheetSlot"><div id="radioWrap">
+    <div class="set">
+      <div class="glass">
+        <div class="scope"><canvas id="dial" aria-label="Orbit tuner: drag the rocket between stations"></canvas><div class="crt" aria-hidden="true"></div></div>
+        <div class="tele">
+          <span class="led" id="led"></span><b id="lockTxt">LOCK</b>
+          <span class="vu" id="vu" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+          <b id="freqTxt">101.7 MHz</b>
+        </div>
+        <div class="readout">
+          <div class="rline">
+            <b id="dispStation">K-HAT 101.7</b>
+            <span class="dj" id="dispDj">DJ DUSTY LONGSHOT</span>
+            <span class="pos" id="dispPos">1/5</span>
+          </div>
+          <div class="mq" id="mqWrap"><span id="dispNow">CHASING X</span></div>
+          <div class="artist" id="dispArtist">DELLA &amp; THE LONG SHOTS</div>
+          <div class="tline"><span id="tElapsed">0:00</span><div class="tbar" id="tBar" role="slider" aria-label="Seek"><i id="tFill"></i></div><span id="tTotal">0:00</span></div>
+          <canvas id="viz" width="600" height="46" aria-hidden="true"></canvas>
+        </div>
+      </div>
+      <div class="mesh" aria-hidden="true"></div>
+      <div class="presets" id="presets" role="group" aria-label="Station presets"></div>
+      <div class="keys">
+        <button type="button" id="prevSt">◀ STATION</button>
+        <button type="button" id="playBtn" class="play">PAUSE</button>
+        <button type="button" id="nextSt">STATION ▶</button>
+      </div>
+      <div class="keys">
+        <button type="button" id="prevTr">◀ TRACK</button>
+        <button type="button" id="karBtn" aria-pressed="false">LYRICS</button>
+        <button type="button" id="nextTr">TRACK ▶</button>
+      </div>
+      <div class="vol"><span>VOL</span><input type="range" id="volRange" min="0" max="100" value="42" step="1" aria-label="Volume"><span id="volOut">42</span></div>
+      <div id="karaoke" aria-live="polite"><div class="kh"><b id="kTitle">Chasing X</b><span id="kArtist">DELLA &amp; THE LONG SHOTS</span></div><div id="klines"></div></div>
+    </div>
+  </div></div>
+</div>
+<button id="needPlay" type="button" hidden>&#9654; TAP TO START THE RADIO</button>
+<script>document.getElementById("miniBar").classList.add("on");</script>
+<script src="/radio.js"></script>
+<script>(function(){const e=document.getElementById("miniBar");if(!e)return;document.querySelectorAll('a[href$="#journey"], a[href="index.html#journey"]').forEach(t=>{t.setAttribute("href","#miniBar");t.addEventListener("click",t=>{t.preventDefault();const n=document.getElementById("miniGlass");if(n){n.click();return}e.scrollIntoView({behavior:"smooth",block:"nearest"})})})})();</script>
+<script src="/assets/js/ga-v2.js" defer></script>
+<script src="/assets/js/attr.js"></script>
+<script src="/assets/js/rocket.js" defer></script>
+<script>document.querySelectorAll('a[href^="https://lfg.moonx.fi"]').forEach(function(e){e.addEventListener("click",function(){if(window.MOONX_EVENT)MOONX_EVENT(/sign_up/.test(e.href)?"create_account":"log_in",{place:e.closest("#cb,#cbr")?"contest":e.closest("body>nav")?"nav":"learn",page:location.pathname})})});</script>
+</body>
+</html>

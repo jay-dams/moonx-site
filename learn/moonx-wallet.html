@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#03050C">
+<title>MOONX wallet explained: keys, backup, PIN | MOONX</title>
+<meta name="description" content="How the MOONX wallet works: keys made on your device, one backup file and a password, a PIN per device, switching devices, and what nobody can recover.">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
+<link rel="canonical" href="https://moonx.fi/learn/moonx-wallet">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="MOONX">
+<meta property="og:title" content="MOONX wallet explained: keys, backup, PIN | MOONX">
+<meta property="og:description" content="How the MOONX wallet works: keys made on your device, one backup file and a password, a PIN per device, switching devices, and what nobody can recover.">
+<meta property="og:url" content="https://moonx.fi/learn/moonx-wallet">
+<meta property="og:image" content="https://moonx.fi/assets/learn/og/moonx-wallet-v1.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-27">
+<meta property="article:modified_time" content="2026-10-27">
+<meta property="article:section" content="Using MOONX">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@moonxfi">
+<link rel="icon" href="/favicon-x.ico" sizes="32x32">
+<link rel="icon" href="/favicon-x.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon-x.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="alternate" type="application/rss+xml" title="MOONX guides" href="/learn/feed.xml">
+<link rel="stylesheet" href="/fonts/fonts.css">
+<link rel="stylesheet" href="/assets/css/site-v2.css">
+<link rel="stylesheet" href="/assets/radio/radio.css">
+<link rel="stylesheet" href="/assets/css/contest-v1.css">
+<link rel="stylesheet" href="/assets/css/learn-v2.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://moonx.fi/learn/moonx-wallet#article","headline":"Your MOONX wallet: who holds the keys, and what you must keep","description":"How the MOONX wallet works: keys made on your device, one backup file and a password, a PIN per device, switching devices, and what nobody can recover.","image":"https://moonx.fi/assets/learn/og/moonx-wallet-v1.png","datePublished":"2026-10-27","dateModified":"2026-10-27","author":{"@type":"Organization","name":"MOONX Team","url":"https://moonx.fi/learn/"},"publisher":{"@id":"https://moonx.fi/#org"},"mainEntityOfPage":"https://moonx.fi/learn/moonx-wallet","isPartOf":{"@id":"https://moonx.fi/#site"},"inLanguage":"en","articleSection":"Using MOONX","wordCount":677}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://moonx.fi/"},{"@type":"ListItem","position":2,"name":"Learn","item":"https://moonx.fi/learn/"},{"@type":"ListItem","position":3,"name":"Your MOONX wallet: who holds the keys, and what you must keep","item":"https://moonx.fi/learn/moonx-wallet"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is MOONX custodial?","acceptedAnswer":{"@type":"Answer","text":"No. The wallet keys are generated on your device and never sent to MOONX. Only you can move your money."}},{"@type":"Question","name":"What happens if I lose my phone?","acceptedAnswer":{"@type":"Answer","text":"Log in on another device with your email, upload your backup file and enter its password. Your wallet comes back with your money and your trades. Then choose a new PIN."}},{"@type":"Question","name":"Can MOONX recover my wallet if I lose my backup file?","acceptedAnswer":{"@type":"Answer","text":"No. MOONX keeps no copy of your backup file or your password. Without both, nobody can restore the wallet."}},{"@type":"Question","name":"Is there a seed phrase?","acceptedAnswer":{"@type":"Answer","text":"No. MOONX uses one encrypted backup file and a password instead of a list of words to write down."}}]}</script>
+</head>
+<body class="lit lrn">
+<div id="bgfix" aria-hidden="true"></div>
+<div class="xb" id="cb" role="region" aria-label="Live challenge: $500">
+  <button type="button" class="xb-hit" data-cb-rules aria-label="$500 challenge: beat MoonXOR's 27x. See the challenge rules"></button>
+  <span class="xa-tag"><b>$500</b> Beat the #1</span>
+  <div class="xb-track" aria-label="Beat MoonXOR's 27x. Win $500. No deadline. First one wins. Friend wins? You get $100. Starts at just over $1."><div class="xb-run" aria-hidden="true"><span> <b>Beat <span class="xa-av"></span>MoonXOR&#8217;s 27x</b> <i>&#9733;</i> Win <b class="xm">$500</b> <i>&#9733;</i> No deadline <i>&#9733;</i> First one wins <i>&#9733;</i> Friend wins? <b class="xm">+$100</b> <i>&#9733;</i> Starts at just over $1 <i>&#9733;</i></span><span> <b>Beat <span class="xa-av"></span>MoonXOR&#8217;s 27x</b> <i>&#9733;</i> Win <b class="xm">$500</b> <i>&#9733;</i> No deadline <i>&#9733;</i> First one wins <i>&#9733;</i> Friend wins? <b class="xm">+$100</b> <i>&#9733;</i> Starts at just over $1 <i>&#9733;</i></span></div></div>
+  <a class="xb-go lnk lnk--standalone" href="https://lfg.moonx.fi/users/sign_up" target="_blank" rel="noopener">Take your shot<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+  <button type="button" class="xb-x" aria-label="Close the banner" data-cb-close><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+</div>
+<div class="cbr" id="cbr">
+  <div class="cbr-s" role="dialog" aria-modal="true" aria-labelledby="cbr-t"><div class="cbr-grab" aria-hidden="true"></div>
+    <span class="cbr-live"><i></i>Live now</span>
+    <h3 id="cbr-t">Beat the #1. Win <span class="xm">$500</span>.</h3>
+    <p class="cbr-sb"><b>MoonXOR</b> holds #1 with <b>27x</b>. One trade could <span class="w">put you there.</span></p>
+    <div class="cbr-board">
+      <div class="cbr-lb"><span class="cbr-rk r1">1</span><span class="cbr-av" role="img" aria-label="MoonXOR's avatar"></span><span class="cbr-id"><span class="cbr-nm">MoonXOR</span><span class="cbr-meta"><span class="cbr-tag">Beat this for $500</span></span></span><span class="cbr-mult">27x</span></div>
+      <div class="cbr-lb you"><span class="cbr-rk">&ndash;</span><span class="cbr-av seat" aria-hidden="true">?</span><span class="cbr-id"><span class="cbr-nm">You?</span><span class="cbr-meta">The next #1</span></span><span class="cbr-mult">Over 27x</span></div>
+    </div>
+    <ol class="cbr-rules">
+      <li><b>Beat 27x.</b> The first trade to show a multiple higher than 27x on the MOONX leaderboard wins $500.</li>
+      <li><b>Any size counts.</b> Trades opened on MOONX from Oct 15, 2026, at any size. It starts with just over a dollar.</li>
+      <li><b>Busy markets only.</b> Only trades on markets with at least $5,000 in Polymarket 24h volume at the time the trade is opened count toward the leaderboard.</li>
+      <li><b>Paid instantly.</b> Once the market resolves and the multiple is confirmed, $500 lands in your main wallet.</li>
+      <li><b>Friend wins? +$100.</b> If the winner joined MOONX with your invite link, you get $100 in your main wallet.</li>
+      <li><b>No deadline. First one wins.</b> If two trades beat 27x, the one placed first wins. It ends when 27x is beaten, and the new #1 is announced on X and Telegram.</li>
+    </ol>
+    <div class="cbr-row">
+      <button type="button" class="cbr-cta ghost" data-cbr-x>Got it</button>
+      <a class="cbr-cta tinted" href="https://lfg.moonx.fi/users/sign_up" target="_blank" rel="noopener">Take your shot</a>
+    </div>
+  </div>
+</div>
+<script>(function(){
+  var cb=document.getElementById("cb"),r=document.getElementById("cbr"),root=document.documentElement,last=null;
+  function sync(){root.style.setProperty("--cbh",(cb.hidden?0:cb.offsetHeight)+"px")}
+  if(window.ResizeObserver)new ResizeObserver(sync).observe(cb);addEventListener("resize",sync);sync();
+  function open(b){last=b;r.classList.add("on");r.querySelector("[data-cbr-x]").focus()}
+  function shut(){r.classList.remove("on");if(last){last.focus();last=null}}
+  document.addEventListener("click",function(e){
+    var t=e.target;
+    if(t.closest("[data-cb-rules]"))return open(t.closest("[data-cb-rules]"));
+    if(t.closest("[data-cbr-x]")||t===r)return shut();
+    if(t.closest("[data-cb-close]")){cb.hidden=true;sync()}
+  });
+  addEventListener("keydown",function(e){if(e.key==="Escape"&&r.classList.contains("on"))shut()});
+})();</script>
+<a class="skip" href="#main">Skip to content</a>
+<nav aria-label="Main">
+  <a href="/" aria-label="MOONX"><svg class="wm" viewBox="0 0 100 22" role="img" aria-label="MOONX" preserveAspectRatio="xMidYMid meet"><text class="wmt" x="50" y="17" text-anchor="middle">MOONX</text></svg></a>
+  <span class="navb"><a class="go ghost" href="https://lfg.moonx.fi">Log in</a><a class="go" href="https://lfg.moonx.fi/users/sign_up">Create account</a></span>
+</nav>
+<main id="main" class="lm">
+<article class="art">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/learn/">Learn</a><span aria-hidden="true">/</span><span aria-current="page">Your wallet</span></nav>
+<span class="kick">Using MOONX</span>
+<h1>Your MOONX wallet: who holds the keys, and what you must keep</h1>
+<p class="dek">On MOONX, your money sits in a wallet that only you can move. That&#x27;s a real protection, and it comes with one real responsibility. Here is how it works, in plain words.</p>
+<div class="meta"><span>By MOONX Team</span><i>·</i><span>Updated <time datetime="2026-10-27">27 October 2026</time></span><i>·</i><span>3 min read</span></div>
+<div class="box ans"><b class="lbl">Short answer</b><p>Your MOONX wallet is non-custodial: its keys are created on your device and MOONX never holds them, so MOONX can&#x27;t move, freeze or spend your money. You keep one encrypted backup file and its password. Each device you use gets a PIN that approves every trade and money move. If you lose the backup file or its password, nobody can recover the wallet, MOONX included.</p></div>
+<nav class="toc" aria-label="On this page"><b>ON THIS PAGE</b><ol><li><a href="#non-custodial-in-one-sentence">Non-custodial, in one sentence</a></li><li><a href="#the-three-things-you-hold">The three things you hold</a></li><li><a href="#using-moonx-on-another-phone-or-computer">Using MOONX on another phone or computer</a></li><li><a href="#where-your-money-actually-is">Where your money actually is</a></li><li><a href="#what-moonx-can-and-cant-do">What MOONX can and can&#x27;t do</a></li><li><a href="#common-questions">Common questions</a></li></ol></nav>
+<h2 id="non-custodial-in-one-sentence">Non-custodial, in one sentence</h2><p>MOONX is software that helps your device create and use a wallet. It never holds your money or your keys. In the words of MOONX&#x27;s Terms, it has no ability to move, freeze or access a single dollar in your wallet.</p><p>Compare that with an exchange account: there, the company holds the money and you hold a login. If the company fails or freezes accounts, your balance is stuck. With a non-custodial wallet, the money is under your keys, on a public blockchain.</p><h2 id="the-three-things-you-hold">The three things you hold</h2><div class="tw"><table><thead><tr><th scope="col">What</th><th scope="col">What it does</th><th scope="col">Who has it</th></tr></thead><tbody><tr><td><b>Backup file</b></td><td>An encrypted copy of your wallet keys</td><td>You only. MOONX doesn&#x27;t keep a copy.</td></tr><tr><td><b>Backup password</b></td><td>Unlocks the backup file</td><td>You only</td></tr><tr><td><b>PIN</b></td><td>Approves every trade and every money move on one device</td><td>You only, one per device</td></tr></tbody></table></div><p>You log in with your email. Logging in shows your account. It&#x27;s the PIN that lets money move, and the backup file with its password that lets you bring your wallet to a new device. You can also add passkeys to secure your account.</p><div class="box risk" role="note"><b class="lbl">The one thing you must not lose</b><p>If you lose the backup file <b>or</b> its password, the money in that wallet is lost for everyone: one doesn&#x27;t work without the other. MOONX can&#x27;t restore it, by design. Store the file somewhere you won&#x27;t delete it, such as a cloud drive and a USB stick, and the password in a password manager.</p></div><h2 id="using-moonx-on-another-phone-or-computer">Using MOONX on another phone or computer</h2><ol><li>Open MOONX on the new device and log in with your email.</li><li>Upload your backup file.</li><li>Enter its password. Your wallet, your money and your trades are all there.</li><li>Choose a PIN for this device, the same one or a new one.</li></ol><h2 id="where-your-money-actually-is">Where your money actually is</h2><p>MOONX wallets live on the <b>Polygon</b> blockchain, the same network Polymarket runs on. Your wallet has up to three parts:</p><ul><li><b>Main wallet:</b> your dollars, in USDC. Deposits arrive here and withdrawals leave from here.</li><li><b>Trading wallet:</b> the money in play on Polymarket, which settles in pUSD. MOONX moves money between the two when you trade.</li><li><b>Savings (optional):</b> unused cash can earn interest through Aave, a third-party lending protocol, at a variable rate. You can ask for it back at any time. Withdrawals depend on Aave having money available, so they can be delayed, and lending protocols carry their own risks.</li></ul><p>MOONX pays the network fees for all of this, so you never need to hold another token.</p><p>Withdrawals can only go to addresses on your <b>Payout Wallets</b> list, up to five, that you set yourself. It&#x27;s a safeguard that runs in your wallet, not a service MOONX operates. Check each address carefully, because a withdrawal to a wrong address can&#x27;t be reversed.</p><h2 id="what-moonx-can-and-cant-do">What MOONX can and can&#x27;t do</h2><div class="tw"><table><thead><tr><th scope="col">MOONX can</th><th scope="col">MOONX can&#x27;t</th></tr></thead><tbody><tr><td>Show you markets and prices</td><td>Move your money: only your device can, with your PIN</td></tr><tr><td>Pass the orders you confirm to Polymarket</td><td>Freeze or seize your wallet</td></tr><tr><td>Pay network fees for you</td><td>Recover a wallet if you lose the backup file or its password</td></tr><tr><td>Help you set up a new device with your backup</td><td>See your PIN or your backup password</td></tr></tbody></table></div><h2 id="common-questions">Common questions</h2><h3 id="is-moonx-custodial">Is MOONX custodial?</h3><p>No. The wallet keys are generated on your device and never sent to MOONX. Only you can move your money.</p><h3 id="what-happens-if-i-lose-my-phone">What happens if I lose my phone?</h3><p>Log in on another device with your email, upload your backup file and enter its password. Your wallet comes back with your money and your trades. Then choose a new PIN.</p><h3 id="can-moonx-recover-my-wallet-if-i-lose-my-backup-file">Can MOONX recover my wallet if I lose my backup file?</h3><p>No. MOONX keeps no copy of your backup file or your password. Without both, nobody can restore the wallet.</p><h3 id="is-there-a-seed-phrase">Is there a seed phrase?</h3><p>No. MOONX uses one encrypted backup file and a password instead of a list of words to write down.</p><h2 id="sources">Sources</h2><ol><li><a class="x" href="/terms">MOONX Terms of Service, section 5: your wallet and self-custody</a></li><li><a class="x" href="/privacy">MOONX Privacy Policy</a></li><li><a class="x" href="https://aave.com" target="_blank" rel="noopener">Aave</a></li></ol>
+<aside class="cta2" aria-label="Try MOONX"><h2 id="try-moonx">Try it on MOONX</h2><p>Every Polymarket market in one feed. Buy Yes or No in a few taps, sell whenever you want, and keep your money in a wallet only you control.</p><div class="row"><a class="btn" href="https://lfg.moonx.fi/users/sign_up">Create account</a><a class="btn ghost" href="/">See how it works</a></div><small>18+ only. Not available everywhere, including the US and the UK: see the <a href="/terms">Terms</a>. Trading involves risk: only put in what you can afford to lose.</small></aside>
+<h2 id="keep-reading">Keep reading</h2><div class="rel"><a class="card lk" href="/learn/first-trade-on-moonx"><em>MOONX</em><b>Your first trade on MOONX, step by step</b><span>Email, wallet, card deposit, Yes or No, Eject: the whole path.</span></a><a class="card lk" href="/learn/earn-with-moonx"><em>MOONX</em><b>Earn with MOONX: your crew and trades taken from your posts</b><span>25% of our fee on your crew for life, 25% when people trade from your posts, paid monthly in USDC.</span></a><a class="card lk" href="/learn/how-polymarket-works"><em>Basics</em><b>How does Polymarket work? Shares, prices and payouts</b><span>The order book, the price you see versus the price you pay, minimums, settlement, and where apps fit in.</span></a></div><h2 id="quick-answers">Quick answers on this topic</h2><ul class="qa"><li><a href="/learn/can-i-use-moonx-on-my-phone">Can you use MOONX on your phone?</a></li><li><a href="/learn/how-to-sell-on-moonx">How do you sell a position on MOONX?</a></li><li><a href="/learn/how-to-withdraw-from-moonx">How do you withdraw money from MOONX?</a></li><li><a href="/learn/is-moonx-safe">Is MOONX safe?</a></li><li><a href="/learn/moonx-fees">What are the fees on MOONX?</a></li><li><a href="/learn/what-if-i-lose-my-moonx-backup-file">What happens if you lose your MOONX backup file?</a></li><li><a href="/learn/what-is-a-shot-on-moonx">What is a shot on MOONX?</a></li></ul>
+</article>
+</main>
+<footer>
+  <div class="tg">The moonshot of a lifetime is one tap away.</div>
+  <nav class="cols" aria-label="Footer">
+    <div><b>ABOUT</b><a href="/#journey">Radio</a><a href="/#faq">FAQ</a></div><div><b>LEARN</b><a href="/learn/">All guides</a><a href="/learn/#answers">Quick answers</a><a href="/learn/what-is-a-prediction-market">Prediction markets</a><a href="/learn/how-polymarket-works">How Polymarket works</a><a href="/learn/polymarket-fees">Polymarket fees</a></div><div><b>SOCIAL</b><a href="https://x.com/moonxfi" rel="me" target="_blank">X</a><a href="https://www.youtube.com/@moonxfi" rel="me" target="_blank">YouTube</a><a href="https://www.instagram.com/moonx.fi" rel="me" target="_blank">Instagram</a></div><div><b>LEGAL</b><a href="/privacy">Privacy Policy</a><a href="/terms">Terms of Service</a></div>
+  </nav>
+  <small>© 2026 MOONX · Your money stays in your wallet · Trades run on Polymarket · Trading involves risk.</small>
+  <small class="listed">Listed on the <a href="https://polymart.app" target="_blank" rel="noopener">Polymarket Tools Directory</a></small>
+  <div class="giant" aria-hidden="true"><svg class="wm" viewBox="0 0 100 22" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><text class="wmt" x="50" y="17" text-anchor="middle">MOONX</text></svg></div>
+</footer>
+<div id="miniBar" role="region" aria-label="Now playing">
+  <div class="set">
+    <button type="button" class="glass" id="miniGlass" aria-label="Open the radio"><b id="miniStation">K-HAT 101.7</b><div class="mq" id="miniMqWrap"><span id="miniNow">Chasing X · Della &amp; the Long Shots</span></div><i class="tune">TUNE</i></button>
+    <button type="button" id="miniPrev" aria-label="Previous track">◀</button>
+    <button type="button" id="miniPlay" class="play" aria-label="Play or pause">II</button>
+    <button type="button" id="miniNext" aria-label="Next track">▶</button>
+  </div>
+</div>
+<div id="radioVeil" aria-hidden="true"></div>
+<div id="radioSheet" role="dialog" aria-label="Shuttle radio" aria-hidden="true">
+  <div class="rs-head"><div><b>MOONX Radio</b><span id="rsSub">Ten stations, sixty-five songs, built for posterity.</span></div><button type="button" id="rsClose" aria-label="Minimise the radio" title="Minimise"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 10l6 6 6-6"/><path d="M5 20h14"/></svg></button></div>
+  <div id="sheetSlot"><div id="radioWrap">
+    <div class="set">
+      <div class="glass">
+        <div class="scope"><canvas id="dial" aria-label="Orbit tuner: drag the rocket between stations"></canvas><div class="crt" aria-hidden="true"></div></div>
+        <div class="tele">
+          <span class="led" id="led"></span><b id="lockTxt">LOCK</b>
+          <span class="vu" id="vu" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+          <b id="freqTxt">101.7 MHz</b>
+        </div>
+        <div class="readout">
+          <div class="rline">
+            <b id="dispStation">K-HAT 101.7</b>
+            <span class="dj" id="dispDj">DJ DUSTY LONGSHOT</span>
+            <span class="pos" id="dispPos">1/5</span>
+          </div>
+          <div class="mq" id="mqWrap"><span id="dispNow">CHASING X</span></div>
+          <div class="artist" id="dispArtist">DELLA &amp; THE LONG SHOTS</div>
+          <div class="tline"><span id="tElapsed">0:00</span><div class="tbar" id="tBar" role="slider" aria-label="Seek"><i id="tFill"></i></div><span id="tTotal">0:00</span></div>
+          <canvas id="viz" width="600" height="46" aria-hidden="true"></canvas>
+        </div>
+      </div>
+      <div class="mesh" aria-hidden="true"></div>
+      <div class="presets" id="presets" role="group" aria-label="Station presets"></div>
+      <div class="keys">
+        <button type="button" id="prevSt">◀ STATION</button>
+        <button type="button" id="playBtn" class="play">PAUSE</button>
+        <button type="button" id="nextSt">STATION ▶</button>
+      </div>
+      <div class="keys">
+        <button type="button" id="prevTr">◀ TRACK</button>
+        <button type="button" id="karBtn" aria-pressed="false">LYRICS</button>
+        <button type="button" id="nextTr">TRACK ▶</button>
+      </div>
+      <div class="vol"><span>VOL</span><input type="range" id="volRange" min="0" max="100" value="42" step="1" aria-label="Volume"><span id="volOut">42</span></div>
+      <div id="karaoke" aria-live="polite"><div class="kh"><b id="kTitle">Chasing X</b><span id="kArtist">DELLA &amp; THE LONG SHOTS</span></div><div id="klines"></div></div>
+    </div>
+  </div></div>
+</div>
+<button id="needPlay" type="button" hidden>&#9654; TAP TO START THE RADIO</button>
+<script>document.getElementById("miniBar").classList.add("on");</script>
+<script src="/radio.js"></script>
+<script>(function(){const e=document.getElementById("miniBar");if(!e)return;document.querySelectorAll('a[href$="#journey"], a[href="index.html#journey"]').forEach(t=>{t.setAttribute("href","#miniBar");t.addEventListener("click",t=>{t.preventDefault();const n=document.getElementById("miniGlass");if(n){n.click();return}e.scrollIntoView({behavior:"smooth",block:"nearest"})})})})();</script>
+<script src="/assets/js/ga-v2.js" defer></script>
+<script src="/assets/js/attr.js"></script>
+<script src="/assets/js/rocket.js" defer></script>
+<script>document.querySelectorAll('a[href^="https://lfg.moonx.fi"]').forEach(function(e){e.addEventListener("click",function(){if(window.MOONX_EVENT)MOONX_EVENT(/sign_up/.test(e.href)?"create_account":"log_in",{place:e.closest("#cb,#cbr")?"contest":e.closest("body>nav")?"nav":"learn",page:location.pathname})})});</script>
+</body>
+</html>

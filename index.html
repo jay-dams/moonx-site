@@ -1452,9 +1452,6 @@ h1.tagline{font-size:inherit;font-weight:inherit}
 .xb > *{position:relative;z-index:1;flex:none}
 .xb-hit{position:absolute!important;inset:0;z-index:2!important;background:none;border:0;padding:0;cursor:pointer;-webkit-tap-highlight-color:transparent}
 .xb-hit:focus-visible{outline:none}
-/* La pastille et le bandeau defilant sont decoratifs: ils laissent passer le clic
-   vers .xb-hit, sinon la moitie gauche de la banniere n'ouvre pas les regles. */
-.xa-tag,.xb-track{pointer-events:none}
 .xb:has(.xb-hit:focus-visible){outline:2px solid #7FB6FF;outline-offset:-3px}
 .xa-tag{align-self:stretch;display:flex;align-items:center;gap:6px;padding:0 22px 0 18px;background:#FF3B6B;color:#fff;font:900 13px/1 "Inter",sans-serif;letter-spacing:.06em;text-transform:uppercase;
   clip-path:polygon(0 0,100% 0,calc(100% - 12px) 100%,0 100%);z-index:3!important;animation:xaKick 3.2s infinite}
@@ -1579,7 +1576,7 @@ body>nav{top:var(--cbh)}
   <button type="button" class="xb-hit" data-cb-rules aria-label="$500 challenge: beat MoonXOR's 27x. See the challenge rules"></button>
   <span class="xa-tag"><b>$500</b> Beat the #1</span>
   <div class="xb-track" aria-label="Beat MoonXOR's 27x. Win $500. No deadline. First one wins. Friend wins? You get $100. Starts at just over $1."><div class="xb-run" aria-hidden="true"><span> <b>Beat <span class="xa-av"></span>MoonXOR&#8217;s 27x</b> <i>&#9733;</i> Win <b class="xm">$500</b> <i>&#9733;</i> No deadline <i>&#9733;</i> First one wins <i>&#9733;</i> Friend wins? <b class="xm">+$100</b> <i>&#9733;</i> Starts at just over $1 <i>&#9733;</i></span><span> <b>Beat <span class="xa-av"></span>MoonXOR&#8217;s 27x</b> <i>&#9733;</i> Win <b class="xm">$500</b> <i>&#9733;</i> No deadline <i>&#9733;</i> First one wins <i>&#9733;</i> Friend wins? <b class="xm">+$100</b> <i>&#9733;</i> Starts at just over $1 <i>&#9733;</i></span></div></div>
-  <a class="xb-go lnk lnk--standalone" href="https://lfg.moonx.fi/" target="_blank" rel="noopener">Take your shot<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+  <a class="xb-go lnk lnk--standalone" href="https://lfg.moonx.fi/users/sign_up" target="_blank" rel="noopener">Take your shot<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
   <button type="button" class="xb-x" aria-label="Close the banner" data-cb-close><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
 </div>
 <div class="cbr" id="cbr">
@@ -1759,7 +1756,7 @@ body>nav{top:var(--cbh)}
 <footer>
   <div class="tg">The moonshot of a lifetime is one tap away.</div>
   <nav class="cols" aria-label="Footer">
-    <div><b>ABOUT</b><a href="#journey" id="footRadio">Radio</a><a href="#faq">FAQ</a></div><div><b>SOCIAL</b><a href="https://x.com/moonxfi" rel="me" target="_blank">X</a><a href="https://www.youtube.com/@moonxfi" rel="me" target="_blank">YouTube</a><a href="https://www.instagram.com/moonx.fi" rel="me" target="_blank">Instagram</a></div><div><b>LEGAL</b><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms of Service</a></div>
+    <div><b>ABOUT</b><a href="#journey" id="footRadio">Radio</a><a href="#faq">FAQ</a></div><div><b>LEARN</b><a href="/learn/">All guides</a><a href="/learn/#answers">Quick answers</a><a href="/learn/what-is-a-prediction-market">Prediction markets</a><a href="/learn/how-polymarket-works">How Polymarket works</a><a href="/learn/polymarket-fees">Polymarket fees</a></div><div><b>SOCIAL</b><a href="https://x.com/moonxfi" rel="me" target="_blank">X</a><a href="https://www.youtube.com/@moonxfi" rel="me" target="_blank">YouTube</a><a href="https://www.instagram.com/moonx.fi" rel="me" target="_blank">Instagram</a></div><div><b>LEGAL</b><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms of Service</a></div>
   </nav>
   <small>© 2026 MOONX · Your money stays in your wallet · Trades run on Polymarket · Trading involves risk.</small>
   <small class="listed">Listed on the <a href="https://polymart.app" target="_blank" rel="noopener">Polymarket Tools Directory</a></small>

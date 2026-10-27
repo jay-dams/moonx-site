@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#03050C">
+<title>Prediction market odds and payouts explained | MOONX</title>
+<meta name="description" content="Turn any Polymarket price into a probability, a payout multiple, decimal and American odds. A full table, worked examples and what fees change.">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
+<link rel="canonical" href="https://moonx.fi/learn/prediction-market-odds">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="MOONX">
+<meta property="og:title" content="Prediction market odds and payouts explained | MOONX">
+<meta property="og:description" content="Turn any Polymarket price into a probability, a payout multiple, decimal and American odds. A full table, worked examples and what fees change.">
+<meta property="og:url" content="https://moonx.fi/learn/prediction-market-odds">
+<meta property="og:image" content="https://moonx.fi/assets/learn/og/prediction-market-odds-v1.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="article:published_time" content="2026-10-27">
+<meta property="article:modified_time" content="2026-10-27">
+<meta property="article:section" content="Prediction markets, from zero">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@moonxfi">
+<link rel="icon" href="/favicon-x.ico" sizes="32x32">
+<link rel="icon" href="/favicon-x.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon-x.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="alternate" type="application/rss+xml" title="MOONX guides" href="/learn/feed.xml">
+<link rel="stylesheet" href="/fonts/fonts.css">
+<link rel="stylesheet" href="/assets/css/site-v2.css">
+<link rel="stylesheet" href="/assets/radio/radio.css">
+<link rel="stylesheet" href="/assets/css/contest-v1.css">
+<link rel="stylesheet" href="/assets/css/learn-v2.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://moonx.fi/learn/prediction-market-odds#article","headline":"Prediction market odds: how a price becomes a payout","description":"Turn any Polymarket price into a probability, a payout multiple, decimal and American odds. A full table, worked examples and what fees change.","image":"https://moonx.fi/assets/learn/og/prediction-market-odds-v1.png","datePublished":"2026-10-27","dateModified":"2026-10-27","author":{"@type":"Organization","name":"MOONX Team","url":"https://moonx.fi/learn/"},"publisher":{"@id":"https://moonx.fi/#org"},"mainEntityOfPage":"https://moonx.fi/learn/prediction-market-odds","isPartOf":{"@id":"https://moonx.fi/#site"},"inLanguage":"en","articleSection":"Prediction markets, from zero","wordCount":833}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://moonx.fi/"},{"@type":"ListItem","position":2,"name":"Learn","item":"https://moonx.fi/learn/"},{"@type":"ListItem","position":3,"name":"Prediction market odds: how a price becomes a payout","item":"https://moonx.fi/learn/prediction-market-odds"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What do Polymarket odds mean?","acceptedAnswer":{"@type":"Answer","text":"The price of a share is the market's estimate of the probability. Yes at 35¢ means traders, as a group, put the chance at about 35%."}},{"@type":"Question","name":"How do I calculate my payout on Polymarket?","acceptedAnswer":{"@type":"Answer","text":"Divide the amount you put in by the price to get your number of shares. Each share pays $1 if you're right. $25 at 40¢ is 62.5 shares, so $62.50 if you win, before fees."}},{"@type":"Question","name":"Are cheap shares a better deal?","acceptedAnswer":{"@type":"Answer","text":"Not by default. A 5¢ share pays 20x, but the market thinks it wins about 1 time in 20. Studies of betting and prediction markets often find long shots slightly overpriced. Read long shots on Polymarket before you chase them."}},{"@type":"Question","name":"Why do Yes and No not add up to exactly $1?","acceptedAnswer":{"@type":"Answer","text":"Because of the spread. The best ask for Yes plus the best ask for No is usually a cent or two above $1. That gap is what you pay to trade instantly."}}]}</script>
+</head>
+<body class="lit lrn">
+<div id="bgfix" aria-hidden="true"></div>
+<div class="xb" id="cb" role="region" aria-label="Live challenge: $500">
+  <button type="button" class="xb-hit" data-cb-rules aria-label="$500 challenge: beat MoonXOR's 27x. See the challenge rules"></button>
+  <span class="xa-tag"><b>$500</b> Beat the #1</span>
+  <div class="xb-track" aria-label="Beat MoonXOR's 27x. Win $500. No deadline. First one wins. Friend wins? You get $100. Starts at just over $1."><div class="xb-run" aria-hidden="true"><span> <b>Beat <span class="xa-av"></span>MoonXOR&#8217;s 27x</b> <i>&#9733;</i> Win <b class="xm">$500</b> <i>&#9733;</i> No deadline <i>&#9733;</i> First one wins <i>&#9733;</i> Friend wins? <b class="xm">+$100</b> <i>&#9733;</i> Starts at just over $1 <i>&#9733;</i></span><span> <b>Beat <span class="xa-av"></span>MoonXOR&#8217;s 27x</b> <i>&#9733;</i> Win <b class="xm">$500</b> <i>&#9733;</i> No deadline <i>&#9733;</i> First one wins <i>&#9733;</i> Friend wins? <b class="xm">+$100</b> <i>&#9733;</i> Starts at just over $1 <i>&#9733;</i></span></div></div>
+  <a class="xb-go lnk lnk--standalone" href="https://lfg.moonx.fi/users/sign_up" target="_blank" rel="noopener">Take your shot<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+  <button type="button" class="xb-x" aria-label="Close the banner" data-cb-close><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+</div>
+<div class="cbr" id="cbr">
+  <div class="cbr-s" role="dialog" aria-modal="true" aria-labelledby="cbr-t"><div class="cbr-grab" aria-hidden="true"></div>
+    <span class="cbr-live"><i></i>Live now</span>
+    <h3 id="cbr-t">Beat the #1. Win <span class="xm">$500</span>.</h3>
+    <p class="cbr-sb"><b>MoonXOR</b> holds #1 with <b>27x</b>. One trade could <span class="w">put you there.</span></p>
+    <div class="cbr-board">
+      <div class="cbr-lb"><span class="cbr-rk r1">1</span><span class="cbr-av" role="img" aria-label="MoonXOR's avatar"></span><span class="cbr-id"><span class="cbr-nm">MoonXOR</span><span class="cbr-meta"><span class="cbr-tag">Beat this for $500</span></span></span><span class="cbr-mult">27x</span></div>
+      <div class="cbr-lb you"><span class="cbr-rk">&ndash;</span><span class="cbr-av seat" aria-hidden="true">?</span><span class="cbr-id"><span class="cbr-nm">You?</span><span class="cbr-meta">The next #1</span></span><span class="cbr-mult">Over 27x</span></div>
+    </div>
+    <ol class="cbr-rules">
+      <li><b>Beat 27x.</b> The first trade to show a multiple higher than 27x on the MOONX leaderboard wins $500.</li>
+      <li><b>Any size counts.</b> Trades opened on MOONX from Oct 15, 2026, at any size. It starts with just over a dollar.</li>
+      <li><b>Busy markets only.</b> Only trades on markets with at least $5,000 in Polymarket 24h volume at the time the trade is opened count toward the leaderboard.</li>
+      <li><b>Paid instantly.</b> Once the market resolves and the multiple is confirmed, $500 lands in your main wallet.</li>
+      <li><b>Friend wins? +$100.</b> If the winner joined MOONX with your invite link, you get $100 in your main wallet.</li>
+      <li><b>No deadline. First one wins.</b> If two trades beat 27x, the one placed first wins. It ends when 27x is beaten, and the new #1 is announced on X and Telegram.</li>
+    </ol>
+    <div class="cbr-row">
+      <button type="button" class="cbr-cta ghost" data-cbr-x>Got it</button>
+      <a class="cbr-cta tinted" href="https://lfg.moonx.fi/users/sign_up" target="_blank" rel="noopener">Take your shot</a>
+    </div>
+  </div>
+</div>
+<script>(function(){
+  var cb=document.getElementById("cb"),r=document.getElementById("cbr"),root=document.documentElement,last=null;
+  function sync(){root.style.setProperty("--cbh",(cb.hidden?0:cb.offsetHeight)+"px")}
+  if(window.ResizeObserver)new ResizeObserver(sync).observe(cb);addEventListener("resize",sync);sync();
+  function open(b){last=b;r.classList.add("on");r.querySelector("[data-cbr-x]").focus()}
+  function shut(){r.classList.remove("on");if(last){last.focus();last=null}}
+  document.addEventListener("click",function(e){
+    var t=e.target;
+    if(t.closest("[data-cb-rules]"))return open(t.closest("[data-cb-rules]"));
+    if(t.closest("[data-cbr-x]")||t===r)return shut();
+    if(t.closest("[data-cb-close]")){cb.hidden=true;sync()}
+  });
+  addEventListener("keydown",function(e){if(e.key==="Escape"&&r.classList.contains("on"))shut()});
+})();</script>
+<a class="skip" href="#main">Skip to content</a>
+<nav aria-label="Main">
+  <a href="/" aria-label="MOONX"><svg class="wm" viewBox="0 0 100 22" role="img" aria-label="MOONX" preserveAspectRatio="xMidYMid meet"><text class="wmt" x="50" y="17" text-anchor="middle">MOONX</text></svg></a>
+  <span class="navb"><a class="go ghost" href="https://lfg.moonx.fi">Log in</a><a class="go" href="https://lfg.moonx.fi/users/sign_up">Create account</a></span>
+</nav>
+<main id="main" class="lm">
+<article class="art">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/learn/">Learn</a><span aria-hidden="true">/</span><span aria-current="page">Odds and payouts</span></nav>
+<span class="kick">Prediction markets, from zero</span>
+<h1>Prediction market odds: how a price becomes a payout</h1>
+<p class="dek">On a prediction market, the price is the odds. A share at 20¢ means about a 20% chance and pays 5 times your money if it lands. Here is the math, a table you can keep, and the details that shave a little off.</p>
+<div class="meta"><span>By MOONX Team</span><i>·</i><span>Updated <time datetime="2026-10-27">27 October 2026</time></span><i>·</i><span>4 min read</span></div>
+<div class="box ans"><b class="lbl">Short answer</b><p>Divide $1 by the price to get your payout multiple. A share at 20¢ pays $1, so it returns 5x your money if you&#x27;re right, and the market gives it about a 20% chance. At 50¢ it&#x27;s 2x, at 5¢ it&#x27;s 20x, at 90¢ it&#x27;s about 1.11x. Fees and the spread lower the real multiple a little.</p></div>
+<nav class="toc" aria-label="On this page"><b>ON THIS PAGE</b><ol><li><a href="#three-numbers-from-one-price">Three numbers from one price</a></li><li><a href="#the-table">The table</a></li><li><a href="#the-formulas">The formulas</a></li><li><a href="#when-is-a-trade-worth-taking">When is a trade worth taking?</a></li><li><a href="#why-the-real-multiple-is-a-bit-lower">Why the real multiple is a bit lower</a></li><li><a href="#selling-early-changes-the-math">Selling early changes the math</a></li><li><a href="#common-questions">Common questions</a></li></ol></nav>
+<h2 id="three-numbers-from-one-price">Three numbers from one price</h2><p>Every share on Polymarket pays <b>$1</b> if it&#x27;s right. So the price alone tells you three things:</p><ul><li><b>Implied probability:</b> the price in cents is the chance in percent. 20¢ is about 20%.</li><li><b>Payout multiple:</b> $1 divided by the price. 20¢ gives 1 ÷ 0.20 = <b>5x</b>.</li><li><b>What $10 becomes:</b> $10 buys 10 ÷ 0.20 = 50 shares, which pay <b>$50</b> if you&#x27;re right.</li></ul><p>The multiple is also what sports bettors call <b>decimal odds</b>. A 5x share is the same as odds of 5.00.</p><h2 id="the-table">The table</h2><div class="tw"><table><thead><tr><th class="n" scope="col">Price</th><th class="n" scope="col">Implied chance</th><th class="n" scope="col">Multiple</th><th class="n" scope="col">$10 returns</th><th class="n" scope="col">American odds</th></tr></thead><tbody><tr><td class="n">1¢</td><td class="n">1%</td><td class="n">100x</td><td class="n">$1,000</td><td class="n">+9900</td></tr><tr><td class="n">5¢</td><td class="n">5%</td><td class="n">20x</td><td class="n">$200</td><td class="n">+1900</td></tr><tr><td class="n">10¢</td><td class="n">10%</td><td class="n">10x</td><td class="n">$100</td><td class="n">+900</td></tr><tr><td class="n">20¢</td><td class="n">20%</td><td class="n">5x</td><td class="n">$50</td><td class="n">+400</td></tr><tr><td class="n">25¢</td><td class="n">25%</td><td class="n">4x</td><td class="n">$40</td><td class="n">+300</td></tr><tr><td class="n">33¢</td><td class="n">33%</td><td class="n">3.03x</td><td class="n">$30.30</td><td class="n">+203</td></tr><tr><td class="n">50¢</td><td class="n">50%</td><td class="n">2x</td><td class="n">$20</td><td class="n">+100</td></tr><tr><td class="n">60¢</td><td class="n">60%</td><td class="n">1.67x</td><td class="n">$16.67</td><td class="n">-150</td></tr><tr><td class="n">75¢</td><td class="n">75%</td><td class="n">1.33x</td><td class="n">$13.33</td><td class="n">-300</td></tr><tr><td class="n">90¢</td><td class="n">90%</td><td class="n">1.11x</td><td class="n">$11.11</td><td class="n">-900</td></tr><tr><td class="n">95¢</td><td class="n">95%</td><td class="n">1.05x</td><td class="n">$10.53</td><td class="n">-1900</td></tr></tbody></table></div><p>Amounts are before fees. &quot;$10 returns&quot; is the total you get back if you&#x27;re right, your $10 included.</p><h2 id="the-formulas">The formulas</h2><p>If the price is <b>p</b> (in dollars, so 20¢ is 0.20):</p><ul><li>Multiple, or decimal odds: <b>1 ÷ p</b></li><li>Shares you get for an amount: <b>amount ÷ p</b></li><li>Profit if you&#x27;re right: <b>amount × (1 ÷ p − 1)</b></li><li>American odds: if p is 0.50 or under, <b>+100 × (1 − p) ÷ p</b>. If p is over 0.50, <b>−100 × p ÷ (1 − p)</b>.</li></ul><h2 id="when-is-a-trade-worth-taking">When is a trade worth taking?</h2><p>A price is the market&#x27;s estimate. You only have an edge if you think the real chance is higher than the price.</p><div class="box ex"><b class="lbl">Worked example</b><p>A share trades at <b>20¢</b>. You believe the real chance is <b>30%</b>.</p><p>For every $1 you put in, you get 5 shares. On average you expect 30% × $5 = <b>$1.50</b> back. That&#x27;s a positive expected value of 50¢ per dollar, before fees.</p><p>If you think the real chance is 15%, the same trade expects 15% × $5 = $0.75 back per dollar. You would be paying for a long shot that&#x27;s priced too high.</p></div><p>This is the only test that matters, and it&#x27;s humbling. The market price already combines what thousands of people know. Beating it on a regular basis is hard.</p><h2 id="why-the-real-multiple-is-a-bit-lower">Why the real multiple is a bit lower</h2><p>Four things sit between the table and your result:</p><ol><li><b>The spread.</b> You buy at the ask, which can be a cent or more above the price on the screen. At low prices a cent matters a lot: buying at 6¢ instead of 5¢ turns 20x into 16.7x.</li><li><b>Polymarket&#x27;s taker fee.</b> On most markets, an order that fills right away pays a fee. As a share of the money you spend, it works out to the fee rate times (1 − price). On a crypto market (rate 0.07), buying at 20¢ costs about 5.6% of your stake. At 90¢ it&#x27;s 0.7%. Geopolitics markets have no fee. Details in <a class="x" href="/learn/polymarket-fees">Polymarket fees, explained</a>.</li><li><b>The app&#x27;s fee.</b> MOONX charges 1% of the trade value when you buy and when you sell. There is no fee when a market resolves.</li><li><b>Time.</b> Your money is tied up until the market ends. A 90¢ share that pays $1 in a year is a different deal from one that pays tomorrow.</li></ol><div class="box ex"><b class="lbl">Worked example: fees included</b><p>$10 on Yes at <b>20¢</b> on a crypto market: 50 shares. Polymarket&#x27;s fee is about $0.56 and MOONX&#x27;s is $0.10, so the trade costs you about <b>$10.66</b> in all. If Yes wins you receive <b>$50</b>: a multiple of about <b>4.7x</b> instead of 5x. Numbers are rounded, and the app shows the exact amounts before you confirm.</p></div><h2 id="selling-early-changes-the-math">Selling early changes the math</h2><p>You don&#x27;t have to wait for $1. If you bought at 20¢ and the price climbs to 60¢, you can sell and take <b>3x</b> right away, whatever happens next. On MOONX that&#x27;s one button, Eject. Many good trades are closed this way. See <a class="x" href="/learn/sell-before-the-result">selling before the result</a>.</p><h2 id="common-questions">Common questions</h2><h3 id="what-do-polymarket-odds-mean">What do Polymarket odds mean?</h3><p>The price of a share is the market&#x27;s estimate of the probability. Yes at 35¢ means traders, as a group, put the chance at about 35%.</p><h3 id="how-do-i-calculate-my-payout-on-polymarket">How do I calculate my payout on Polymarket?</h3><p>Divide the amount you put in by the price to get your number of shares. Each share pays $1 if you&#x27;re right. $25 at 40¢ is 62.5 shares, so $62.50 if you win, before fees.</p><h3 id="are-cheap-shares-a-better-deal">Are cheap shares a better deal?</h3><p>Not by default. A 5¢ share pays 20x, but the market thinks it wins about 1 time in 20. Studies of betting and prediction markets often find long shots slightly overpriced. Read <a class="x" href="/learn/long-shot-trades">long shots on Polymarket</a> before you chase them.</p><h3 id="why-do-yes-and-no-not-add-up-to-exactly-1">Why do Yes and No not add up to exactly $1?</h3><p>Because of the spread. The best ask for Yes plus the best ask for No is usually a cent or two above $1. That gap is what you pay to trade instantly.</p><h2 id="sources">Sources</h2><ol><li><a class="x" href="https://docs.polymarket.com/concepts/prices-orderbook" target="_blank" rel="noopener">Polymarket documentation: prices and the order book</a></li><li><a class="x" href="https://docs.polymarket.com/trading/fees" target="_blank" rel="noopener">Polymarket documentation: fees</a></li><li><a class="x" href="/terms">MOONX Terms of Service, section 11: fees</a></li></ol>
+<aside class="cta2" aria-label="Try MOONX"><h2 id="try-moonx">Try it on MOONX</h2><p>Every Polymarket market in one feed. Buy Yes or No in a few taps, sell whenever you want, and keep your money in a wallet only you control.</p><div class="row"><a class="btn" href="https://lfg.moonx.fi/users/sign_up">Create account</a><a class="btn ghost" href="/">See how it works</a></div><small>18+ only. Not available everywhere, including the US and the UK: see the <a href="/terms">Terms</a>. Trading involves risk: only put in what you can afford to lose.</small></aside>
+<h2 id="keep-reading">Keep reading</h2><div class="rel"><a class="card lk" href="/learn/what-is-a-prediction-market"><em>Basics</em><b>What is a prediction market? A plain-English guide</b><span>The idea in five minutes: questions, Yes and No, prices between 1¢ and 99¢, and a $1 payout.</span></a><a class="card lk" href="/learn/long-shot-trades"><em>Strategy</em><b>Long shots on Polymarket: why 5¢ pays 20x, and why most never do</b><span>Why cheap shares pay so much, how often they hit, and how to play them without getting hurt.</span></a><a class="card lk" href="/learn/polymarket-fees"><em>Polymarket</em><b>Polymarket fees explained, with real numbers</b><span>The taker fee formula, the rate for each category, what you really pay in cents, and MOONX&#x27;s 1%.</span></a></div><h2 id="quick-answers">Quick answers on this topic</h2><ul class="qa"><li><a href="/learn/are-prediction-markets-accurate">Are prediction markets accurate?</a></li><li><a href="/learn/can-you-lose-more-than-you-bet-on-polymarket">Can you lose more than you bet on Polymarket?</a></li><li><a href="/learn/can-you-use-polymarket-with-a-card">Can you use Polymarket with a credit or debit card?</a></li><li><a href="/learn/do-you-need-crypto-to-use-polymarket">Do you need crypto to use Polymarket?</a></li><li><a href="/learn/do-you-pay-taxes-on-polymarket-winnings">Do you pay taxes on Polymarket winnings?</a></li><li><a href="/learn/how-to-read-a-polymarket-chart">How do you read a Polymarket chart?</a></li><li><a href="/learn/is-polymarket-safe">Is Polymarket safe?</a></li><li><a href="/learn/what-are-gas-fees">What are gas fees?</a></li><li><a href="/learn/what-does-the-percentage-mean-on-polymarket">What does the percentage mean on Polymarket?</a></li><li><a href="/learn/what-is-a-non-custodial-wallet">What is a non-custodial wallet?</a></li></ul>
+</article>
+</main>
+<footer>
+  <div class="tg">The moonshot of a lifetime is one tap away.</div>
+  <nav class="cols" aria-label="Footer">
+    <div><b>ABOUT</b><a href="/#journey">Radio</a><a href="/#faq">FAQ</a></div><div><b>LEARN</b><a href="/learn/">All guides</a><a href="/learn/#answers">Quick answers</a><a href="/learn/what-is-a-prediction-market">Prediction markets</a><a href="/learn/how-polymarket-works">How Polymarket works</a><a href="/learn/polymarket-fees">Polymarket fees</a></div><div><b>SOCIAL</b><a href="https://x.com/moonxfi" rel="me" target="_blank">X</a><a href="https://www.youtube.com/@moonxfi" rel="me" target="_blank">YouTube</a><a href="https://www.instagram.com/moonx.fi" rel="me" target="_blank">Instagram</a></div><div><b>LEGAL</b><a href="/privacy">Privacy Policy</a><a href="/terms">Terms of Service</a></div>
+  </nav>
+  <small>© 2026 MOONX · Your money stays in your wallet · Trades run on Polymarket · Trading involves risk.</small>
+  <small class="listed">Listed on the <a href="https://polymart.app" target="_blank" rel="noopener">Polymarket Tools Directory</a></small>
+  <div class="giant" aria-hidden="true"><svg class="wm" viewBox="0 0 100 22" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><text class="wmt" x="50" y="17" text-anchor="middle">MOONX</text></svg></div>
+</footer>
+<div id="miniBar" role="region" aria-label="Now playing">
+  <div class="set">
+    <button type="button" class="glass" id="miniGlass" aria-label="Open the radio"><b id="miniStation">K-HAT 101.7</b><div class="mq" id="miniMqWrap"><span id="miniNow">Chasing X · Della &amp; the Long Shots</span></div><i class="tune">TUNE</i></button>
+    <button type="button" id="miniPrev" aria-label="Previous track">◀</button>
+    <button type="button" id="miniPlay" class="play" aria-label="Play or pause">II</button>
+    <button type="button" id="miniNext" aria-label="Next track">▶</button>
+  </div>
+</div>
+<div id="radioVeil" aria-hidden="true"></div>
+<div id="radioSheet" role="dialog" aria-label="Shuttle radio" aria-hidden="true">
+  <div class="rs-head"><div><b>MOONX Radio</b><span id="rsSub">Ten stations, sixty-five songs, built for posterity.</span></div><button type="button" id="rsClose" aria-label="Minimise the radio" title="Minimise"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 10l6 6 6-6"/><path d="M5 20h14"/></svg></button></div>
+  <div id="sheetSlot"><div id="radioWrap">
+    <div class="set">
+      <div class="glass">
+        <div class="scope"><canvas id="dial" aria-label="Orbit tuner: drag the rocket between stations"></canvas><div class="crt" aria-hidden="true"></div></div>
+        <div class="tele">
+          <span class="led" id="led"></span><b id="lockTxt">LOCK</b>
+          <span class="vu" id="vu" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+          <b id="freqTxt">101.7 MHz</b>
+        </div>
+        <div class="readout">
+          <div class="rline">
+            <b id="dispStation">K-HAT 101.7</b>
+            <span class="dj" id="dispDj">DJ DUSTY LONGSHOT</span>
+            <span class="pos" id="dispPos">1/5</span>
+          </div>
+          <div class="mq" id="mqWrap"><span id="dispNow">CHASING X</span></div>
+          <div class="artist" id="dispArtist">DELLA &amp; THE LONG SHOTS</div>
+          <div class="tline"><span id="tElapsed">0:00</span><div class="tbar" id="tBar" role="slider" aria-label="Seek"><i id="tFill"></i></div><span id="tTotal">0:00</span></div>
+          <canvas id="viz" width="600" height="46" aria-hidden="true"></canvas>
+        </div>
+      </div>
+      <div class="mesh" aria-hidden="true"></div>
+      <div class="presets" id="presets" role="group" aria-label="Station presets"></div>
+      <div class="keys">
+        <button type="button" id="prevSt">◀ STATION</button>
+        <button type="button" id="playBtn" class="play">PAUSE</button>
+        <button type="button" id="nextSt">STATION ▶</button>
+      </div>
+      <div class="keys">
+        <button type="button" id="prevTr">◀ TRACK</button>
+        <button type="button" id="karBtn" aria-pressed="false">LYRICS</button>
+        <button type="button" id="nextTr">TRACK ▶</button>
+      </div>
+      <div class="vol"><span>VOL</span><input type="range" id="volRange" min="0" max="100" value="42" step="1" aria-label="Volume"><span id="volOut">42</span></div>
+      <div id="karaoke" aria-live="polite"><div class="kh"><b id="kTitle">Chasing X</b><span id="kArtist">DELLA &amp; THE LONG SHOTS</span></div><div id="klines"></div></div>
+    </div>
+  </div></div>
+</div>
+<button id="needPlay" type="button" hidden>&#9654; TAP TO START THE RADIO</button>
+<script>document.getElementById("miniBar").classList.add("on");</script>
+<script src="/radio.js"></script>
+<script>(function(){const e=document.getElementById("miniBar");if(!e)return;document.querySelectorAll('a[href$="#journey"], a[href="index.html#journey"]').forEach(t=>{t.setAttribute("href","#miniBar");t.addEventListener("click",t=>{t.preventDefault();const n=document.getElementById("miniGlass");if(n){n.click();return}e.scrollIntoView({behavior:"smooth",block:"nearest"})})})})();</script>
+<script src="/assets/js/ga-v2.js" defer></script>
+<script src="/assets/js/attr.js"></script>
+<script src="/assets/js/rocket.js" defer></script>
+<script>document.querySelectorAll('a[href^="https://lfg.moonx.fi"]').forEach(function(e){e.addEventListener("click",function(){if(window.MOONX_EVENT)MOONX_EVENT(/sign_up/.test(e.href)?"create_account":"log_in",{place:e.closest("#cb,#cbr")?"contest":e.closest("body>nav")?"nav":"learn",page:location.pathname})})});</script>
+</body>
+</html>

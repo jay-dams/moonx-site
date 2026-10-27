@@ -1,0 +1,124 @@
+.xb{position:relative;z-index:25;display:flex;align-items:center;min-height:64px;padding:0 10px 0 0;overflow:hidden;isolation:isolate;cursor:pointer;color:#fff;font-family:"Inter",system-ui,sans-serif;background:#05080F}
+.xb[hidden]{display:none}
+.xb::after{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(166,255,61,.05) 0 1px,transparent 1px 3px)}
+.xb > *{position:relative;z-index:1;flex:none}
+.xb-hit{position:absolute!important;inset:0;z-index:2!important;background:none;border:0;padding:0;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.xb-hit:focus-visible{outline:none}
+.xb:has(.xb-hit:focus-visible){outline:2px solid #7FB6FF;outline-offset:-3px}
+.xa-tag{align-self:stretch;display:flex;align-items:center;gap:6px;padding:0 22px 0 18px;background:#FF3B6B;color:#fff;font:900 13px/1 "Inter",sans-serif;letter-spacing:.06em;text-transform:uppercase;
+  clip-path:polygon(0 0,100% 0,calc(100% - 12px) 100%,0 100%);z-index:3!important;animation:xaKick 3.2s infinite}
+.xa-tag b{font:800 20px/1 "JetBrains Mono",monospace;letter-spacing:-.02em}
+@keyframes xaKick{0%,86%,100%{transform:none}89%{transform:rotate(-3deg) scale(1.06)}92%{transform:rotate(2deg) scale(1.06)}95%{transform:none}}
+.xb-track{flex:1 1 auto!important;min-width:0;overflow:hidden;-webkit-mask:linear-gradient(90deg,transparent,#000 4%,#000 94%,transparent);mask:linear-gradient(90deg,transparent,#000 4%,#000 94%,transparent)}
+.xb-run{display:flex;width:max-content;animation:xbTick 30s linear infinite}
+.xb:hover .xb-run{animation-play-state:paused}
+.xb-run span{padding-right:24px;white-space:nowrap;font:700 15px/1 "JetBrains Mono",monospace;text-transform:uppercase;letter-spacing:.04em;color:#D9F7B8;text-shadow:0 0 10px rgba(166,255,61,.45)}
+.xb-run b{color:#fff}.xb-run b.xm{color:#A6FF3D}.xb-run i{font-style:normal;color:#FF3B6B;margin:0 12px}
+.xa-av{display:inline-block;width:22px;height:22px;border-radius:6px;vertical-align:-6px;margin:0 6px 0 2px;background:#fff url(/assets/contest/moonxor-v1.jpg) center/cover;box-shadow:0 0 0 1.5px #A6FF3D,0 0 10px rgba(166,255,61,.5)}
+@keyframes xbTick{to{transform:translateX(-50%)}}
+.xb-go{z-index:3!important;margin:0 4px 0 12px;display:inline-flex;align-items:center;min-height:38px;padding:0 16px;border-radius:12px;color:#fff;text-decoration:none;
+  font:800 13px/1 "Inter",sans-serif;letter-spacing:-.01em;white-space:nowrap;background:rgba(45,123,255,.18);border:1px solid rgba(45,123,255,.55);box-shadow:inset 0 0 22px rgba(45,123,255,.30)}
+.xb-go:hover{background:rgba(45,123,255,.28);border-color:rgba(45,123,255,.78)}
+.xb-x{z-index:3!important;display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border:0;border-radius:8px;background:transparent;color:#8FA8C8;cursor:pointer;padding:0}
+.xb-x:hover{color:#fff;background:rgba(160,200,255,.06)}
+.xb-x::after{content:"";position:absolute;inset:-6px}
+.xb-x svg{width:15px;height:15px}
+.xb :focus-visible{outline:2px solid #7FB6FF;outline-offset:3px}
+@media (max-width:760px){
+  .xb{min-height:48px;padding-right:6px}
+  .xa-tag{padding:0 16px 0 12px;font-size:10px}.xa-tag b{font-size:16px}
+  .xb-run span{font-size:12px}
+  .xa-av{width:17px;height:17px;border-radius:5px;vertical-align:-4px}
+  .xb-go{display:none}
+}
+@media (prefers-reduced-motion:reduce){.xa-tag,.xb-run{animation:none}}
+.xb{min-height:48px}
+.xb-run span{font-size:13px}
+.xa-tag{padding:0 18px 0 14px;font-size:11px}.xa-tag b{font-size:17px}
+.xa-av{width:19px;height:19px;border-radius:5px;vertical-align:-5px}
+@media (max-width:760px){
+  .xa-tag{padding:0 16px 0 12px;font-size:10px}.xa-tag b{font-size:16px}
+  .xb-run span{font-size:12px}
+  .xa-av{width:17px;height:17px;vertical-align:-4px}
+}
+.cbr{position:fixed;inset:0;z-index:60;display:none;align-items:flex-end;justify-content:center;
+  background:rgba(0,0,0,.84);-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);font-family:"Inter",system-ui,sans-serif;color:#fff}
+.cbr.on{display:flex;animation:cbrFi .2s ease}
+.cbr-s{position:relative;width:100%;max-width:520px;max-height:90dvh;overflow-y:auto;overscroll-behavior:contain;
+  padding:16px;background:#0A0E1A;border:1px solid rgba(150,195,255,.30);border-bottom:0;border-radius:20px 20px 0 0;
+  animation:cbrUp .3s cubic-bezier(.2,.9,.3,1)}
+.cbr-grab{width:38px;height:4px;border-radius:99px;background:rgba(150,195,255,.30);margin:0 auto 16px}
+.cbr-live{display:inline-flex;align-items:center;gap:6px;margin-bottom:14px;padding:5px 10px;border-radius:99px;background:#FF3B6B;color:#fff;
+  font:900 10px/1 "Inter",sans-serif;letter-spacing:.1em;text-transform:uppercase}
+.cbr-live i{width:6px;height:6px;border-radius:50%;background:#fff;animation:cbrPulse 1.4s infinite}
+.cbr h3{margin:0;font:700 28px/1.14 "Inter",sans-serif;letter-spacing:-.035em;color:#fff}
+.cbr h3 .xm{font-family:"JetBrains Mono",monospace;color:#A6FF3D;letter-spacing:-.02em}
+.cbr-sb{margin:8px 0 0;font:500 13px/1.55 "Inter",sans-serif;color:#8FA8C8}
+.cbr-sb b{color:#fff;font-weight:700}.cbr-sb .w{color:#A6FF3D;font-weight:700}
+.cbr-board{display:flex;flex-direction:column;gap:8px;margin-top:16px}
+.cbr-lb{display:flex;align-items:center;gap:12px;padding:12px;border-radius:16px;background:#0A0E1A;border:1px solid rgba(150,195,255,.16)}
+.cbr-lb.you{background:linear-gradient(173deg,rgba(45,123,255,.20),rgba(45,123,255,.06));border-color:rgba(45,123,255,.42)}
+.cbr-rk{width:22px;text-align:center;font:700 15px/1 "JetBrains Mono",monospace;color:#8FA8C8;flex:none}
+.cbr-rk.r1{color:#FFC93C}
+.cbr-av{width:38px;height:38px;border-radius:12px;flex:none;background:#fff url(/assets/contest/moonxor-v1.jpg) center/cover;margin-right:6px}
+.cbr-av.seat{background:none;border:1px dashed rgba(150,195,255,.30);display:flex;align-items:center;justify-content:center;font:700 15px/1 "JetBrains Mono",monospace;color:#8FA8C8}
+.cbr-id{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
+.cbr-nm{font-size:13px;font-weight:600;line-height:1.55}
+.cbr-meta{display:flex;flex-wrap:wrap;align-items:center;gap:4px;font-size:11px;line-height:1.6;color:#8FA8C8}
+.cbr-tag{display:inline-flex;padding:4px 8px;border-radius:99px;border:1px solid rgba(166,255,61,.32);background:rgba(166,255,61,.13);color:#A6FF3D;font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+.cbr-mult{flex:none;padding:4px 12px;border-radius:99px;background:rgba(166,255,61,.11);border:1px solid rgba(166,255,61,.26);color:#A6FF3D;font-size:13px;font-weight:800;letter-spacing:-.02em;white-space:nowrap}
+.cbr-rules{margin:16px 0 0;padding:0 0 0 20px;display:flex;flex-direction:column;gap:8px;font:500 13px/1.55 "Inter",sans-serif;color:#8FA8C8}
+.cbr-rules b{color:#fff;font-weight:600}
+.cbr-row{display:flex;gap:10px;margin-top:20px}
+.cbr-cta{text-decoration:none;flex:1 1 calc(50% - 5px);display:flex;align-items:center;justify-content:center;padding:16px;border-radius:12px;cursor:pointer;
+  font:800 13px/1.25 "Inter",sans-serif;letter-spacing:-.01em;color:#fff;transition:background .16s,border-color .16s}
+.cbr-cta.ghost{background:none;border:1px solid rgba(150,195,255,.30)}
+.cbr-cta.ghost:hover{border-color:rgba(150,195,255,.5);background:rgba(160,200,255,.05)}
+.cbr-cta.tinted{background:rgba(45,123,255,.18);border:1px solid rgba(45,123,255,.55);box-shadow:inset 0 0 22px rgba(45,123,255,.30)}
+.cbr-cta.tinted:hover{background:rgba(45,123,255,.28);border-color:rgba(45,123,255,.78)}
+.cbr :focus-visible{outline:2px solid #7FB6FF;outline-offset:3px}
+@media(min-width:761px){
+  .cbr{align-items:center;padding:24px}
+  .cbr-s{max-width:560px;padding:20px;border-bottom:1px solid rgba(150,195,255,.30);border-radius:20px}
+  .cbr-grab{display:none}
+}
+@keyframes cbrFi{from{opacity:0}}
+@keyframes cbrUp{from{transform:translateY(24px);opacity:0}}
+@keyframes cbrPulse{50%{opacity:.3}}
+@media(prefers-reduced-motion:reduce){.cbr.on,.cbr-s,.cbr-live i{animation:none}}
+.xb{background:#03050C}
+.xb-run span{color:#CEFDA8;text-shadow:0 0 10px rgba(166,255,61,.28)}
+.xb-run span{letter-spacing:.06em}
+.xb-run b,.xb-run b.xm{font-weight:700}
+.xa-tag{font-weight:800}
+.xa-tag{font-size:11px}
+.xa-tag b{font-size:18px;font-weight:700}
+.xa-av{width:22px;height:22px;border-radius:8px;vertical-align:-6px;
+  box-shadow:0 0 0 1px #A6FF3D,0 0 10px rgba(166,255,61,.28)}
+.xb-run .xa-av{padding:0;box-sizing:border-box}
+.xb-x{border:1px solid transparent}
+.xb-x:hover{background:rgba(160,200,255,.05);border-color:rgba(150,195,255,.30)}
+@media (max-width:760px){
+  .xa-tag{font-size:9px}
+  .xa-tag b{font-size:15px}
+  .xa-av{width:17px;height:17px;border-radius:8px;vertical-align:-4px}
+}
+.lnk{color:#7FB6FF;font-weight:700;cursor:pointer;transition:color .15s}
+.lnk:hover{color:#FFFFFF}
+.lnk:focus-visible{outline:2px solid #7FB6FF;outline-offset:2px;border-radius:4px}
+.lnk--inline{text-decoration:underline;text-underline-offset:2px}
+.lnk--standalone{display:inline-flex;align-items:center;gap:6px;min-height:32px;padding:0 4px;
+  font-family:"Inter",sans-serif;font-size:13px;font-weight:800;line-height:1.25;letter-spacing:-.02em;text-decoration:none;
+  background:none;border:0;box-shadow:none;border-radius:4px}
+.lnk--standalone svg{width:16px;height:16px;flex:none;transition:transform .15s}
+.lnk--standalone:hover svg{transform:translate(2px,-2px)}
+.lnk--standalone:hover{background:none;border-color:transparent}
+.xb-go.lnk{margin:0 4px 0 12px}
+@media(max-width:760px){.xb-go.lnk{display:none}}
+:root{--cbh:48px}
+.xb{position:fixed;top:0;left:0;right:0;z-index:21;font-weight:400}
+.cbr{font-weight:400}
+body{padding-top:var(--cbh)}
+body>nav{top:var(--cbh)}
+.legal .sec{scroll-margin-top:calc(var(--navh) + var(--cbh, 0px) + 18px)}
+.art h2,.art h3{scroll-margin-top:calc(var(--navh) + var(--cbh, 0px) + 18px)}
