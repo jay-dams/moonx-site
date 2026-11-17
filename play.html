@@ -153,7 +153,9 @@ nav.top{position:fixed;top:0;left:0;right:0;z-index:30;height:var(--nh);display:
 /* La phrase qui dit d'ou viennent les prix: elle se lit d'un trait, sur
    toute la largeur, pas dans une colonne etroite a cote d'un badge. */
 .pmnote{margin:16px 3px 0;font-size:11.5px;color:var(--dim);line-height:1.6;font-style:italic}
-.pmnote .pmb{float:left;margin:2px 9px 0 0;font-style:normal}
+/* Le badge au fil du texte, pas en flottant: seule la premiere ligne
+   le contourne, toutes les suivantes prennent la largeur entiere. */
+.pmnote .pmb{display:inline-flex;vertical-align:1px;margin:0 8px 0 0;font-style:normal}
 
 .pmnote a{color:var(--pm);font-weight:700}
 .mt .mh .dt2{color:var(--dim)}
@@ -186,8 +188,16 @@ nav.top{position:fixed;top:0;left:0;right:0;z-index:30;height:var(--nh);display:
 .sg .k2.fd{color:var(--red)}
 .sg.on .k2.fu,.sg.on .k2.fd{color:#06110A}
 /* le match en vedette: le premier de la liste, plus grand, pour donner un point d'accroche */
+/* La carte en vedette respire: la photo avance lentement et revient, sur
+   vingt-deux secondes, sans jamais sauter. C'est une seule couche animee
+   par la carte graphique — aucun fichier en plus, aucune donnee en plus.
+   La photo est passee sur son propre calque pour pouvoir bouger sous le
+   voile sombre, qui lui ne bouge pas. */
 .mt.feat{position:relative;padding:13px;border-radius:26px;overflow:hidden;background-color:var(--card);background-size:cover;background-position:center 35%;box-shadow:inset 0 0 0 1px var(--line)}
-.mt.feat:before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(7,11,20,.74),rgba(7,11,20,.93) 55%,rgba(7,11,20,.97))}
+.mt.feat:before{content:"";position:absolute;inset:-7%;background-image:inherit;background-size:cover;background-position:center 35%;
+  animation:kenb 22s ease-in-out infinite alternate;will-change:transform;transform-origin:50% 40%}
+.mt.feat:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(7,11,20,.74),rgba(7,11,20,.93) 55%,rgba(7,11,20,.97))}
+@keyframes kenb{from{transform:scale(1) translate3d(0,0,0)}to{transform:scale(1.16) translate3d(-2.5%,-2%,0)}}
 .mt.feat .mh,.mt.feat .mkt{position:relative}
 .mt.feat .mh{font-size:10.5px;margin:0 3px 10px}
 .mt.feat .mkt{padding:3px;gap:3px;border-radius:22px;background:linear-gradient(180deg,rgba(61,220,132,.09),rgba(150,180,230,.045));box-shadow:inset 0 0 0 1px rgba(140,170,220,.14)}
@@ -693,7 +703,7 @@ body.det .hero,body.det .invite{display:none}
 .dop[disabled]{opacity:.4;pointer-events:none}
 .dwin{margin:2px 0 4px}
 .dnote{margin:18px 0 4px;padding:12px 14px;border-radius:14px;background:var(--well);box-shadow:inset 0 0 0 1px var(--line);font-size:12px;line-height:1.6;color:var(--dim);font-style:italic}
-.dnote .pmb{float:left;margin:2px 9px 0 0;font-style:normal}
+.dnote .pmb{display:inline-flex;vertical-align:1px;margin:0 8px 0 0;font-style:normal}
 
 .dnote a{color:var(--pm)}
 .dempty{padding:26px 16px;text-align:center;color:var(--dim);font-size:13.5px}
