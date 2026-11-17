@@ -149,7 +149,7 @@ nav.top{position:fixed;top:0;left:0;right:0;z-index:30;height:var(--nh);display:
 .mt .mh .vl{color:rgba(130,145,172,.6)}
 .mt .mh .pl2{color:var(--acc)}
 .pmb{display:inline-flex;align-items:center;gap:4px;padding:2px 6px 1px;border-radius:5px;background:rgba(140,156,255,.13);color:var(--pm);font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.09em;white-space:nowrap}
-.pmb svg{width:7px;height:7px;fill:currentColor;flex:none}
+.pmb svg{width:7.5px;height:9px;fill:currentColor;flex:none}
 .pmnote{display:flex;align-items:flex-start;gap:8px;margin:14px 3px 0;font-size:11.5px;color:var(--dim);line-height:1.5}
 .pmnote .pmb{flex:none;margin-top:1px}
 .pmnote a{color:var(--pm);font-weight:700}
@@ -507,7 +507,7 @@ footer .lk a{text-decoration:none;color:#fff}
 .tkwrap::-webkit-scrollbar{display:none}
 .ticker:after{content:"";position:absolute;right:0;top:0;bottom:0;width:34px;pointer-events:none;background:linear-gradient(90deg,rgba(4,7,14,0),rgba(4,7,14,.95))}
 .pmlive{flex:none;display:inline-flex;align-items:center;gap:6px;height:100%;padding:0 13px;font-family:var(--mono);font-size:9.5px;font-weight:700;letter-spacing:.14em;color:var(--pm);background:rgba(99,120,255,.09);border-right:1px solid var(--line);white-space:nowrap}
-.pmlive svg{width:9px;height:9px;fill:currentColor;flex:none}
+.pmlive svg{width:9px;height:10.8px;fill:currentColor;flex:none}
 .pmlive i{font-style:normal}
 @media (max-width:560px){.pmlive{font-size:8.5px;padding:0 8px;letter-spacing:.08em;gap:5px}.pmlive i{display:none}}
 .tkin{display:flex;align-items:center;height:100%;width:max-content}
@@ -558,12 +558,13 @@ footer .lk a{text-decoration:none;color:#fff}
 .dc .em{position:absolute;right:-14px;top:-20px;font-size:92px;line-height:1;opacity:.13;transform:rotate(-12deg);pointer-events:none}
 .dc u{display:block;font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.15em;color:var(--hi);text-decoration:none;position:relative}
 .dc h5{margin:3px 0 9px;font-size:16px;font-weight:900;letter-spacing:-.02em;position:relative}
-.dc .lgs{display:grid;gap:5px;margin-bottom:10px;position:relative}
+.dc .lgs{display:grid;gap:7px;margin-bottom:10px;position:relative}
 .dc .lgs div{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:700;color:#DCE4F2;min-width:0}
-.dc .lgs .lo{flex:none;width:18px;height:18px;border-radius:5px;background:rgba(0,0,0,.35);display:grid;place-items:center;overflow:hidden;font-size:7.5px;font-weight:900}
+.dc .lgs .lo{flex:none;align-self:center;width:20px;height:20px;border-radius:5px;background:rgba(0,0,0,.35);display:grid;place-items:center;overflow:hidden;font-size:7.5px;font-weight:900}
 .dc .lgs .lo img{width:100%;height:100%;object-fit:contain}
-.dc .lgs .t{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.dc .lgs .k{font-family:var(--mono);font-size:11px;font-weight:700;color:var(--dim)}
+.dc .lgs .t{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;line-height:1.2}
+.dc .lgs .t small{display:block;font-size:10px;font-weight:600;letter-spacing:0;color:var(--dim);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dc .lgs .k{flex:none;align-self:center;font-family:var(--mono);font-size:11px;font-weight:700;color:var(--dim)}
 .dc .ft{display:flex;align-items:center;gap:9px;position:relative}
 .dc .ft .x{font-size:21px;font-weight:900;letter-spacing:-.03em;color:#fff;font-variant-numeric:tabular-nums}
 .dc .ft .x em{font-style:normal;font-size:11px;color:var(--dim);display:block;font-weight:700;letter-spacing:0}
@@ -897,7 +898,7 @@ button,a,.sg,.dop,.mt,.dc{touch-action:manipulation}
   </div>
 </nav>
 
-<div class="ticker" id="ticker"><span class="pmlive"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 0l6 6-6 6-6-6z"/></svg>POLYMARKET<i> LIVE</i></span><div class="tkwrap"><div class="tkin" id="tkin"></div></div></div>
+<div class="ticker" id="ticker"><span class="pmlive"><svg viewBox="110 96 266 320" aria-hidden="true"><path d="M375.84 389.422C375.84 403.572 375.84 410.647 371.212 414.154C366.585 417.662 359.773 415.75 346.15 411.927L127.22 350.493C119.012 348.19 114.907 347.038 112.534 343.907C110.161 340.776 110.161 336.513 110.161 327.988V184.012C110.161 175.487 110.161 171.224 112.534 168.093C114.907 164.962 119.012 163.81 127.22 161.507L346.15 100.072C359.773 96.2495 366.585 94.338 371.212 97.8455C375.84 101.353 375.84 108.428 375.84 122.578V389.422ZM164.761 330.463L346.035 381.337V279.595L164.761 330.463ZM139.963 306.862L321.201 256L139.963 205.138V306.862ZM164.759 181.537L346.035 232.406V130.663L164.759 181.537Z"/></svg>POLYMARKET<i> LIVE</i></span><div class="tkwrap"><div class="tkin" id="tkin"></div></div></div>
 
 <main class="wrap">
   <div class="shell">
@@ -1415,7 +1416,9 @@ function marketHTML(m,feat){
    pour ne dependre d'aucun service exterieur. */
 var SPIMG={soccer:1,basketball:1,amfootball:1,tennis:1,hockey:1,fight:1,cricket:1,baseball:1,other:1};
 function sportBg(sp){return"assets/img/sport/"+(SPIMG[sp]?sp:"other")+".jpg"}
-var PMSVG='<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 0l6 6-6 6-6-6z"/></svg>';
+/* La marque officielle de Polymarket, telle qu'ils la publient. Elle
+   remplace le losange que j'avais dessine a la main. */
+var PMSVG='<svg viewBox="110 96 266 320" aria-hidden="true"><path d="M375.84 389.422C375.84 403.572 375.84 410.647 371.212 414.154C366.585 417.662 359.773 415.75 346.15 411.927L127.22 350.493C119.012 348.19 114.907 347.038 112.534 343.907C110.161 340.776 110.161 336.513 110.161 327.988V184.012C110.161 175.487 110.161 171.224 112.534 168.093C114.907 164.962 119.012 163.81 127.22 161.507L346.15 100.072C359.773 96.2495 366.585 94.338 371.212 97.8455C375.84 101.353 375.84 108.428 375.84 122.578V389.422ZM164.761 330.463L346.035 381.337V279.595L164.761 330.463ZM139.963 306.862L321.201 256L139.963 205.138V306.862ZM164.759 181.537L346.035 232.406V130.663L164.759 181.537Z"/></svg>';
 var CHSVG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>';
 var CVSVG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 15l6-6 6 6"/></svg>';
 var BKSVG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>';
@@ -1794,10 +1797,11 @@ function dcHTML(c,i){
   return'<button type="button" class="dc c'+(i%4)+'" data-dc="'+c.id+'" style="background-image:url('+sportBg(sp)+')"><span class="em">'+c.em+'</span>'+
     '<u>'+c.tag+'</u><h5>'+esc(c.name)+'</h5><div class="lgs">'+
     c.legs.slice(0,3).map(function(l){
-      /* "Draw" tout seul ne dit pas de quel match il s'agit, et deux nuls
-         dans la meme carte deviennent indiscernables: on nomme le match. */
-      var nm=l.o.draw?mtitle(l.m):l.o.label;
-      return'<div>'+logoMini(l.o)+'<span class="t">'+esc(nm)+'</span><span class="k" data-lk="'+l.o.token+'">'+fx(1/price(l.o.token,l.o.p))+"</span></div>";
+      /* "Under 212.5", "Draw", "Knicks -6.5": seuls, ces intitules ne
+         disent pas de quel match il s'agit, et trois totaux dans la meme
+         carte deviennent indiscernables. Le match va en dessous. */
+      return'<div>'+logoMini(l.o)+'<span class="t">'+esc(l.o.label)+'<small>'+esc(mtitle(l.m))+'</small></span>'+
+        '<span class="k" data-lk="'+l.o.token+'">'+fx(1/price(l.o.token,l.o.p))+"</span></div>";
     }).join("")+
     (c.legs.length>3?'<div><span class="lo">+'+(c.legs.length-3)+'</span><span class="t">more</span></div>':"")+
     '</div><div class="ft"><span class="x" data-dcx="'+c.id+'">'+fx(comboX2(c.legs))+"<em>"+(same?"exact price":vol(comboVol(c.legs))+" on Polymarket")+'</em></span><span class="add">Add to slip</span></div></button>';
@@ -2772,8 +2776,15 @@ async function buildCard(r){
   g.fillStyle="rgba(61,220,132,.16)";rrect(g,P+mw+16,P+16,96,38,19);g.fill();
   g.fillStyle=acc==="#FF5C7A"?"#3DDC84":acc;g.font='700 19px JetBrains Mono,monospace';
   g.fillText("PLAY",P+mw+36,P+42);
+  /* la marque officielle de Polymarket: notre fichier, donc dessinable */
   g.fillStyle="rgba(140,156,255,.9)";g.font='700 19px JetBrains Mono,monospace';
-  g.textAlign="right";g.fillText("LIVE POLYMARKET PRICES",CARDW-P,P+42);g.textAlign="left";
+  g.textAlign="right";g.fillText("LIVE PRICES",CARDW-P,P+42);
+  var tw=g.measureText("LIVE PRICES").width;g.textAlign="left";
+  var pm=await cardImg("assets/img/polymarket-logo.svg");
+  if(pm&&pm.width){
+    var ph2=25,pw2=pm.width*(ph2/pm.height);
+    g.globalAlpha=.92;g.drawImage(pm,CARDW-P-tw-16-pw2,P+20,pw2,ph2);g.globalAlpha=1;
+  }
 
   /* le mot du resultat */
   g.fillStyle=acc;g.font='700 30px JetBrains Mono,monospace';
