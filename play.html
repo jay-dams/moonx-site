@@ -562,7 +562,6 @@ footer .lk a{text-decoration:none;color:#fff}
 .dc.c1:before{background:linear-gradient(135deg,rgba(232,179,65,.5),rgba(232,179,65,.12) 55%,transparent)}
 .dc.c2:before{background:linear-gradient(135deg,rgba(255,92,122,.5),rgba(255,92,122,.12) 55%,transparent)}
 .dc.c3:before{background:linear-gradient(135deg,rgba(140,156,255,.5),rgba(140,156,255,.12) 55%,transparent)}
-.dc .em{position:absolute;right:-14px;top:-20px;font-size:92px;line-height:1;opacity:.13;transform:rotate(-12deg);pointer-events:none}
 .dc u{display:block;font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.15em;color:var(--hi);text-decoration:none;position:relative}
 .dc h5{margin:3px 0 9px;font-size:16px;font-weight:900;letter-spacing:-.02em;position:relative}
 .dc .lgs{display:grid;gap:7px;margin-bottom:10px;position:relative}
@@ -1558,7 +1557,8 @@ var SPIMG={
   basketball:"basketball", nba:"basketball", cbb:"basketball",
   hockey:"hockey", nhl:"hockey",
   amfootball:"amfootball", nfl:"amfootball", cfb:"amfootball",
-  fight:"fight", ufc:"fight"
+  fight:"fight", ufc:"fight",
+  volley:"volley", tt:"tabletennis", pickle:"pickle"
 };
 function sportBg(k){var f=SPIMG[k];return f?"assets/img/sport/"+f+".jpg":""}
 function bgStyle(k){var u=sportBg(k);return u?' style="background-image:url('+u+')"':""}
@@ -1954,7 +1954,7 @@ function comboVol(legs){
 }
 function dcHTML(c,i){
   var sp=c.legs[0]?catOf(c.legs[0].m):"",same=comboSame(c.legs);
-  return'<button type="button" class="dc c'+(i%4)+'" data-dc="'+c.id+'"'+bgStyle(sp)+'><span class="em">'+c.em+'</span>'+
+  return'<button type="button" class="dc c'+(i%4)+'" data-dc="'+c.id+'"'+bgStyle(sp)+'>'+
     '<u>'+c.tag+'</u><h5>'+esc(c.name)+'</h5><div class="lgs">'+
     c.legs.slice(0,3).map(function(l){
       /* "Under 212.5", "Draw", "Knicks -6.5": seuls, ces intitules ne
