@@ -1025,7 +1025,45 @@ footer .lk button:hover{color:#fff}
 (function(){
 "use strict";
 var API="https://xcyqdfhnpntcloimotoo.supabase.co/functions/v1/league",SIGN="https://lfg.moonx.fi/users/sign_up",TK="moonx.play.token",SK="moonx.play.stake",START=1000;
-var SPORTS=[["all","All sports","\u25C9"],["soccer","Football","\u26BD"],["basketball","Basketball","\uD83C\uDFC0"],["amfootball","US football","\uD83C\uDFC8"],["tennis","Tennis","\uD83C\uDFBE"],["hockey","Hockey","\uD83C\uDFD2"],["fight","MMA","\uD83E\uDD4A"],["cricket","Cricket","\uD83C\uDFCF"],["baseball","Baseball","\u26BE"],["other","More","\u2726"]];
+/* Les categories sont celles de Polymarket: des ligues, pas des sports.
+   "More" ne voulait rien dire et cachait 37 matchs — du volley polonais,
+   du tennis de table et du pickleball. Chacun a desormais son nom. */
+var SPORTS=[
+  ["all","All sports","\u25C9"],
+  ["soccer","Soccer","\u26BD"],
+  ["tennis","Tennis","\uD83C\uDFBE"],
+  ["nba","NBA","\uD83C\uDFC0"],
+  ["cbb","College basketball","\uD83C\uDFC0"],
+  ["nhl","NHL","\uD83C\uDFD2"],
+  ["nfl","NFL","\uD83C\uDFC8"],
+  ["cfb","College football","\uD83C\uDFC8"],
+  ["ufc","UFC","\uD83E\uDD4A"],
+  ["basketball","Basketball","\uD83C\uDFC0"],
+  ["hockey","Hockey","\uD83C\uDFD2"],
+  ["cricket","Cricket","\uD83C\uDFCF"],
+  ["baseball","Baseball","\u26BE"],
+  ["tt","Table tennis","\uD83C\uDFD3"],
+  ["pickle","Pickleball","\uD83E\uDD4E"],
+  ["volley","Volleyball","\uD83C\uDFD0"],
+  ["other","Other sports","\u2726"]
+];
+/* La ligue, et a defaut l'icone de la ligue, disent la categorie. */
+function catOf(m){
+  var L=String(m.league||"").toLowerCase(),I=String(m.licon||"").toLowerCase(),s=m.sport;
+  if(s==="soccer")return"soccer";
+  if(s==="tennis")return"tennis";
+  if(s==="fight")return"ufc";
+  if(s==="cricket")return"cricket";
+  if(s==="baseball")return"baseball";
+  if(s==="amfootball")return /college|ncaa|cfb/.test(L)?"cfb":"nfl";
+  if(s==="basketball")return L==="nba"?"nba":(/college|ncaa|cbb/.test(L)?"cbb":"basketball");
+  if(s==="hockey")return L==="nhl"?"nhl":"hockey";
+  var z=L+" "+I;
+  if(/volley|pluslig/.test(z))return"volley";
+  if(/setka|table.?tennis/.test(z))return"tt";
+  if(/pickle|ppa/.test(z))return"pickle";
+  return"other";
+}
 var $=function(id){return document.getElementById(id)};
 var tok=null;try{tok=localStorage.getItem(TK)}catch(e){}
 try{var _s=parseFloat(localStorage.getItem(SK));if(isFinite(_s)&&_s>0)stake=_s}catch(e){}
@@ -1290,7 +1328,7 @@ function render(){
 }
 
 function sportsBar(){
-  var n={};MK.forEach(function(m){n[m.sport]=(n[m.sport]||0)+1});
+  var n={};MK.forEach(function(m){var k=catOf(m);n[k]=(n[k]||0)+1});
   var el=$("sports");
   if(el)el.innerHTML=SPORTS.filter(function(s){return s[0]!==sport&&(s[0]==="all"||n[s[0]])}).map(function(s){return'<button type="button" class="chip'+(s[0]===sport?" on":"")+'" data-sport="'+s[0]+'"><span class="ci">'+s[2]+"</span>"+s[1]+"</button>"}).join("");
   renderRail();
@@ -1367,7 +1405,7 @@ function dface(k,t){
 function dayList(){
   var by={},ord=[];
   MK.forEach(function(m){
-    if(sport!=="all"&&m.sport!==sport)return;
+    if(sport!=="all"&&catOf(m)!==sport)return;
     if(m.opts.length<2)return;
     var k=dkey(m);
     if(!by[k]){by[k]={k:k,n:0,t:m.start};ord.push(by[k])}
@@ -1405,7 +1443,7 @@ function daysBar(){
 function mlist(){
   var now=Date.now();
   return MK.filter(function(m){
-    return(sport==="all"||m.sport===sport)&&m.opts.length>=2&&(day==="all"||dkey(m)===day);
+    return(sport==="all"||catOf(m)===sport)&&m.opts.length>=2&&(day==="all"||dkey(m)===day);
   }).sort(function(a,b){
     var al=a.start<=now,bl=b.start<=now;
     if(al!==bl)return al?-1:1;
@@ -1631,7 +1669,7 @@ function searchPaint(){
   var b=$("sbody");if(b)b.innerHTML=searchBody(timers.sq||"");
 }
 function filterSheet(){
-  var n={};MK.forEach(function(m){n[m.sport]=(n[m.sport]||0)+1});
+  var n={};MK.forEach(function(m){var k=catOf(m);n[k]=(n[k]||0)+1});
   openSheet("filter",'<h3>Choose a sport <button type="button" data-close-sheet="1">Close</button></h3><div class="fsheet">'+
     SPORTS.filter(function(x){return x[0]==="all"||n[x[0]]}).map(function(x){
       var c=x[0]==="all"?MK.length:n[x[0]];
@@ -1642,7 +1680,7 @@ function goMarket(id){
   var m=MK.find(function(x){return x.id===id});if(!m)return;
   if(tab!=="matches")setTab("matches");
   if(detail){detail=null;syncViews();renderIdentity();renderDaily()}
-  if(sport!=="all"&&m.sport!==sport)sport="all";
+  if(sport!=="all"&&catOf(m)!==sport)sport="all";
   day=dkey(m);
   var l=mlist(),idx=-1;
   l.some(function(x,k){if(x.id===id){idx=k;return true}});
@@ -1655,7 +1693,7 @@ function goMarket(id){
 }
 function renderRail(){
   var r=$("rail");if(!r)return;
-  var n={};MK.forEach(function(m){n[m.sport]=(n[m.sport]||0)+1});
+  var n={};MK.forEach(function(m){var k=catOf(m);n[k]=(n[k]||0)+1});
   var h='<button type="button" class="rsr" data-search="1"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg></span><span class="lb">Search a team</span></button>';
   h+='<div class="rh">MARKETS</div>';
   h+=SPORTS.filter(function(x){return x[0]==="all"||n[x[0]]||x[0]===sport}).map(function(x){
@@ -1753,7 +1791,7 @@ function pick3(list,n,fn){
    match, garde en memoire, et seulement pour les quelques premiers.    */
 function loadDeep(){
   if(!timers.deepOk)return;
-  var top=openMk().slice().sort(function(a,b){return b.vol-a.vol}).slice(0,4);
+  var top=comboPool().slice().sort(function(a,b){return b.vol-a.vol}).slice(0,4);
   top.forEach(function(m){
     if(DEEP[m.id]||deepOn[m.id])return;
     deepOn[m.id]=1;
@@ -1796,8 +1834,20 @@ function spreadLeg(m){
 function bttsLeg(m){
   return deepLeg(m,"both_teams_to_score",function(o,p){return /^yes$/i.test(o.label)&&p>.4&&p<.8});
 }
+/* Polymarket propose des combos par categorie: quand on choisit NBA, on
+   veut des combos NBA. On elargit seulement si la categorie est trop
+   mince pour en tirer trois. */
+function comboPool(){
+  if(sport==="all")return openMk();
+  var l=openMk().filter(function(m){return catOf(m)===sport});
+  return l.length>=3?l:openMk();
+}
+function comboNarrow(){
+  if(sport==="all")return false;
+  return openMk().filter(function(m){return catOf(m)===sport}).length>=3;
+}
 function comboOfDayList(){
-  var now=Date.now(),all=openMk();
+  var now=Date.now(),all=comboPool();
   if(all.length<3)return[];
   var soon=all.filter(function(m){return m.start>now});
   var live=all.filter(function(m){return m.start<=now});
@@ -1920,10 +1970,11 @@ function renderDaily(){
   var el=$("daily");if(!el)return;
   var cs=combosOfDay();DC=cs;
   if(!cs.length){el.innerHTML="";el.dataset.k="";return}
-  var k=cs.map(function(c){return c.id+c.legs.map(function(l){return l.o.token.slice(-6)}).join("-")}).join("|");
+  var k=sport+"/"+cs.map(function(c){return c.id+c.legs.map(function(l){return l.o.token.slice(-6)}).join("-")}).join("|");
   if(el.dataset.k===k)return;
   el.dataset.k=k;
-  el.innerHTML='<div class="dayhd"><h3>Today’s combos</h3><span class="pmb">'+PMSVG+'LIVE POLYMARKET PRICES</span></div>'+
+  var cat=comboNarrow()?(SPORTS.find(function(x){return x[0]===sport})||[])[1]:"";
+  el.innerHTML='<div class="dayhd"><h3>'+(cat?esc(cat)+" combos":"Today’s combos")+'</h3><span class="pmb">'+PMSVG+'LIVE POLYMARKET PRICES</span></div>'+
     '<div class="dgrid">'+cs.map(dcHTML).join("")+"</div>";
 }
 function addCombo(id){
@@ -3192,7 +3243,7 @@ document.addEventListener("click",function(e){
   if(d.tab){setTab(d.tab);return}
   if(d.mail){sendMail(d.mail);return}
   if(d.startgame){startGame();return}
-  if(d.sport){sport=d.sport;SHOWN=14;closeSheet();fixDay();if(detail){detail=null;syncViews();renderIdentity();renderDaily()}if(tab!=="matches"){setTab("matches")}try{var u=new URL(location.href);if(sport==="all")u.searchParams.delete("sport");else u.searchParams.set("sport",sport);history.replaceState(null,"",u)}catch(x){}renderMatches();renderTicket();pollQuotes();return}
+  if(d.sport){sport=d.sport;SHOWN=14;closeSheet();fixDay();DEEP=DEEP;loadDeep();renderDaily();if(detail){detail=null;syncViews();renderIdentity();renderDaily()}if(tab!=="matches"){setTab("matches")}try{var u=new URL(location.href);if(sport==="all")u.searchParams.delete("sport");else u.searchParams.set("sport",sport);history.replaceState(null,"",u)}catch(x){}renderMatches();renderTicket();pollQuotes();return}
   if(d.pick){togglePick(d.pick,+d.j);return}
   if(d.dc){addCombo(d.dc);return}
   if(d.go){goMarket(d.go);return}
