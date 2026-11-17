@@ -1631,14 +1631,15 @@ function openMk(){
    chiffree par le serveur, au prix exact qui sera retenu.
 --------------------------------------------------------------------------- */
 var DEEP={},deepOn={},QC={},qcOn={};
+/* Le nul compte comme les autres. En l'ecartant, un match en direct qui
+   se dirigeait vers 0-0 — le nul a 88% — rendait "le favori" du match
+   l'equipe menee a 11,8x, et la carte annoncait 2116x en se disant sure. */
 function favLeg(m){
-  var j=-1;m.opts.forEach(function(o,k){if(o.draw)return;if(j<0||price(o.token,o.p)>price(m.opts[j].token,m.opts[j].p))j=k});
-  if(j<0)j=0;
+  var j=0;m.opts.forEach(function(o,k){if(price(o.token,o.p)>price(m.opts[j].token,m.opts[j].p))j=k});
   return{m:m,o:m.opts[j],gk:m.id+"|ml"};
 }
 function dogLeg(m){
-  var j=-1;m.opts.forEach(function(o,k){if(o.draw)return;if(j<0||price(o.token,o.p)<price(m.opts[j].token,m.opts[j].p))j=k});
-  if(j<0)j=0;
+  var j=0;m.opts.forEach(function(o,k){if(price(o.token,o.p)<price(m.opts[j].token,m.opts[j].p))j=k});
   return{m:m,o:m.opts[j],gk:m.id+"|ml"};
 }
 function legP(l){return price(l.o.token,l.o.p)}
@@ -1757,9 +1758,12 @@ function comboSame(legs){
 }
 function comboX2(legs){
   if(comboSame(legs)){
-    var k=ckey(legs);
-    if(QC[k]>0)return QC[k];
-    askCombo(legs);
+    var k=ckey(legs),c=QC[k];
+    /* On garde le dernier prix connu pendant qu'on en redemande un: sinon
+       la carte reviendrait au produit des cotes, qui est faux ici. */
+    if(c&&Date.now()-c.t>30000)askCombo(legs);
+    if(c&&c.v>0)return c.v;
+    if(!c)askCombo(legs);
   }
   return legs.reduce(function(a,l){return a/price(l.o.token,l.o.p)},1);
 }
@@ -1769,9 +1773,9 @@ function askCombo(legs){
   qcOn[k]=1;
   bq(function(){
     return api("quote",{picks:legs.map(function(l){return{event_id:l.m.id,token_id:l.o.token}})}).then(function(j){
-      QC[k]=+j.mult||0;
-      if(tab==="matches"&&!detail)renderDaily();
-    }).catch(function(){QC[k]=-1}).then(function(){setTimeout(function(){qcOn[k]=0},45000)});
+      QC[k]={v:+j.mult||0,t:Date.now()};
+      if(tab==="matches"&&!detail)tickDaily();
+    }).catch(function(){QC[k]={v:0,t:Date.now()}}).then(function(){setTimeout(function(){qcOn[k]=0},8000)});
   });
 }
 function comboVol(legs){
@@ -1784,7 +1788,10 @@ function dcHTML(c,i){
   return'<button type="button" class="dc c'+(i%4)+'" data-dc="'+c.id+'" style="background-image:url('+sportBg(sp)+')"><span class="em">'+c.em+'</span>'+
     '<u>'+c.tag+'</u><h5>'+esc(c.name)+'</h5><div class="lgs">'+
     c.legs.slice(0,3).map(function(l){
-      return'<div>'+logoMini(l.o)+'<span class="t">'+esc(l.o.label)+'</span><span class="k">'+fx(1/price(l.o.token,l.o.p))+"</span></div>";
+      /* "Draw" tout seul ne dit pas de quel match il s'agit, et deux nuls
+         dans la meme carte deviennent indiscernables: on nomme le match. */
+      var nm=l.o.draw?mtitle(l.m):l.o.label;
+      return'<div>'+logoMini(l.o)+'<span class="t">'+esc(nm)+'</span><span class="k" data-lk="'+l.o.token+'">'+fx(1/price(l.o.token,l.o.p))+"</span></div>";
     }).join("")+
     (c.legs.length>3?'<div><span class="lo">+'+(c.legs.length-3)+'</span><span class="t">more</span></div>':"")+
     '</div><div class="ft"><span class="x" data-dcx="'+c.id+'">'+fx(comboX2(c.legs))+"<em>"+(same?"exact price":vol(comboVol(c.legs))+" on Polymarket")+'</em></span><span class="add">Add to slip</span></div></button>';
@@ -1794,6 +1801,22 @@ function logoMini(o){
   if(o.sub&&!realLogo(o))return'<span class="lo">'+subIcon(o)+'</span>';
   var ini=initials(o.label),lg=realLogo(o);
   return'<span class="lo">'+(lg?'<img src="'+esc(lg)+'" alt="" loading="lazy" onerror="this.parentNode.textContent=\''+ini+'\'">':ini)+"</span>";
+}
+/* Les cartes de combos ne sont pas redessinees a chaque tic de prix: leur
+   composition ne change pas. Mais leurs chiffres, si. Sans ca, les cotes
+   de chaque jambe restaient figees a leur valeur du premier rendu pendant
+   que le multiplicateur, lui, suivait: la carte se contredisait. */
+function tickDaily(){
+  document.querySelectorAll("#daily [data-lk]").forEach(function(e){
+    var v=Q[e.dataset.lk];if(v==null)return;
+    var t=fx(1/v);if(e.textContent!==t)e.textContent=t;
+  });
+  document.querySelectorAll("#daily [data-dcx]").forEach(function(e){
+    var c=DC.find(function(x){return x.id===e.dataset.dcx});
+    if(!c)return;
+    var t=fx(comboX2(c.legs));
+    if(e.firstChild&&e.firstChild.nodeValue!==t)e.firstChild.nodeValue=t;
+  });
 }
 function renderDaily(){
   var el=$("daily");if(!el)return;
@@ -2708,6 +2731,10 @@ function quoteTokens(){
   var s={};openPos().forEach(function(p){p.lg_leg.forEach(function(l){if(l.final==null)s[l.token_id]=1})});
   Object.keys(picks).forEach(function(k){s[picks[k].token]=1});
   if(follow)follow.legs.forEach(function(l){s[l.token]=1});
+  /* Les jambes des combos proposes: souvent des matchs d'un autre jour que
+     celui affiche, donc absents de la liste visible. Sans leurs cotes,
+     les cartes resteraient figees. */
+  DC.forEach(function(c){c.legs.forEach(function(l){s[l.o.token]=1})});
   if(detail&&detail.ev){
     detail.ev.opts.forEach(function(o){s[o.token]=1});
     (detail.ev.groups||[]).forEach(function(g){g.opts.forEach(function(o){s[o.token]=1})});
@@ -2739,9 +2766,7 @@ function pollQuotes(){
       if(pcount())refreshTicket();
     }
     tickTicker();tickClocks();
-    document.querySelectorAll("[data-dcx]").forEach(function(e){
-      var c=DC.find(function(x){return x.id===e.dataset.dcx});if(c)e.firstChild.nodeValue=fx(comboX2(c.legs));
-    });
+    tickDaily();
     if(pcount()>1&&mode==="combo"&&Date.now()-QT.at>8000&&!QT.busy)askQuote();
     updateLive();if(follow)dyn();
   }).catch(function(){});
