@@ -850,6 +850,16 @@ button,a,.sg,.dop,.mt,.dc{touch-action:manipulation}
 .sres .k5{flex:none;font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.06em;color:var(--hi);white-space:nowrap}
 .sres .k5.lv3{color:var(--red)}
 .shint{margin:10px 2px 0;font-size:12px;line-height:1.45;color:var(--dim)}
+/* La feuille de recherche garde une hauteur fixe. Sinon elle se retracte
+   des qu'il reste un seul resultat: le champ saute sous le pouce et le
+   clavier du telephone se referme au milieu de la frappe. */
+@media (max-width:1079px){
+  .sheet[data-k="search"]>.panel{height:86vh;max-height:86vh;overflow:hidden;display:flex;flex-direction:column}
+  .sheet[data-k="search"] h3,.sheet[data-k="search"] .sfield{flex:none}
+  .sheet[data-k="search"] #sbody{flex:1;min-height:0;display:flex;flex-direction:column}
+  .sheet[data-k="search"] .sres{flex:1;min-height:0;max-height:none}
+  .sheet[data-k="search"] .shint{flex:none}
+}
 .shint b{color:#fff;font-weight:800}
 /* ---------------------------------------------------------------------------
    LES BARRES FIXES SUR IOS. Safari redessine en retard les elements fixes
