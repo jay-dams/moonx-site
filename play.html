@@ -79,6 +79,50 @@ nav.top{position:fixed;top:0;left:0;right:0;z-index:30;height:var(--nh);display:
 .chip{flex:none;height:32px;padding:0 13px;border-radius:999px;border:1px solid var(--line);background:var(--well);font-size:13px;font-weight:700;color:var(--dim);white-space:nowrap}
 .chip.on{background:#fff;color:#03050C;border-color:#fff}
 .chip.add{color:var(--mint);border-color:rgba(166,255,61,.4)}
+.mail{margin-top:12px;padding-top:12px;border-top:1px solid rgba(150,195,255,.22)}
+.mail label{display:block;font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.12em;color:var(--dim);margin:0 2px 6px}
+.mailrow{display:flex;gap:8px;align-items:stretch}
+.mailrow input{flex:1;min-width:0;height:46px;padding:0 13px;border-radius:13px;border:1px solid var(--line-2);background:rgba(0,0,0,.3);outline:0;font-weight:700;font-size:15px}
+.mailrow input:focus{border-color:var(--hi)}
+.real .mailrow .go{flex:none;width:auto;height:46px;padding:0 16px}
+.mailmsg{margin:8px 2px 0;font-size:12.5px;color:var(--dim);min-height:1em}
+.mailmsg.ok{color:var(--mint)}
+.mailmsg.ko{color:var(--red)}
+@media (max-width:560px){.mailrow{flex-direction:column}.real .mailrow .go{width:100%}}
+.real .rtag{display:inline-block;margin-bottom:8px;font-family:var(--mono);font-size:9.5px;font-weight:700;letter-spacing:.14em;color:var(--mint);border:1px solid rgba(166,255,61,.4);border-radius:999px;padding:3px 8px 2px}
+.real .lev{margin:8px 0 0;font-size:13.5px;line-height:1.45;color:#DCE4F2}
+.real .lev b{color:#fff}
+.real ul{list-style:none;margin:10px 0 12px;padding:0;display:grid;gap:7px}
+.real li{display:flex;gap:9px;align-items:flex-start;font-size:13px;line-height:1.4;color:#DCE4F2}
+.real li b{color:#fff;font-weight:800}
+.real li s{flex:none;width:17px;height:17px;margin-top:1px;border-radius:50%;background:rgba(166,255,61,.18);color:var(--mint);text-decoration:none;display:grid;place-items:center;font-size:10px;font-weight:900}
+.real .fine{display:block;margin-top:10px;font-size:11px;line-height:1.45;color:var(--dim)}
+.chip-demo{font-family:var(--mono);font-size:9.5px;font-weight:700;letter-spacing:.12em;color:#FFC93C;border:1px solid rgba(255,201,60,.45);border-radius:999px;padding:3px 7px 2px;margin-left:6px}
+.hpill{display:none;align-items:center;height:30px;padding:0 10px;border-radius:999px;border:1px solid var(--line);background:var(--well);font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.04em;color:var(--dim);max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hpill:not([hidden]){display:inline-flex}
+.idbox{margin:16px auto 0;max-width:620px;padding:16px;border-radius:18px;border:1px solid var(--line-2);background:linear-gradient(180deg,var(--card-2),var(--card))}
+.idbox h3{margin:0 0 4px;font-size:18px;font-weight:900;letter-spacing:-.02em}
+.idbox p{margin:0 0 12px;color:var(--dim);font-size:13.5px}
+.idrow{display:flex;gap:8px;align-items:stretch}
+.idrow .fld{flex:1;min-width:0}
+.idrow .go{flex:none;white-space:nowrap}
+.iderr{margin:8px 0 0;font-size:12.5px;color:var(--red);min-height:1em}
+@media (max-width:560px){.idrow{flex-direction:column}.idrow .go{width:100%}.hpill{display:none!important}}
+.days{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:10px -14px 0;padding:2px 14px;scroll-snap-type:x proximity}
+.days::-webkit-scrollbar{display:none}
+.day{flex:none;scroll-snap-align:start;min-width:74px;padding:7px 11px 6px;border-radius:14px;border:1px solid var(--line);background:var(--well);text-align:left;color:var(--dim);transition:border-color .15s,background .15s}
+.day:hover{border-color:var(--line-2)}
+.day u{display:block;font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.1em;text-decoration:none;text-transform:uppercase}
+.day b{display:block;font-size:15px;font-weight:900;color:#fff;letter-spacing:-.01em;line-height:1.2}
+.day i{display:block;font-style:normal;font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.06em;margin-top:1px}
+.day.on{background:#fff;border-color:#fff;color:rgba(3,5,12,.62)}
+.day.on b{color:#03050C}
+.day.lv u{color:var(--red)}
+.day.lv.on{background:var(--red);border-color:var(--red);color:rgba(255,255,255,.8)}
+.day.lv.on u,.day.lv.on b{color:#fff}
+.tline{display:flex;align-items:center;gap:10px;margin:18px 2px 8px}
+.tline b{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.1em;color:var(--dim)}
+.tline s{flex:1;height:1px;background:var(--line);text-decoration:none}
 .grid{display:grid;grid-template-columns:minmax(0,1fr);gap:10px;align-items:start}
 .card{border:1px solid var(--line);border-radius:18px;background:linear-gradient(180deg,var(--card-2),var(--card));padding:12px;min-width:0}
 .meta{display:flex;align-items:center;gap:7px;font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.07em;color:var(--dim);text-transform:uppercase;margin:0 2px 10px;min-width:0}
@@ -247,9 +291,9 @@ footer .lk a{text-decoration:none;color:#fff}
 </head>
 <body>
 <nav class="top" aria-label="Main">
-  <a class="brand" href="/" aria-label="MOONX home"><span class="bm">MOONX</span><span class="chip-play">PLAY</span></a>
+  <a class="brand" href="/" aria-label="MOONX home"><span class="bm">MOONX</span><span class="chip-play">PLAY</span><span class="chip-demo" id="demoChip" hidden>DEMO DATA</span></a>
   <div class="nr">
-    <button class="eq" id="eqBtn" type="button" hidden><span id="eqV">$1,000.00</span><small id="eqX">1.00x</small></button>
+    <span class="hpill" id="hdlPill" hidden></span><button class="eq" id="eqBtn" type="button" hidden><span id="eqV">$1,000.00</span><small id="eqX">1.00x</small></button>
     <a class="go ghost dsk" data-cta="nav" href="https://lfg.moonx.fi/users/sign_up">Trade for real</a>
   </div>
 </nav>
@@ -266,6 +310,7 @@ footer .lk a{text-decoration:none;color:#fff}
     </div>
   </header>
   <div class="invite" id="inviteBox" hidden></div>
+  <div class="idbox" id="idBox" hidden></div>
 
   <div class="tabs" role="tablist" aria-label="Sections">
     <button type="button" class="on" data-tab="matches" role="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7l4 3-1.5 5h-5L8 10z"/></svg>Matches</button>
@@ -278,7 +323,9 @@ footer .lk a{text-decoration:none;color:#fff}
       <section class="view on" id="v-matches">
         <div class="sechead"><h2>Pick your matches</h2><span id="mSub">Loading live prices…</span></div>
         <div class="chips" id="sports"></div>
+        <div class="days" id="days" role="tablist" aria-label="Match days"></div>
         <div id="mList"></div>
+        <div id="mCta"></div>
       </section>
       <section class="view" id="v-trades"></section>
       <section class="view" id="v-league"></section>
@@ -306,7 +353,13 @@ var API="https://xcyqdfhnpntcloimotoo.supabase.co/functions/v1/league",SIGN="htt
 var SPORTS=[["all","All sports"],["soccer","Football"],["basketball","Basketball"],["amfootball","American football"],["tennis","Tennis"],["hockey","Hockey"],["fight","MMA"],["cricket","Cricket"],["baseball","Baseball"],["other","More"]];
 var $=function(id){return document.getElementById(id)};
 var tok=null;try{tok=localStorage.getItem(TK)}catch(e){}
-var P=null,MK=[],Q={},QP={},H={},tab="matches",sport=qp("sport")||"all",picks={},mode="combo",amount=null,LG="ALL",LD=null,inviteCode=(qp("l")||"").toUpperCase(),inviteInfo=null,follow=null,lastVal={},msHit={},seenStatus={},busy=false,timers={};
+/* Collecte d'email: la fonction Supabase n'a pas encore d'action "email".
+   Tant qu'elle n'existe pas, le champ reste cache pour ne pas promettre
+   une inscription qui echouerait. Passer MAIL_ON a true quand l'action
+   {a:"email", email, source, handle, attr} est en place cote serveur. */
+var MAIL_ON=false;
+var mailSent={};
+var P=null,MK=[],Q={},QP={},H={},tab="matches",sport=qp("sport")||"all",day="live",picks={},mode="combo",amount=null,LG="ALL",LD=null,inviteCode=(qp("l")||"").toUpperCase(),inviteInfo=null,follow=null,lastVal={},msHit={},seenStatus={},busy=false,timers={};
 
 function qp(k){try{return new URLSearchParams(location.search).get(k)}catch(e){return null}}
 function ev(n,p){try{if(window.MOONX_EVENT)window.MOONX_EVENT(n,p||{})}catch(e){}}
@@ -316,12 +369,145 @@ function fx(x){if(!isFinite(x))return"-";return(x>=100?x.toFixed(0):x>=10?x.toFi
 function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
 function initials(s){var w=String(s).replace(/[^A-Za-z0-9 ]/g," ").trim().split(/\s+/);return((w[0]||"?")[0]+(w.length>1?w[w.length-1][0]:(w[0]||"")[1]||"")).toUpperCase()}
 function vol(v){return v>=1e6?"$"+(v/1e6).toFixed(1)+"M":v>=1e3?"$"+Math.round(v/1e3)+"K":"$"+Math.round(v)}
-function when(t){var d=new Date(t),n=new Date(),tm=d.toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"});var dd=Math.round((new Date(d.getFullYear(),d.getMonth(),d.getDate())-new Date(n.getFullYear(),n.getMonth(),n.getDate()))/864e5);return dd===0?"Today "+tm:dd===1?"Tomorrow "+tm:d.toLocaleDateString("en-US",{weekday:"short"})+" "+tm}
+function when(t){var d=new Date(t),n=new Date(),tm=d.toLocaleTimeString("en-US",{hour:"numeric",minute:"2-digit"});var dd=Math.round((new Date(d.getFullYear(),d.getMonth(),d.getDate())-new Date(n.getFullYear(),n.getMonth(),n.getDate()))/864e5);return dd===0?"Today "+tm:dd===1?"Tomorrow "+tm:d.toLocaleDateString("en-US",{weekday:"short"})+" "+tm}
 function ago(t){var s=Math.max(1,Math.round((Date.now()-Date.parse(t))/1000));return s<60?s+"s":s<3600?Math.round(s/60)+"m":s<86400?Math.round(s/3600)+"h":Math.round(s/86400)+"d"}
 function toast(t){var e=$("toast");e.textContent=t;e.classList.add("on");clearTimeout(timers.toast);timers.toast=setTimeout(function(){e.classList.remove("on")},2600)}
 function vib(p){try{navigator.vibrate&&navigator.vibrate(p)}catch(e){}}
 function av(o){if(o.draw)return'<span class="av draw">=</span>';var ini=initials(o.label);return'<span class="av">'+(o.logo?'<img src="'+esc(o.logo)+'" alt="" loading="lazy" onerror="this.parentNode.textContent=\''+ini+'\'">':ini)+"</span>"}
 function api(a,b){b=b||{};b.a=a;return fetch(API,{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify(b)}).then(function(r){return r.json().then(function(j){if(!r.ok||j.error)throw j.error||"server";return j})})}
+/* ---------------------------------------------------------------------------
+   MODE DEMO: la fonction Supabase n'autorise que https://moonx.fi, donc en
+   local (ou avec ?demo=1) rien ne repond. On rejoue alors tout le jeu dans le
+   navigateur: matchs fictifs, prix qui bougent, solde et paris en localStorage.
+   La production garde le vrai serveur: voir LOCAL ci-dessous.
+--------------------------------------------------------------------------- */
+var LOCAL=(function(){try{return location.protocol==="file:"||/^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname)||qp("demo")==="1"}catch(e){return false}})();
+var DK="moonx.play.demo";
+var DEMO={
+  teams:{
+    soccer:[["Premier League","Arsenal","Chelsea"],["Premier League","Liverpool","Everton"],["La Liga","Real Madrid","Sevilla"],["Serie A","Inter","Napoli"],["Ligue 1","PSG","Marseille"],["Bundesliga","Bayern","Dortmund"]],
+    basketball:[["NBA","Celtics","Knicks"],["NBA","Lakers","Warriors"],["EuroLeague","Fenerbahce","Olympiacos"],["NCAA","Duke","Kansas"]],
+    amfootball:[["NFL","Chiefs","Bills"],["NFL","49ers","Cowboys"],["NFL","Eagles","Giants"]],
+    tennis:[["ATP","Alcaraz","Sinner"],["WTA","Swiatek","Gauff"]],
+    hockey:[["NHL","Bruins","Rangers"],["NHL","Oilers","Flames"]],
+    baseball:[["MLB","Yankees","Red Sox"]],
+    fight:[["UFC","Pereira","Ankalaev"]],
+    cricket:[["IPL","Mumbai","Chennai"]]
+  },
+  rnd:function(s){var x=Math.sin(s*9301+49297)*233280;return x-Math.floor(x)},
+  state:function(){
+    if(DEMO._s)return DEMO._s;
+    var s=null;try{s=JSON.parse(localStorage.getItem(DK)||"null")}catch(e){}
+    if(!s||!s.player)s={player:null,positions:[],seq:1,leagues:[]};
+    DEMO._s=s;return s;
+  },
+  save:function(){try{localStorage.setItem(DK,JSON.stringify(DEMO._s))}catch(e){}},
+  profile:function(extra){
+    var s=DEMO.state(),j={player:s.player,positions:s.positions.slice().reverse(),leagues:s.leagues};
+    if(extra)for(var k in extra)j[k]=extra[k];
+    return j;
+  },
+  markets:function(){
+    if(DEMO._mk)return DEMO._mk;
+    var out=[],now=Date.now(),i=0;
+    Object.keys(DEMO.teams).forEach(function(sp){
+      DEMO.teams[sp].forEach(function(t,k){
+        i++;
+        var liveOne=i%7===0;
+        var dayOff=liveOne?0:Math.floor(DEMO.rnd(i)*5);
+        var hour=[11,14,16,18,20,21][Math.floor(DEMO.rnd(i*3)*6)];
+        var d=new Date();d.setHours(hour,[0,15,30,45][Math.floor(DEMO.rnd(i*5)*4)],0,0);
+        d.setDate(d.getDate()+dayOff);
+        var start=liveOne?now-Math.floor(DEMO.rnd(i*7)*40*60e3):(d.getTime()<=now?d.getTime()+24*3600e3:d.getTime());
+        var pa=.25+DEMO.rnd(i*11)*.5,draw=sp==="soccer"&&DEMO.rnd(i*13)>.45;
+        var opts;
+        if(draw){var pd=.18+DEMO.rnd(i*17)*.12;opts=[{label:t[1],token:"d"+i+"a",p:pa*(1-pd)},{label:"Draw",token:"d"+i+"d",p:pd,draw:true},{label:t[2],token:"d"+i+"b",p:(1-pa)*(1-pd)}]}
+        else opts=[{label:t[1],token:"d"+i+"a",p:pa},{label:t[2],token:"d"+i+"b",p:1-pa}];
+        out.push({id:"demo"+i,league:t[0],licon:null,sport:sp,start:start,vol:Math.round(500+DEMO.rnd(i*19)*90000),opts:opts});
+      });
+    });
+    DEMO._mk=out;DEMO._q={};out.forEach(function(m){m.opts.forEach(function(o){DEMO._q[o.token]=o.p})});
+    return out;
+  },
+  drift:function(){
+    DEMO.markets();var q=DEMO._q;
+    Object.keys(q).forEach(function(k){
+      var v=q[k]+(Math.random()-.5)*.012;
+      q[k]=Math.min(.97,Math.max(.03,v));
+    });
+    return q;
+  },
+  other:function(tok){
+    var m=DEMO.markets().find(function(x){return x.opts.some(function(o){return o.token===tok})});
+    if(!m)return null;var o=m.opts.find(function(z){return z.token!==tok});return o?o.token:null;
+  },
+  leg:function(pick){
+    var m=DEMO.markets().find(function(x){return x.id===pick.event_id}),o=m.opts.find(function(z){return z.token===pick.token_id});
+    return{token_id:o.token,other_token:DEMO.other(o.token),p0:DEMO._q[o.token],final:null,label:o.label,draw:!!o.draw,logo:null,
+           event_title:m.opts.map(function(z){return z.label}).filter(function(z){return z!=="Draw"}).join(" v "),start_at:new Date(m.start).toISOString()};
+  },
+  board:function(){
+    var s=DEMO.state(),rows=[{handle:"moonxor",equity:2714.08},{handle:"carla_x",equity:1880.4},{handle:"nico",equity:1402.15},{handle:"deepinthecrater",equity:1120.9},{handle:"sam_r",equity:742.3}];
+    if(s.player)rows.push({handle:s.player.handle,equity:DEMO.equity()});
+    return rows.sort(function(a,b){return b.equity-a.equity});
+  },
+  equity:function(){
+    var s=DEMO.state();if(!s.player)return START;
+    return +s.player.bal+s.positions.filter(function(p){return p.status==="open"}).reduce(function(t,p){
+      return t+p.lg_leg.reduce(function(v,l){return v*(DEMO._q[l.token_id]||l.p0)/l.p0},+p.stake)},0);
+  }
+};
+function demoApi(a,b){
+  b=b||{};
+  return new Promise(function(res,rej){
+    setTimeout(function(){
+      var s=DEMO.state();
+      try{
+        if(a==="markets")return res({markets:DEMO.markets()});
+        if(a==="quotes"){var all=DEMO.drift(),q={};(b.tokens||[]).forEach(function(t){if(all[t]!=null)q[t]=all[t]});return res({quotes:q})}
+        if(a==="me"){if(!s.player)throw"token";return res(DEMO.profile())}
+        if(a==="join"){
+          var hd=String(b.handle||"").trim();
+          if(!/^[A-Za-z0-9_]{3,18}$/.test(hd))throw"handle";
+          s.player={handle:hd,bal:START};s.positions=[];s.seq=1;DEMO.save();
+          return res(DEMO.profile({token:"demo-token"}));
+        }
+        if(a==="open"){
+          if(!s.player)throw"token";
+          var stake=Math.round(+b.stake*100)/100;
+          if(!(stake>=1))throw"stake";
+          if(stake>+s.player.bal+1e-9)throw"balance";
+          DEMO.drift();
+          var pos={id:"p"+(s.seq++),status:"open",stake:stake,payout:0,created_at:new Date().toISOString(),via_side:null,lg_leg:(b.picks||[]).map(DEMO.leg)};
+          s.player.bal=Math.round((+s.player.bal-stake)*100)/100;s.positions.push(pos);DEMO.save();
+          return res(DEMO.profile({opened:{id:pos.id}}));
+        }
+        if(a==="eject"){
+          if(!s.player)throw"token";
+          var p=s.positions.find(function(z){return z.id===b.position});
+          if(!p||p.status!=="open")throw"closed";
+          var pay=Math.round(p.lg_leg.reduce(function(v,l){return v*(DEMO._q[l.token_id]||l.p0)/l.p0},+p.stake)*100)/100;
+          p.status="ejected";p.payout=pay;s.player.bal=Math.round((+s.player.bal+pay)*100)/100;DEMO.save();
+          return res(DEMO.profile({ejected:{payout:pay}}));
+        }
+        if(a==="restart"){if(!s.player)throw"token";s.player.bal=START;s.positions=[];DEMO.save();return res(DEMO.profile())}
+        if(a==="history"){
+          var from=(b.from||Math.floor(Date.now()/1000-3600))*1000,p0=DEMO._q[b.token]||.5,pts=[],n=40;
+          for(var i=0;i<=n;i++)pts.push({t:Math.round((from+(Date.now()-from)*i/n)/1000),p:Math.min(.97,Math.max(.03,p0+(DEMO.rnd(i+1)-.5)*.08*(1-i/n)))});
+          return res({history:pts});
+        }
+        if(a==="league")return res({league:{code:b.code||"ALL",name:b.code&&b.code!=="ALL"?"Your league":"All players"},board:DEMO.board(),open:[]});
+        if(a==="league_create"||a==="league_join"){
+          var code=(b.code||"DEMO12").toUpperCase();
+          if(!s.leagues.some(function(l){return l.code===code}))s.leagues.push({code:code,name:b.name||"Your league"});
+          DEMO.save();return res(DEMO.profile({league:{code:code,name:b.name||"Your league"}}));
+        }
+        if(a==="email")return res({ok:true});
+      }catch(err){return rej(err)}
+      rej("action");
+    },LOCAL?120:0);
+  });
+}
 function errText(e){return{taken:"That name is taken. Try another one.",handle:"3 to 18 letters, numbers or _ only.",balance:"Not enough play money.",closed:"This market just closed.",price:"Price out of range right now. Try another pick.",picks:"One pick per match, up to 6.",stake:"Minimum is $1.",league:"League not found.",name:"Give your league a name.",auth:"Your session expired. Reload the page.",upstream:"Polymarket is slow right now. Try again.",limit:"You already run 10 leagues."}[e]||"Something went wrong. Try again."}
 
 function price(t,fb){var v=Q[t];return v!=null?v:fb}
@@ -355,8 +541,36 @@ function setTab(t){
   window.scrollTo({top:0});
 }
 
+function renderIdentity(){
+  var b=$("idBox"),pill=$("hdlPill");
+  if(P){
+    b.hidden=true;
+    pill.hidden=false;pill.textContent="@"+P.player.handle;
+    return;
+  }
+  pill.hidden=true;
+  b.hidden=tab!=="matches";
+  if(b.hidden||b.dataset.ready)return;
+  b.dataset.ready="1";
+  b.innerHTML='<h3>Pick your name</h3><p>It shows on the leaderboard. You get $1,000 of play money, no account and no email needed.</p>'+
+    '<div class="idrow"><input class="fld" id="hdl2" maxlength="18" autocomplete="nickname" spellcheck="false" placeholder="e.g. moonboy_23" value="'+esc(timers.hdl||"")+'"><button class="go" type="button" data-startgame="1">Start with $1,000</button></div>'+
+    '<p class="iderr" id="idErr" role="status"></p>';
+}
+function startGame(){
+  if(busy)return;
+  var f=$("hdl2"),e=$("idErr");if(!f)return;
+  var hd=f.value.trim().replace(/^@/,"");
+  timers.hdl=hd;
+  if(!/^[A-Za-z0-9_]{3,18}$/.test(hd)){e.textContent="3 to 18 letters, numbers or _ only.";f.focus();return}
+  e.textContent="";busy=true;
+  api("join",{handle:hd,league:inviteCode||undefined}).then(function(j){
+    tok=j.token;try{localStorage.setItem(TK,tok)}catch(x){}
+    setProfile(j);ev("lg_join",{invite:!!inviteCode,from:"idbox"});
+    $("idBox").dataset.ready="";toast("You're in. $1,000 of play money.");render();
+  }).catch(function(err){e.textContent=errText(err)}).then(function(){busy=false});
+}
 function render(){
-  refreshNav();
+  refreshNav();renderIdentity();
   if(tab==="matches")renderMatches();
   if(tab==="trades")renderTrades();
   if(tab==="league")renderLeague();
@@ -375,18 +589,73 @@ function card(m){
     return'<button type="button" class="opt'+(on?" on":"")+'" data-m="'+m.id+'" data-o="'+j+'" aria-pressed="'+on+'">'+av(o)+'<span class="nm">'+esc(o.label)+"<small>"+Math.round(p*100)+'% chance</small></span><span class="xm" data-tok="'+o.token+'">'+fx(1/p)+"</span></button>"}).join("")+'</div><div class="meta" style="margin:10px 2px 0"><span class="lg">'+vol(m.vol)+" traded on Polymarket</span></div></article>";
 }
 
+function dayKey(t){var d=new Date(t);return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+function dayLabel(k){
+  var p=k.split("-"),d=new Date(+p[0],+p[1]-1,+p[2]),n=new Date();
+  var diff=Math.round((d-new Date(n.getFullYear(),n.getMonth(),n.getDate()))/864e5);
+  var nm=diff===0?"Today":diff===1?"Tomorrow":d.toLocaleDateString("en-US",{weekday:"long"});
+  return{name:nm,sub:d.toLocaleDateString("en-US",{day:"numeric",month:"short"}).toUpperCase()};
+}
+function dayBuckets(list){
+  var now=Date.now(),b={live:[],days:{},order:[]};
+  list.forEach(function(m){
+    if(m.start<=now){b.live.push(m);return}
+    var k=dayKey(m.start);
+    if(!b.days[k]){b.days[k]=[];b.order.push(k)}
+    b.days[k].push(m);
+  });
+  b.order.sort();
+  b.live.sort(function(a,c){return c.vol-a.vol});
+  b.order.forEach(function(k){b.days[k].sort(function(a,c){return a.start-c.start})});
+  return b;
+}
+function dayRail(b){
+  var el=$("days"),h="";
+  if(b.live.length)h+='<button type="button" role="tab" class="day lv'+(day==="live"?" on":"")+'" data-day="live" aria-selected="'+(day==="live")+'"><u>&#9679; Live</u><b>Now</b><i>'+b.live.length+(b.live.length>1?" matches":" match")+"</i></button>";
+  b.order.forEach(function(k){
+    var L=dayLabel(k),n=b.days[k].length;
+    h+='<button type="button" role="tab" class="day'+(day===k?" on":"")+'" data-day="'+k+'" aria-selected="'+(day===k)+'"><u>'+esc(L.sub)+"</u><b>"+esc(L.name)+"</b><i>"+n+(n>1?" matches":" match")+"</i></button>";
+  });
+  el.innerHTML=h;el.hidden=!h;
+  var on=el.querySelector(".day.on");if(on&&on.scrollIntoView)on.scrollIntoView({block:"nearest",inline:"nearest"});
+}
 function renderMatches(){
   sportsBar();
   var el=$("mList");
-  if(!MK.length){el.innerHTML=timers.mkLoaded?'<div class="empty"><b>No matches right now.</b>New matches open all day. Try again in a moment.<br><button class="go" type="button" data-retry="1">Refresh</button></div>':'<div class="grid two"><div class="skel"></div><div class="skel"></div><div class="skel"></div><div class="skel"></div></div>';return}
-  var list=MK.filter(function(m){return sport==="all"||m.sport===sport}),now=Date.now();
-  if(list.length>12){var big=list.filter(function(m){return m.vol>=10000});if(big.length>=8)list=big}
-  var live=list.filter(function(m){return m.start<=now}).sort(function(a,b){return b.vol-a.vol}),soon=list.filter(function(m){return m.start>now&&m.start<=now+24*3600e3}),later=list.filter(function(m){return m.start>now+24*3600e3});
-  var h="";
-  if(live.length)h+='<div class="sechead"><h2><span class="ldot"></span>Live now</h2><span>Prices move with the match</span></div><div class="grid two">'+live.map(card).join("")+"</div>";
-  if(soon.length)h+='<div class="sechead"><h2>Next 24 hours</h2><span>Get in before kick off</span></div><div class="grid two">'+soon.map(card).join("")+"</div>";
-  if(later.length)h+='<div class="sechead"><h2>Later</h2></div><div class="grid two">'+later.map(card).join("")+"</div>";
-  el.innerHTML=h||'<div class="empty"><b>Nothing in this sport right now.</b><button class="go" type="button" data-sport="all">Show all sports</button></div>';
+  if(!MK.length){
+    $("days").hidden=true;
+    el.innerHTML=timers.mkLoaded?'<div class="empty"><b>No matches right now.</b>New matches open all day. Try again in a moment.<br><button class="go" type="button" data-retry="1">Refresh</button></div>':'<div class="skel"></div><div class="skel" style="margin-top:10px"></div>';
+    $("mSub").textContent=timers.mkLoaded?"No matches":"Loading live prices…";
+    return;
+  }
+  var list=MK.filter(function(m){return sport==="all"||m.sport===sport});
+  if(!list.length){
+    $("days").hidden=true;
+    el.innerHTML='<div class="empty"><b>Nothing in this sport right now.</b><button class="go" type="button" data-sport="all">Show all sports</button></div>';
+    $("mSub").textContent="0 matches";return;
+  }
+  var b=dayBuckets(list);
+  var avail=(b.live.length?["live"]:[]).concat(b.order);
+  if(avail.indexOf(day)<0)day=avail[0];
+  dayRail(b);
+  var sel=day==="live"?b.live:(b.days[day]||[]),h="";
+  if(day==="live"){
+    h='<div class="sechead"><h2><span class="ldot"></span>Live now</h2><span>Prices move with the match</span></div><div class="grid two">'+sel.map(card).join("")+"</div>";
+  }else{
+    var L=dayLabel(day),slot="";
+    h='<div class="sechead"><h2>'+esc(L.name)+'</h2><span>'+esc(L.sub)+" · "+sel.length+(sel.length>1?" matches":" match")+"</span></div>";
+    sel.forEach(function(m,i){
+      var s=new Date(m.start).getHours()<12?"Morning":new Date(m.start).getHours()<18?"Afternoon":"Evening";
+      if(s!==slot){slot=s;h+=(i?"":"")+'<div class="tline"><b>'+s.toUpperCase()+'</b><s></s></div><div class="grid two">'}
+      h+=card(m);
+      var nx=sel[i+1];
+      var ns=nx?(new Date(nx.start).getHours()<12?"Morning":new Date(nx.start).getHours()<18?"Afternoon":"Evening"):null;
+      if(ns!==s)h+="</div>";
+    });
+  }
+  el.innerHTML=h;
+  var cta=$("mCta");
+  if(cta&&!cta.dataset.ready){cta.dataset.ready="1";cta.innerHTML=realBox("Play money here. Real money on MOONX.","matches")}
   $("mSub").textContent=list.length+" matches · live prices";
 }
 
@@ -480,8 +749,69 @@ function closedRow(p){
   return'<div class="cl">'+(l.length>1?'<span class="av">'+l.length+"</span>":av(l[0]))+'<span class="nm">'+esc(lbl)+"<small>"+esc(l.map(function(z){return z.event_title}).join(" · "))+"</small></span>"+st+'<b class="'+(pay>=p.stake?"up":"dn")+'">'+signed(pay-p.stake)+"</b></div>";
 }
 
-function realBox(t){return'<div class="real"><b>'+t+'</b><p>Same Polymarket markets, with real money. Pick a side in two taps and sell anytime.</p><a class="go" data-cta="play_trades" href="'+SIGN+'">Create your MOONX account</a><small>18+ only. Not available everywhere.</small></div>'}
-
+function mailHTML(place){
+  if(!MAIL_ON&&!LOCAL)return"";
+  return'<div class="mail"><label for="ml_'+place+'">OR LEAVE YOUR EMAIL</label>'+
+    '<div class="mailrow"><input id="ml_'+place+'" type="email" inputmode="email" autocomplete="email" spellcheck="false" placeholder="you@example.com" data-mail-in="'+place+'">'+
+    '<button class="go ghost" type="button" data-mail="'+place+'">Keep me posted</button></div>'+
+    '<p class="mailmsg" id="mlm_'+place+'" role="status"></p></div>';
+}
+function bestRun(){
+  if(!P)return null;
+  var best=null;
+  P.positions.forEach(function(x){
+    if(x.status==="open"||!+x.payout)return;
+    var m=+x.payout/+x.stake;if(m>1.05&&(!best||m>best.x))best={x:m,net:+x.payout-+x.stake};
+  });
+  return best;
+}
+function leverLine(){
+  /* Leviers: on n'invente aucun chiffre. Tout vient du jeu du joueur
+     (gain manque, meilleur coup) ou du classement reellement charge. */
+  var e=P?equity():START, out=[];
+  if(P&&e>START+1) out.push("<b>You turned $1,000 into "+money(e)+".</b> With real money that was "+signed(e-START)+" in your pocket.");
+  var b=bestRun();
+  if(b&&(!P||e<=START+1)) out.push("<b>Your best shot paid "+fx(b.x)+".</b> On play money that is a story. On MOONX it is "+signed(b.net)+".");
+  if(!out.length&&P&&e<START) out.push("<b>Down on play money costs you nothing.</b> That is the point of practising here first.");
+  if(LD&&LD.board&&LD.board.length){
+    var top=LD.board[0];
+    if(top&&+top.equity>START) out.push("@"+esc(top.handle)+" is at "+fx(+top.equity/START)+" on the board. Same markets are open for real.");
+  }
+  return out.length?'<p class="lev">'+out[0]+"</p>":"";
+}
+function realBox(t,place){
+  place=place||"trades";
+  /* "No KYC" est la position du produit, confirmee par Thibault et deja dite
+     dans la FAQ ("no identity check, no document to upload"). Les partenaires
+     de paiement font leurs propres controles: c'est dans les petits caracteres. */
+  return'<div class="real"><span class="rtag">INVITE-ONLY FOR NOW</span><b>'+t+'</b>'+leverLine()+
+    '<ul>'+
+    '<li><s>&#10003;</s><span><b>No KYC.</b> No identity check, no document to upload, no approval to wait for.</span></li>'+
+    '<li><s>&#10003;</s><span><b>Non-custodial.</b> The wallet is made on your device and the keys stay there. Your money is yours.</span></li>'+
+    '<li><s>&#10003;</s><span><b>Pay by card, sell anytime.</b> No crypto knowledge needed, and you never wait for the result.</span></li>'+
+    '</ul>'+
+    '<a class="go" data-cta="play_'+place+'" href="'+SIGN+'">Create your account in 2 minutes</a>'+
+    mailHTML(place)+
+    '<small class="fine">18+ only. Not available everywhere. Payment partners run their own checks when you add money.</small></div>';
+}
+function sendMail(place){
+  var f=document.querySelector('[data-mail-in="'+place+'"]'),m=$("mlm_"+place);
+  if(!f||!m)return;
+  var v=f.value.trim();
+  m.className="mailmsg";
+  if(!/^[^@\s]+@[^@\s.]+\.[^@\s]{2,}$/.test(v)){m.className="mailmsg ko";m.textContent="That email doesn't look right.";f.focus();return}
+  if(mailSent[v]){m.className="mailmsg ok";m.textContent="Already noted. Talk soon.";return}
+  m.textContent="Sending…";
+  api("email",{email:v,source:"play",handle:P?P.player.handle:null,attr:(window.MOONX_ATTR?window.MOONX_ATTR():null)})
+    .then(function(){
+      mailSent[v]=1;f.value="";m.className="mailmsg ok";m.textContent="Got it. We'll email you when it's your turn.";
+      ev("play_email",{place:place});
+    })
+    .catch(function(){
+      m.className="mailmsg ko";
+      m.innerHTML='Could not save it right now. <a href="'+SIGN+'" data-cta="play_mailfail" style="color:var(--hi)">Create your account instead</a>.';
+    });
+}
 function renderTrades(){
   var el=$("v-trades");
   if(!P){el.innerHTML='<div class="empty" style="margin-top:18px"><b>No trades yet.</b>Pick a match to start with $1,000 of play money.<br><button class="go" type="button" data-tab="matches">See matches</button></div>';return}
@@ -571,7 +901,7 @@ function settled(p){
 
 function showResult(r){
   var big=r.net>=0?"up":"dn";
-  $("box").innerHTML='<div class="tag">'+r.tag+'</div><div class="big '+big+'">'+signed(r.net)+'</div><span class="mx '+big+'">'+fx(r.x)+"</span><p>"+esc(r.label)+". "+r.msg+'</p><div class="acts"><button class="go big" type="button" data-close-ov="1">Keep playing</button><button class="go ghost" type="button" data-share="1">Share</button></div>'+(r.x>=1.3?realBox("That was a "+fx(r.x)+". Now picture it with real money."):"");
+  $("box").innerHTML='<div class="tag">'+r.tag+'</div><div class="big '+big+'">'+signed(r.net)+'</div><span class="mx '+big+'">'+fx(r.x)+"</span><p>"+esc(r.label)+". "+r.msg+'</p><div class="acts"><button class="go big" type="button" data-close-ov="1">Keep playing</button><button class="go ghost" type="button" data-share="1">Share</button></div>'+(r.x>=1.15?realBox("That was a "+fx(r.x)+". The same market was open for real.","result"):realBox("Next one for real?","result"));
   $("ov").classList.add("open");sign();
 }
 
@@ -605,6 +935,7 @@ function renderLeague(){
   if(d.feed&&d.feed.length){
     h+='<div class="sechead"><h2>What happened</h2></div><div class="feed">'+d.feed.map(feedRow).join("")+"</div>";
   }
+  h+=realBox("You are playing for pride. They are playing for money.","league");
   el.innerHTML=h;
 }
 
@@ -707,7 +1038,10 @@ function pollMe(){if(!tok||document.hidden)return;api("me",{token:tok}).then(fun
 document.addEventListener("click",function(e){
   var t=e.target.closest("button,[data-tab]");if(!t)return;var d=t.dataset;
   if(d.tab){setTab(d.tab);return}
-  if(d.sport){sport=d.sport;try{var u=new URL(location.href);if(sport==="all")u.searchParams.delete("sport");else u.searchParams.set("sport",sport);history.replaceState(null,"",u)}catch(x){}renderMatches();pollQuotes();return}
+  if(d.mail){sendMail(d.mail);return}
+  if(d.startgame){startGame();return}
+  if(d.day){day=d.day;renderMatches();pollQuotes();return}
+  if(d.sport){sport=d.sport;day="live";try{var u=new URL(location.href);if(sport==="all")u.searchParams.delete("sport");else u.searchParams.set("sport",sport);history.replaceState(null,"",u)}catch(x){}renderMatches();pollQuotes();return}
   if(d.m){if(follow){follow=null}var j=+d.o;if(picks[d.m]===j)delete picks[d.m];else{if(Object.keys(picks).length>=6&&picks[d.m]==null){toast("Up to 6 picks per combo.");return}picks[d.m]=j}renderMatches();renderTicket();pollQuotes();return}
   if(d.rm){delete picks[d.rm];renderMatches();renderTicket();return}
   if(d.clear){picks={};renderMatches();renderTicket();return}
@@ -732,6 +1066,8 @@ document.addEventListener("click",function(e){
   if(t.id==="eqBtn"){setTab("trades");return}
 });
 function rememberName(){var f=document.querySelector("#hdl");if(f)timers.hdl=f.value}
+document.addEventListener("keydown",function(e){if(e.key==="Enter"&&e.target&&e.target.dataset&&e.target.dataset.mailIn){e.preventDefault();sendMail(e.target.dataset.mailIn);return}
+  if(e.key==="Enter"&&e.target&&e.target.id==="hdl2"){e.preventDefault();startGame()}});
 $("sheet").addEventListener("click",function(e){if(e.target===this){closeSheet();if(follow){follow=null;renderTicket()}}});
 $("ov").addEventListener("click",function(e){if(e.target===this)this.classList.remove("open")});
 document.addEventListener("keydown",function(e){if(e.key==="Escape"){closeSheet();$("ov").classList.remove("open")}if(e.key==="Enter"&&e.target.id==="lgName")makeLeague()});
@@ -743,6 +1079,7 @@ document.addEventListener("input",function(e){
 });
 document.addEventListener("visibilitychange",function(){if(!document.hidden){pollMarkets();pollQuotes();pollMe()}});
 
+if(LOCAL){api=demoApi;$("demoChip").hidden=false;try{tok=localStorage.getItem(DK)&&"demo-token"||null}catch(e){}}
 function boot(){
   render();pollMarkets();
   if(inviteCode)api("league",{code:inviteCode}).then(function(j){inviteInfo={code:j.league.code,name:j.league.name};LG=j.league.code;LD=j;var b=$("inviteBox");b.hidden=false;b.innerHTML='<span style="flex:1">You\'re invited to <b>'+esc(j.league.name)+"</b>. "+(P?"":"Pick a match to join with $1,000.")+"</span>"+(P&&!P.leagues.some(function(l){return l.code===j.league.code})?'<button class="go" type="button" data-joinlg="'+j.league.code+'">Join</button>':"");}).catch(function(){inviteCode=""});
