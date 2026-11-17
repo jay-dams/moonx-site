@@ -877,6 +877,14 @@ function qp(k){try{return new URLSearchParams(location.search).get(k)}catch(e){r
 function ev(n,p){try{if(window.MOONX_EVENT)window.MOONX_EVENT(n,p||{})}catch(e){}}
 function money(v){return"$"+(Math.round(v*100)/100).toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2})}
 function signed(v){return(v>=0?"+":"-")+money(Math.abs(v))}
+/* Le multiplicateur du portefeuille arrondi a deux decimales affiche
+   "1.00x" tant que le gain est inferieur a 1%, ce qui contredit le
+   montant affiche juste a cote. Dans cette bande on montre l'argent. */
+function eqx(e){
+  var x=e/START,d=e-START;
+  if(Math.abs(d)<0.005)return fx(1);
+  return(x>=1.01||x<=0.99)?fx(x):signed(d);
+}
 function fx(x){if(!isFinite(x))return"-";return(x>=100?x.toFixed(0):x>=10?x.toFixed(1):x.toFixed(2))+"x"}
 function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
 function initials(s){var w=String(s).replace(/[^A-Za-z0-9 ]/g," ").trim().split(/\s+/);return((w[0]||"?")[0]+(w.length>1?w[w.length-1][0]:(w[0]||"")[1]||"")).toUpperCase()}
@@ -1049,7 +1057,7 @@ function setProfile(j){
 
 function refreshNav(){
   var b=$("eqBtn");if(!P){b.hidden=true;return}
-  b.hidden=false;var e=equity();$("eqV").textContent=money(e);var x=$("eqX");x.textContent=fx(e/START);x.className=e>=START?"up":"dn";
+  b.hidden=false;var e=equity();$("eqV").textContent=money(e);var x=$("eqX");x.textContent=eqx(e);x.className=e>=START?"up":"dn";
   var n=openPos().length,o=$("openN");o.textContent=n;o.classList.toggle("on",n>0);
   $("hero").hidden=!!P||tab!=="matches";
 }
@@ -2177,7 +2185,7 @@ function leverLine(){
   if(!out.length&&P&&e<START) out.push("<b>Down on play money costs you nothing.</b> That is the point of practising here first.");
   if(LD&&LD.board&&LD.board.length){
     var top=LD.board[0];
-    if(top&&+top.equity>START) out.push("@"+esc(top.handle)+" is at "+fx(+top.equity/START)+" on the board. Same markets are open for real.");
+    if(top&&+top.equity>=START*1.01) out.push("@"+esc(top.handle)+" is at "+fx(+top.equity/START)+" on the board. Same markets are open for real.");
   }
   return out.length?'<p class="lev">'+out[0]+"</p>":"";
 }
@@ -2218,11 +2226,17 @@ function renderTrades(){
   var el=$("v-trades");
   if(!P){el.innerHTML='<div class="empty" style="margin-top:18px"><b>No bets yet.</b>Tap a team to start with $1,000 of play money.<br><button class="go" type="button" data-tab="matches">See the matches</button></div>';return}
   var e=equity(),op=openPos(),cl=P.positions.filter(function(p){return p.status!=="open"}),inplay=op.reduce(function(s,p){return s+posValue(p)},0);
-  var h='<div class="sum-card"><div class="t">@'+esc(P.player.handle).toUpperCase()+' · TOTAL</div><div><span class="v '+(e>=START?"up":"dn")+'" id="tEq">'+money(e)+'</span><span class="x" id="tX">'+fx(e/START)+'</span></div><div class="kp"><div><small>CASH</small><b>'+money(+P.player.bal)+'</b></div><div><small>IN PLAY</small><b id="tIn">'+money(inplay)+'</b></div><div><small>BEST</small><b class="up">'+fx(+P.player.best/START)+"</b></div></div>"+
+  var h='<div class="sum-card"><div class="t">@'+esc(P.player.handle).toUpperCase()+' · TOTAL</div><div><span class="v '+(e>=START?"up":"dn")+'" id="tEq">'+money(e)+'</span><span class="x" id="tX">'+eqx(e)+'</span></div><div class="kp"><div><small>CASH</small><b>'+money(+P.player.bal)+'</b></div><div><small>IN PLAY</small><b id="tIn">'+money(inplay)+'</b></div><div><small>BEST</small><b class="up">'+fx(+P.player.best/START)+"</b></div></div>"+
   (e<1&&!op.length?'<button class="go big" type="button" data-restart="1" style="margin-top:12px">Start again with $1,000</button>':"")+"</div>";
   h+='<div class="sechead"><h2>'+(op.length?'<span class="ldot"></span>':"")+"Open bets</h2><span>"+op.length+" open</span></div>";
   h+=op.length?'<div class="grid">'+op.map(posCard).join("")+"</div>":'<div class="empty"><b>No open bet.</b>Live matches move the fastest.<br><button class="go" type="button" data-tab="matches">Tap a team</button></div>';
-  h+=realBox(e>START?"You're at "+fx(e/START)+" on play money. Now picture it live.":"On MOONX, it's the real thing.");
+  /* Un multiplicateur arrondi a deux decimales affiche "1.00x" des que le
+     gain est petit, juste au-dessus d'une ligne qui annonce "+$1.98": le
+     titre se contredisait. On ne sort le multiplicateur que quand il dit
+     vraiment quelque chose, sinon on parle en argent.                   */
+  h+=realBox(e>=START*1.01?"You're at "+fx(e/START)+" on play money. Now picture it live."
+    :e>START+0.5?"You're ahead on play money. Now picture it live."
+    :"On MOONX, it's the real thing.");
   if(cl.length)h+='<div class="sechead"><h2>Closed</h2><span>'+cl.length+'</span></div><div class="closed">'+cl.slice(0,30).map(closedRow).join("")+"</div>";
   el.innerHTML=h;sign();drawCharts();
 }
@@ -2282,7 +2296,7 @@ function updateLive(){
   });
   if(tab==="trades"){
     document.querySelectorAll("[data-lp]").forEach(function(e){var t=e.dataset.lp,l=null;openPos().some(function(p){return p.lg_leg.some(function(z){if(z.token_id===t){l=z;return true}})});if(l){var c=legNow(l);e.textContent=Math.round(c*100)+"%";e.className="pc "+(c>=+l.p0?"up":"dn")}});
-    var e=equity(),te=$("tEq");if(te){te.textContent=money(e);te.className="v "+(e>=START?"up":"dn");$("tX").textContent=fx(e/START);$("tIn").textContent=money(openPos().reduce(function(s,p){return s+posValue(p)},0))}
+    var e=equity(),te=$("tEq");if(te){te.textContent=money(e);te.className="v "+(e>=START?"up":"dn");$("tX").textContent=eqx(e);$("tIn").textContent=money(openPos().reduce(function(s,p){return s+posValue(p)},0))}
     drawCharts();
   }
   refreshNav();renderLive();
