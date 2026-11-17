@@ -499,7 +499,7 @@ function when(t){var d=new Date(t),n=new Date(),tm=d.toLocaleTimeString("en-US",
 function ago(t){var s=Math.max(1,Math.round((Date.now()-Date.parse(t))/1000));return s<60?s+"s":s<3600?Math.round(s/60)+"m":s<86400?Math.round(s/3600)+"h":Math.round(s/86400)+"d"}
 function toast(t){var e=$("toast");e.textContent=t;e.classList.add("on");clearTimeout(timers.toast);timers.toast=setTimeout(function(){e.classList.remove("on")},2600)}
 function vib(p){try{navigator.vibrate&&navigator.vibrate(p)}catch(e){}}
-function av(o){if(o.draw)return'<span class="av draw">=</span>';var ini=initials(o.label);return'<span class="av">'+(o.logo?'<img src="'+esc(o.logo)+'" alt="" loading="lazy" onerror="this.parentNode.textContent=\''+ini+'\'">':ini)+"</span>"}
+function av(o){if(o.draw)return'<span class="av draw">=</span>';var ini=initials(o.label),lg=(o.logo&&!/country-flags\/un\.png/i.test(o.logo))?o.logo:"";return'<span class="av">'+(lg?'<img src="'+esc(lg)+'" alt="" loading="lazy" onerror="this.parentNode.textContent=\''+ini+'\'">':ini)+"</span>"}
 function api(a,b){b=b||{};b.a=a;return fetch(API,{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify(b)}).then(function(r){return r.json().then(function(j){if(!r.ok||j.error)throw j.error||"server";return j})})}
 /* ---------------------------------------------------------------------------
    MODE DEMO: la fonction Supabase n'autorise que https://moonx.fi, donc en
@@ -724,7 +724,12 @@ function deckList(){
     return al?b.vol-a.vol:a.start-b.start;
   });
 }
-function logo(o){var ini=initials(o.label);return'<span class="lo">'+(o.logo?'<img src="'+esc(o.logo)+'" alt="" loading="lazy" onerror="this.parentNode.textContent=\''+ini+'\'">':ini)+"</span>"}
+function realLogo(o){
+  /* Polymarket sert un drapeau ONU generique quand il n'a pas de visuel:
+     il s'affiche quasi vide sur fond sombre, les initiales sont plus lisibles. */
+  return o.logo&&!/country-flags\/un\.png/i.test(o.logo)?o.logo:"";
+}
+function logo(o){var ini=initials(o.label),lg=realLogo(o);return'<span class="lo">'+(lg?'<img src="'+esc(lg)+'" alt="" loading="lazy" onerror="this.parentNode.textContent=\''+ini+'\'">':ini)+"</span>"}
 function sideHTML(m,S){
   var p=price(S.o.token,S.o.p);
   return'<button type="button" class="dks" data-pick="'+m.id+'" data-j="'+S.j+'">'+logo(S.o)+
