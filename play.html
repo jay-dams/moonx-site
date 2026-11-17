@@ -879,6 +879,12 @@ button,a,.sg,.dop,.mt,.dc{touch-action:manipulation}
   .lvbar{background:#05080F}
   .slipbar .in{background:#0B101D}
 }
+.cardbox{border-radius:18px;overflow:hidden;background:rgba(150,180,230,.06);box-shadow:inset 0 0 0 1px var(--line);margin-bottom:12px}
+.cardbox img{width:100%;height:auto;display:block}
+.cardbox .skel{border-radius:0}
+.cardacts{display:grid;grid-template-columns:1fr auto;gap:8px}
+.cardacts .go.big{height:48px;font-size:15px}
+.cardacts .go.ghost{height:48px;padding:0 16px}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -2569,7 +2575,7 @@ function eject(id){
   var p=openPos().find(function(z){return z.id===id});
   api("eject",{token:tok,position:id}).then(function(r){
     setProfile(r);var pay=r.ejected.payout,st=p?+p.stake:0;vib(25);ev("lg_eject",{mult:st?Math.round(pay/st*100)/100:0});
-    showResult({tag:"CASHED OUT",net:pay-st,x:st?pay/st:0,label:p?(p.lg_leg.length>1?"Combo · "+p.lg_leg.length+" picks":p.lg_leg[0].label):"",msg:pay>st+.004?"Locked in before the end. "+money(pay)+" is back in your balance.":pay>st-.005?"Out at even. "+money(pay)+" is back in your balance.":"You cut it early. "+money(pay)+" is back in your balance."});
+    showResult({tag:"CASHED OUT",net:pay-st,x:st?pay/st:0,stake:st,legs:p?p.lg_leg:[],label:p?(p.lg_leg.length>1?"Combo · "+p.lg_leg.length+" picks":p.lg_leg[0].label):"",msg:pay>st+.004?"Locked in before the end. "+money(pay)+" is back in your balance.":pay>st-.005?"Out at even. "+money(pay)+" is back in your balance.":"You cut it early. "+money(pay)+" is back in your balance."});
     render();
   }).catch(function(e){toast(errText(e));if(b){b.disabled=false}render()}).then(function(){busy=false});
 }
@@ -2579,8 +2585,8 @@ function settled(p){
      dans un petit message qui passe. */
   var pay=+(p.payout||0),x=pay/p.stake,cm=p.lg_leg.length>1;
   var label=cm?"Combo \u00b7 "+p.lg_leg.length+" picks":p.lg_leg[0].label;
-  if(p.status==="won")showResult({tag:"WON",net:pay-p.stake,x:x,label:label+" came through",msg:money(pay)+" paid into your balance."});
-  else showResult({tag:"LOST",net:pay-p.stake,x:x,label:cm?"The combo broke":label+" didn\u2019t make it",msg:"Polymarket settled it. Your "+money(+p.stake)+" is gone \u2014 play money, so nothing real."});
+  if(p.status==="won")showResult({tag:"WON",net:pay-p.stake,x:x,stake:+p.stake,legs:p.lg_leg,label:label+" came through",msg:money(pay)+" paid into your balance."});
+  else showResult({tag:"LOST",net:pay-p.stake,x:x,stake:+p.stake,legs:p.lg_leg,label:cm?"The combo broke":label+" didn\u2019t make it",msg:"Polymarket settled it. Your "+money(+p.stake)+" is gone \u2014 play money, so nothing real."});
 }
 
 function countUp(el,v){
@@ -2608,6 +2614,7 @@ function showResult(r){
     '<button class="iconb" type="button" data-share="1" aria-label="Share"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v7a1 1 0 001 1h14a1 1 0 001-1v-7"/><path d="M12 15V3M8 7l4-4 4 4"/></svg></button></div>'+
     '<details class="rmore"><summary>'+(win?"Do this with real money":"On MOONX, this one was real")+"</summary>"+
     realBox(win?"That was a "+fx(r.x)+". The same market was open for real.":"The market is still open for real.","result")+"</details>";
+  timers.lastRes=r;timers.card=null;
   $("ov").classList.add("open");
   countUp($("rAmt"),r.net);
   if(win&&r.net>0)confetti(r.x>=3?150:90);
@@ -2700,6 +2707,171 @@ function invite(code){
   ev("lg_invite");
   if(navigator.share){navigator.share({title:"MOONX Play",text:txt,url:url}).catch(function(){});return}
   (navigator.clipboard?navigator.clipboard.writeText(txt+" "+url):Promise.reject()).then(function(){toast("Invite link copied.")}).catch(function(){toast(url)});
+}
+/* ---------------------------------------------------------------------------
+   LA CARTE A PARTAGER. Un denouement merite autre chose qu'une phrase.
+   On dessine une image: le fond du sport, le mot du resultat, le
+   multiplicateur, le gain, les paris. Les logos d'equipes de Polymarket
+   ne peuvent pas y figurer — leur serveur n'autorise pas le dessin sur
+   une toile, l'image se verrouillerait et ne pourrait plus etre exportee.
+   On garde donc nos photos, qui viennent de notre domaine, et les
+   initiales dans des pastilles.
+--------------------------------------------------------------------------- */
+var CARDW=1080,CARDH=1350;
+function cardImg(src){
+  return new Promise(function(res){
+    var i=new Image();
+    i.onload=function(){res(i)};i.onerror=function(){res(null)};
+    i.src=src;
+  });
+}
+function rrect(g,x,y,w,h,r){
+  g.beginPath();
+  g.moveTo(x+r,y);g.arcTo(x+w,y,x+w,y+h,r);g.arcTo(x+w,y+h,x,y+h,r);
+  g.arcTo(x,y+h,x,y,r);g.arcTo(x,y,x+w,y,r);g.closePath();
+}
+function fitText(g,t,max,size,weight){
+  var s=size;
+  do{g.font=weight+" "+s+"px Inter,system-ui,sans-serif";s-=2}while(g.measureText(t).width>max&&s>14);
+  return g.font;
+}
+function resSport(r){
+  var l=(r.legs||[])[0];if(!l)return"other";
+  if(l.sport&&SPIMG[l.sport])return l.sport;
+  var m=MK.find(function(x){return x.id===String(l.event_id)});
+  return(m&&SPIMG[m.sport])?m.sport:"other";
+}
+async function buildCard(r){
+  try{await document.fonts.ready}catch(e){}
+  var c=document.createElement("canvas");c.width=CARDW;c.height=CARDH;
+  var g=c.getContext("2d");
+  var win=r.net>0,even=Math.abs(r.net)<0.005;
+  var acc=win?"#3DDC84":even?"#A9BCD8":"#FF5C7A";
+  /* le fond: la photo du sport, assombrie, avec une lueur a la couleur
+     du resultat */
+  g.fillStyle="#070B14";g.fillRect(0,0,CARDW,CARDH);
+  var ph=await cardImg(sportBg(resSport(r)));
+  if(ph&&ph.width){
+    var k=Math.max(CARDW/ph.width,CARDH/ph.height),w=ph.width*k,h=ph.height*k;
+    g.globalAlpha=.78;g.drawImage(ph,(CARDW-w)/2,(CARDH-h)/2-60,w,h);g.globalAlpha=1;
+  }
+  var gr=g.createLinearGradient(0,0,0,CARDH);
+  gr.addColorStop(0,"rgba(7,11,20,.42)");gr.addColorStop(.5,"rgba(7,11,20,.82)");gr.addColorStop(1,"rgba(7,11,20,.97)");
+  g.fillStyle=gr;g.fillRect(0,0,CARDW,CARDH);
+  var glow=g.createRadialGradient(CARDW/2,330,0,CARDW/2,330,620);
+  glow.addColorStop(0,(win?"rgba(61,220,132,":even?"rgba(169,188,216,":"rgba(255,92,122,")+".22)");
+  glow.addColorStop(1,"rgba(0,0,0,0)");
+  g.fillStyle=glow;g.fillRect(0,0,CARDW,760);
+
+  var P=76;
+  /* en-tete */
+  g.textBaseline="alphabetic";
+  g.fillStyle="#fff";g.font='400 46px Blanka,Inter,sans-serif';
+  g.fillText("MOONX",P,P+46);
+  var mw=g.measureText("MOONX").width;
+  g.fillStyle="rgba(61,220,132,.16)";rrect(g,P+mw+16,P+16,96,38,19);g.fill();
+  g.fillStyle=acc==="#FF5C7A"?"#3DDC84":acc;g.font='700 19px JetBrains Mono,monospace';
+  g.fillText("PLAY",P+mw+36,P+42);
+  g.fillStyle="rgba(140,156,255,.9)";g.font='700 19px JetBrains Mono,monospace';
+  g.textAlign="right";g.fillText("LIVE POLYMARKET PRICES",CARDW-P,P+42);g.textAlign="left";
+
+  /* le mot du resultat */
+  g.fillStyle=acc;g.font='700 30px JetBrains Mono,monospace';
+  try{g.letterSpacing="8px"}catch(e){}
+  g.textAlign="center";g.fillText(String(r.tag||"").toUpperCase(),CARDW/2,378);
+  try{g.letterSpacing="0px"}catch(e){}
+
+  /* le multiplicateur */
+  g.fillStyle="#fff";g.font='900 170px Inter,system-ui,sans-serif';
+  g.fillText(fx(r.x),CARDW/2,540);
+
+  /* le gain */
+  g.fillStyle=acc;g.font='900 86px Inter,system-ui,sans-serif';
+  g.fillText(signed(r.net),CARDW/2,648);
+  g.textAlign="left";
+
+  /* les paris */
+  var legs=(r.legs||[]).slice(0,3),y=790;
+  if(legs.length){
+    g.strokeStyle="rgba(140,170,220,.22)";g.lineWidth=2;
+    g.beginPath();g.moveTo(P,730);g.lineTo(CARDW-P,730);g.stroke();
+    legs.forEach(function(l){
+      g.fillStyle="rgba(150,180,230,.13)";rrect(g,P,y-44,62,62,20);g.fill();
+      var ic=l.draw?"=":/^over/i.test(l.label)?"\u25B4":/^under/i.test(l.label)?"\u25BE":
+        /^yes$/i.test(l.label)?"\u2713":/^no$/i.test(l.label)?"\u2715":initials(l.label);
+      g.fillStyle="#C8D4EA";g.font='900 '+(ic.length>1?22:28)+'px Inter,system-ui,sans-serif';
+      g.textAlign="center";g.fillText(ic,P+31,y-4);g.textAlign="left";
+      g.fillStyle="#fff";fitText(g,l.label,CARDW-2*P-230,38,"800");
+      g.fillText(l.label,P+86,y-14);
+      g.fillStyle="rgba(165,180,205,.95)";g.font='600 24px Inter,system-ui,sans-serif';
+      g.fillText(String(l.event_title||l.title||""),P+86,y+18);
+      g.fillStyle=acc;g.font='900 34px Inter,system-ui,sans-serif';
+      g.textAlign="right";g.fillText(fx(1/(+l.p0||1)),CARDW-P,y-6);g.textAlign="left";
+      y+=104;
+    });
+    if((r.legs||[]).length>3){
+      g.fillStyle="rgba(130,145,172,.95)";g.font='700 26px Inter,system-ui,sans-serif';
+      g.fillText("+"+((r.legs||[]).length-3)+" more",P+86,y-14);
+    }
+  }
+  /* la mise et le retour */
+  g.fillStyle="rgba(150,180,230,.09)";rrect(g,P,CARDH-268,CARDW-2*P,96,26);g.fill();
+  g.fillStyle="#fff";g.font='800 38px Inter,system-ui,sans-serif';g.textAlign="center";
+  g.fillText(money(r.stake)+"  →  "+money(r.stake+r.net),CARDW/2,CARDH-205);
+
+  /* le pied */
+  g.fillStyle="#fff";g.font='900 34px Inter,system-ui,sans-serif';
+  g.fillText("moonx.fi/play",CARDW/2,CARDH-112);
+  g.fillStyle="rgba(130,145,172,.95)";g.font='600 25px Inter,system-ui,sans-serif';
+  g.fillText("Free · $1,000 of play money · real Polymarket prices",CARDW/2,CARDH-68);
+  g.textAlign="left";
+  return c;
+}
+function cardText(r){
+  var win=r.net>0;
+  return(win?"I just hit "+fx(r.x)+" on MOONX Play":"That one didn’t land on MOONX Play")+
+    " — real matches, live Polymarket prices, $1,000 of play money. Can you beat me?";
+}
+function shareResult(){
+  var r=timers.lastRes;if(!r)return share();
+  ev("lg_share_card");
+  openSheet("card",'<h3>Share it <button type="button" data-close-sheet="1">Close</button></h3>'+
+    '<div class="cardbox"><div class="skel" style="aspect-ratio:4/5;height:auto"></div></div>'+
+    '<div class="cardacts"><button class="go big" type="button" data-cardgo="1">Share</button>'+
+    '<button class="go ghost" type="button" data-carddl="1">Save image</button></div>');
+  buildCard(r).then(function(c){
+    var box=document.querySelector(".cardbox");if(!box)return;
+    timers.card=c;
+    box.innerHTML='<img alt="Your result" src="'+c.toDataURL("image/png")+'">';
+  }).catch(function(){});
+}
+function cardBlob(){
+  return new Promise(function(res,rej){
+    var c=timers.card;if(!c)return rej();
+    c.toBlob(function(b){b?res(b):rej()},"image/png",0.95);
+  });
+}
+function shareCardGo(){
+  var r=timers.lastRes||{},txt=cardText(r),url="https://moonx.fi/play"+(LG!=="ALL"?"?l="+LG:"");
+  cardBlob().then(function(b){
+    var f=new File([b],"moonx-play.png",{type:"image/png"});
+    if(navigator.canShare&&navigator.canShare({files:[f]}))
+      return navigator.share({files:[f],text:txt,url:url});
+    if(navigator.share)return navigator.share({title:"MOONX Play",text:txt,url:url});
+    throw 0;
+  }).catch(function(){
+    (navigator.clipboard?navigator.clipboard.writeText(txt+" "+url):Promise.reject())
+      .then(function(){toast("Text copied. Save the image to post it.")})
+      .catch(function(){toast(url)});
+  });
+}
+function cardDownload(){
+  cardBlob().then(function(b){
+    var u=URL.createObjectURL(b),a=document.createElement("a");
+    a.href=u;a.download="moonx-play.png";document.body.appendChild(a);a.click();a.remove();
+    setTimeout(function(){URL.revokeObjectURL(u)},4000);
+    toast("Image saved.");
+  }).catch(function(){toast("Could not build the image.")});
 }
 function share(){
   var e=equity(),txt="I'm at "+fx(e/START)+" on MOONX Play: real matches, live Polymarket prices, $1,000 of play money. Can you beat me?",url="https://moonx.fi/play"+(LG!=="ALL"?"?l="+LG:"");
@@ -2833,7 +3005,9 @@ document.addEventListener("click",function(e){
   if(d.ej){eject(d.ej);return}
   if(d.closeOv){$("ov").classList.remove("open");return}
   if(d.closeSheet){closeSheet();return}
-  if(d.share){share();return}
+  if(d.share){shareResult();return}
+  if(d.cardgo){shareCardGo();return}
+  if(d.carddl){cardDownload();return}
   if(d.restart){restart();return}
   if(d.lg){LG=d.lg;LD=null;renderLeague();loadLeague();return}
   if(d.newlg){newLeague();return}
