@@ -852,6 +852,24 @@ button,a,.sg,.dop,.mt,.dc{touch-action:manipulation}
 .sres .k5.lv3{color:var(--red)}
 .shint{margin:10px 2px 0;font-size:12px;line-height:1.45;color:var(--dim)}
 .shint b{color:#fff;font-weight:800}
+/* ---------------------------------------------------------------------------
+   LES BARRES FIXES SUR IOS. Safari redessine en retard les elements fixes
+   qui portent un flou d'arriere-plan: pendant un defilement lance, on voit
+   une fraction de seconde le contenu de la page la ou devraient etre la
+   barre du haut et le bandeau. On supprime donc le flou sur tactile (un
+   fond opaque fait le meme effet) et on pose chaque barre sur sa propre
+   couche, ce qui evite le repeint fautif.
+--------------------------------------------------------------------------- */
+@media (hover:none){
+  nav.top,.ticker,.tabs,.lvbar,.slipbar .in{
+    -webkit-backdrop-filter:none;backdrop-filter:none;
+    -webkit-transform:translateZ(0);transform:translateZ(0);
+  }
+  nav.top{background:#05080F}
+  .tabs{background:#05080F}
+  .lvbar{background:#05080F}
+  .slipbar .in{background:#0B101D}
+}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
