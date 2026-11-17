@@ -667,6 +667,8 @@ body.det .hero,body.det .invite{display:none}
 .dchips::-webkit-scrollbar{display:none}
 .dchips button{flex:none;height:32px;padding:0 13px;border-radius:999px;background:rgba(150,180,230,.07);box-shadow:inset 0 0 0 1px var(--line);font-size:12.5px;font-weight:800;color:var(--hi);white-space:nowrap}
 .dchips button.on{background:var(--acc);color:#06110A;box-shadow:none}
+.dchips button em{font-style:normal;margin-left:6px;font-family:var(--mono);font-size:10px;font-weight:700;opacity:.55}
+.dsec h4{display:none}
 .dsec{margin:16px 0 0;scroll-margin-top:calc(var(--nh) + var(--th) + 58px)}
 .dsec h4{display:flex;align-items:center;gap:8px;margin:0 3px 9px;font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.14em;color:var(--hi);text-transform:uppercase}
 .dsec h4 s{flex:1;height:1px;background:var(--line);text-decoration:none}
@@ -719,6 +721,29 @@ button,a,.sg,.dop,.mt,.dc{touch-action:manipulation}
   .view.pushin{animation:pushin .28s cubic-bezier(.32,.72,0,1)}
   .view.popin{animation:popin .28s cubic-bezier(.32,.72,0,1)}
   #v-detail{will-change:transform}
+}
+/* Un match a trois issues n'a qu'un tiers de la carte par camp, sur
+   telephone comme sur ordinateur ou la liste est en deux colonnes. On
+   retaille pour que "Portugal" tienne en entier au lieu de "Port...".  */
+.sg.n3{padding:0 9px}
+.sg.n3 .t1{gap:5px}
+.sg.n3 .lo{width:16px;height:16px;border-radius:5px}
+.sg.n3 .nm2{font-size:12px;letter-spacing:-.02em}
+.sg.n3 .k2{font-size:16px}
+@media (max-width:430px){
+  /* Le jour est maintenant choisi dans le rail du haut: la date sur chaque
+     carte ne sert plus a rien et poussait la ligne hors de l'ecran. */
+  .mt .mh .dt2{display:none}
+  /* Le compte des joueurs du clan est deja dans le fil du clan: sur un
+     ecran de telephone il poussait "ALL BETS" hors de la carte. */
+  .mt .mh .pl2{display:none}
+  .mt .mh{overflow:hidden}
+  .mt .mh .lg{max-width:42%}
+  .mt .mh .r{min-width:0}
+  .mt.feat .sg.n3{padding:0 10px;height:78px}
+  .mt.feat .sg.n3 .lo{width:22px;height:22px;border-radius:7px;font-size:8px}
+  .mt.feat .sg.n3 .nm2{font-size:13px}
+  .mt.feat .sg.n3 .k2{font-size:19px}
 }
 @keyframes pushin{from{transform:translateX(26%);opacity:.25}to{transform:none;opacity:1}}
 @keyframes popin{from{transform:translateX(-16%);opacity:.25}to{transform:none;opacity:1}}
@@ -800,6 +825,7 @@ button,a,.sg,.dop,.mt,.dc{touch-action:manipulation}
       <div class="idbox" id="idBox" hidden></div>
       <section class="view on" id="v-matches">
         <div class="sportrow"><button class="sportbtn" type="button" data-filter="1" id="fBtn"><span class="ic">◉</span><span class="lb">All sports</span><span class="n"></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button><div class="chips" id="sports"></div></div>
+        <div class="days" id="days"></div>
         <div id="daily"></div>
         <div class="mlist" id="mList"></div>
         <div id="mCta"></div>
@@ -1120,10 +1146,65 @@ function tickClocks(){
     if(e.textContent!==c)e.textContent=c;
   });
 }
+/* ---------------------------------------------------------------------------
+   LE CALENDRIER. Au lieu d'une seule liste sans fin, un rail de jours:
+   "Live" d'abord, puis aujourd'hui, demain, et la suite. On ne voit qu'un
+   jour a la fois, et le direct est un filtre comme les autres.
+--------------------------------------------------------------------------- */
+function dkey(m){
+  if(m.start<=Date.now())return"live";
+  var d=new Date(m.start),n=new Date();
+  var dd=Math.round((new Date(d.getFullYear(),d.getMonth(),d.getDate())-new Date(n.getFullYear(),n.getMonth(),n.getDate()))/864e5);
+  return"d"+(dd<0?0:dd);
+}
+function dface(k,t){
+  if(k==="live")return{u:"NOW",b:"Live"};
+  var d=new Date(t),dd=+k.slice(1);
+  var day=d.toLocaleDateString("en-US",{weekday:"short"}),num=d.getDate();
+  return{u:dd===0?"TODAY":dd===1?"TOMORROW":day.toUpperCase(),b:day+" "+num};
+}
+function dayList(){
+  var by={},ord=[];
+  MK.forEach(function(m){
+    if(sport!=="all"&&m.sport!==sport)return;
+    if(m.opts.length<2)return;
+    var k=dkey(m);
+    if(!by[k]){by[k]={k:k,n:0,t:m.start};ord.push(by[k])}
+    by[k].n++;
+    if(m.start<by[k].t)by[k].t=m.start;
+  });
+  ord.sort(function(a,b){
+    if((a.k==="live")!==(b.k==="live"))return a.k==="live"?-1:1;
+    return a.t-b.t;
+  });
+  return ord;
+}
+/* Si le jour choisi n'existe plus (changement de sport, match termine),
+   on retombe sur le premier disponible plutot que sur une page vide.  */
+function fixDay(){
+  var l=dayList();
+  if(!l.length)return;
+  if(!l.some(function(x){return x.k===day}))day=l[0].k;
+}
+function daysBar(){
+  var el=$("days");if(!el)return;
+  var l=dayList();
+  if(l.length<2){el.innerHTML="";return}
+  var k=l.map(function(x){return x.k+":"+x.n}).join("|")+"/"+day;
+  if(el.dataset.k===k)return;
+  el.dataset.k=k;
+  el.innerHTML=l.map(function(x){
+    var f=dface(x.k,x.t);
+    return'<button type="button" class="day'+(x.k==="live"?" lv":"")+(x.k===day?" on":"")+'" data-day="'+x.k+'">'+
+      '<u>'+f.u+'</u><b>'+esc(f.b)+'</b><i>'+x.n+'</i></button>';
+  }).join("");
+  var on=el.querySelector(".day.on");
+  if(on)el.scrollTo({left:Math.max(0,on.offsetLeft-60),behavior:"auto"});
+}
 function mlist(){
   var now=Date.now();
   return MK.filter(function(m){
-    return(sport==="all"||m.sport===sport)&&m.opts.length>=2;
+    return(sport==="all"||m.sport===sport)&&m.opts.length>=2&&(day==="all"||dkey(m)===day);
   }).sort(function(a,b){
     var al=a.start<=now,bl=b.start<=now;
     if(al!==bl)return al?-1:1;
@@ -1147,6 +1228,26 @@ function logo(o){
   var ini=initials(o.label),lg=realLogo(o);
   return'<span class="lo">'+(lg?'<img src="'+esc(lg)+'" alt="" loading="lazy" onerror="this.parentNode.textContent=\''+ini+'\'">':ini)+"</span>";
 }
+/* "Bosnia and Herzegovina" sur un tiers d'ecran de telephone, ca donne
+   "Bosnia and Her...". On raccourcit plutot que de couper au hasard:
+   on enleve le complement, puis on reduit les premiers mots a leur
+   initiale. Le nom entier reste dans le bulletin et sur le ticket.    */
+function shortName(s,max){
+  s=String(s||"").trim();
+  if(s.length<=max)return s;
+  var m=/^(.+?)\s+(?:and|&)\s+/.exec(s);
+  if(m&&m[1].length>=4)s=m[1];
+  if(s.length<=max)return s;
+  m=/^.+?\s+of\s+(.+)$/i.exec(s);
+  if(m&&m[1].length>=4)s=m[1];
+  if(s.length<=max)return s;
+  var w=s.split(/\s+/);
+  while(w.length>2&&w.join(" ").length>max)w.shift();
+  for(var k=0;k<w.length-1&&w.join(" ").length>max;k++){
+    if(w[k].length>2)w[k]=w[k][0].toUpperCase()+".";
+  }
+  return w.join(" ");
+}
 function shr(m,j){
   /* Largeur du camp = sa probabilite, mais ramenee vers le centre: un outsider
      a 2% garde une part minimale, sinon son nom et sa cote ne tiennent pas.
@@ -1156,17 +1257,44 @@ function shr(m,j){
   var MIN=n<3?.34:.26;
   return MIN+(1-n*MIN)*(ps[j]/tot);
 }
-function segHTML(m,j){
+function segMax(m,j,feat){
+  var w=document.documentElement.clientWidth||375;
+  var cw=w>=1080?(feat?660:340):Math.min(w-28,760);
+  var px=shr(m,j)*cw-(feat?66:56);
+  var ch=feat?8.6:(m.opts.length>2?6.5:7.1);
+  return Math.max(6,Math.round(px/ch));
+}
+function segHTML(m,j,feat){
   var o=m.opts[j],p=price(o.token,o.p),on=!!picks[o.token],sh=shr(m,j);
   var top=0;m.opts.forEach(function(x,k){if(shr(m,k)>shr(m,top))top=k});
   var two=m.opts.length<3;
   return'<button type="button" class="sg'+(two?"":" n3")+(on?" on":j===top?" fav":"")+'" style="flex-grow:'+(sh*100).toFixed(2)+
     '" data-pick="'+m.id+'" data-j="'+j+'" data-sgw="'+o.token+'" aria-pressed="'+(on?"true":"false")+'">'+
-    '<span class="t1">'+logo(o)+'<span class="nm2">'+esc(o.label)+'</span></span>'+
+    '<span class="t1">'+logo(o)+'<span class="nm2" data-f="'+esc(o.label)+'">'+esc(shortName(o.label,segMax(m,j,feat)))+'</span></span>'+
     '<span class="t2"><b class="k2" data-tok="'+o.token+'">'+fx(1/p)+'</b><i class="pc2" data-ch="'+o.token+'">'+Math.round(p*100)+'%</i></span></button>';
 }
-function marketHTML(m){
-  return'<div class="mkt">'+m.opts.map(function(o,j){return segHTML(m,j)}).join("")+"</div>";
+/* Le calcul ne fait qu'estimer la place. Apres le rendu on mesure pour de
+   vrai et on raccourcit les rares noms qui depassent encore: aucun nom
+   ne finit coupe au milieu d'un mot.                                   */
+function fitNames(){
+  var els=document.querySelectorAll(".mkt .nm2[data-f]");
+  if(!els.length)return;
+  var jobs=[];
+  els.forEach(function(e){
+    if(e.scrollWidth>e.clientWidth+1)jobs.push({e:e,full:e.getAttribute("data-f"),r:e.clientWidth/Math.max(1,e.scrollWidth)});
+  });
+  if(!jobs.length)return;
+  jobs.forEach(function(j){
+    j.e.textContent=shortName(j.full,Math.max(5,Math.floor(j.e.textContent.length*j.r)-1));
+  });
+  jobs.forEach(function(j){
+    if(j.e.scrollWidth<=j.e.clientWidth+1)return;
+    var r=j.e.clientWidth/Math.max(1,j.e.scrollWidth);
+    j.e.textContent=shortName(j.full,Math.max(4,Math.floor(j.e.textContent.length*r)-1));
+  });
+}
+function marketHTML(m,feat){
+  return'<div class="mkt">'+m.opts.map(function(o,j){return segHTML(m,j,feat)}).join("")+"</div>";
 }
 /* Fonds photo par sport. Images Pexels (licence Pexels: usage commercial
    libre, sans attribution), redimensionnees et servies depuis notre domaine
@@ -1194,7 +1322,7 @@ function matchHTML(m,feat){
     '<span class="pmb">'+PMSVG+vol(m.vol)+"</span>"+
     (live?'<span class="lv">LIVE</span>':'<span class="dt2">'+dstamp(m.start)+'</span><span class="cd2" data-cd="'+m.start+'">'+cdown(m.start)+"</span>")+
     '<button type="button" class="allb" data-open="'+m.id+'">ALL BETS'+CHSVG+"</button>"+
-    "</span></div>"+marketHTML(m)+"</article>";
+    "</span></div>"+marketHTML(m,feat)+"</article>";
 }
 /* ---------------------------------------------------------------------------
    LE RAIL (ordinateur): les sports a gauche avec leur nombre de marches,
@@ -1213,6 +1341,7 @@ function goMarket(id){
   if(tab!=="matches")setTab("matches");
   if(detail){detail=null;syncViews();renderIdentity();renderDaily()}
   if(sport!=="all"&&m.sport!==sport)sport="all";
+  day=dkey(m);
   var l=mlist(),idx=-1;
   l.some(function(x,k){if(x.id===id){idx=k;return true}});
   if(idx<0)return;
@@ -1376,21 +1505,18 @@ function renderMatches(){
       :'<div class="skel"></div><div class="skel" style="margin-top:10px"></div>';
     return;
   }
+  fixDay();daysBar();
   var l=mlist();
   if(!l.length){
-    el.innerHTML='<div class="empty"><b>Nothing in this sport right now.</b>Pick another one.<br><button class="go" type="button" data-sport="all">All sports</button></div>';
+    el.innerHTML='<div class="empty"><b>Nothing here right now.</b>Try another day or another sport.<br><button class="go" type="button" data-sport="all">All sports</button></div>';
     return;
   }
-  var cnt={};l.forEach(function(m){var k=groupOf(m);cnt[k]=(cnt[k]||0)+1});
-  var h="",g="";
-  l.slice(0,SHOWN).forEach(function(m,i){
-    var k=groupOf(m);
-    if(k!==g){g=k;h+='<div class="tline"><b'+(k==="LIVE NOW"?' class="lvb"':"")+">"+k+"</b><s></s><u>"+cnt[k]+"</u></div>"}
-    h+=matchHTML(m,i===0);
-  });
+  var h="";
+  l.slice(0,SHOWN).forEach(function(m,i){h+=matchHTML(m,i===0)});
   if(l.length>SHOWN)h+='<button class="more1" type="button" data-more="1">Show more matches &darr;</button>';
   h+='<p class="pmnote"><span class="pmb">'+PMSVG+'POLYMARKET</span><span>Every match, every price and every result on this page comes from the live <a href="https://polymarket.com" target="_blank" rel="noopener">Polymarket</a> order book. MOONX Play only lets you trade them with play money.</span></p>';
   el.innerHTML=h;
+  fitNames();
 }
 /* ---------------------------------------------------------------------------
    L'ECRAN D'UN MATCH. Polymarket cote bien plus que le vainqueur: handicaps,
@@ -1402,6 +1528,9 @@ var PHONE=function(){try{return!window.matchMedia("(min-width:1080px)").matches}
 function slideIn(el,cls){
   if(!PHONE())return;
   el.classList.remove("pushin","popin");void el.offsetWidth;el.classList.add(cls);
+  var off=function(){el.classList.remove("pushin","popin");el.removeEventListener("animationend",off)};
+  el.addEventListener("animationend",off);
+  clearTimeout(timers.slide);timers.slide=setTimeout(off,480);
 }
 function syncViews(anim){
   var dv=$("v-detail"),mv=$("v-matches");
@@ -1481,28 +1610,39 @@ function paintDetail(){
     '<h1 class="dh2">'+esc(mtitle(e))+'</h1>'+
     '<div class="dmeta">'+(live?'<span class="lv">LIVE NOW</span>':'<span>'+dstamp(e.start)+'</span><span class="cd2" data-cd="'+e.start+'">'+cdown(e.start)+'</span>')+'</div>'+
     '<div class="dwin">'+marketHTML(e)+'</div>';
-  var gs=(detail.ev&&detail.ev.groups)||[];
+  var fam=detail.ev?famOf(detail.ev):[];
   if(!detail.ev)h+='<div class="dempty">Loading every market on this match…</div>';
-  else if(!gs.length)h+='<div class="dempty">Polymarket only trades the winner on this match for now.</div>';
+  else if(!fam.length)h+='<div class="dempty">Polymarket only trades the winner on this match for now.</div>';
   else{
-    var order=[],by={};
-    gs.forEach(function(g){if(!by[g.name]){by[g.name]=[];order.push(g.name)}by[g.name].push(g)});
-    h+='<div class="dchips">'+order.map(function(n,i){
-      return'<button type="button" data-dj="'+i+'" class="'+(i===detail.sec?"on":"")+'">'+esc(n)+'</button>';
-    }).join("")+'</div>';
-    h+=order.map(function(n,i){
-      return'<section class="dsec" id="dsec-'+i+'"><h4>'+esc(n)+'<s></s>'+(by[n].length>1?'<u>'+by[n].length+' lines</u>':"")+'</h4>'+
-        by[n].map(function(g){
-          var cap=gcap(g),fl=function(x){return String(x).toLowerCase().replace(/[^a-z0-9]+/g," ").trim()};
-          if(cap&&fl(cap)===fl(n))cap="";
-          return'<div class="drow">'+(cap?'<span class="dcap">'+esc(cap)+'</span>':"")+
-            '<div class="dops">'+g.opts.map(dopHTML).join("")+'</div></div>';
-        }).join("")+'</section>';
-    }).join("");
+    if(detail.sec>=fam.length)detail.sec=0;
+    h+='<div class="dchips">'+fam.map(function(f,i){
+      return'<button type="button" data-dj="'+i+'" class="'+(i===detail.sec?"on":"")+'">'+esc(f.name)+'<em>'+f.gs.length+'</em></button>';
+    }).join("")+'</div><div id="dbody">'+famHTML(fam[detail.sec])+'</div>';
   }
   h+='<p class="dnote"><span class="pmb">'+PMSVG+'POLYMARKET</span><span>Every line on this page is a live Polymarket market. Stack several of them and they are priced together, not simply multiplied — two bets on the same match move with each other.</span></p>';
   el.innerHTML=h;
-  dchipScroll();
+  fitNames();
+}
+/* Les marches ranges par famille: handicaps, totaux, joueurs... On n'en
+   montre qu'une a la fois, comme des onglets. Le mur de lignes disparait
+   et chaque famille tient dans un ecran de telephone.                  */
+function famOf(e){
+  var by={},ord=[];
+  (e.groups||[]).forEach(function(g){
+    if(!by[g.name]){by[g.name]={name:g.name,gs:[]};ord.push(by[g.name])}
+    by[g.name].gs.push(g);
+  });
+  return ord;
+}
+function famHTML(f){
+  if(!f)return"";
+  var fl=function(x){return String(x).toLowerCase().replace(/[^a-z0-9]+/g," ").trim()};
+  return'<section class="dsec">'+f.gs.map(function(g){
+    var cap=gcap(g);
+    if(cap&&fl(cap)===fl(f.name))cap="";
+    return'<div class="drow">'+(cap?'<span class="dcap">'+esc(cap)+'</span>':"")+
+      '<div class="dops">'+g.opts.map(dopHTML).join("")+'</div></div>';
+  }).join("")+'</section>';
 }
 /* On ne redessine pas tout l'ecran a chaque tap: la page sauterait. */
 function paintPicks(){
@@ -1514,31 +1654,12 @@ function paintPicks(){
   var w=el.querySelector(".dwin .mkt"),e=detail&&detail.ev;
   if(w&&e)w.innerHTML=e.opts.map(function(o,j){return segHTML(e,j)}).join("");
 }
-function dchipScroll(){
-  var el=$("v-detail");if(!el)return;
-  var chips=el.querySelector(".dchips");if(!chips)return;
-  if(el.dataset.sc)return;
-  el.dataset.sc="1";
-  window.addEventListener("scroll",function(){
-    if(!detail||timers.dsc)return;
-    timers.dsc=requestAnimationFrame(function(){
-      timers.dsc=0;
-      var w=$("v-detail");if(!w||!detail)return;
-      var cs=w.querySelector(".dchips");if(!cs)return;
-      var top=cs.getBoundingClientRect().bottom+12,secs=w.querySelectorAll(".dsec"),k=0;
-      secs.forEach(function(x,i){if(x.getBoundingClientRect().top<=top)k=i});
-      if(k===detail.sec)return;
-      detail.sec=k;
-      cs.querySelectorAll("button").forEach(function(b,i){b.classList.toggle("on",i===k)});
-      var on=cs.children[k];
-      if(on)cs.scrollTo({left:Math.max(0,on.offsetLeft-70),behavior:"smooth"});
-    });
-  },{passive:true});
-}
 function renderRows(id){
   var card=document.querySelector('.mt[data-id="'+id+'"]'),m=MK.find(function(x){return x.id===id});
   if(!card||!m)return;
-  card.querySelector(".mkt").innerHTML=m.opts.map(function(o,j){return segHTML(m,j)}).join("");
+  var feat=card.classList.contains("feat");
+  card.querySelector(".mkt").innerHTML=m.opts.map(function(o,j){return segHTML(m,j,feat)}).join("");
+  fitNames();
 }
 /* Un pari retenu = un jeton Polymarket. On en garde au plus un par marche
    (choisir "Over" apres "Under" remplace), et six en tout. */
@@ -2285,6 +2406,7 @@ function pollQuotes(){
         var dw=document.querySelector("#v-detail .dwin .mkt");
         if(dw)dw.querySelectorAll(".sg").forEach(function(g,j){g.style.flexGrow=(shr(detail.ev,j)*100).toFixed(1)});
       }
+      fitNames();
       if(pcount())refreshTicket();
     }
     tickTicker();tickClocks();
@@ -2304,7 +2426,7 @@ document.addEventListener("click",function(e){
   if(d.tab){setTab(d.tab);return}
   if(d.mail){sendMail(d.mail);return}
   if(d.startgame){startGame();return}
-  if(d.sport){sport=d.sport;SHOWN=14;closeSheet();if(detail){detail=null;syncViews();renderIdentity();renderDaily()}if(tab!=="matches"){setTab("matches")}try{var u=new URL(location.href);if(sport==="all")u.searchParams.delete("sport");else u.searchParams.set("sport",sport);history.replaceState(null,"",u)}catch(x){}renderMatches();renderTicket();pollQuotes();return}
+  if(d.sport){sport=d.sport;SHOWN=14;closeSheet();fixDay();if(detail){detail=null;syncViews();renderIdentity();renderDaily()}if(tab!=="matches"){setTab("matches")}try{var u=new URL(location.href);if(sport==="all")u.searchParams.delete("sport");else u.searchParams.set("sport",sport);history.replaceState(null,"",u)}catch(x){}renderMatches();renderTicket();pollQuotes();return}
   if(d.pick){togglePick(d.pick,+d.j);return}
   if(d.dc){addCombo(d.dc);return}
   if(d.go){goMarket(d.go);return}
@@ -2333,15 +2455,23 @@ document.addEventListener("click",function(e){
   if(d.rm){var rl=picks[d.rm];delete picks[d.rm];afterPick(rl&&rl.id);return}
   if(d.clear){var ks=legsList().map(function(x){return x.id});picks={};ks.forEach(renderRows);if(detail)paintPicks();renderTicket();quoteSoon();return}
   if(d.mode){mode=d.mode;renderTicket();if(mode==="combo")quoteSoon();return}
+  if(d.day){day=d.day;SHOWN=14;renderMatches();renderTicket();pollQuotes();vib(6);
+    window.scrollTo({top:Math.max(0,$("days").getBoundingClientRect().top+window.scrollY-(parseInt(getComputedStyle(document.body).paddingTop)+8)),behavior:"smooth"});return}
   if(d.open){openDetail(d.open);return}
   if(d.back){closeDetail();return}
   if(d.dp){var f=dfind(d.dp);if(f){addLeg(mkLeg(detail.ev,f.o,f.gk,f.sub));afterPick(detail.id)}return}
   if(d.dj){
-    var sc=$("dsec-"+d.dj);if(!sc)return;
+    if(!detail||!detail.ev)return;
     detail.sec=+d.dj;
-    document.querySelectorAll(".dchips button").forEach(function(b,i){b.classList.toggle("on",i===+d.dj)});
-    window.scrollTo({top:sc.getBoundingClientRect().top+window.scrollY-(parseInt(getComputedStyle(document.body).paddingTop)+54),behavior:"smooth"});
-    return}
+    var fam=famOf(detail.ev),bd=$("dbody");
+    if(bd)bd.innerHTML=famHTML(fam[detail.sec]);
+    var cs=document.querySelector(".dchips");
+    if(cs){
+      cs.querySelectorAll("button").forEach(function(b,i){b.classList.toggle("on",i===+d.dj)});
+      var on=cs.children[+d.dj];
+      if(on)cs.scrollTo({left:Math.max(0,on.offsetLeft-70),behavior:"smooth"});
+    }
+    vib(5);return}
   if(d.q){amount=Math.max(1,Math.floor(cash()*+d.q*100)/100);if(+d.q===1)amount=cash();rememberName();if($("sheet").dataset.k==="follow")$("sheetP").innerHTML=followHTML();return}
   if(d.fplace){rememberName();placeFollow();return}
   if(d.ej){eject(d.ej);return}
