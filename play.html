@@ -183,7 +183,10 @@ nav.top{position:fixed;top:0;left:0;right:0;z-index:30;height:var(--nh);display:
 .sg .k2.fd{color:var(--red)}
 .sg.on .k2.fu,.sg.on .k2.fd{color:#06110A}
 /* le match en vedette: le premier de la liste, plus grand, pour donner un point d'accroche */
-.mt.feat .mh{font-size:10.5px;margin-bottom:9px}
+.mt.feat{position:relative;padding:13px;border-radius:26px;overflow:hidden;background-color:var(--card);background-size:cover;background-position:center 35%;box-shadow:inset 0 0 0 1px var(--line)}
+.mt.feat:before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(7,11,20,.74),rgba(7,11,20,.93) 55%,rgba(7,11,20,.97))}
+.mt.feat .mh,.mt.feat .mkt{position:relative}
+.mt.feat .mh{font-size:10.5px;margin:0 3px 10px}
 .mt.feat .mkt{padding:3px;gap:3px;border-radius:22px;background:linear-gradient(180deg,rgba(61,220,132,.09),rgba(150,180,230,.045));box-shadow:inset 0 0 0 1px rgba(140,170,220,.14)}
 .mt.feat .sg{height:84px;border-radius:19px;gap:5px;padding:0 15px}
 .mt.feat .sg .lo{width:30px;height:30px;border-radius:9px;font-size:11px}
@@ -537,11 +540,13 @@ footer .lk a{text-decoration:none;color:#fff}
 .dayhd span{font-size:12px;color:var(--dim)}
 .dgrid{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none;margin:0 -14px;padding:2px 14px 4px;scroll-snap-type:x mandatory}
 .dgrid::-webkit-scrollbar{display:none}
-.dc{flex:none;width:258px;scroll-snap-align:start;position:relative;overflow:hidden;border-radius:20px;padding:13px;text-align:left;box-shadow:inset 0 0 0 1px var(--line)}
-.dc.c0{background:linear-gradient(135deg,rgba(61,220,132,.2),rgba(61,220,132,.04) 60%,rgba(13,19,34,.9))}
-.dc.c1{background:linear-gradient(135deg,rgba(232,179,65,.22),rgba(232,179,65,.04) 60%,rgba(13,19,34,.9))}
-.dc.c2{background:linear-gradient(135deg,rgba(255,92,122,.2),rgba(255,92,122,.04) 60%,rgba(13,19,34,.9))}
-.dc.c3{background:linear-gradient(135deg,rgba(140,156,255,.22),rgba(140,156,255,.04) 60%,rgba(13,19,34,.9))}
+.dc{flex:none;width:258px;scroll-snap-align:start;position:relative;overflow:hidden;border-radius:20px;padding:13px;text-align:left;box-shadow:inset 0 0 0 1px var(--line);background-color:var(--card);background-size:cover;background-position:center;isolation:isolate}
+.dc:before{content:"";position:absolute;inset:0;z-index:-1}
+.dc:after{content:"";position:absolute;inset:0;z-index:-2;background:linear-gradient(170deg,rgba(7,11,20,.45) 0%,rgba(7,11,20,.86) 52%,rgba(7,11,20,.96) 100%)}
+.dc.c0:before{background:linear-gradient(135deg,rgba(61,220,132,.5),rgba(61,220,132,.12) 55%,transparent)}
+.dc.c1:before{background:linear-gradient(135deg,rgba(232,179,65,.5),rgba(232,179,65,.12) 55%,transparent)}
+.dc.c2:before{background:linear-gradient(135deg,rgba(255,92,122,.5),rgba(255,92,122,.12) 55%,transparent)}
+.dc.c3:before{background:linear-gradient(135deg,rgba(140,156,255,.5),rgba(140,156,255,.12) 55%,transparent)}
 .dc .em{position:absolute;right:-14px;top:-20px;font-size:92px;line-height:1;opacity:.13;transform:rotate(-12deg);pointer-events:none}
 .dc u{display:block;font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.15em;color:var(--hi);text-decoration:none;position:relative}
 .dc h5{margin:3px 0 9px;font-size:16px;font-weight:900;letter-spacing:-.02em;position:relative}
@@ -607,6 +612,8 @@ footer .lk a{text-decoration:none;color:#fff}
   .howto{justify-content:flex-start;margin-top:9px}
   .dgrid{margin:0;padding:2px 0 4px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));overflow:visible}
   .dc{width:auto}
+  .dc .ft{flex-wrap:wrap;gap:10px}
+  .dc .ft .add{flex:1 1 100%;margin-left:0;display:flex;align-items:center;justify-content:center;height:40px;padding:0}
   .mlist{max-width:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 12px;align-items:start}
   .mlist{grid-auto-flow:dense}
   .mlist .tline{grid-column:1/-1}
@@ -1005,6 +1012,11 @@ function segHTML(m,j){
 function marketHTML(m){
   return'<div class="mkt">'+m.opts.map(function(o,j){return segHTML(m,j)}).join("")+"</div>";
 }
+/* Fonds photo par sport. Images Pexels (licence Pexels: usage commercial
+   libre, sans attribution), redimensionnees et servies depuis notre domaine
+   pour ne dependre d'aucun service exterieur. */
+var SPIMG={soccer:1,basketball:1,amfootball:1,tennis:1,hockey:1,fight:1,cricket:1,baseball:1,other:1};
+function sportBg(sp){return"assets/img/sport/"+(SPIMG[sp]?sp:"other")+".jpg"}
 var PMSVG='<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 0l6 6-6 6-6-6z"/></svg>';
 function clanOn(id){
   /* combien de joueurs du classement ont un pari ouvert sur ce match:
@@ -1015,7 +1027,8 @@ function clanOn(id){
 }
 function matchHTML(m,feat){
   var live=m.start<=Date.now(),c=clanOn(m.id);
-  return'<article class="mt'+(feat?" feat":"")+'" data-id="'+m.id+'"><div class="mh">'+
+  return'<article class="mt'+(feat?" feat":"")+'" data-id="'+m.id+'"'+
+    (feat?' style="background-image:url('+sportBg(m.sport)+')"':"")+'><div class="mh">'+
     (m.licon?'<img src="'+esc(m.licon)+'" alt="" loading="lazy" onerror="this.remove()">':"")+
     '<span class="lg">'+esc(m.league)+'</span><span class="r">'+
     (c?'<span class="pl2">\u25CF '+c+" playing</span>":"")+
@@ -1153,7 +1166,8 @@ function combosOfDay(){
 function comboX2(legs){return legs.reduce(function(a,l){var o=l.m.opts[l.j];return a/price(o.token,o.p)},1)}
 function comboVol(legs){return legs.reduce(function(a,l){return a+(+l.m.vol||0)},0)}
 function dcHTML(c,i){
-  return'<button type="button" class="dc c'+(i%4)+'" data-dc="'+c.id+'"><span class="em">'+c.em+'</span>'+
+  var sp=c.legs[0]?c.legs[0].m.sport:"other";
+  return'<button type="button" class="dc c'+(i%4)+'" data-dc="'+c.id+'" style="background-image:url('+sportBg(sp)+')"><span class="em">'+c.em+'</span>'+
     '<u>'+c.tag+'</u><h5>'+esc(c.name)+'</h5><div class="lgs">'+
     c.legs.slice(0,3).map(function(l){
       var o=l.m.opts[l.j];
