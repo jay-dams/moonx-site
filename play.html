@@ -632,7 +632,7 @@ footer .lk a{text-decoration:none;color:#fff}
   .mlist{max-width:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 12px;align-items:start}
   .mlist{grid-auto-flow:dense}
   .mlist .tline{grid-column:1/-1}
-  .mlist .more1,.mlist .empty,.mlist .skel{grid-column:1/-1}
+  .mlist .more1,.mlist .empty,.mlist .skel,.mlist .pmnote{grid-column:1/-1}
   .mt.feat{grid-column:1/-1}
   .mt.feat .mkt{max-width:none}
   .lvbar{margin:0 0 6px;padding:10px 0;position:static;background:none;border-bottom:1px solid var(--line)}
@@ -1952,15 +1952,40 @@ function comboVol(legs){
   legs.forEach(function(l){if(seen[l.m.id])return;seen[l.m.id]=1;v+=(+l.m.vol||0)});
   return v;
 }
+/* Une jambe doit se lire d'un trait: ce qu'on parie, puis ou. Trois
+   defauts se corrigent ici d'un coup.
+   — "FC Bayern Mu..." coupait le handicap, qui est pourtant tout le pari:
+     le suffixe chiffre est mis de cote, le nom raccourci, puis recolle.
+   — "Over 1.5" ne disait pas de quoi. Le nom du marche le dit: des buts,
+     des points. On le remet derriere le chiffre.
+   — "Uruguay" au-dessus de "Uruguay vs Dominican Rep." n'apprenait rien
+     et cachait l'adversaire. Sur un pari au vainqueur, la ligne du bas
+     ne garde donc que l'adversaire. */
+function legFace(l){
+  var lab=String(l.o.label||""),g=String(l.gname||""),m=l.m;
+  var hc=lab.match(/\s([+-]\d+(?:\.\d+)?)$/);
+  if(hc)lab=shortName(lab.slice(0,lab.length-hc[0].length),14)+" "+hc[1];
+  else if(/^(over|under)\s/i.test(lab)){
+    var u=/^totals?\s+(.+)$/i.exec(g);
+    if(u)lab+=" "+u[1].toLowerCase().slice(0,9);
+  }
+  else if(/^yes$/i.test(lab)&&g)lab=g;
+  else if(/^no$/i.test(lab)&&g)lab="No "+g.charAt(0).toLowerCase()+g.slice(1);
+  var sub=mtitle(m);
+  if(!l.sub&&!l.o.draw){
+    var t=String(l.o.label||"");
+    var other=(m.opts||[]).filter(function(o){return!o.draw&&o.label!==t});
+    if(other.length===1)sub="vs "+other[0].label;
+  }
+  return{lab:lab,sub:sub};
+}
 function dcHTML(c,i){
   var sp=c.legs[0]?catOf(c.legs[0].m):"",same=comboSame(c.legs);
   return'<button type="button" class="dc c'+(i%4)+'" data-dc="'+c.id+'"'+bgStyle(sp)+'>'+
     '<u>'+c.tag+'</u><h5>'+esc(c.name)+'</h5><div class="lgs">'+
     c.legs.slice(0,3).map(function(l){
-      /* "Under 212.5", "Draw", "Knicks -6.5": seuls, ces intitules ne
-         disent pas de quel match il s'agit, et trois totaux dans la meme
-         carte deviennent indiscernables. Le match va en dessous. */
-      return'<div>'+logoMini(l.o)+'<span class="t">'+esc(l.o.label)+'<small>'+esc(mtitle(l.m))+'</small></span>'+
+      var f=legFace(l);
+      return'<div>'+logoMini(l.o)+'<span class="t">'+esc(f.lab)+'<small>'+esc(f.sub)+'</small></span>'+
         '<span class="k" data-lk="'+l.o.token+'">'+fx(1/price(l.o.token,l.o.p))+"</span></div>";
     }).join("")+
     (c.legs.length>3?'<div><span class="lo">+'+(c.legs.length-3)+'</span><span class="t">more</span></div>':"")+
