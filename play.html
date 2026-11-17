@@ -188,16 +188,10 @@ nav.top{position:fixed;top:0;left:0;right:0;z-index:30;height:var(--nh);display:
 .sg .k2.fd{color:var(--red)}
 .sg.on .k2.fu,.sg.on .k2.fd{color:#06110A}
 /* le match en vedette: le premier de la liste, plus grand, pour donner un point d'accroche */
-/* La carte en vedette respire: la photo avance lentement et revient, sur
-   vingt-deux secondes, sans jamais sauter. C'est une seule couche animee
-   par la carte graphique — aucun fichier en plus, aucune donnee en plus.
-   La photo est passee sur son propre calque pour pouvoir bouger sous le
-   voile sombre, qui lui ne bouge pas. */
+/* La photo ne bouge pas. Un travelling lent la recadrait et la rendait
+   molle: l'illustration compte plus que le mouvement. */
 .mt.feat{position:relative;padding:13px;border-radius:26px;overflow:hidden;background-color:var(--card);background-size:cover;background-position:center 35%;box-shadow:inset 0 0 0 1px var(--line)}
-.mt.feat:before{content:"";position:absolute;inset:-7%;background-image:inherit;background-size:cover;background-position:center 35%;
-  animation:kenb 22s ease-in-out infinite alternate;will-change:transform;transform-origin:50% 40%}
-.mt.feat:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(7,11,20,.74),rgba(7,11,20,.93) 55%,rgba(7,11,20,.97))}
-@keyframes kenb{from{transform:scale(1) translate3d(0,0,0)}to{transform:scale(1.16) translate3d(-2.5%,-2%,0)}}
+.mt.feat:before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(7,11,20,.74),rgba(7,11,20,.93) 55%,rgba(7,11,20,.97))}
 .mt.feat .mh,.mt.feat .mkt{position:relative}
 .mt.feat .mh{font-size:10.5px;margin:0 3px 10px}
 .mt.feat .mkt{padding:3px;gap:3px;border-radius:22px;background:linear-gradient(180deg,rgba(61,220,132,.09),rgba(150,180,230,.045));box-shadow:inset 0 0 0 1px rgba(140,170,220,.14)}
@@ -1554,8 +1548,20 @@ function marketHTML(m,feat){
 /* Fonds photo par sport. Images Pexels (licence Pexels: usage commercial
    libre, sans attribution), redimensionnees et servies depuis notre domaine
    pour ne dependre d'aucun service exterieur. */
-var SPIMG={soccer:1,basketball:1,amfootball:1,tennis:1,hockey:1,fight:1,cricket:1,baseball:1,other:1};
-function sportBg(sp){return"assets/img/sport/"+(SPIMG[sp]?sp:"other")+".jpg"}
+/* Une photo n'est posee que si elle illustre VRAIMENT le sport. Le
+   fichier "other.jpg" etait une copie de la photo de baseball: trente
+   matchs de tennis de table, de pickleball et de volley s'illustraient
+   donc d'un terrain de baseball. Faute de la bonne image, on n'en met
+   aucune: la carte reste sobre, elle ne ment pas. */
+var SPIMG={
+  soccer:"soccer", tennis:"tennis", cricket:"cricket", baseball:"baseball",
+  basketball:"basketball", nba:"basketball", cbb:"basketball",
+  hockey:"hockey", nhl:"hockey",
+  amfootball:"amfootball", nfl:"amfootball", cfb:"amfootball",
+  fight:"fight", ufc:"fight"
+};
+function sportBg(k){var f=SPIMG[k];return f?"assets/img/sport/"+f+".jpg":""}
+function bgStyle(k){var u=sportBg(k);return u?' style="background-image:url('+u+')"':""}
 /* La marque officielle de Polymarket, telle qu'ils la publient. Elle
    remplace le losange que j'avais dessine a la main. */
 var PMSVG='<svg viewBox="110 96 266 320" aria-hidden="true"><path d="M375.84 389.422C375.84 403.572 375.84 410.647 371.212 414.154C366.585 417.662 359.773 415.75 346.15 411.927L127.22 350.493C119.012 348.19 114.907 347.038 112.534 343.907C110.161 340.776 110.161 336.513 110.161 327.988V184.012C110.161 175.487 110.161 171.224 112.534 168.093C114.907 164.962 119.012 163.81 127.22 161.507L346.15 100.072C359.773 96.2495 366.585 94.338 371.212 97.8455C375.84 101.353 375.84 108.428 375.84 122.578V389.422ZM164.761 330.463L346.035 381.337V279.595L164.761 330.463ZM139.963 306.862L321.201 256L139.963 205.138V306.862ZM164.759 181.537L346.035 232.406V130.663L164.759 181.537Z"/></svg>';
@@ -1574,7 +1580,7 @@ function matchHTML(m,feat){
   var live=m.start<=Date.now(),c=clanOn(m.id);
   var imm=!live&&m.start-Date.now()<900e3;
   return'<article class="mt'+(feat?" feat":"")+(imm?" imm":"")+'" data-id="'+m.id+'"'+
-    (feat?' style="background-image:url('+sportBg(m.sport)+')"':"")+'><div class="mh">'+
+    (feat?bgStyle(catOf(m)):"")+'><div class="mh">'+
     (m.licon?'<img src="'+esc(m.licon)+'" alt="" loading="lazy" onerror="this.remove()">':"")+
     '<span class="lg">'+esc(m.league)+'</span><span class="r">'+
     (c?'<span class="pl2">\u25CF '+c+" playing</span>":"")+
@@ -1947,8 +1953,8 @@ function comboVol(legs){
   return v;
 }
 function dcHTML(c,i){
-  var sp=c.legs[0]?c.legs[0].m.sport:"other",same=comboSame(c.legs);
-  return'<button type="button" class="dc c'+(i%4)+'" data-dc="'+c.id+'" style="background-image:url('+sportBg(sp)+')"><span class="em">'+c.em+'</span>'+
+  var sp=c.legs[0]?catOf(c.legs[0].m):"",same=comboSame(c.legs);
+  return'<button type="button" class="dc c'+(i%4)+'" data-dc="'+c.id+'"'+bgStyle(sp)+'><span class="em">'+c.em+'</span>'+
     '<u>'+c.tag+'</u><h5>'+esc(c.name)+'</h5><div class="lgs">'+
     c.legs.slice(0,3).map(function(l){
       /* "Under 212.5", "Draw", "Knicks -6.5": seuls, ces intitules ne
@@ -1958,7 +1964,7 @@ function dcHTML(c,i){
         '<span class="k" data-lk="'+l.o.token+'">'+fx(1/price(l.o.token,l.o.p))+"</span></div>";
     }).join("")+
     (c.legs.length>3?'<div><span class="lo">+'+(c.legs.length-3)+'</span><span class="t">more</span></div>':"")+
-    '</div><div class="ft"><span class="x" data-dcx="'+c.id+'">'+fx(comboX2(c.legs))+"<em>"+(same?"exact price":vol(comboVol(c.legs))+" on Polymarket")+'</em></span><span class="add">Play this combo</span></div></button>';
+    '</div><div class="ft"><span class="x" data-dcx="'+c.id+'">'+fx(comboX2(c.legs))+"<em>"+(same?"exact price":comboVol(c.legs)>=1000?vol(comboVol(c.legs))+" on Polymarket":c.legs.length+" picks")+'</em></span><span class="add">Play this combo</span></div></button>';
 }
 function logoMini(o){
   if(o.draw)return'<span class="lo">=</span>';
@@ -3004,7 +3010,7 @@ function resSport(r){
   var l=(r.legs||[])[0];if(!l)return"other";
   if(l.sport&&SPIMG[l.sport])return l.sport;
   var m=MK.find(function(x){return x.id===String(l.event_id)});
-  return(m&&SPIMG[m.sport])?m.sport:"other";
+  return m?catOf(m):"";
 }
 async function buildCard(r){
   try{await document.fonts.ready}catch(e){}
@@ -3152,6 +3158,9 @@ function cardDownload(){
 var WK="moonx.play.welcome";
 var VOLSVG='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V13M10 20V7M16 20V10M22 20V4"/></svg>';
 function volBadge(v,full){
+  /* Sous mille dollars echanges, le chiffre n'apprend rien et "$0" donne
+     l'impression d'un marche casse: on n'affiche rien. */
+  if(!(v>=1000))return"";
   return'<span class="vol1" title="Traded on Polymarket">'+VOLSVG+vol(v)+(full?'<i>TRADED</i>':"")+'</span>';
 }
 function welcomeHTML(){
