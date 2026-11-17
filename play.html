@@ -886,6 +886,45 @@ button,a,.sg,.dop,.mt,.dc{touch-action:manipulation}
 .cardacts{display:grid;grid-template-columns:1fr auto;gap:8px}
 .cardacts .go.big{height:48px;font-size:15px}
 .cardacts .go.ghost{height:48px;padding:0 16px}
+/* ---------------------------------------------------------------------------
+   L'ECRAN D'ACCUEIL. Un debutant arrive sans savoir ce qu'est Polymarket ni
+   pourquoi les cotes bougent. Trois phrases, trois gestes, une source.
+--------------------------------------------------------------------------- */
+.wel{text-align:left;padding:0}
+.wel .top{position:relative;padding:24px 22px 20px;background:linear-gradient(180deg,rgba(61,220,132,.16),rgba(61,220,132,0))}
+.wel .bm{font-size:26px}
+.wel .chip-play{vertical-align:3px;margin-left:8px}
+.wel h2{margin:14px 0 0;font-size:26px;font-weight:900;letter-spacing:-.03em;line-height:1.12}
+.wel h2 em{font-style:normal;color:var(--acc)}
+.wel .sub{margin:8px 0 0;font-size:14px;line-height:1.5;color:var(--hi)}
+.wel ol{list-style:none;margin:0;padding:18px 22px 4px;display:grid;gap:14px}
+.wel li{display:flex;gap:12px;align-items:flex-start}
+.wel li b{flex:none;width:26px;height:26px;border-radius:50%;background:var(--acc);color:#06110A;font-family:var(--mono);font-size:12px;font-weight:700;display:grid;place-items:center;margin-top:1px}
+.wel li span{flex:1;min-width:0;font-size:14.5px;font-weight:800;line-height:1.25}
+.wel li small{display:block;margin-top:3px;font-size:12.5px;font-weight:600;color:var(--dim);line-height:1.45}
+.wel .src{display:flex;align-items:center;gap:10px;margin:16px 22px 0;padding:12px 14px;border-radius:14px;background:rgba(140,156,255,.1);box-shadow:inset 0 0 0 1px rgba(140,156,255,.22)}
+.wel .src img{height:17px;width:auto;flex:none;opacity:.95}
+.wel .src span{flex:1;min-width:0;font-size:12px;line-height:1.45;color:var(--hi)}
+.wel .acts{padding:16px 22px calc(18px + var(--sab))}
+.wel .acts .go{width:100%;height:52px;font-size:16px;border-radius:16px}
+.wel .fine{display:block;margin-top:10px;font-size:11.5px;line-height:1.45;color:var(--dim);text-align:center}
+.ov .box.welbox{max-width:460px;padding:0;text-align:left;max-height:92vh;overflow-y:auto;overscroll-behavior:contain}
+/* le volume d'un marche: un pictogramme qui dit "echange", pas une marque */
+.vol1{display:inline-flex;align-items:center;gap:5px;padding:2px 7px 1px;border-radius:5px;background:rgba(150,180,230,.1);color:var(--hi);font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.06em;white-space:nowrap}
+.vol1 svg{width:9px;height:9px;flex:none;stroke:currentColor;fill:none;stroke-width:2.6;stroke-linecap:round}
+.vol1 i{font-style:normal;color:var(--dim);letter-spacing:.09em}
+.howlink{display:block;margin:9px auto 0;font-size:12.5px;font-weight:700;color:var(--dim);text-decoration:underline;text-underline-offset:3px}
+.howlink:hover{color:#fff}
+footer .lk button{font-size:12.5px;font-weight:700;color:var(--dim)}
+footer .lk button:hover{color:#fff}
+/* le bandeau du bonus, apres un gain */
+.bonus{position:relative;margin:16px 0 0;padding:16px;border-radius:20px;text-align:left;border:1px solid rgba(61,220,132,.45);background:linear-gradient(180deg,rgba(61,220,132,.18),rgba(61,220,132,.04))}
+.bonus .btag{display:inline-block;margin-bottom:9px;font-family:var(--mono);font-size:9.5px;font-weight:700;letter-spacing:.16em;color:#06110A;background:var(--acc);border-radius:999px;padding:4px 10px 3px}
+.bonus b{display:block;font-size:16px;font-weight:900;letter-spacing:-.02em;line-height:1.25}
+.bonus p{margin:6px 0 13px;font-size:13.5px;line-height:1.45;color:#DCE4F2}
+.bonus p b{display:inline;font-size:inherit;color:var(--acc)}
+.bonus .go{width:100%;height:50px;font-size:15.5px}
+.bonus small{display:block;margin-top:10px;font-size:11px;line-height:1.5;color:var(--dim)}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -909,6 +948,7 @@ button,a,.sg,.dop,.mt,.dc{touch-action:manipulation}
         <p class="lead">Free game &middot; <b>$1,000 of play money</b> &middot; real Polymarket prices</p>
         <div class="howto"><div><b>1</b>Tap a team</div><div><b>2</b>Pick your stake</div><div><b>3</b>Cash out</div></div>
         <button class="go ghost hjoin" type="button" data-join="1">Pick your name to join the board</button>
+        <button class="howlink" type="button" data-welcome="1">How does this work?</button>
       </header>
       <div class="invite" id="inviteBox" hidden></div>
       <div class="idbox" id="idBox" hidden></div>
@@ -929,7 +969,7 @@ button,a,.sg,.dop,.mt,.dc{touch-action:manipulation}
   <footer>
     <p>MOONX Play is a free game with play money only: no deposit, nothing to win, nothing to lose. Prices are live Polymarket prices, results are the official Polymarket results.</p>
     <p>MOONX is the app to trade Polymarket with real money, with the option to sell anytime. 18+ only. Not available everywhere.</p>
-    <div class="lk"><a href="/">MOONX</a><a href="/learn/">Learn</a><a href="/privacy">Privacy Policy</a><a href="/terms">Terms of Service</a></div>
+    <div class="lk"><button type="button" data-welcome="1">How it works</button><a href="/">MOONX</a><a href="/learn/">Learn</a><a href="/privacy">Privacy Policy</a><a href="/terms">Terms of Service</a></div>
   </footer>
 </main>
 
@@ -1436,7 +1476,7 @@ function matchHTML(m,feat){
     (m.licon?'<img src="'+esc(m.licon)+'" alt="" loading="lazy" onerror="this.remove()">':"")+
     '<span class="lg">'+esc(m.league)+'</span><span class="r">'+
     (c?'<span class="pl2">\u25CF '+c+" playing</span>":"")+
-    '<span class="pmb">'+PMSVG+vol(m.vol)+"</span>"+
+    volBadge(m.vol)+
     (live?'<span class="lv">LIVE</span>':'<span class="dt2">'+dstamp(m.start)+'</span><span class="cd2" data-cd="'+m.start+'">'+cdown(m.start)+"</span>")+
     '<button type="button" class="allb" data-open="'+m.id+'">ALL BETS'+CHSVG+"</button>"+
     "</span></div>"+marketHTML(m,feat)+"</article>";
@@ -1962,7 +2002,7 @@ function paintDetail(){
   var live=e.start<=Date.now();
   var h='<div class="dtop"><button class="dbk" type="button" data-back="1" aria-label="Back">'+BKSVG+'</button>'+
     '<div class="dti">'+(e.licon?'<img src="'+esc(e.licon)+'" alt="" onerror="this.remove()">':"")+'<span>'+esc(e.league||"Polymarket")+'</span></div>'+
-    '<span class="pmb">'+PMSVG+vol(e.vol)+'</span></div>'+
+    volBadge(e.vol,true)+'</div>'+
     '<h1 class="dh2">'+esc(mtitle(e))+'</h1>'+
     '<div class="dmeta">'+(live?'<span class="lv">LIVE NOW</span>':'<span>'+dstamp(e.start)+'</span><span class="cd2" data-cd="'+e.start+'">'+cdown(e.start)+'</span>')+'</div>'+
     '<div class="dwin">'+marketHTML(e)+'</div>';
@@ -2603,6 +2643,16 @@ function countUp(el,v){
   }
   requestAnimationFrame(f);
 }
+/* Apres un gain, la seule chose qui compte: le meme marche etait ouvert
+   pour de vrai, et l'entree y est offerte. On le dit franchement, une
+   fois, sans le cacher dans un depliant. */
+function bonusBox(r){
+  return'<div class="bonus"><span class="btag">YOUR $5 IS WAITING</span>'+
+    '<b>You just turned '+money(r.stake)+' into '+money(r.stake+r.net)+'.</b>'+
+    '<p>Same match, same price, real money \u2014 and we put the first <b>$5</b> in for you.</p>'+
+    '<a class="go big" data-cta="bonus" href="'+SIGN+'">Claim your $5 and go real</a>'+
+    '<small>Card works if you have no crypto. Already hold USDC on Coinbase, Revolut or anywhere else? Send it straight in. 18+ only, not available everywhere.</small></div>';
+}
 function showResult(r){
   /* Gagne ou perdu, c'est un moment: une onde, un anneau qui tombe, le
      montant qui monte tout seul. Perdu, meme traitement en rouge, sans
@@ -2616,7 +2666,8 @@ function showResult(r){
     '<p class="rsub">'+esc(r.label)+"<span>"+esc(r.msg)+"</span></p>"+
     '<div class="racts"><button class="go" type="button" data-close-ov="1">'+(win?"Keep playing":"Go again")+"</button>"+
     '<button class="iconb" type="button" data-share="1" aria-label="Share"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v7a1 1 0 001 1h14a1 1 0 001-1v-7"/><path d="M12 15V3M8 7l4-4 4 4"/></svg></button></div>'+
-    '<details class="rmore"><summary>'+(win?"Do this with real money":"On MOONX, this one was real")+"</summary>"+
+    (win&&r.net>0?bonusBox(r):"")+
+    '<details class="rmore"><summary>'+(win?"How going real works":"On MOONX, this one was real")+"</summary>"+
     realBox(win?"That was a "+fx(r.x)+". The same market was open for real.":"The market is still open for real.","result")+"</details>";
   timers.lastRes=r;timers.card=null;
   $("ov").classList.add("open");
@@ -2884,6 +2935,41 @@ function cardDownload(){
     toast("Image saved.");
   }).catch(function(){toast("Could not build the image.")});
 }
+/* ---------------------------------------------------------------------------
+   L'ECRAN D'ACCUEIL. Montre une fois, a qui arrive sans compte. On peut le
+   rouvrir depuis le pied de page et depuis le rail.
+--------------------------------------------------------------------------- */
+var WK="moonx.play.welcome";
+var VOLSVG='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V13M10 20V7M16 20V10M22 20V4"/></svg>';
+function volBadge(v,full){
+  return'<span class="vol1" title="Traded on Polymarket">'+VOLSVG+vol(v)+(full?'<i>TRADED</i>':"")+'</span>';
+}
+function welcomeHTML(){
+  return'<div class="wel">'+
+    '<div class="top"><span class="bm">MOONX</span><span class="chip-play">PLAY</span>'+
+    '<h2>Bet on tonight’s matches with <em>$1,000 of play money</em>.</h2>'+
+    '<p class="sub">Not a simulator: the odds are the ones traders are paying right now. You risk nothing.</p></div>'+
+    '<ol>'+
+    '<li><b>1</b><span>Tap a team<small>Or open a match to find handicaps, totals, halves and player lines — hundreds per game.</small></span></li>'+
+    '<li><b>2</b><span>Pick your stake<small>From $1 to everything you have. Stack several picks and the odds multiply.</small></span></li>'+
+    '<li><b>3</b><span>Cash out whenever you want<small>You don’t have to wait for the final whistle. Take the money and run.</small></span></li>'+
+    '</ol>'+
+    '<div class="src"><img src="assets/img/polymarket-logo.svg" alt="Polymarket">'+
+    '<span>Every match, every price and every result comes from the live Polymarket order book.</span></div>'+
+    '<div class="acts"><button class="go big" type="button" data-welgo="1">Start with $1,000</button>'+
+    '<small class="fine">Free. No account, no card, nothing to download. 18+ only.</small></div></div>';
+}
+function showWelcome(){
+  var b=$("box");
+  b.className="box welbox";
+  b.innerHTML=welcomeHTML();
+  $("ov").classList.add("open");
+  ev("lg_welcome");
+}
+function welcomeSeen(){
+  try{return localStorage.getItem(WK)==="1"}catch(e){return true}
+}
+function markWelcome(){try{localStorage.setItem(WK,"1")}catch(e){}}
 function share(){
   var e=equity(),txt="I'm at "+fx(e/START)+" on MOONX Play: real matches, live Polymarket prices, $1,000 of play money. Can you beat me?",url="https://moonx.fi/play"+(LG!=="ALL"?"?l="+LG:"");
   ev("lg_share");
@@ -2969,6 +3055,8 @@ document.addEventListener("click",function(e){
   if(d.go){goMarket(d.go);return}
   if(d.filter){filterSheet();return}
   if(d.search){searchSheet();return}
+  if(d.welcome){showWelcome();return}
+  if(d.welgo){markWelcome();$("ov").classList.remove("open");return}
   if(d.sclear){timers.sq="";var sf=$("sq");if(sf){sf.value="";sf.focus()}searchPaint();return}
   if(d.slipx){setSlip(!slipOpen);return}
   if(d.k){kpress(d.k);return}
@@ -3122,6 +3210,8 @@ document.addEventListener("visibilitychange",function(){if(!document.hidden){pol
 
 if(LOCAL){api=demoApi;$("demoChip").hidden=false;try{tok=localStorage.getItem(DK)&&"demo-token"||null}catch(e){}}
 function boot(){
+  /* Un debutant doit savoir ou il met les pieds avant de voir des cotes. */
+  if(!tok&&!welcomeSeen()&&!inviteCode){markWelcome();setTimeout(showWelcome,220)}
   /* On laisse la page se charger avant d'aller chercher la profondeur des
      marches: sinon la rafale tombe sur un serveur qui demarre encore. */
   setTimeout(function(){timers.deepOk=1;loadDeep()},2500);
