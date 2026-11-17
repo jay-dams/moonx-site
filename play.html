@@ -1725,7 +1725,7 @@ function renderRail(){
   }).join("");
   h+='<div class="sep"></div><div class="rh">YOU</div>'+
     '<button type="button" class="'+(tab==="trades"?"on":"")+'" data-tab="trades"><span class="ic">◈</span><span class="lb">My bets</span><span class="n">'+(openPos().length||"")+'</span></button>'+
-    '<button type="button" class="'+(tab==="league"?"on":"")+'" data-tab="league"><span class="ic">⚔</span><span class="lb">Clan</span><span class="n">'+((LD&&LD.board&&LD.board.length)||"")+'</span></button>'+
+    '<button type="button" class="'+(tab==="league"?"on":"")+'" data-tab="league"><span class="ic">⚔</span><span class="lb">Clan</span><span class="n">'+((LD&&(LD.total||(LD.board&&LD.board.length)))||"")+'</span></button>'+
     '<div class="mini"><u>MOONX IS LIVE</u><b>Same markets, real money, sell anytime.</b><a class="go" data-cta="rail" href="'+SIGN+'">Create account</a></div>';
   r.innerHTML=h;
 }
@@ -2479,8 +2479,8 @@ function basketHTML(){
     (c.warn?esc(c.warn):"Bet "+money(c.a))+"</button></div>";
 }
 function clanRow(r,i,me){
-  var x=+r.equity/START;
-  return'<div class="clrow'+(me&&String(r.handle).toLowerCase()===me?" me":"")+'"><span class="rk'+(i<3?" t":"")+'">'+(i+1)+
+  var x=+r.equity/START,n=+r.rank||i+1;
+  return'<div class="clrow'+(me&&String(r.handle).toLowerCase()===me?" me":"")+'"><span class="rk'+(n<=3?" t":"")+'">'+n+
     '</span><span class="h">@'+esc(r.handle)+'</span><span class="m '+(x>=1?"up":"dn")+'">'+fx(x)+"</span></div>";
 }
 function clanFeedRow(f){
@@ -2497,7 +2497,7 @@ function clanHTML(){
   if(!LD||!LD.board)return'<div class="cd"><h4>Your clan</h4><div class="empty2">Loading the board…</div></div>';
   var me=P&&P.player.handle.toLowerCase(),b=LD.board,mine=-1;
   if(me)b.some(function(r,i){if(String(r.handle).toLowerCase()===me){mine=i;return true}});
-  var h='<div class="cd"><h4>'+esc(LD.league.name)+"<span>"+b.length+" playing</span></h4>"+
+  var h='<div class="cd"><h4>'+esc(LD.league.name)+"<span>"+(LD.total||b.length)+" playing</span></h4>"+
     b.slice(0,5).map(function(r,i){return clanRow(r,i,me)}).join("");
   if(mine>=5)h+='<div style="height:1px;background:var(--line);margin:7px 4px"></div>'+clanRow(b[mine],mine,me);
   h+=LG==="ALL"
@@ -2925,7 +2925,7 @@ function leaguesChips(){
 }
 
 function loadLeague(){
-  api("league",{code:LG}).then(function(j){LD=j;renderSide();renderRail();if(tab==="league")renderLeague()}).catch(function(e){if(e==="league"){LG="ALL";loadLeague()}});
+  api("league",{code:LG,token:tok||undefined}).then(function(j){LD=j;renderSide();renderRail();if(tab==="league")renderLeague()}).catch(function(e){if(e==="league"){LG="ALL";loadLeague()}});
 }
 
 function renderLeague(){
@@ -2937,8 +2937,8 @@ function renderLeague(){
     var url="https://moonx.fi/play?l="+LG;
     h+=isMember?'<div class="inv"><code>'+url.replace("https://","")+'</code><button class="go" type="button" data-invite="'+LG+'">Invite</button></div>':'<div class="invite" style="margin:12px 0 0"><span style="flex:1">Join <b>'+esc(d.league.name)+"</b> and take on your friends.</span>"+'<button class="go" type="button" data-joinlg="'+LG+'">Join</button></div>';
   }
-  h+='<div class="sechead"><h2>'+esc(d.league.name)+"</h2><span>"+(d.board.length)+" players · live</span></div>";
-  h+=d.board.length?'<div class="board">'+d.board.map(function(r,i){var x=+r.equity/START;return'<div class="br'+(me&&String(r.handle).toLowerCase()===me?" me":"")+'"><span class="rk'+(i<3?" t":"")+'">'+(i+1)+'</span><span class="h">@'+esc(r.handle)+'</span><span class="e">'+money(+r.equity)+'</span><span class="m '+(x>=1?"up":"dn")+'">'+fx(x)+"</span></div>"}).join("")+"</div>":'<div class="empty"><b>No players yet.</b>Invite your friends with the link above.</div>';
+  h+='<div class="sechead"><h2>'+esc(d.league.name)+"</h2><span>"+(d.total||d.board.length)+" players · live</span></div>";
+  h+=d.board.length?'<div class="board">'+d.board.map(function(r,i){var x=+r.equity/START,n=+r.rank||i+1;return'<div class="br'+(me&&String(r.handle).toLowerCase()===me?" me":"")+'"><span class="rk'+(n<=3?" t":"")+'">'+n+'</span><span class="h">@'+esc(r.handle)+'</span><span class="e">'+money(+r.equity)+'</span><span class="m '+(x>=1?"up":"dn")+'">'+fx(x)+"</span></div>"}).join("")+"</div>":'<div class="empty"><b>No players yet.</b>Invite your friends with the link above.</div>';
   var others=(d.open||[]).filter(function(p){return!me||String(p.lg_player&&p.lg_player.handle).toLowerCase()!==me}).slice(0,12);
   if(others.length){
     h+='<div class="sechead"><h2>Their trades</h2><span>Follow them or go against</span></div><div class="grid two">'+others.map(function(p){
