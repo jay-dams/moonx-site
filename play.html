@@ -640,6 +640,63 @@ footer .lk a{text-decoration:none;color:#fff}
 @media (min-width:1080px) and (max-width:1279px){
   .shell{grid-template-columns:184px minmax(0,1fr) 312px;gap:18px}
 }
+/* ---------------------------------------------------------------------------
+   L'ECRAN D'UN MATCH: tous ses marches, groupes comme chez un bookmaker.
+   Le vainqueur en haut (meme barre que la liste), puis handicaps, totaux,
+   mi-temps, joueurs. Les pastilles du haut sautent d'une section a l'autre.
+--------------------------------------------------------------------------- */
+body.det .hero,body.det .invite{display:none}
+.mt .mh .allb{display:inline-flex;align-items:center;gap:4px;padding:2px 7px 1px;border-radius:999px;background:rgba(61,220,132,.13);box-shadow:inset 0 0 0 1px rgba(61,220,132,.3);color:var(--acc);font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.09em;white-space:nowrap}
+.mt .mh .allb:hover{background:rgba(61,220,132,.22)}
+.mt .mh .allb svg{width:8px;height:8px;flex:none}
+.dtop{display:flex;align-items:center;gap:10px;margin:8px 0 10px}
+.dbk{width:36px;height:36px;border-radius:12px;flex:none;background:rgba(150,180,230,.07);box-shadow:inset 0 0 0 1px var(--line);display:grid;place-items:center}
+.dbk:hover{background:rgba(150,180,230,.13)}
+.dbk svg{width:17px;height:17px}
+.dti{display:flex;align-items:center;gap:7px;min-width:0;font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.11em;color:var(--dim);text-transform:uppercase}
+.dti img{width:16px;height:16px;border-radius:4px;object-fit:contain;opacity:.85;flex:none}
+.dti span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dtop .pmb{margin-left:auto;flex:none}
+.dh2{margin:0 0 7px;font-size:clamp(22px,5.6vw,31px);font-weight:900;letter-spacing:-.034em;line-height:1.06}
+.dmeta{display:flex;align-items:center;gap:8px;margin:0 0 12px;font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.09em;color:var(--dim);text-transform:uppercase;flex-wrap:wrap}
+.dmeta .cd2{padding:2px 7px 1px;border-radius:999px;background:rgba(150,180,230,.11);color:var(--hi)}
+.dmeta .cd2.lv2{background:rgba(255,92,122,.18);color:var(--red)}
+.dmeta .lv{display:inline-flex;align-items:center;gap:5px;color:var(--red)}
+.dmeta .lv:before{content:"";width:6px;height:6px;border-radius:50%;background:var(--red);animation:pu 1.4s infinite}
+.dchips{position:sticky;top:calc(var(--nh) + var(--th));z-index:12;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:14px -14px 2px;padding:9px 14px;background:var(--bg)}
+.dchips::-webkit-scrollbar{display:none}
+.dchips button{flex:none;height:32px;padding:0 13px;border-radius:999px;background:rgba(150,180,230,.07);box-shadow:inset 0 0 0 1px var(--line);font-size:12.5px;font-weight:800;color:var(--hi);white-space:nowrap}
+.dchips button.on{background:var(--acc);color:#06110A;box-shadow:none}
+.dsec{margin:16px 0 0;scroll-margin-top:calc(var(--nh) + var(--th) + 58px)}
+.dsec h4{display:flex;align-items:center;gap:8px;margin:0 3px 9px;font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.14em;color:var(--hi);text-transform:uppercase}
+.dsec h4 s{flex:1;height:1px;background:var(--line);text-decoration:none}
+.dsec h4 u{color:var(--dim);text-decoration:none}
+.drow{display:flex;align-items:center;gap:10px;padding:3px 0}
+.dcap{flex:0 0 31%;min-width:0;font-size:12.5px;font-weight:700;color:var(--hi);line-height:1.2}
+.dops{flex:1;display:flex;gap:6px;min-width:0}
+.dop{flex:1 1 0;min-width:0;display:flex;align-items:center;gap:8px;height:50px;padding:0 12px;border-radius:14px;background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.015));box-shadow:inset 0 0 0 1px var(--line);text-align:left;transition:background .2s,box-shadow .2s,transform .12s}
+.dop:hover{background:linear-gradient(180deg,rgba(255,255,255,.09),rgba(255,255,255,.03))}
+.dop:active{transform:scale(.985)}
+.dop.on{background:linear-gradient(180deg,#4BE593,var(--acc-d));box-shadow:0 12px 28px -14px rgba(61,220,132,.95)}
+.dop .dnm{flex:1;min-width:0;font-size:13px;font-weight:800;letter-spacing:-.015em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dop .k2{flex:none;font-size:15.5px;font-weight:900;letter-spacing:-.03em;color:var(--acc);font-variant-numeric:tabular-nums;transition:color .3s}
+.dop .k2.fu{color:#8BF2B8}
+.dop .k2.fd{color:var(--red)}
+.dop .pc2{display:none}
+.dop.on .dnm,.dop.on .k2{color:#06110A}
+.dop[disabled]{opacity:.4;pointer-events:none}
+.dwin{margin:2px 0 4px}
+.dnote{display:flex;gap:9px;align-items:flex-start;margin:18px 0 4px;padding:11px 13px;border-radius:14px;background:var(--well);box-shadow:inset 0 0 0 1px var(--line);font-size:12px;line-height:1.45;color:var(--dim)}
+.dnote .pmb{flex:none}
+.dnote a{color:var(--pm)}
+.dempty{padding:26px 16px;text-align:center;color:var(--dim);font-size:13.5px}
+.qn{margin:8px 0 0;font-size:11.5px;line-height:1.35;color:var(--pm);display:flex;gap:6px;align-items:flex-start}
+.qn b{color:#fff;font-weight:800}
+@media (min-width:1080px){
+  .dchips{top:calc(var(--nh) + var(--th) + 4px);margin:14px 0 2px;padding:9px 0}
+  .dcap{flex:0 0 34%}
+  .dsec{margin-top:18px}
+}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -672,6 +729,7 @@ footer .lk a{text-decoration:none;color:#fff}
         <div class="mlist" id="mList"></div>
         <div id="mCta"></div>
       </section>
+      <section class="view" id="v-detail"></section>
       <section class="view" id="v-trades"></section>
       <section class="view" id="v-league"></section>
     </div>
@@ -711,6 +769,7 @@ try{var _s=parseFloat(localStorage.getItem(SK));if(isFinite(_s)&&_s>0)stake=_s}c
    {a:"email", email, source, handle, attr} est en place cote serveur. */
 var MAIL_ON=false;
 var mailSent={};
+var detail=null,QT={k:"",mult:null,err:null,at:0,busy:false};
 var P=null,MK=[],Q={},QP={},H={},tab="matches",sport=qp("sport")||"all",day="live",picks={},stake=null,mode="combo",amount=null,LG="ALL",LD=null,inviteCode=(qp("l")||"").toUpperCase(),inviteInfo=null,follow=null,lastVal={},msHit={},seenStatus={},busy=false,timers={};
 
 function qp(k){try{return new URLSearchParams(location.search).get(k)}catch(e){return null}}
@@ -854,13 +913,23 @@ function demoApi(a,b){
           if(!s.leagues.some(function(l){return l.code===code}))s.leagues.push({code:code,name:b.name||"Your league"});
           DEMO.save();return res(DEMO.profile({league:{code:code,name:b.name||"Your league"}}));
         }
+        if(a==="event"){
+          var em=DEMO.markets().find(function(x){return String(x.id)===String(b.event)});
+          if(!em)throw"event";
+          var ec=JSON.parse(JSON.stringify(em));ec.groups=[];return res({event:ec});
+        }
+        if(a==="quote"){
+          var dq=DEMO.drift(),pp=1;
+          (b.picks||[]).forEach(function(x){var v=dq[x.token_id];pp*=(v!=null?v:.5)});
+          return res({mult:pp>0?1/pp:0,legs:[],now:Date.now()});
+        }
         if(a==="email")return res({ok:true});
       }catch(err){return rej(err)}
       rej("action");
     },LOCAL?120:0);
   });
 }
-function errText(e){return{taken:"That name is taken. Try another one.",handle:"3 to 18 letters, numbers or _ only.",balance:"Not enough play money.",closed:"This market just closed.",price:"Price out of range right now. Try another pick.",picks:"One pick per match, up to 6.",stake:"Minimum is $1.",league:"League not found.",name:"Give your league a name.",auth:"Your session expired. Reload the page.",upstream:"Polymarket is slow right now. Try again.",limit:"You already run 10 leagues."}[e]||"Something went wrong. Try again."}
+function errText(e){return{taken:"That name is taken. Try another one.",handle:"3 to 18 letters, numbers or _ only.",balance:"Not enough play money.",closed:"This market just closed.",price:"Price out of range right now. Try another pick.",picks:"Up to 6 picks, and never the same one twice.",combo:"These picks can\u2019t all win together. Swap one.",event:"That match isn\u2019t open right now.",stake:"Minimum is $1.",league:"League not found.",name:"Give your league a name.",auth:"Your session expired. Reload the page.",upstream:"Polymarket is slow right now. Try again.",limit:"You already run 10 leagues."}[e]||"Something went wrong. Try again."}
 
 function price(t,fb){var v=Q[t];return v!=null?v:fb}
 function legNow(l){return l.final!=null?+l.final:price(l.token_id,+l.p0)}
@@ -887,6 +956,7 @@ function refreshNav(){
 function setTab(t){
   tab=t;document.querySelectorAll(".tabs button").forEach(function(b){b.classList.toggle("on",b.dataset.tab===t)});
   document.querySelectorAll(".view").forEach(function(v){v.classList.toggle("on",v.id==="v-"+t)});
+  syncViews();
   refreshNav();render();
   if(t==="league")loadLeague();
   if(t==="trades")loadHistories();
@@ -921,7 +991,7 @@ function startGame(){
 }
 function render(){
   refreshNav();renderIdentity();renderLive();renderTicker();renderRail();
-  if(tab==="matches"){renderDaily();renderMatches()}
+  if(tab==="matches"){if(detail)paintDetail();else{renderDaily();renderMatches()}}
   if(tab==="trades")renderTrades();
   if(tab==="league")renderLeague();
   renderTicket();
@@ -998,6 +1068,7 @@ function realLogo(o){
 }
 function logo(o){
   if(o.draw)return'<span class="lo dw">=</span>';
+  if(o.sub&&!realLogo(o))return'<span class="lo dw">'+subIcon(o)+'</span>';
   var ini=initials(o.label),lg=realLogo(o);
   return'<span class="lo">'+(lg?'<img src="'+esc(lg)+'" alt="" loading="lazy" onerror="this.parentNode.textContent=\''+ini+'\'">':ini)+"</span>";
 }
@@ -1011,7 +1082,7 @@ function shr(m,j){
   return MIN+(1-n*MIN)*(ps[j]/tot);
 }
 function segHTML(m,j){
-  var o=m.opts[j],p=price(o.token,o.p),on=picks[m.id]===j,sh=shr(m,j);
+  var o=m.opts[j],p=price(o.token,o.p),on=!!picks[o.token],sh=shr(m,j);
   var top=0;m.opts.forEach(function(x,k){if(shr(m,k)>shr(m,top))top=k});
   var two=m.opts.length<3;
   return'<button type="button" class="sg'+(two?"":" n3")+(on?" on":j===top?" fav":"")+'" style="flex-grow:'+(sh*100).toFixed(2)+
@@ -1028,6 +1099,8 @@ function marketHTML(m){
 var SPIMG={soccer:1,basketball:1,amfootball:1,tennis:1,hockey:1,fight:1,cricket:1,baseball:1,other:1};
 function sportBg(sp){return"assets/img/sport/"+(SPIMG[sp]?sp:"other")+".jpg"}
 var PMSVG='<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 0l6 6-6 6-6-6z"/></svg>';
+var CHSVG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>';
+var BKSVG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>';
 function clanOn(id){
   /* combien de joueurs du classement ont un pari ouvert sur ce match:
      vrai chiffre, lu dans les positions ouvertes renvoyees par le serveur. */
@@ -1044,6 +1117,7 @@ function matchHTML(m,feat){
     (c?'<span class="pl2">\u25CF '+c+" playing</span>":"")+
     '<span class="pmb">'+PMSVG+vol(m.vol)+"</span>"+
     (live?'<span class="lv">LIVE</span>':'<span class="dt2">'+dstamp(m.start)+'</span><span class="cd2" data-cd="'+m.start+'">'+cdown(m.start)+"</span>")+
+    '<button type="button" class="allb" data-open="'+m.id+'">ALL BETS'+CHSVG+"</button>"+
     "</span></div>"+marketHTML(m)+"</article>";
 }
 /* ---------------------------------------------------------------------------
@@ -1061,6 +1135,7 @@ function filterSheet(){
 function goMarket(id){
   var m=MK.find(function(x){return x.id===id});if(!m)return;
   if(tab!=="matches")setTab("matches");
+  if(detail){detail=null;syncViews();renderIdentity();renderDaily()}
   if(sport!=="all"&&m.sport!==sport)sport="all";
   var l=mlist(),idx=-1;
   l.some(function(x,k){if(x.id===id){idx=k;return true}});
@@ -1188,6 +1263,7 @@ function dcHTML(c,i){
 }
 function logoMini(o){
   if(o.draw)return'<span class="lo">=</span>';
+  if(o.sub&&!realLogo(o))return'<span class="lo">'+subIcon(o)+'</span>';
   var ini=initials(o.label),lg=realLogo(o);
   return'<span class="lo">'+(lg?'<img src="'+esc(lg)+'" alt="" loading="lazy" onerror="this.parentNode.textContent=\''+ini+'\'">':ini)+"</span>";
 }
@@ -1203,11 +1279,12 @@ function renderDaily(){
 }
 function addCombo(id){
   var c=DC.find(function(x){return x.id===id});if(!c)return;
-  var ks=Object.keys(picks);picks={};
-  c.legs.forEach(function(l){picks[l.m.id]=l.j});
+  var ks=legsList().map(function(x){return x.id});picks={};
+  c.legs.forEach(function(l){var o=l.m.opts[l.j];picks[o.token]=mkLeg(l.m,o,l.m.id+"|ml")});
   mode="combo";
-  ks.concat(Object.keys(picks)).forEach(renderRows);
-  renderTicket();vib(12);
+  ks.concat(c.legs.map(function(l){return l.m.id})).forEach(renderRows);
+  if(detail)paintPicks();
+  renderTicket();quoteSoon();vib(12);
   toast(c.name+" is in your slip. Pick your stake.");
   ev("lg_daily",{combo:id});
 
@@ -1239,19 +1316,178 @@ function renderMatches(){
   h+='<p class="pmnote"><span class="pmb">'+PMSVG+'POLYMARKET</span><span>Every match, every price and every result on this page comes from the live <a href="https://polymarket.com" target="_blank" rel="noopener">Polymarket</a> order book. MOONX Play only lets you trade them with play money.</span></p>';
   el.innerHTML=h;
 }
+/* ---------------------------------------------------------------------------
+   L'ECRAN D'UN MATCH. Polymarket cote bien plus que le vainqueur: handicaps,
+   totaux, mi-temps, lignes de joueurs. On va les chercher avec l'action
+   "event" et on les presente groupes, comme chez un bookmaker. On peut en
+   empiler plusieurs du meme match: le serveur les prix ensemble.
+--------------------------------------------------------------------------- */
+function syncViews(){
+  var dv=$("v-detail"),mv=$("v-matches");
+  if(!dv||!mv)return;
+  var on=tab==="matches";
+  mv.classList.toggle("on",on&&!detail);
+  dv.classList.toggle("on",on&&!!detail);
+  document.body.classList.toggle("det",!!detail);
+}
+function openDetail(id){
+  var m=MK.find(function(x){return x.id===id});
+  detail={id:String(id),ev:null,err:null,base:m||null,sec:0};
+  if(tab!=="matches")setTab("matches");else syncViews();
+  paintDetail();
+  window.scrollTo({top:0,behavior:"auto"});
+  ev("lg_match",{id:id});
+  api("event",{event:String(id)}).then(function(j){
+    if(!detail||detail.id!==String(id))return;
+    detail.ev=j.event;seedQ(j.event);
+    paintDetail();pollQuotes();
+  }).catch(function(e){
+    if(!detail||detail.id!==String(id))return;
+    detail.err=errText(e);paintDetail();
+  });
+}
+function seedQ(e){
+  (e.opts||[]).forEach(function(o){if(Q[o.token]==null)Q[o.token]=o.p});
+  (e.groups||[]).forEach(function(g){g.opts.forEach(function(o){if(Q[o.token]==null)Q[o.token]=o.p})});
+}
+function closeDetail(){
+  if(!detail)return;
+  detail=null;syncViews();renderIdentity();renderDaily();renderMatches();
+}
+function dfind(tok){
+  var e=detail&&detail.ev;if(!e)return null;
+  for(var i=0;i<e.opts.length;i++)if(e.opts[i].token===tok)return{o:e.opts[i],gk:e.id+"|ml"};
+  var gs=e.groups||[];
+  for(var k=0;k<gs.length;k++)for(var j=0;j<gs[k].opts.length;j++)
+    if(gs[k].opts[j].token===tok)return{o:gs[k].opts[j],gk:e.id+"|"+gs[k].key,sub:true};
+  return null;
+}
+/* L'intitule a gauche d'une ligne. Polymarket ecrit ses questions en entier
+   ("Knicks vs. Raptors: O/U 216.5"): on enleve ce que le titre du match dit
+   deja, pour ne garder que ce qui distingue la ligne. */
+var NOCAP={spreads:1,first_half_spreads:1,moneyline:1,first_half_moneyline:1};
+function gcap(g){
+  if(NOCAP[g.type])return"";
+  var t=String(g.title||"");
+  t=t.replace(/^\s*[^:]*\bvs\.?\s[^:]*:\s*/i,"");
+  t=t.replace(/\bTeam Total\b:?\s*/i,"");
+  t=t.replace(/\b1st Half\b\s*/i,"");
+  t=t.replace(/\b1H\b\s*/i,"");
+  t=t.replace(/\bO\/U\b\s*/i,"");
+  t=t.replace(/\s*:\s*/," · ");
+  return t.trim();
+}
+function dopHTML(o){
+  var p=price(o.token,o.p),on=!!picks[o.token];
+  return'<button type="button" class="dop'+(on?" on":"")+'" data-dp="'+o.token+'" aria-pressed="'+(on?"true":"false")+'">'+
+    '<span class="dnm">'+esc(o.label)+'</span><b class="k2" data-tok="'+o.token+'">'+fx(1/p)+
+    '</b><i class="pc2" data-ch="'+o.token+'">'+Math.round(p*100)+'%</i></button>';
+}
+function paintDetail(){
+  var el=$("v-detail");if(!el||!detail)return;
+  var e=detail.ev||detail.base;
+  if(!e){el.innerHTML=detail.err?'<div class="dempty">'+esc(detail.err)+'<br><button class="go ghost" type="button" data-back="1" style="margin-top:12px">Back to matches</button></div>':'<div class="skel"></div><div class="skel" style="margin-top:10px"></div>';return}
+  var live=e.start<=Date.now();
+  var h='<div class="dtop"><button class="dbk" type="button" data-back="1" aria-label="Back">'+BKSVG+'</button>'+
+    '<div class="dti">'+(e.licon?'<img src="'+esc(e.licon)+'" alt="" onerror="this.remove()">':"")+'<span>'+esc(e.league||"Polymarket")+'</span></div>'+
+    '<span class="pmb">'+PMSVG+vol(e.vol)+'</span></div>'+
+    '<h1 class="dh2">'+esc(mtitle(e))+'</h1>'+
+    '<div class="dmeta">'+(live?'<span class="lv">LIVE NOW</span>':'<span>'+dstamp(e.start)+'</span><span class="cd2" data-cd="'+e.start+'">'+cdown(e.start)+'</span>')+'</div>'+
+    '<div class="dwin">'+marketHTML(e)+'</div>';
+  var gs=(detail.ev&&detail.ev.groups)||[];
+  if(!detail.ev)h+='<div class="dempty">Loading every market on this match…</div>';
+  else if(!gs.length)h+='<div class="dempty">Polymarket only trades the winner on this match for now.</div>';
+  else{
+    var order=[],by={};
+    gs.forEach(function(g){if(!by[g.name]){by[g.name]=[];order.push(g.name)}by[g.name].push(g)});
+    h+='<div class="dchips">'+order.map(function(n,i){
+      return'<button type="button" data-dj="'+i+'" class="'+(i===detail.sec?"on":"")+'">'+esc(n)+'</button>';
+    }).join("")+'</div>';
+    h+=order.map(function(n,i){
+      return'<section class="dsec" id="dsec-'+i+'"><h4>'+esc(n)+'<s></s>'+(by[n].length>1?'<u>'+by[n].length+' lines</u>':"")+'</h4>'+
+        by[n].map(function(g){
+          var cap=gcap(g),fl=function(x){return String(x).toLowerCase().replace(/[^a-z0-9]+/g," ").trim()};
+          if(cap&&fl(cap)===fl(n))cap="";
+          return'<div class="drow">'+(cap?'<span class="dcap">'+esc(cap)+'</span>':"")+
+            '<div class="dops">'+g.opts.map(dopHTML).join("")+'</div></div>';
+        }).join("")+'</section>';
+    }).join("");
+  }
+  h+='<p class="dnote"><span class="pmb">'+PMSVG+'POLYMARKET</span><span>Every line on this page is a live Polymarket market. Stack several of them and they are priced together, not simply multiplied — two bets on the same match move with each other.</span></p>';
+  el.innerHTML=h;
+  dchipScroll();
+}
+/* On ne redessine pas tout l'ecran a chaque tap: la page sauterait. */
+function paintPicks(){
+  var el=$("v-detail");if(!el)return;
+  el.querySelectorAll(".dop").forEach(function(b){
+    var on=!!picks[b.dataset.dp];
+    b.classList.toggle("on",on);b.setAttribute("aria-pressed",on?"true":"false");
+  });
+  var w=el.querySelector(".dwin .mkt"),e=detail&&detail.ev;
+  if(w&&e)w.innerHTML=e.opts.map(function(o,j){return segHTML(e,j)}).join("");
+}
+function dchipScroll(){
+  var el=$("v-detail");if(!el)return;
+  var chips=el.querySelector(".dchips");if(!chips)return;
+  if(el.dataset.sc)return;
+  el.dataset.sc="1";
+  window.addEventListener("scroll",function(){
+    if(!detail||timers.dsc)return;
+    timers.dsc=requestAnimationFrame(function(){
+      timers.dsc=0;
+      var w=$("v-detail");if(!w||!detail)return;
+      var cs=w.querySelector(".dchips");if(!cs)return;
+      var top=cs.getBoundingClientRect().bottom+12,secs=w.querySelectorAll(".dsec"),k=0;
+      secs.forEach(function(x,i){if(x.getBoundingClientRect().top<=top)k=i});
+      if(k===detail.sec)return;
+      detail.sec=k;
+      cs.querySelectorAll("button").forEach(function(b,i){b.classList.toggle("on",i===k)});
+      var on=cs.children[k];
+      if(on)cs.scrollTo({left:Math.max(0,on.offsetLeft-70),behavior:"smooth"});
+    });
+  },{passive:true});
+}
 function renderRows(id){
   var card=document.querySelector('.mt[data-id="'+id+'"]'),m=MK.find(function(x){return x.id===id});
   if(!card||!m)return;
   card.querySelector(".mkt").innerHTML=m.opts.map(function(o,j){return segHTML(m,j)}).join("");
 }
+/* Un pari retenu = un jeton Polymarket. On en garde au plus un par marche
+   (choisir "Over" apres "Under" remplace), et six en tout. */
+function mkLeg(m,o,gk,sub){
+  return{id:String(m.id),title:mtitle(m),sport:m.sport,start:m.start,token:o.token,other:o.other||null,
+    label:o.label,logo:o.logo||(sub?subLogo(m,o.label):""),draw:!!o.draw,p:o.p,gk:gk,sub:!!sub};
+}
+/* Un pari du type "Knicks -3,5" porte sur une equipe: on lui rend son logo.
+   "Over 216,5" n'appartient a personne: il prend une fleche. */
+function subLogo(m,label){
+  var lo="";
+  (m.opts||[]).forEach(function(o){if(!o.draw&&o.logo&&String(label).indexOf(o.label)===0)lo=o.logo});
+  return lo;
+}
+function subIcon(o){
+  var l=String(o.label||"");
+  return /^over/i.test(l)?"\u25B4":/^under/i.test(l)?"\u25BE":/^yes$/i.test(l)?"\u2713":/^no$/i.test(l)?"\u2715":"\u00b1";
+}
+function pcount(){return Object.keys(picks).length}
+function addLeg(lg){
+  if(picks[lg.token]){delete picks[lg.token];return}
+  Object.keys(picks).forEach(function(k){if(picks[k].gk===lg.gk)delete picks[k]});
+  if(pcount()>=6){toast("Up to 6 picks at once.");return}
+  picks[lg.token]=lg;vib(8);
+}
+function afterPick(id){
+  if(id)renderRows(id);
+  if(detail)paintPicks();
+  renderTicket();quoteSoon();
+}
 function togglePick(id,j){
-  var m=MK.find(function(x){return x.id===id});if(!m)return;
-  if(picks[id]===j)delete picks[id];
-  else{
-    if(picks[id]==null&&Object.keys(picks).length>=6){toast("Up to 6 picks at once.");return}
-    picks[id]=j;vib(8);
-  }
-  renderRows(id);renderTicket();
+  var m=MK.find(function(x){return x.id===id});
+  if(!m&&detail&&detail.ev&&detail.ev.id===id)m=detail.ev;
+  if(!m||!m.opts[j])return;
+  addLeg(mkLeg(m,m.opts[j],id+"|ml"));
+  afterPick(id);
 }
 /* ---- le bulletin en bas de l'ecran ---- */
 function stakeBtns(){
@@ -1283,9 +1519,10 @@ function renderTicket(){
   var c=calc(l),cm=c.cm;
   bar.className="slipbar on";
   bar.innerHTML='<div class="in"><div class="sl1"><div class="slp">'+
-    l.map(function(x){return'<span class="sp"><u>'+esc(x.o.label)+'</u><i>'+fx(lx(x))+'</i><button type="button" class="rm1" data-rm="'+x.m.id+'" aria-label="Remove">&times;</button></span>'}).join("")+
+    l.map(function(x){return'<span class="sp"><u>'+esc(x.label)+'</u><i>'+fx(lx(x))+'</i><button type="button" class="rm1" data-rm="'+x.token+'" aria-label="Remove">&times;</button></span>'}).join("")+
     '</div>'+(n>1?'<button class="slx" type="button" data-clear="1">Clear</button>':"")+"</div>"+
     (n>1?'<div class="seg"><button type="button" data-mode="combo" class="'+(cm?"on":"")+'">Combo <em>'+fx(comboX(l))+'</em></button><button type="button" data-mode="singles" class="'+(cm?"":"on")+'">'+n+" singles</button></div>":"")+
+    qnote(l)+
     '<div class="slst">'+stakeBtns()+"</div>"+
     '<button class="slbet" type="button" data-bet="1"'+(c.warn?" disabled":"")+">"+
     (c.warn?esc(c.warn):"Bet "+money(c.a)+' <em>&rarr; '+money(c.pay)+" if right</em>")+"</button></div>";
@@ -1300,9 +1537,10 @@ function basketHTML(){
   var c=calc(l),cm=c.cm;
   return'<div class="cd bk"><div class="hd"><b>Your slip</b><span class="cnt">'+n+'</span><button class="clr" type="button" data-clear="1">Clear</button></div>'+
     '<div class="lst">'+l.map(function(x){
-      return'<div class="it">'+logoMini(x.o)+'<span class="nm3">'+esc(x.o.label)+"<small>"+esc(mtitle(x.m))+'</small></span><span class="k">'+fx(lx(x))+'</span><button type="button" class="rm1" data-rm="'+x.m.id+'" aria-label="Remove">&times;</button></div>';
+      return'<div class="it">'+logoMini(x)+'<span class="nm3">'+esc(x.label)+"<small>"+esc(x.title)+'</small></span><span class="k">'+fx(lx(x))+'</span><button type="button" class="rm1" data-rm="'+x.token+'" aria-label="Remove">&times;</button></div>';
     }).join("")+"</div>"+
     (n>1?'<div class="seg"><button type="button" data-mode="combo" class="'+(cm?"on":"")+'">Combo <em>'+fx(comboX(l))+'</em></button><button type="button" data-mode="singles" class="'+(cm?"":"on")+'">'+n+" singles</button></div>":"")+
+    qnote(l)+
     '<div class="slst">'+stakeBtns()+"</div>"+
     '<div class="tot"><span>'+(cm?n+"-pick combo":n>1?n+" singles":"Pays if right")+"</span><b>"+money(c.pay)+"</b></div>"+
     '<button class="slbet" type="button" data-bet="1"'+(c.warn?" disabled":"")+">"+
@@ -1352,9 +1590,9 @@ function doBet(){
   busy=true;setBusy(true);
   var cm=c.cm,n=c.n;
   var jobs=(cm||n===1)
-    ?[{picks:l.map(function(x){return{event_id:x.m.id,token_id:x.o.token}}),stake:Math.min(c.a,cash())}]
-    :l.map(function(x){return{picks:[{event_id:x.m.id,token_id:x.o.token}],stake:Math.floor(c.a/n*100)/100}});
-  var ids=Object.keys(picks),last=null;
+    ?[{picks:l.map(function(x){return{event_id:x.id,token_id:x.token}}),stake:Math.min(c.a,cash())}]
+    :l.map(function(x){return{picks:[{event_id:x.id,token_id:x.token}],stake:Math.floor(c.a/n*100)/100}});
+  var ids=l.map(function(x){return x.id}),last=null;
   jobs.reduce(function(pr,j){
     return pr.then(function(){
       return api("open",{token:tok,picks:j.picks,stake:j.stake}).then(function(r){
@@ -1363,10 +1601,10 @@ function doBet(){
     });
   },Promise.resolve()).then(function(){
     ev("lg_trade",{legs:n,mode:cm?"combo":n>1?"singles":"single"});vib(16);
-    picks={};
-    if(jobs.length===1)undoToast(cm&&n>1?"Combo ×"+n:l[0].o.label,c.a,c.pay,last);
+    picks={};QT={k:"",mult:null,err:null,at:0,busy:false};
+    if(jobs.length===1)undoToast(cm&&n>1?"Combo ×"+n:l[0].label,c.a,c.pay,last);
     else toast(jobs.length+" bets placed. Good luck!");
-    ids.forEach(renderRows);renderTicket();refreshNav();renderLive();loadHistories();
+    ids.forEach(renderRows);if(detail)paintPicks();renderTicket();refreshNav();renderLive();loadHistories();
   }).catch(function(e){toast(errText(e))}).then(function(){busy=false;setBusy(false)});
 }
 function undoToast(label,a,pay,posId){
@@ -1379,7 +1617,7 @@ function undoToast(label,a,pay,posId){
 function nameHTML(l){
   var c=calc(l),one=l.length===1?l[0]:null,bet=l.length>0;
   return'<div class="first"><h3>'+(bet?"One last thing":"Pick your name")+'</h3><p class="s">This is the name your clan sees on the leaderboard. No account, no email, nothing to download — and you can’t change it later, so pick one you like.</p>'+
-    (one?'<div class="row">'+logo(one.o)+'<span class="t">'+esc(one.o.label)+"<small>"+esc(mtitle(one.m))+'</small></span><span class="x">'+fx(lx(one))+"</span></div>":"")+
+    (one?'<div class="row">'+logo(one)+'<span class="t">'+esc(one.label)+"<small>"+esc(one.title)+'</small></span><span class="x">'+fx(lx(one))+"</span></div>":"")+
     '<input class="fld" id="qhdl" maxlength="18" autocomplete="nickname" spellcheck="false" aria-label="Your name" value="'+esc(timers.hdl||suggestName())+'">'+
     '<p class="slipn" id="qerr">3 to 18 letters, numbers or _</p>'+
     '<button class="go big" type="button" data-namego="1">'+(bet?"Bet "+money(c.a)+" &rarr; "+money(c.pay):"Start with $1,000")+"</button>"+
@@ -1403,12 +1641,63 @@ function nameGo(){
     busy=false;setBusy(false);
   });
 }
-function legsList(){var l=[];Object.keys(picks).forEach(function(id){var m=MK.find(function(x){return x.id===id});if(m)l.push({m:m,o:m.opts[picks[id]]})});return l}
-function lx(x){return 1/price(x.o.token,x.o.p)}
-function comboX(l){return l.reduce(function(a,x){return a*lx(x)},1)}
+function legsList(){var l=[];Object.keys(picks).forEach(function(k){l.push(picks[k])});return l}
+function lx(x){return 1/price(x.token,x.p)}
+function rawX(l){return l.reduce(function(a,x){return a*lx(x)},1)}
+/* Le multiplicateur d'un combo. Quand plusieurs paris portent sur le meme
+   match, le produit des cotes est faux: le serveur calcule la probabilite
+   jointe reelle et c'est ce prix-la qui sera retenu. On affiche le sien. */
+function comboX(l){
+  if(l.length>1&&QT.k===pkey()){
+    if(QT.err)return NaN;
+    if(QT.mult>0)return QT.mult;
+  }
+  return rawX(l);
+}
+function pkey(){return Object.keys(picks).sort().join(",")}
+function sameMatch(l){
+  var seen={},dup=false;
+  l.forEach(function(x){if(seen[x.id])dup=true;seen[x.id]=1});
+  return dup;
+}
+function quoteSoon(){
+  clearTimeout(timers.qt);
+  var k=pkey();
+  if(QT.k!==k){QT.k=k;QT.mult=null;QT.err=null;QT.at=0}
+  if(pcount()<2)return;
+  timers.qt=setTimeout(askQuote,260);
+}
+function askQuote(){
+  var l=legsList(),k=pkey();
+  if(l.length<2||QT.busy)return;
+  QT.busy=true;
+  api("quote",{picks:l.map(function(x){return{event_id:x.id,token_id:x.token}})}).then(function(j){
+    if(pkey()!==k)return;
+    QT.k=k;QT.mult=+j.mult||null;QT.err=null;QT.at=Date.now();
+  }).catch(function(e){
+    if(pkey()!==k)return;
+    QT.k=k;QT.mult=null;QT.err=e==="combo"?errText("combo"):null;QT.at=Date.now();
+  }).then(function(){QT.busy=false;renderTicket()});
+}
 function cash(){return P?Math.floor(+P.player.bal*100)/100:START}
 function curAmt(){return amount!=null?Math.min(amount,cash()):stakeNow()}
-function calc(l){var n=l.length,cm=n>1&&mode==="combo",a=curAmt(),pay=cm?a*comboX(l):l.reduce(function(s,x){return s+a/n*lx(x)},0);return{n:n,cm:cm,a:a,pay:pay,warn:!(a>=1)?"Minimum is $1.":a>cash()+1e-9?"You have "+money(cash())+" in cash.":""}}
+function calc(l){
+  var n=l.length,cm=n>1&&mode==="combo",a=curAmt(),pay=cm?a*comboX(l):l.reduce(function(s,x){return s+a/n*lx(x)},0);
+  if(!isFinite(pay))pay=0;
+  var w=!(a>=1)?"Minimum is $1.":a>cash()+1e-9?"You have "+money(cash())+" in cash.":"";
+  if(!w&&cm&&QT.err&&QT.k===pkey())w=QT.err;
+  return{n:n,cm:cm,a:a,pay:pay,warn:w};
+}
+/* La phrase qui explique pourquoi la cote d'un combo sur un seul match
+   n'est pas le produit des cotes. On ne l'affiche que si l'ecart se voit. */
+function qnote(l){
+  if(l.length<2||mode!=="combo"||!sameMatch(l))return"";
+  if(QT.err&&QT.k===pkey())return"";
+  if(QT.k!==pkey()||!(QT.mult>0))return'<p class="qn">Same match: the exact price is being checked\u2026</p>';
+  var r=rawX(l),d=QT.mult/r;
+  if(d>.97&&d<1.03)return"";
+  return'<p class="qn"><span>'+(d<1?"\u25BE":"\u25B4")+'</span><span>Same match, so these picks move together. Priced at <b>'+fx(QT.mult)+'</b> instead of '+fx(r)+'.</span></p>';
+}
 
 function nameField(){return P?"":'<label class="lbl" for="hdl">YOUR NAME ON THE LEADERBOARD</label><input class="fld" id="hdl" maxlength="18" autocomplete="nickname" placeholder="e.g. moonboy_23" value="'+esc(timers.hdl||"")+'">'}
 
@@ -1789,13 +2078,17 @@ function sign(){
 
 function pollMarkets(){
   if(document.hidden)return;
-  api("markets").then(function(j){timers.mkLoaded=1;MK=j.markets||[];MK.forEach(function(m){m.opts.forEach(function(o){if(Q[o.token]==null)Q[o.token]=o.p})});Object.keys(picks).forEach(function(id){if(!MK.some(function(m){return m.id===id}))delete picks[id]});renderTicker();renderRail();if(tab==="matches"){renderDaily();renderMatches()}renderTicket()}).catch(function(){timers.mkLoaded=1;if(!MK.length&&tab==="matches")$("mList").innerHTML='<div class="empty"><b>Live prices are slow to load.</b>Check your connection and try again.<br><button class="go" type="button" data-retry="1">Try again</button></div>'});
+  api("markets").then(function(j){timers.mkLoaded=1;MK=j.markets||[];MK.forEach(function(m){m.opts.forEach(function(o){if(Q[o.token]==null)Q[o.token]=o.p})});Object.keys(picks).forEach(function(k){if(!MK.some(function(m){return m.id===picks[k].id}))delete picks[k]});renderTicker();renderRail();if(tab==="matches"&&!detail){renderDaily();renderMatches()}renderTicket()}).catch(function(){timers.mkLoaded=1;if(!MK.length&&tab==="matches")$("mList").innerHTML='<div class="empty"><b>Live prices are slow to load.</b>Check your connection and try again.<br><button class="go" type="button" data-retry="1">Try again</button></div>'});
 }
 function quoteTokens(){
   var s={};openPos().forEach(function(p){p.lg_leg.forEach(function(l){if(l.final==null)s[l.token_id]=1})});
-  Object.keys(picks).forEach(function(id){var m=MK.find(function(x){return x.id===id});if(m)m.opts.forEach(function(o){s[o.token]=1})});
+  Object.keys(picks).forEach(function(k){s[picks[k].token]=1});
   if(follow)follow.legs.forEach(function(l){s[l.token]=1});
-  if(tab==="matches")mlist().slice(0,SHOWN).forEach(function(m){m.opts.forEach(function(o){s[o.token]=1})});
+  if(detail&&detail.ev){
+    detail.ev.opts.forEach(function(o){s[o.token]=1});
+    (detail.ev.groups||[]).forEach(function(g){g.opts.forEach(function(o){s[o.token]=1})});
+  }
+  if(tab==="matches"&&!detail)mlist().slice(0,SHOWN).forEach(function(m){m.opts.forEach(function(o){s[o.token]=1})});
   return Object.keys(s).slice(0,200);
 }
 function pollQuotes(){
@@ -1804,7 +2097,7 @@ function pollQuotes(){
     var q=j.quotes||{},now=Date.now();
     Object.keys(q).forEach(function(k){var v=+q[k];QP[k]=Q[k];Q[k]=v;if(H[k]){H[k].pts.push([now,v]);if(H[k].pts.length>2000)H[k].pts.shift()}});
     if(tab==="matches"){
-      document.querySelectorAll(".sg .k2[data-tok]").forEach(function(e){
+      document.querySelectorAll("[data-tok]").forEach(function(e){
         var k=e.dataset.tok;if(q[k]==null)return;
         var v=Q[k],o=QP[k];e.textContent=fx(1/v);
         var ch=e.parentNode.querySelector('[data-ch="'+k+'"]');if(ch)ch.textContent=Math.round(v*100)+"%";
@@ -1814,23 +2107,30 @@ function pollQuotes(){
         var m=MK.find(function(x){return x.id===c.dataset.id});if(!m)return;
         c.querySelectorAll(".sg").forEach(function(g,j){g.style.flexGrow=(shr(m,j)*100).toFixed(1)});
       });
-      if(Object.keys(picks).length)renderTicket();
+      if(detail&&detail.ev){
+        var dw=document.querySelector("#v-detail .dwin .mkt");
+        if(dw)dw.querySelectorAll(".sg").forEach(function(g,j){g.style.flexGrow=(shr(detail.ev,j)*100).toFixed(1)});
+      }
+      if(pcount())renderTicket();
     }
     tickTicker();tickClocks();
     document.querySelectorAll("[data-dcx]").forEach(function(e){
       var c=DC.find(function(x){return x.id===e.dataset.dcx});if(c)e.firstChild.nodeValue=fx(comboX2(c.legs));
     });
+    if(pcount()>1&&mode==="combo"&&Date.now()-QT.at>8000&&!QT.busy)askQuote();
     updateLive();if(follow)dyn();
   }).catch(function(){});
 }
 function pollMe(){if(!tok||document.hidden)return;api("me",{token:tok}).then(function(j){setProfile(j);if(tab==="trades")renderTrades();refreshNav()}).catch(function(e){if(e==="auth"){tok=null;P=null;try{localStorage.removeItem(TK)}catch(x){}render()}})}
 
 document.addEventListener("click",function(e){
+  var mh=e.target.closest(".mt .mh");
+  if(mh&&!e.target.closest("button")){var mc=mh.closest(".mt");if(mc&&mc.dataset.id){openDetail(mc.dataset.id);return}}
   var t=e.target.closest("button,[data-tab]");if(!t)return;var d=t.dataset;
   if(d.tab){setTab(d.tab);return}
   if(d.mail){sendMail(d.mail);return}
   if(d.startgame){startGame();return}
-  if(d.sport){sport=d.sport;SHOWN=14;closeSheet();if(tab!=="matches"){setTab("matches")}try{var u=new URL(location.href);if(sport==="all")u.searchParams.delete("sport");else u.searchParams.set("sport",sport);history.replaceState(null,"",u)}catch(x){}renderMatches();renderTicket();pollQuotes();return}
+  if(d.sport){sport=d.sport;SHOWN=14;closeSheet();if(detail){detail=null;syncViews();renderIdentity();renderDaily()}if(tab!=="matches"){setTab("matches")}try{var u=new URL(location.href);if(sport==="all")u.searchParams.delete("sport");else u.searchParams.set("sport",sport);history.replaceState(null,"",u)}catch(x){}renderMatches();renderTicket();pollQuotes();return}
   if(d.pick){togglePick(d.pick,+d.j);return}
   if(d.dc){addCombo(d.dc);return}
   if(d.go){goMarket(d.go);return}
@@ -1848,9 +2148,18 @@ document.addEventListener("click",function(e){
     if($("sheet").dataset.k==="name")$("sheetP").innerHTML=nameHTML(legsList());
     return}
   if(d.undo){var u=d.undo;$("toast").classList.remove("on","rich");eject(u);return}
-  if(d.rm){delete picks[d.rm];renderRows(d.rm);renderTicket();return}
-  if(d.clear){var ks=Object.keys(picks);picks={};ks.forEach(renderRows);renderTicket();return}
-  if(d.mode){mode=d.mode;renderTicket();return}
+  if(d.rm){var rl=picks[d.rm];delete picks[d.rm];afterPick(rl&&rl.id);return}
+  if(d.clear){var ks=legsList().map(function(x){return x.id});picks={};ks.forEach(renderRows);if(detail)paintPicks();renderTicket();quoteSoon();return}
+  if(d.mode){mode=d.mode;renderTicket();if(mode==="combo")quoteSoon();return}
+  if(d.open){openDetail(d.open);return}
+  if(d.back){closeDetail();return}
+  if(d.dp){var f=dfind(d.dp);if(f){addLeg(mkLeg(detail.ev,f.o,f.gk,f.sub));afterPick(detail.id)}return}
+  if(d.dj){
+    var sc=$("dsec-"+d.dj);if(!sc)return;
+    detail.sec=+d.dj;
+    document.querySelectorAll(".dchips button").forEach(function(b,i){b.classList.toggle("on",i===+d.dj)});
+    window.scrollTo({top:sc.getBoundingClientRect().top+window.scrollY-(parseInt(getComputedStyle(document.body).paddingTop)+54),behavior:"smooth"});
+    return}
   if(d.q){amount=Math.max(1,Math.floor(cash()*+d.q*100)/100);if(+d.q===1)amount=cash();rememberName();if($("sheet").dataset.k==="follow")$("sheetP").innerHTML=followHTML();return}
   if(d.fplace){rememberName();placeFollow();return}
   if(d.ej){eject(d.ej);return}
