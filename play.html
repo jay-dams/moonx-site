@@ -226,7 +226,7 @@ nav.top{position:fixed;top:0;left:0;right:0;z-index:30;height:var(--nh);display:
 .slbet:active{transform:scale(.99)}
 .slbet em{font-style:normal;opacity:.68}
 .slbet[disabled]{background:rgba(150,180,230,.1);color:var(--dim);box-shadow:none;pointer-events:none}
-body.slip{padding-bottom:calc(var(--tb) + var(--sab) + 228px)}
+body.bslip{padding-bottom:calc(var(--tb) + var(--sab) + 228px)}
 @media (min-width:980px){
   .mlist,#sports{max-width:760px;margin-left:auto;margin-right:auto}
   #sports{padding-left:0;padding-right:0}
@@ -474,7 +474,7 @@ body.slip{padding-bottom:calc(var(--tb) + var(--sab) + 228px)}
 @keyframes ms{0%{transform:translate(-50%,10px) scale(.3);opacity:0}25%{transform:translate(-50%,0) scale(1.12);opacity:1}75%{opacity:1}100%{transform:translate(-50%,-24px) scale(1);opacity:0}}
 .toast{position:fixed;left:50%;bottom:calc(var(--tb) + var(--sab) + 12px);z-index:70;transform:translate(-50%,20px);opacity:0;pointer-events:none;padding:11px 16px;border-radius:13px;background:#fff;color:#06110A;font-weight:800;font-size:13.5px;transition:all .25s;max-width:92vw;text-align:center;box-shadow:0 10px 30px -10px rgba(0,0,0,.6)}
 .toast.on{opacity:1;transform:translate(-50%,0)}
-body.slip .toast{bottom:calc(var(--tb) + var(--sab) + 232px)}
+body.bslip .toast{bottom:calc(var(--tb) + var(--sab) + 232px)}
 .toast.rich{display:flex;align-items:center;gap:12px;text-align:left;pointer-events:auto;padding:9px 9px 9px 15px}
 .toast.rich .tt{display:block}
 .toast.rich .tt b{display:block;font-size:13.5px;font-weight:900}
@@ -615,7 +615,7 @@ footer .lk a{text-decoration:none;color:#fff}
   .side::-webkit-scrollbar{display:none}
   .tabs{display:none!important}
   .slipbar{display:none!important}
-  body,body.slip{padding-bottom:40px}
+  body,body.bslip{padding-bottom:40px}
   .sportrow{display:none}
   .hero{text-align:left;padding:4px 0 0}
   .hero .lead{font-size:13px}
@@ -697,6 +697,81 @@ body.det .hero,body.det .invite{display:none}
   .dcap{flex:0 0 34%}
   .dsec{margin-top:18px}
 }
+/* ---------------------------------------------------------------------------
+   LE TELEPHONE. Tout ce qui suit ne sert qu'au tactile: la sensation sous
+   le doigt, la navigation qui glisse comme dans une application, le
+   bulletin qu'on tire du bas, et un pave numerique au lieu du clavier.
+--------------------------------------------------------------------------- */
+button,a,.sg,.dop,.mt,.dc{touch-action:manipulation}
+.sg,.dop,.slst button,.tabs button,.chips button,.dchips button,.dc,.allb,.sp,.kg button,.kq button{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+@media (hover:none){
+  /* Sur un ecran tactile il n'y a pas de survol: on remplace par l'appui. */
+  .sg:active{background:linear-gradient(180deg,rgba(255,255,255,.12),rgba(255,255,255,.04));transform:scale(.978)}
+  .dop:active{transform:scale(.975)}
+  .allb:active,.dbk:active,.dchips button:active,.chips button:active{transform:scale(.94)}
+  .dc:active{transform:scale(.985)}
+  .more1:active{transform:scale(.99)}
+  .slst button:active{transform:scale(.95)}
+}
+/* La navigation: l'ecran d'un match entre par la droite, la liste revient
+   par la gauche. C'est le geste d'iOS, et il dit tout seul ou l'on est. */
+@media (max-width:1079px){
+  .view.pushin{animation:pushin .28s cubic-bezier(.32,.72,0,1)}
+  .view.popin{animation:popin .28s cubic-bezier(.32,.72,0,1)}
+  #v-detail{will-change:transform}
+}
+@keyframes pushin{from{transform:translateX(26%);opacity:.25}to{transform:none;opacity:1}}
+@keyframes popin{from{transform:translateX(-16%);opacity:.25}to{transform:none;opacity:1}}
+
+/* ---- le bulletin: une feuille qu'on tire du bas ---- */
+.slipbar .grab{display:none}
+@media (max-width:1079px){
+  .slipbar{left:0;right:0;bottom:calc(var(--tb) + var(--sab));padding:0 10px 10px;border-radius:24px 24px 0 0;
+    background:rgba(11,16,29,.97);box-shadow:0 -1px 0 0 var(--line-2),0 -24px 60px -20px rgba(0,0,0,.9)}
+  .slipbar .in{padding-top:2px}
+  .slipbar .grab{display:block;width:100%;height:22px;position:relative}
+  .slipbar .grab s{position:absolute;left:50%;top:9px;width:38px;height:4px;margin-left:-19px;border-radius:3px;background:rgba(160,185,225,.3);text-decoration:none}
+  .slmini{display:flex;align-items:center;gap:10px;width:100%;padding:0 2px 10px;text-align:left}
+  .slmini .cnt{flex:none;width:26px;height:26px;border-radius:9px;background:var(--acc);color:#06110A;font-size:13px;font-weight:900;display:grid;place-items:center}
+  .slmini .ml{flex:1;min-width:0;font-size:13.5px;font-weight:800;line-height:1.15}
+  .slmini .ml small{display:block;font-size:11.5px;font-weight:600;color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .slmini .x{flex:none;font-size:19px;font-weight:900;letter-spacing:-.03em;color:var(--acc);font-variant-numeric:tabular-nums}
+  .slmini .cv{flex:none;width:22px;height:22px;display:grid;place-items:center;color:var(--dim);transition:transform .22s}
+  .slmini .cv svg{width:15px;height:15px}
+  body.slipx .slmini .cv{transform:rotate(180deg)}
+  .slipbar .full{display:none}
+  body.slipx .slipbar .full{display:block}
+  body.slipx .slipbar .full.fadein{animation:fade .2s}
+  body.bslip{padding-bottom:calc(var(--tb) + var(--sab) + 128px)}
+  .slipbar .seg{margin-bottom:9px}
+  /* les paris empiles, en colonne: on les lit, on les enleve */
+  .slhd{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:0 2px 4px;font-family:var(--mono);font-size:9.5px;font-weight:700;letter-spacing:.14em;color:var(--dim)}
+  .slhd button{font-family:var(--disp);font-size:12px;font-weight:700;letter-spacing:0;color:var(--dim);padding:4px 8px;border-radius:8px;text-transform:none}
+  .slhd button:active{background:rgba(255,255,255,.07);color:#fff}
+  body.kpad .slipbar .slhd,body.kpad .slipbar .slv,body.kpad .slipbar .seg,body.kpad .slipbar .qn{display:none}
+  .slv{max-height:33vh;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;margin:0 0 9px}
+  .slv .it2{display:flex;align-items:center;gap:9px;padding:7px 2px;border-bottom:1px solid var(--line)}
+  .slv .it2:last-child{border-bottom:0}
+  .slv .lo{flex:none;width:26px;height:26px;border-radius:8px;background:#1B2440;display:grid;place-items:center;overflow:hidden;font-size:9px;font-weight:900;color:#C8D4EA}
+  .slv .lo img{width:100%;height:100%;object-fit:contain}
+  .slv .n4{flex:1;min-width:0;font-size:13.5px;font-weight:800;line-height:1.2}
+  .slv .n4 small{display:block;font-size:11px;font-weight:600;color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .slv .k4{flex:none;font-size:14.5px;font-weight:900;color:var(--acc);font-variant-numeric:tabular-nums}
+  .slv .rm1{flex:none;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.07);color:var(--dim);font-size:15px;line-height:1;display:grid;place-items:center}
+}
+@keyframes fade{from{opacity:0;transform:translateY(-6px)}}
+/* ---- le pave numerique: on ne sort jamais le clavier du telephone ---- */
+.kpd{grid-column:span 5}
+.kamt{display:flex;align-items:baseline;gap:4px;justify-content:center;padding:2px 0 9px}
+.kamt span{font-size:21px;font-weight:900;color:var(--dim)}
+.kamt b{font-size:31px;font-weight:900;letter-spacing:-.04em;font-variant-numeric:tabular-nums;line-height:1}
+.kamt i{font-style:normal;margin-left:8px;font-size:11.5px;font-weight:700;color:var(--dim);align-self:center}
+.kq{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:5px;margin-bottom:7px}
+.kq button{height:34px;border-radius:10px;background:rgba(150,180,230,.09);font-size:12.5px;font-weight:800;color:#DCE4F2}
+.kg{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:8px}
+.kg button{height:44px;border-radius:13px;background:rgba(150,180,230,.07);font:900 20px/1 var(--disp);font-variant-numeric:tabular-nums;color:#fff;transition:background .12s,transform .1s}
+.kg button:active{background:rgba(150,180,230,.2);transform:scale(.95)}
+.kdone{grid-column:span 5;height:40px;border-radius:12px;background:rgba(150,180,230,.1);font-weight:800;font-size:13.5px;color:#fff;margin-bottom:8px}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -769,7 +844,7 @@ try{var _s=parseFloat(localStorage.getItem(SK));if(isFinite(_s)&&_s>0)stake=_s}c
    {a:"email", email, source, handle, attr} est en place cote serveur. */
 var MAIL_ON=false;
 var mailSent={};
-var detail=null,QT={k:"",mult:null,err:null,at:0,busy:false};
+var detail=null,QT={k:"",mult:null,err:null,at:0,busy:false},slipOpen=false,kbuf="";
 var P=null,MK=[],Q={},QP={},H={},tab="matches",sport=qp("sport")||"all",day="live",picks={},stake=null,mode="combo",amount=null,LG="ALL",LD=null,inviteCode=(qp("l")||"").toUpperCase(),inviteInfo=null,follow=null,lastVal={},msHit={},seenStatus={},busy=false,timers={};
 
 function qp(k){try{return new URLSearchParams(location.search).get(k)}catch(e){return null}}
@@ -1100,6 +1175,7 @@ var SPIMG={soccer:1,basketball:1,amfootball:1,tennis:1,hockey:1,fight:1,cricket:
 function sportBg(sp){return"assets/img/sport/"+(SPIMG[sp]?sp:"other")+".jpg"}
 var PMSVG='<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 0l6 6-6 6-6-6z"/></svg>';
 var CHSVG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>';
+var CVSVG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 15l6-6 6 6"/></svg>';
 var BKSVG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>';
 function clanOn(id){
   /* combien de joueurs du classement ont un pari ouvert sur ce match:
@@ -1322,18 +1398,29 @@ function renderMatches(){
    "event" et on les presente groupes, comme chez un bookmaker. On peut en
    empiler plusieurs du meme match: le serveur les prix ensemble.
 --------------------------------------------------------------------------- */
-function syncViews(){
+var PHONE=function(){try{return!window.matchMedia("(min-width:1080px)").matches}catch(e){return true}};
+function slideIn(el,cls){
+  if(!PHONE())return;
+  el.classList.remove("pushin","popin");void el.offsetWidth;el.classList.add(cls);
+}
+function syncViews(anim){
   var dv=$("v-detail"),mv=$("v-matches");
   if(!dv||!mv)return;
-  var on=tab==="matches";
+  var on=tab==="matches",was=dv.classList.contains("on");
   mv.classList.toggle("on",on&&!detail);
   dv.classList.toggle("on",on&&!!detail);
   document.body.classList.toggle("det",!!detail);
+  if(anim&&on){
+    if(detail&&!was)slideIn(dv,"pushin");
+    else if(!detail&&was)slideIn(mv,"popin");
+  }
+  dv.style.transform="";dv.style.opacity="";
 }
 function openDetail(id){
   var m=MK.find(function(x){return x.id===id});
   detail={id:String(id),ev:null,err:null,base:m||null,sec:0};
-  if(tab!=="matches")setTab("matches");else syncViews();
+  if(tab!=="matches")setTab("matches");
+  syncViews(true);
   paintDetail();
   window.scrollTo({top:0,behavior:"auto"});
   ev("lg_match",{id:id});
@@ -1352,7 +1439,7 @@ function seedQ(e){
 }
 function closeDetail(){
   if(!detail)return;
-  detail=null;syncViews();renderIdentity();renderDaily();renderMatches();
+  detail=null;renderIdentity();renderDaily();renderMatches();syncViews(true);
 }
 function dfind(tok){
   var e=detail&&detail.ev;if(!e)return null;
@@ -1475,7 +1562,9 @@ function addLeg(lg){
   if(picks[lg.token]){delete picks[lg.token];return}
   Object.keys(picks).forEach(function(k){if(picks[k].gk===lg.gk)delete picks[k]});
   if(pcount()>=6){toast("Up to 6 picks at once.");return}
+  var first=!pcount();
   picks[lg.token]=lg;vib(8);
+  if(first){slipOpen=true;kbuf=""}
 }
 function afterPick(id){
   if(id)renderRows(id);
@@ -1490,9 +1579,42 @@ function togglePick(id,j){
   afterPick(id);
 }
 /* ---- le bulletin en bas de l'ecran ---- */
-function stakeBtns(){
+function kpdHTML(){
+  var a=stakeNow(),c=cash();
+  var keys=[1,2,3,4,5,6,7,8,9];
+  return'<div class="kpd"><div class="kamt"><span>$</span><b id="kv">'+esc(kbuf||String(Math.round(a*100)/100))+'</b><i>of '+money(c)+'</i></div>'+
+    '<div class="kq"><button type="button" data-kadd="10">+10</button><button type="button" data-kadd="25">+25</button><button type="button" data-kadd="100">+100</button>'+
+    '<button type="button" data-kop="half">\u00bd</button><button type="button" data-kop="dbl">2\u00d7</button><button type="button" data-kop="max">Max</button></div>'+
+    '<div class="kg">'+keys.map(function(d){return'<button type="button" data-k="'+d+'">'+d+'</button>'}).join("")+
+    '<button type="button" data-k=".">.</button><button type="button" data-k="0">0</button><button type="button" data-kdel="1">\u232B</button></div></div>'+
+    '<button type="button" class="kdone" data-custom="0">Done</button>';
+}
+/* Le pave ecrit dans kbuf, puis la mise suit. On ne redessine que le
+   montant affiche: les touches restent sous le doigt.                  */
+function kpress(ch){
+  var b=kbuf||"";
+  if(ch==="."){if(b.indexOf(".")>=0)return;b=(b||"0")+"."}
+  else{
+    if(b==="0")b="";
+    if(b.replace(/[^0-9]/g,"").length>=7)return;
+    if(/\.\d\d$/.test(b))return;
+    b=b+ch;
+  }
+  kset(b);
+}
+function kdel(){kset((kbuf||"").slice(0,-1))}
+function kset(b){
+  kbuf=b;
+  var v=parseFloat(b);
+  stake=isFinite(v)?Math.max(0,Math.floor(v*100)/100):0;
+  amount=null;
+  try{localStorage.setItem(SK,String(stake))}catch(x){}
+  var e=$("kv");if(e)e.textContent=b||"0";
+  syncBet();vib(4);
+}
+function stakeBtns(kp){
   var c=cash(),a=stakeNow();
-  if(custom)return'<div class="cst"><span>$</span><input class="cin" inputmode="decimal" autocomplete="off" aria-label="Your amount" value="'+(Math.round(a*100)/100)+'"><button type="button" data-max="1">Max '+money(c)+'</button><button type="button" data-custom="0">Done</button></div>';
+  if(custom)return kp?kpdHTML():'<div class="cst"><span>$</span><input class="cin" inputmode="decimal" autocomplete="off" aria-label="Your amount" value="'+(Math.round(a*100)/100)+'"><button type="button" data-max="1">Max '+money(c)+'</button><button type="button" data-custom="0">Done</button></div>';
   if(c<10)return'<button type="button" data-stake="'+(Math.floor(c*100)/100)+'" class="on" style="grid-column:span 4">All in '+money(c)+"</button>";
   var vs=[10,25,50,100],hit=vs.some(function(v){return Math.abs(a-v)<.005});
   return vs.map(function(v){
@@ -1510,22 +1632,74 @@ function syncBet(){
   });
   document.querySelectorAll(".bk .tot b").forEach(function(e){e.textContent=money(c.pay)});
 }
+/* Le bulletin sur telephone est une feuille qu'on tire du bas: repliee,
+   une seule ligne qui dit ce qu'on a et ce que ca paie; depliee, les paris
+   un par un, le choix combo ou simples, la mise et le pave numerique.
+   On ne redessine que ce qui change, pour ne jamais perdre un appui.    */
+function slipLegHTML(x){
+  return'<div class="it2">'+logoMini(x)+'<span class="n4">'+esc(x.label)+'<small>'+esc(x.title)+'</small></span>'+
+    '<span class="k4">'+fx(lx(x))+'</span>'+
+    '<button type="button" class="rm1" data-rm="'+x.token+'" aria-label="Remove">&times;</button></div>';
+}
+function miniHTML(l,c){
+  var n=l.length,cm=c.cm;
+  var names=l.map(function(x){return x.label}).join(", ");
+  return'<button type="button" class="slmini" data-slipx="1" aria-expanded="'+(slipOpen?"true":"false")+'">'+
+    '<span class="cnt">'+n+'</span>'+
+    '<span class="ml">'+(n>1?(cm?n+"-pick combo":n+" singles"):"1 pick")+'<small>'+esc(names)+'</small></span>'+
+    '<b class="x">'+(n>1&&!cm?money(c.pay):fx(c.pay/(c.a||1)))+'</b>'+
+    '<span class="cv">'+CVSVG+'</span></button>';
+}
 function renderTicket(){
   renderSide();
   var l=legsList(),n=l.length,bar=$("slipbar");if(!bar)return;
   var show=n>0&&tab==="matches"&&!follow;
-  document.body.classList.toggle("slip",show);
-  if(!show){bar.className="slipbar";bar.innerHTML="";return}
+  document.body.classList.toggle("bslip",show);
+  if(!show){bar.className="slipbar";bar.innerHTML="";document.body.classList.remove("slipx","kpad");slipOpen=false;return}
   var c=calc(l),cm=c.cm;
+  document.body.classList.toggle("slipx",slipOpen);
+  document.body.classList.toggle("kpad",!!custom&&PHONE());
   bar.className="slipbar on";
-  bar.innerHTML='<div class="in"><div class="sl1"><div class="slp">'+
-    l.map(function(x){return'<span class="sp"><u>'+esc(x.label)+'</u><i>'+fx(lx(x))+'</i><button type="button" class="rm1" data-rm="'+x.token+'" aria-label="Remove">&times;</button></span>'}).join("")+
-    '</div>'+(n>1?'<button class="slx" type="button" data-clear="1">Clear</button>':"")+"</div>"+
-    (n>1?'<div class="seg"><button type="button" data-mode="combo" class="'+(cm?"on":"")+'">Combo <em>'+fx(comboX(l))+'</em></button><button type="button" data-mode="singles" class="'+(cm?"":"on")+'">'+n+" singles</button></div>":"")+
-    qnote(l)+
-    '<div class="slst">'+stakeBtns()+"</div>"+
+  bar.dataset.k=tkey();
+  bar.innerHTML='<div class="in"><button type="button" class="grab" data-slipx="1" aria-label="Open or close the slip"><s></s></button>'+
+    miniHTML(l,c)+
+    '<div class="full">'+
+      '<div class="slhd"><span>YOUR PICKS</span>'+(n>1?'<button type="button" data-clear="1">Clear all</button>':"")+'</div>'+
+      '<div class="slv">'+l.map(slipLegHTML).join("")+'</div>'+
+      (n>1?'<div class="seg"><button type="button" data-mode="combo" class="'+(cm?"on":"")+'">Combo <em>'+fx(comboX(l))+'</em></button><button type="button" data-mode="singles" class="'+(cm?"":"on")+'">'+n+" singles</button></div>":"")+
+      qnote(l)+
+      '<div class="slst">'+stakeBtns(true)+'</div>'+
+    '</div>'+
     '<button class="slbet" type="button" data-bet="1"'+(c.warn?" disabled":"")+">"+
     (c.warn?esc(c.warn):"Bet "+money(c.a)+' <em>&rarr; '+money(c.pay)+" if right</em>")+"</button></div>";
+}
+function tkey(){return pkey()+"|"+mode+"|"+(custom?1:0)+"|"+(slipOpen?1:0)+"|"+tab+"|"+(follow?1:0)}
+/* Rafraichir les chiffres sans refaire le bulletin: sur telephone, un
+   redessin a chaque tic de prix avalerait l'appui en cours.            */
+function refreshTicket(){
+  var bar=$("slipbar"),l=legsList();
+  if(!bar||!l.length||bar.dataset.k!==tkey()){renderTicket();return}
+  var c=calc(l);
+  bar.querySelectorAll(".slv .it2 .k4").forEach(function(e,i){if(l[i])e.textContent=fx(lx(l[i]))});
+  var m=bar.querySelector(".slmini .x");
+  if(m)m.textContent=(l.length>1&&!c.cm)?money(c.pay):fx(c.pay/(c.a||1));
+  var cb=bar.querySelector('.seg [data-mode="combo"] em');
+  if(cb)cb.textContent=fx(comboX(l));
+  var q=bar.querySelector(".qn"),nh=qnote(l);
+  if((q?q.outerHTML:"")!==nh){
+    if(q)q.outerHTML=nh;
+    else{var sl=bar.querySelector(".slst");if(sl&&nh)sl.insertAdjacentHTML("beforebegin",nh)}
+  }
+  syncBet();renderSide();
+}
+function setSlip(on){
+  slipOpen=!!on;
+  document.body.classList.toggle("slipx",slipOpen);
+  var f=document.querySelector(".slipbar .full");
+  if(f&&slipOpen){f.classList.remove("fadein");void f.offsetWidth;f.classList.add("fadein")}
+  var m=document.querySelector(".slipbar .slmini");if(m)m.setAttribute("aria-expanded",slipOpen?"true":"false");
+  if(!slipOpen&&custom){custom=false;renderTicket()}
+  vib(6);
 }
 /* ---------------------------------------------------------------------------
    LE PANIER (colonne de droite sur ordinateur). On empile les camps comme
@@ -2111,7 +2285,7 @@ function pollQuotes(){
         var dw=document.querySelector("#v-detail .dwin .mkt");
         if(dw)dw.querySelectorAll(".sg").forEach(function(g,j){g.style.flexGrow=(shr(detail.ev,j)*100).toFixed(1)});
       }
-      if(pcount())renderTicket();
+      if(pcount())refreshTicket();
     }
     tickTicker();tickClocks();
     document.querySelectorAll("[data-dcx]").forEach(function(e){
@@ -2135,7 +2309,15 @@ document.addEventListener("click",function(e){
   if(d.dc){addCombo(d.dc);return}
   if(d.go){goMarket(d.go);return}
   if(d.filter){filterSheet();return}
-  if(d.custom!=null){custom=d.custom==="1";renderTicket();
+  if(d.slipx){setSlip(!slipOpen);return}
+  if(d.k){kpress(d.k);return}
+  if(d.kdel){kdel();return}
+  if(d.kadd){kset(String(Math.min(cash(),(parseFloat(kbuf||String(stakeNow()))||0)+ +d.kadd)));return}
+  if(d.kop){
+    var cur=parseFloat(kbuf||String(stakeNow()))||0;
+    var nv=d.kop==="half"?cur/2:d.kop==="dbl"?cur*2:cash();
+    kset(String(Math.max(0,Math.min(cash(),Math.floor(nv*100)/100))));return}
+  if(d.custom!=null){custom=d.custom==="1";if(custom)kbuf="";renderTicket();
     if(custom)setTimeout(function(){var f=document.querySelector(".cin");if(f){f.focus();f.select()}},30);
     return}
   if(d.max){stake=cash();amount=null;try{localStorage.setItem(SK,String(stake))}catch(x){}renderTicket();return}
@@ -2177,6 +2359,57 @@ document.addEventListener("click",function(e){
   if(d.retry){pollMarkets();return}
   if(t.id==="eqBtn"){setTab("trades");return}
 });
+/* ---------------------------------------------------------------------------
+   LES GESTES. Deux seulement, mais ceux qu'un pouce attend d'une
+   application: revenir en glissant depuis le bord gauche, et tirer le
+   bulletin du bas. Tout est passif pour ne jamais retarder le defilement.
+--------------------------------------------------------------------------- */
+(function(){
+  if(!("ontouchstart" in window))return;
+  var ed={on:false,x:0,y:0,dx:0};
+  document.addEventListener("touchstart",function(e){
+    if(!detail||!PHONE()||e.touches.length!==1)return;
+    var t=e.touches[0];
+    if(t.clientX>26)return;
+    ed.on=true;ed.x=t.clientX;ed.y=t.clientY;ed.dx=0;
+    var v=$("v-detail");v.style.transition="";
+  },{passive:true});
+  document.addEventListener("touchmove",function(e){
+    if(!ed.on)return;
+    var t=e.touches[0],dx=t.clientX-ed.x,dy=t.clientY-ed.y,v=$("v-detail");
+    if(Math.abs(dy)>44&&Math.abs(dy)>Math.abs(dx)){ed.on=false;v.style.transform="";v.style.opacity="";return}
+    ed.dx=Math.max(0,Math.min(dx,420));
+    v.style.transform="translateX("+ed.dx+"px)";
+    v.style.opacity=String(Math.max(.35,1-ed.dx/520));
+  },{passive:true});
+  function endEdge(){
+    if(!ed.on)return;ed.on=false;
+    var v=$("v-detail"),go=ed.dx>72;
+    v.style.transition="transform .2s cubic-bezier(.32,.72,0,1),opacity .2s";
+    if(go){vib(8);closeDetail()}
+    v.style.transform="";v.style.opacity="";
+    setTimeout(function(){v.style.transition=""},230);
+  }
+  document.addEventListener("touchend",endEdge,{passive:true});
+  document.addEventListener("touchcancel",endEdge,{passive:true});
+
+  /* le bulletin: on le tire vers le haut, on le repousse vers le bas */
+  var sd={on:false,y:0,dy:0};
+  document.addEventListener("touchstart",function(e){
+    var t=e.target.closest&&e.target.closest(".slipbar .grab,.slipbar .slmini");
+    if(!t||!PHONE()||e.touches.length!==1)return;
+    sd.on=true;sd.y=e.touches[0].clientY;sd.dy=0;
+  },{passive:true});
+  document.addEventListener("touchmove",function(e){
+    if(!sd.on)return;
+    sd.dy=e.touches[0].clientY-sd.y;
+  },{passive:true});
+  document.addEventListener("touchend",function(){
+    if(!sd.on)return;sd.on=false;
+    if(sd.dy<-26&&!slipOpen)setSlip(true);
+    else if(sd.dy>26&&slipOpen)setSlip(false);
+  },{passive:true});
+})();
 function rememberName(){var f=document.querySelector("#hdl");if(f)timers.hdl=f.value}
 document.addEventListener("keydown",function(e){if(e.key==="Enter"&&e.target&&e.target.dataset&&e.target.dataset.mailIn){e.preventDefault();sendMail(e.target.dataset.mailIn);return}
   if(e.key==="Enter"&&e.target&&e.target.id==="hdl2"){e.preventDefault();startGame()}
