@@ -498,13 +498,23 @@ footer .lk a{text-decoration:none;color:#fff}
    et clan a droite. Sur telephone la meme matiere empilee, barre d'onglets
    en bas. Inspire de l'organisation de Novig.
 =========================================================================== */
-.ticker{position:fixed;top:var(--nh);left:0;right:0;z-index:29;height:var(--th);display:flex;align-items:center;background:rgba(4,7,14,.94);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
-.tkwrap{flex:1;min-width:0;height:100%;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 40px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 40px),transparent)}
+.ticker{position:fixed;top:var(--nh);left:0;right:0;z-index:29;height:var(--th);display:flex;align-items:center;background:#040710;border-bottom:1px solid var(--line)}
+/* Au doigt on fait glisser soi-meme: un bandeau qui defile tout seul est
+   impossible a taper, et l'animation sous un degrade de bord clignote sur iOS.
+   A la souris il defile, et s'arrete quand on le survole. */
+.tkwrap{flex:1;min-width:0;height:100%;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:none;position:relative}
+.tkwrap::-webkit-scrollbar{display:none}
+.ticker:after{content:"";position:absolute;right:0;top:0;bottom:0;width:34px;pointer-events:none;background:linear-gradient(90deg,rgba(4,7,14,0),rgba(4,7,14,.95))}
 .pmlive{flex:none;display:inline-flex;align-items:center;gap:6px;height:100%;padding:0 13px;font-family:var(--mono);font-size:9.5px;font-weight:700;letter-spacing:.14em;color:var(--pm);background:rgba(99,120,255,.09);border-right:1px solid var(--line);white-space:nowrap}
 .pmlive svg{width:9px;height:9px;fill:currentColor;flex:none}
-@media (max-width:520px){.pmlive{font-size:8.5px;padding:0 9px;letter-spacing:.1em}}
-.tkin{display:flex;align-items:center;height:100%;width:max-content;animation:tkroll 90s linear infinite}
-.ticker:hover .tkin{animation-play-state:paused}
+.pmlive i{font-style:normal}
+@media (max-width:560px){.pmlive{font-size:8.5px;padding:0 8px;letter-spacing:.08em;gap:5px}.pmlive i{display:none}}
+.tkin{display:flex;align-items:center;height:100%;width:max-content}
+@media (hover:hover) and (pointer:fine){
+  .tkwrap{overflow:hidden}
+  .tkin{animation:tkroll 95s linear infinite;transform:translateZ(0);backface-visibility:hidden}
+  .ticker:hover .tkin{animation-play-state:paused}
+}
 @keyframes tkroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 .tki{display:inline-flex;align-items:center;gap:8px;height:var(--th);padding:0 15px;font-size:11.5px;font-weight:700;color:var(--hi);white-space:nowrap;position:relative;transition:background .15s}
 .tki:hover{background:rgba(150,180,230,.1);color:#fff}
@@ -642,7 +652,7 @@ footer .lk a{text-decoration:none;color:#fff}
   </div>
 </nav>
 
-<div class="ticker" id="ticker"><span class="pmlive"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 0l6 6-6 6-6-6z"/></svg>POLYMARKET LIVE</span><div class="tkwrap"><div class="tkin" id="tkin"></div></div></div>
+<div class="ticker" id="ticker"><span class="pmlive"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 0l6 6-6 6-6-6z"/></svg>POLYMARKET<i> LIVE</i></span><div class="tkwrap"><div class="tkin" id="tkin"></div></div></div>
 
 <main class="wrap">
   <div class="shell">
@@ -1097,7 +1107,7 @@ function renderTicker(){
   var el=$("tkin");if(!el)return;
   var l=tickerList();
   if(!l.length){el.innerHTML='<span class="tki"><em>LOADING LIVE MARKETS</em></span>';el.dataset.k="";return}
-  var k=l.map(function(m){return m.id}).join(",");
+  var k=l.map(function(m){return m.id}).sort().join(",");
   if(el.dataset.k===k){tickTicker();return}
   el.dataset.k=k;
   var now=Date.now();
@@ -1108,7 +1118,7 @@ function renderTicker(){
       '<em>'+esc(m.league.slice(0,20))+(live?"":" \u00b7 in "+cdown(m.start))+
       '</em><b>'+esc(o.label)+'</b><i data-tk="'+o.token+'">'+fx(1/price(o.token,o.p))+"</i></button>";
   }).join("");
-  el.innerHTML=one+one;
+  el.innerHTML=(window.matchMedia&&window.matchMedia("(hover:hover) and (pointer:fine)").matches)?one+one:one;
 }
 function tickTicker(){
   document.querySelectorAll("#tkin [data-tk]").forEach(function(e){
