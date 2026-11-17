@@ -740,10 +740,35 @@ button,a,.sg,.dop,.mt,.dc{touch-action:manipulation}
   .mt .mh{overflow:hidden}
   .mt .mh .lg{max-width:42%}
   .mt .mh .r{min-width:0}
+  /* La carte en vedette est dessinee pour un grand ecran: sur telephone
+     son nom de 16 pixels ne tenait pas dans un camp sur deux. */
+  .mt.feat .sg{padding:0 12px;height:76px}
+  .mt.feat .sg .lo{width:24px;height:24px;border-radius:8px;font-size:9px}
+  .mt.feat .sg .nm2{font-size:14px}
+  .mt.feat .sg .k2{font-size:20px}
+  .mt.feat .sg .pc2{font-size:10px}
   .mt.feat .sg.n3{padding:0 10px;height:78px}
   .mt.feat .sg.n3 .lo{width:22px;height:22px;border-radius:7px;font-size:8px}
   .mt.feat .sg.n3 .nm2{font-size:13px}
   .mt.feat .sg.n3 .k2{font-size:19px}
+}
+@media (max-width:360px){
+  /* Un iPhone SE: trois camps dans 292 pixels. On resserre encore pour que
+     "Portugal" tienne, logo compris. */
+  .sg.n3{padding:0 8px}
+  .sg.n3 .t1{gap:4px}
+  .sg.n3 .lo{width:14px;height:14px;border-radius:4px;font-size:6px}
+  .sg.n3 .nm2{font-size:11px}
+  .sg.n3 .k2{font-size:15px}
+  .mt.feat .sg .nm2{font-size:13px}
+  .mt.feat .sg .lo{width:22px;height:22px}
+  /* A trois camps dans 292 pixels, le logo et le nom cote a cote ne
+     laissent plus trente pixels au nom. On les empile: le nom reprend
+     toute la largeur du camp.                                        */
+  .sg.n3 .t1{flex-direction:column;align-items:flex-start;gap:2px}
+  .sg.n3 .nm2{max-width:100%}
+  .mt.feat .sg.n3{height:86px}
+  .mt.feat .sg.n3 .t1{gap:3px}
 }
 @keyframes pushin{from{transform:translateX(26%);opacity:.25}to{transform:none;opacity:1}}
 @keyframes popin{from{transform:translateX(-16%);opacity:.25}to{transform:none;opacity:1}}
@@ -924,6 +949,24 @@ function ago(t){var s=Math.max(1,Math.round((Date.now()-Date.parse(t))/1000));re
 function toast(t){var e=$("toast");e.textContent=t;e.classList.add("on");clearTimeout(timers.toast);timers.toast=setTimeout(function(){e.classList.remove("on")},2600)}
 function vib(p){try{navigator.vibrate&&navigator.vibrate(p)}catch(e){}}
 function av(o){if(o.draw)return'<span class="av draw">=</span>';var ini=initials(o.label),lg=(o.logo&&!/country-flags\/un\.png/i.test(o.logo))?o.logo:"";return'<span class="av">'+(lg?'<img src="'+esc(lg)+'" alt="" loading="lazy" onerror="this.parentNode.textContent=\''+ini+'\'">':ini)+"</span>"}
+/* La fonction Supabase est un seul petit serveur. Huit appels en meme
+   temps a froid et il rend WORKER_RESOURCE_LIMIT sur les huit: la page
+   se charge vide. Tout ce qui n'est pas demande par le joueur passe donc
+   par une file, un appel a la fois, avec un souffle entre deux.        */
+var BQ=[],bqOn=0;
+function bq(fn){
+  BQ.push(fn);
+  if(BQ.length>8)BQ.shift();
+  bqRun();
+}
+function bqRun(){
+  if(bqOn||!BQ.length||document.hidden)return;
+  bqOn=1;
+  var fn=BQ.shift();
+  Promise.resolve().then(fn).catch(function(){}).then(function(){
+    bqOn=0;clearTimeout(timers.bq);timers.bq=setTimeout(bqRun,420);
+  });
+}
 function api(a,b){b=b||{};b.a=a;return fetch(API,{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify(b)}).then(function(r){return r.json().then(function(j){if(!r.ok||j.error)throw j.error||"server";return j})})}
 /* ---------------------------------------------------------------------------
    MODE DEMO: la fonction Supabase n'autorise que https://moonx.fi, donc en
@@ -1584,15 +1627,18 @@ function pick3(list,n,fn){
 /* Va chercher tous les marches des matchs les plus echanges. Un appel par
    match, garde en memoire, et seulement pour les quelques premiers.    */
 function loadDeep(){
-  var top=openMk().slice().sort(function(a,b){return b.vol-a.vol}).slice(0,5);
+  if(!timers.deepOk)return;
+  var top=openMk().slice().sort(function(a,b){return b.vol-a.vol}).slice(0,4);
   top.forEach(function(m){
     if(DEEP[m.id]||deepOn[m.id])return;
     deepOn[m.id]=1;
-    api("event",{event:m.id}).then(function(j){
-      if(!j||!j.event)return;
-      DEEP[m.id]=j.event;seedQ(j.event);
-      if(tab==="matches"&&!detail)renderDaily();
-    }).catch(function(){});
+    bq(function(){
+      return api("event",{event:m.id}).then(function(j){
+        if(!j||!j.event)return;
+        DEEP[m.id]=j.event;seedQ(j.event);
+        if(tab==="matches"&&!detail)renderDaily();
+      }).catch(function(){deepOn[m.id]=0});
+    });
   });
 }
 /* Cherche une ligne precise dans la profondeur d'un match. */
@@ -1694,10 +1740,12 @@ function askCombo(legs){
   var k=ckey(legs);
   if(qcOn[k])return;
   qcOn[k]=1;
-  api("quote",{picks:legs.map(function(l){return{event_id:l.m.id,token_id:l.o.token}})}).then(function(j){
-    QC[k]=+j.mult||0;
-    if(tab==="matches"&&!detail)renderDaily();
-  }).catch(function(){QC[k]=-1}).then(function(){setTimeout(function(){qcOn[k]=0},45000)});
+  bq(function(){
+    return api("quote",{picks:legs.map(function(l){return{event_id:l.m.id,token_id:l.o.token}})}).then(function(j){
+      QC[k]=+j.mult||0;
+      if(tab==="matches"&&!detail)renderDaily();
+    }).catch(function(){QC[k]=-1}).then(function(){setTimeout(function(){qcOn[k]=0},45000)});
+  });
 }
 function comboVol(legs){
   var seen={},v=0;
@@ -2824,10 +2872,13 @@ document.addEventListener("input",function(e){
   var v=parseFloat(String(e.target.value).replace(",",".").replace(/[^0-9.]/g,""));amount=isFinite(v)?Math.floor(v*100)/100:0;
   document.querySelectorAll(".amtIn").forEach(function(f){if(f!==e.target)f.value=e.target.value});dyn();
 });
-document.addEventListener("visibilitychange",function(){if(!document.hidden){pollMarkets();pollQuotes();pollMe()}});
+document.addEventListener("visibilitychange",function(){if(!document.hidden){pollMarkets();pollQuotes();pollMe();bqRun()}});
 
 if(LOCAL){api=demoApi;$("demoChip").hidden=false;try{tok=localStorage.getItem(DK)&&"demo-token"||null}catch(e){}}
 function boot(){
+  /* On laisse la page se charger avant d'aller chercher la profondeur des
+     marches: sinon la rafale tombe sur un serveur qui demarre encore. */
+  setTimeout(function(){timers.deepOk=1;loadDeep()},2500);
   render();pollMarkets();
   if(inviteCode)api("league",{code:inviteCode}).then(function(j){inviteInfo={code:j.league.code,name:j.league.name};LG=j.league.code;LD=j;var b=$("inviteBox");b.hidden=false;b.innerHTML='<span style="flex:1">You\'re invited to <b>'+esc(j.league.name)+"</b>. "+(P?"":"Pick a match to join with $1,000.")+"</span>"+(P&&!P.leagues.some(function(l){return l.code===j.league.code})?'<button class="go" type="button" data-joinlg="'+j.league.code+'">Join</button>':"");}).catch(function(){inviteCode=""});
   if(tok)api("me",{token:tok}).then(function(j){setProfile(j);if(inviteCode&&!P.leagues.some(function(l){return l.code===inviteCode}))api("league_join",{token:tok,code:inviteCode}).then(function(r){setProfile(r);toast("You joined "+r.league.name);$("inviteBox").hidden=true}).catch(function(){});render();pollQuotes()}).catch(function(e){if(e==="auth"){tok=null;try{localStorage.removeItem(TK)}catch(x){}}render()});
