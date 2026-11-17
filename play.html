@@ -150,8 +150,11 @@ nav.top{position:fixed;top:0;left:0;right:0;z-index:30;height:var(--nh);display:
 .mt .mh .pl2{color:var(--acc)}
 .pmb{display:inline-flex;align-items:center;gap:4px;padding:2px 6px 1px;border-radius:5px;background:rgba(140,156,255,.13);color:var(--pm);font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.09em;white-space:nowrap}
 .pmb svg{width:7.5px;height:9px;fill:currentColor;flex:none}
-.pmnote{display:flex;align-items:flex-start;gap:8px;margin:14px 3px 0;font-size:11.5px;color:var(--dim);line-height:1.5}
-.pmnote .pmb{flex:none;margin-top:1px}
+/* La phrase qui dit d'ou viennent les prix: elle se lit d'un trait, sur
+   toute la largeur, pas dans une colonne etroite a cote d'un badge. */
+.pmnote{margin:16px 3px 0;font-size:11.5px;color:var(--dim);line-height:1.6;font-style:italic}
+.pmnote .pmb{float:left;margin:2px 9px 0 0;font-style:normal}
+
 .pmnote a{color:var(--pm);font-weight:700}
 .mt .mh .dt2{color:var(--dim)}
 .mt .mh .cd2{padding:2px 7px 1px;border-radius:999px;background:rgba(150,180,230,.11);color:var(--hi);letter-spacing:.06em}
@@ -689,8 +692,9 @@ body.det .hero,body.det .invite{display:none}
 .dop.on .dnm,.dop.on .k2{color:#06110A}
 .dop[disabled]{opacity:.4;pointer-events:none}
 .dwin{margin:2px 0 4px}
-.dnote{display:flex;gap:9px;align-items:flex-start;margin:18px 0 4px;padding:11px 13px;border-radius:14px;background:var(--well);box-shadow:inset 0 0 0 1px var(--line);font-size:12px;line-height:1.45;color:var(--dim)}
-.dnote .pmb{flex:none}
+.dnote{margin:18px 0 4px;padding:12px 14px;border-radius:14px;background:var(--well);box-shadow:inset 0 0 0 1px var(--line);font-size:12px;line-height:1.6;color:var(--dim);font-style:italic}
+.dnote .pmb{float:left;margin:2px 9px 0 0;font-style:normal}
+
 .dnote a{color:var(--pm)}
 .dempty{padding:26px 16px;text-align:center;color:var(--dim);font-size:13.5px}
 .qn{margin:8px 0 0;font-size:11.5px;line-height:1.35;color:var(--pm);display:flex;gap:6px;align-items:flex-start}
@@ -948,6 +952,15 @@ footer .lk button:hover{color:#fff}
   .mcp b{font-size:12px}
   .mck{font-size:16px}
 }
+/* le compte a rebours qui brule */
+.cd2.soon{background:rgba(232,179,65,.2)!important;color:var(--amber)!important}
+.cd2.now{background:rgba(255,92,122,.22)!important;color:var(--red)!important;animation:pulse1 1.3s ease-in-out infinite}
+@keyframes pulse1{0%,100%{opacity:1}50%{opacity:.55}}
+.dmeta .cd2.soon{background:rgba(232,179,65,.2);color:var(--amber)}
+.dmeta .cd2.now{background:rgba(255,92,122,.22);color:var(--red)}
+/* un match sur le point de commencer merite d'etre vu */
+.mt.imm .mkt{box-shadow:inset 0 0 0 1px rgba(255,92,122,.4),0 0 26px -14px rgba(255,92,122,.9)}
+.mt .mh .kick{display:inline-flex;align-items:center;gap:4px;padding:2px 7px 1px;border-radius:999px;background:rgba(255,92,122,.18);color:var(--red);font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.09em;white-space:nowrap;animation:pulse1 1.3s ease-in-out infinite}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -1307,6 +1320,15 @@ function dstamp(t){
   var dd=Math.round((new Date(d.getFullYear(),d.getMonth(),d.getDate())-new Date(n.getFullYear(),n.getMonth(),n.getDate()))/864e5);
   return(dd===0?"Today":dd===1?"Tomorrow":d.toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric"}))+" "+hhmm(t);
 }
+/* L'urgence se lit sur le compte a rebours: neutre au-dela d'une heure,
+   ambre dans l'heure, rouge battant dans le quart d'heure. */
+function cdClass(t){
+  var s=(t-Date.now())/1000;
+  if(s<=0)return"cd2 lv2";
+  if(s<900)return"cd2 now";
+  if(s<3600)return"cd2 soon";
+  return"cd2";
+}
 function cdown(t){
   /* Temps restant avant le coup d'envoi. Polymarket denoue le marche a la fin
      de la rencontre; l'echeance connue et sure, c'est le debut du match. */
@@ -1319,9 +1341,10 @@ function cdown(t){
 }
 function tickClocks(){
   document.querySelectorAll("[data-cd]").forEach(function(e){
-    var c=cdown(+e.dataset.cd);
-    if(!c){e.textContent="LIVE";e.className="cd2 lv2";return}
-    if(e.textContent!==c)e.textContent=c;
+    var t=+e.dataset.cd,c=cdown(t),k=cdClass(t);
+    if(!c&&e.textContent!=="LIVE")e.textContent="LIVE";
+    else if(c&&e.textContent!==c)e.textContent=c;
+    if(e.className!==k)e.className=k;
   });
 }
 /* ---------------------------------------------------------------------------
@@ -1495,13 +1518,14 @@ function clanOn(id){
 }
 function matchHTML(m,feat){
   var live=m.start<=Date.now(),c=clanOn(m.id);
-  return'<article class="mt'+(feat?" feat":"")+'" data-id="'+m.id+'"'+
+  var imm=!live&&m.start-Date.now()<900e3;
+  return'<article class="mt'+(feat?" feat":"")+(imm?" imm":"")+'" data-id="'+m.id+'"'+
     (feat?' style="background-image:url('+sportBg(m.sport)+')"':"")+'><div class="mh">'+
     (m.licon?'<img src="'+esc(m.licon)+'" alt="" loading="lazy" onerror="this.remove()">':"")+
     '<span class="lg">'+esc(m.league)+'</span><span class="r">'+
     (c?'<span class="pl2">\u25CF '+c+" playing</span>":"")+
     volBadge(m.vol)+
-    (live?'<span class="lv">LIVE</span>':'<span class="dt2">'+dstamp(m.start)+'</span><span class="cd2" data-cd="'+m.start+'">'+cdown(m.start)+"</span>")+
+    (live?'<span class="lv">LIVE</span>':'<span class="dt2">'+dstamp(m.start)+'</span><span class="'+cdClass(m.start)+'" data-cd="'+m.start+'">'+cdown(m.start)+"</span>")+
     '<button type="button" class="allb" data-open="'+m.id+'">ALL BETS'+CHSVG+"</button>"+
     "</span></div>"+marketHTML(m,feat)+"</article>";
 }
@@ -1868,7 +1892,7 @@ function dcHTML(c,i){
         '<span class="k" data-lk="'+l.o.token+'">'+fx(1/price(l.o.token,l.o.p))+"</span></div>";
     }).join("")+
     (c.legs.length>3?'<div><span class="lo">+'+(c.legs.length-3)+'</span><span class="t">more</span></div>':"")+
-    '</div><div class="ft"><span class="x" data-dcx="'+c.id+'">'+fx(comboX2(c.legs))+"<em>"+(same?"exact price":vol(comboVol(c.legs))+" on Polymarket")+'</em></span><span class="add">Add to slip</span></div></button>';
+    '</div><div class="ft"><span class="x" data-dcx="'+c.id+'">'+fx(comboX2(c.legs))+"<em>"+(same?"exact price":vol(comboVol(c.legs))+" on Polymarket")+'</em></span><span class="add">Play this combo</span></div></button>';
 }
 function logoMini(o){
   if(o.draw)return'<span class="lo">=</span>';
@@ -2028,7 +2052,7 @@ function paintDetail(){
     '<div class="dti">'+(e.licon?'<img src="'+esc(e.licon)+'" alt="" onerror="this.remove()">':"")+'<span>'+esc(e.league||"Polymarket")+'</span></div>'+
     volBadge(e.vol,true)+'</div>'+
     '<h1 class="dh2">'+esc(mtitle(e))+'</h1>'+
-    '<div class="dmeta">'+(live?'<span class="lv">LIVE NOW</span>':'<span>'+dstamp(e.start)+'</span><span class="cd2" data-cd="'+e.start+'">'+cdown(e.start)+'</span>')+'</div>'+
+    '<div class="dmeta">'+(live?'<span class="lv">LIVE NOW</span>':'<span>'+dstamp(e.start)+'</span><span class="'+cdClass(e.start)+'" data-cd="'+e.start+'">'+cdown(e.start)+'</span>')+'</div>'+
     '<div class="dwin">'+marketHTML(e)+'</div>'+(detail.ev?mcHTML(detail.ev):"");
   var fam=detail.ev?famOf(detail.ev):[];
   if(!detail.ev)h+='<div class="dempty">Loading every market on this match…</div>';
