@@ -797,6 +797,36 @@ button,a,.sg,.dop,.mt,.dc{touch-action:manipulation}
 .kg button{height:44px;border-radius:13px;background:rgba(150,180,230,.07);font:900 20px/1 var(--disp);font-variant-numeric:tabular-nums;color:#fff;transition:background .12s,transform .1s}
 .kg button:active{background:rgba(150,180,230,.2);transform:scale(.95)}
 .kdone{grid-column:span 5;height:40px;border-radius:12px;background:rgba(150,180,230,.1);font-weight:800;font-size:13.5px;color:#fff;margin-bottom:8px}
+/* ---------------------------------------------------------------------------
+   LA RECHERCHE. Un supporter arrive pour une equipe, pas pour un sport.
+   On cherche dans tout le tableau a la fois, sans tenir compte du jour ni
+   du sport choisis, et on ouvre directement l'ecran du match.
+--------------------------------------------------------------------------- */
+.srb{flex:none;width:36px;height:36px;border-radius:999px;display:grid;place-items:center;background:rgba(150,180,230,.09);box-shadow:inset 0 0 0 1px var(--line);color:var(--hi)}
+.srb svg{width:17px;height:17px}
+.srb:active{transform:scale(.94)}
+.rsr{display:flex;align-items:center;gap:9px;width:100%;height:38px;padding:0 10px;margin:0 0 12px;border-radius:12px;background:rgba(150,180,230,.07);box-shadow:inset 0 0 0 1px var(--line);color:var(--dim);font-size:13px;font-weight:700}
+.rsr:hover{background:rgba(150,180,230,.13);color:#fff}
+.rsr .ic svg{width:15px;height:15px;display:block}
+.sfield{display:flex;align-items:center;gap:9px;height:46px;padding:0 12px;border-radius:14px;background:rgba(0,0,0,.32);box-shadow:inset 0 0 0 1px var(--line-2);margin-bottom:12px}
+.sfield svg{width:17px;height:17px;flex:none;color:var(--dim)}
+.sfield input{flex:1;min-width:0;background:none;border:0;outline:0;color:#fff;font:800 16px/1 var(--disp);padding:0}
+.sfield input::placeholder{color:var(--dim);font-weight:600}
+.sfield input::-webkit-search-cancel-button,.sfield input::-webkit-search-decoration{-webkit-appearance:none;display:none}
+.sfield button{flex:none;width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.08);color:var(--dim);font-size:14px;line-height:1;display:grid;place-items:center}
+.sres{max-height:56vh;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;margin:0 -4px}
+.sres .sr{display:flex;align-items:center;gap:10px;width:100%;padding:9px 4px;text-align:left;border-bottom:1px solid var(--line)}
+.sres .sr:last-child{border-bottom:0}
+.sres .sr:active{background:rgba(150,180,230,.07)}
+.sres .lo{flex:none;width:28px;height:28px;border-radius:9px;background:#1B2440;display:grid;place-items:center;overflow:hidden;font-size:9px;font-weight:900;color:#C8D4EA}
+.sres .lo img{width:100%;height:100%;object-fit:contain}
+.sres .n5{flex:1;min-width:0;font-size:14px;font-weight:800;line-height:1.2}
+.sres .n5 small{display:block;font-size:11.5px;font-weight:600;color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sres .n5 b{color:var(--acc);font-weight:900}
+.sres .k5{flex:none;font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.06em;color:var(--hi);white-space:nowrap}
+.sres .k5.lv3{color:var(--red)}
+.shint{margin:10px 2px 0;font-size:12px;line-height:1.45;color:var(--dim)}
+.shint b{color:#fff;font-weight:800}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -824,7 +854,7 @@ button,a,.sg,.dop,.mt,.dc{touch-action:manipulation}
       <div class="invite" id="inviteBox" hidden></div>
       <div class="idbox" id="idBox" hidden></div>
       <section class="view on" id="v-matches">
-        <div class="sportrow"><button class="sportbtn" type="button" data-filter="1" id="fBtn"><span class="ic">◉</span><span class="lb">All sports</span><span class="n"></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button><div class="chips" id="sports"></div></div>
+        <div class="sportrow"><button class="srb" type="button" data-search="1" aria-label="Search a team or a player"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg></button><button class="sportbtn" type="button" data-filter="1" id="fBtn"><span class="ic">◉</span><span class="lb">All sports</span><span class="n"></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button><div class="chips" id="sports"></div></div>
         <div class="days" id="days"></div>
         <div id="daily"></div>
         <div class="mlist" id="mList"></div>
@@ -1336,6 +1366,103 @@ function matchHTML(m,feat){
    LE RAIL (ordinateur): les sports a gauche avec leur nombre de marches,
    puis les sections. Sur telephone ce sont les pastilles et la barre du bas.
 --------------------------------------------------------------------------- */
+/* ---------------------------------------------------------------------------
+   LA RECHERCHE. On cherche dans tout le catalogue ouvert: equipes,
+   joueurs de tennis et de MMA (ce sont les camps du marche), ligues. Si un
+   match est deja charge en profondeur, ses lignes de joueurs comptent
+   aussi. Le jour et le sport choisis ne limitent pas la recherche.
+--------------------------------------------------------------------------- */
+var PROP={points:1,rebounds:1,assists:1,threes:1,steals:1,blocks:1,
+  first_half_points:1,player_points:1,player_rebounds:1,player_assists:1};
+function nz(s){
+  return String(s==null?"":s).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/[^a-z0-9]+/g," ").trim();
+}
+function hiLite(label,words){
+  var out=esc(label),n=nz(label);
+  if(!words.length)return out;
+  var w=words.filter(function(x){return x.length>1&&n.indexOf(x)>=0}).sort(function(a,b){return b.length-a.length})[0];
+  if(!w)return out;
+  var i=nz(label).indexOf(w);
+  if(i<0)return out;
+  /* nz() garde les memes positions tant qu'il n'y a pas d'accent, ce qui
+     est le cas des noms d'equipes; en cas de doute on n'illumine pas. */
+  if(nz(label.slice(i,i+w.length))!==w)return out;
+  return esc(label.slice(0,i))+"<b>"+esc(label.slice(i,i+w.length))+"</b>"+esc(label.slice(i+w.length));
+}
+function searchHits(q){
+  var words=nz(q).split(" ").filter(Boolean);
+  if(!words.length)return{m:[],p:[]};
+  var out=[];
+  openMk().forEach(function(m){
+    var hay=nz(mtitle(m)+" "+m.league+" "+m.opts.map(function(o){return o.label}).join(" "));
+    if(!words.every(function(w){return hay.indexOf(w)>=0}))return;
+    /* le camp qui correspond le mieux donne le logo et le rang */
+    var best=null,rank=3;
+    m.opts.forEach(function(o){
+      if(o.draw)return;
+      var n=nz(o.label);
+      var r=words.every(function(w){return n===w})?0:words.every(function(w){return n.indexOf(w)===0})?1:words.every(function(w){return n.indexOf(w)>=0})?2:3;
+      if(r<rank){rank=r;best=o}
+    });
+    out.push({m:m,o:best||m.opts[0],rank:rank,words:words});
+  });
+  out.sort(function(a,b){
+    if(a.rank!==b.rank)return a.rank-b.rank;
+    var al=a.m.start<=Date.now(),bl=b.m.start<=Date.now();
+    if(al!==bl)return al?-1:1;
+    return b.m.vol-a.m.vol;
+  });
+  /* les lignes de JOUEURS des matchs deja charges. Les handicaps et les
+     totaux portent le nom des equipes: les reprendre ici ferait doublon
+     avec le match lui-meme, deja en tete des resultats. */
+  var pl=[];
+  Object.keys(DEEP).forEach(function(id){
+    var e=DEEP[id];
+    (e.groups||[]).forEach(function(g){
+      if(!PROP[g.type])return;
+      var n=nz(g.title);
+      if(!words.every(function(w){return n.indexOf(w)>=0}))return;
+      if(pl.length<6)pl.push({e:e,g:g,words:words});
+    });
+  });
+  return{m:out.slice(0,24),p:pl};
+}
+function srHTML(h){
+  var m=h.m,live=m.start<=Date.now();
+  return'<button type="button" class="sr" data-open="'+m.id+'">'+logoMini(h.o)+
+    '<span class="n5">'+hiLite(mtitle(m),h.words)+'<small>'+esc(m.league)+'</small></span>'+
+    '<span class="k5'+(live?" lv3":"")+'">'+(live?"LIVE":dstamp(m.start))+'</span></button>';
+}
+function spHTML(h){
+  return'<button type="button" class="sr" data-open="'+h.e.id+'">'+
+    '<span class="lo">'+subIcon(h.g.opts[0])+'</span>'+
+    '<span class="n5">'+hiLite(h.g.title,h.words)+'<small>'+esc(mtitle(h.e))+'</small></span>'+
+    '<span class="k5">'+esc(h.g.name)+'</span></button>';
+}
+function searchBody(q){
+  if(!nz(q)){
+    var top=openMk().slice().sort(function(a,b){return b.vol-a.vol}).slice(0,8);
+    return'<div class="sres">'+top.map(function(m){return srHTML({m:m,o:favLeg(m).o,words:[]})}).join("")+'</div>'+
+      '<p class="shint">Type a team, a country or a player. <b>Juventus</b>, <b>Knicks</b>, <b>Alcaraz</b>…</p>';
+  }
+  var r=searchHits(q);
+  if(!r.m.length&&!r.p.length)
+    return'<div class="sres"></div><p class="shint"><b>Nothing open under that name.</b> Polymarket opens new matches all day. Looking for a player? His lines sit inside his match \u2014 open it and look under <b>Player points</b>.</p>';
+  return'<div class="sres">'+r.m.map(srHTML).join("")+r.p.map(spHTML).join("")+'</div>'+
+    (r.p.length?'<p class="shint">Player lines come from the matches already loaded. Open a match and look under <b>Player points</b> for the rest.</p>':"");
+}
+function searchSheet(){
+  openSheet("search",'<h3>Search <button type="button" data-close-sheet="1">Close</button></h3>'+
+    '<div class="sfield"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg>'+
+    '<input id="sq" type="search" inputmode="search" autocomplete="off" autocorrect="off" spellcheck="false" placeholder="Team, country, player…" value="'+esc(timers.sq||"")+'">'+
+    '<button type="button" data-sclear="1" aria-label="Clear">&times;</button></div>'+
+    '<div id="sbody">'+searchBody(timers.sq||"")+'</div>');
+  setTimeout(function(){var f=$("sq");if(f){f.focus();f.select()}},60);
+  ev("lg_search_open");
+}
+function searchPaint(){
+  var b=$("sbody");if(b)b.innerHTML=searchBody(timers.sq||"");
+}
 function filterSheet(){
   var n={};MK.forEach(function(m){n[m.sport]=(n[m.sport]||0)+1});
   openSheet("filter",'<h3>Choose a sport <button type="button" data-close-sheet="1">Close</button></h3><div class="fsheet">'+
@@ -1362,7 +1489,8 @@ function goMarket(id){
 function renderRail(){
   var r=$("rail");if(!r)return;
   var n={};MK.forEach(function(m){n[m.sport]=(n[m.sport]||0)+1});
-  var h='<div class="rh">MARKETS</div>';
+  var h='<button type="button" class="rsr" data-search="1"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg></span><span class="lb">Search a team</span></button>';
+  h+='<div class="rh">MARKETS</div>';
   h+=SPORTS.filter(function(x){return x[0]==="all"||n[x[0]]||x[0]===sport}).map(function(x){
     var c=x[0]==="all"?MK.length:(n[x[0]]||0);
     return'<button type="button" class="'+(x[0]===sport&&tab==="matches"?"on":"")+'" data-sport="'+x[0]+'">'+
@@ -2557,6 +2685,8 @@ document.addEventListener("click",function(e){
   if(d.dc){addCombo(d.dc);return}
   if(d.go){goMarket(d.go);return}
   if(d.filter){filterSheet();return}
+  if(d.search){searchSheet();return}
+  if(d.sclear){timers.sq="";var sf=$("sq");if(sf){sf.value="";sf.focus()}searchPaint();return}
   if(d.slipx){setSlip(!slipOpen);return}
   if(d.k){kpress(d.k);return}
   if(d.kdel){kdel();return}
@@ -2583,7 +2713,7 @@ document.addEventListener("click",function(e){
   if(d.mode){mode=d.mode;renderTicket();if(mode==="combo")quoteSoon();return}
   if(d.day){day=d.day;SHOWN=14;renderMatches();renderTicket();pollQuotes();vib(6);
     window.scrollTo({top:Math.max(0,$("days").getBoundingClientRect().top+window.scrollY-(parseInt(getComputedStyle(document.body).paddingTop)+8)),behavior:"smooth"});return}
-  if(d.open){openDetail(d.open);return}
+  if(d.open){closeSheet();openDetail(d.open);return}
   if(d.back){closeDetail();return}
   if(d.dp){var f=dfind(d.dp);if(f){addLeg(mkLeg(detail.ev,f.o,f.gk,f.sub));afterPick(detail.id)}return}
   if(d.dj){
@@ -2682,6 +2812,11 @@ document.addEventListener("input",function(e){
     try{localStorage.setItem(SK,String(stake))}catch(x){}
     document.querySelectorAll(".cin").forEach(function(f){if(f!==e.target)f.value=e.target.value});
     syncBet();return;
+  }
+  if(e.target.id==="sq"){
+    timers.sq=e.target.value;
+    clearTimeout(timers.sqt);timers.sqt=setTimeout(searchPaint,110);
+    return;
   }
   if(e.target.id==="qhdl"){timers.hdl=e.target.value;var q=$("qerr");if(q){q.textContent="Your name on the leaderboard. Keep it or change it.";q.className="slipn"}return}
   if(e.target.id==="hdl"){timers.hdl=e.target.value;document.querySelectorAll("#hdl").forEach(function(f){if(f!==e.target)f.value=e.target.value});return}
