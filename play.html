@@ -1416,25 +1416,80 @@ function openMk(){
      118 marches a l'heure ou j'ecris, du live au week-end prochain. */
   return MK.filter(function(m){return m.opts.length>=2&&!m.closed});
 }
+/* ---------------------------------------------------------------------------
+   LES COMBOS DU JOUR. Polymarket ne cote pas que le vainqueur: pour les
+   gros matchs il ouvre des handicaps, des totaux, des lignes de joueurs.
+   On va chercher cette profondeur sur les matchs les plus echanges, et on
+   en tire des idees de ticket qui changent avec le tableau: le favori qui
+   couvre, le match a buts, le meme match double. Chaque idee est ensuite
+   chiffree par le serveur, au prix exact qui sera retenu.
+--------------------------------------------------------------------------- */
+var DEEP={},deepOn={},QC={},qcOn={};
 function favLeg(m){
   var j=-1;m.opts.forEach(function(o,k){if(o.draw)return;if(j<0||price(o.token,o.p)>price(m.opts[j].token,m.opts[j].p))j=k});
-  return{m:m,j:j<0?0:j};
+  if(j<0)j=0;
+  return{m:m,o:m.opts[j],gk:m.id+"|ml"};
 }
 function dogLeg(m){
   var j=-1;m.opts.forEach(function(o,k){if(o.draw)return;if(j<0||price(o.token,o.p)<price(m.opts[j].token,m.opts[j].p))j=k});
-  return{m:m,j:j<0?0:j};
+  if(j<0)j=0;
+  return{m:m,o:m.opts[j],gk:m.id+"|ml"};
 }
-function legP(l){var o=l.m.opts[l.j];return price(o.token,o.p)}
+function legP(l){return price(l.o.token,l.o.p)}
 function pick3(list,n,fn){
   var out=[],seen={};
   list.some(function(m){
     if(seen[m.id])return false;
-    var l=fn(m);if(!l||legP(l)<=0.02||legP(l)>=.985)return false;
+    var l=fn(m);if(!l||!l.o||legP(l)<=0.02||legP(l)>=.985)return false;
     seen[m.id]=1;out.push(l);return out.length>=n;
   });
   return out;
 }
-function combosOfDay(){
+/* Va chercher tous les marches des matchs les plus echanges. Un appel par
+   match, garde en memoire, et seulement pour les quelques premiers.    */
+function loadDeep(){
+  var top=openMk().slice().sort(function(a,b){return b.vol-a.vol}).slice(0,5);
+  top.forEach(function(m){
+    if(DEEP[m.id]||deepOn[m.id])return;
+    deepOn[m.id]=1;
+    api("event",{event:m.id}).then(function(j){
+      if(!j||!j.event)return;
+      DEEP[m.id]=j.event;seedQ(j.event);
+      if(tab==="matches"&&!detail)renderDaily();
+    }).catch(function(){});
+  });
+}
+/* Cherche une ligne precise dans la profondeur d'un match. */
+function deepLeg(m,type,want){
+  var e=DEEP[m.id];if(!e)return null;
+  var gs=(e.groups||[]).filter(function(g){return g.type===type});
+  for(var i=0;i<gs.length;i++){
+    for(var k=0;k<gs[i].opts.length;k++){
+      var o=gs[i].opts[k],p=price(o.token,o.p);
+      if(!want(o,p,gs[i]))continue;
+      /* "Knicks -6.5" appartient aux Knicks: il reprend leur logo.
+         "Over 5.5" n'appartient a personne: il prend une fleche.     */
+      var oo={label:o.label,token:o.token,other:o.other,p:o.p,draw:false,sub:true,logo:subLogo(m,o.label)};
+      return{m:m,o:oo,gk:m.id+"|"+gs[i].key,sub:true,gname:gs[i].name};
+    }
+  }
+  return null;
+}
+function overLeg(m){
+  return deepLeg(m,"totals",function(o,p){return /^over/i.test(o.label)&&p>.42&&p<.72});
+}
+function underLeg(m){
+  return deepLeg(m,"totals",function(o,p){return /^under/i.test(o.label)&&p>.42&&p<.72});
+}
+function spreadLeg(m){
+  var f=favLeg(m);if(!f)return null;
+  var nm=f.o.label;
+  return deepLeg(m,"spreads",function(o,p){return o.label.indexOf(nm)===0&&/-/.test(o.label)&&p>.38&&p<.68});
+}
+function bttsLeg(m){
+  return deepLeg(m,"both_teams_to_score",function(o,p){return /^yes$/i.test(o.label)&&p>.4&&p<.8});
+}
+function comboOfDayList(){
   var now=Date.now(),all=openMk();
   if(all.length<3)return[];
   var soon=all.filter(function(m){return m.start>now});
@@ -1443,6 +1498,31 @@ function combosOfDay(){
   var byFav=soon.slice().sort(function(a,b){return legP(favLeg(b))-legP(favLeg(a))});
   var byVol=all.slice().sort(function(a,b){return b.vol-a.vol});
   var byLive=live.slice().sort(function(a,b){return b.vol-a.vol});
+  var deep=byVol.filter(function(m){return DEEP[m.id]});
+
+  /* 1. Le meme match, deux fois: la nouveaute, et le prix est exact. */
+  for(var i=0;i<deep.length&&out.length<1;i++){
+    var m=deep[i],f=favLeg(m),o=overLeg(m);
+    if(f&&o&&legP(f)>.3&&legP(f)<.9)
+      out.push({id:"same"+m.id,em:"◎",sp:"same",tag:"SAME MATCH",name:"Double down",
+        sub:esc(mtitle(m))+" — the favourite and the goals, priced together",legs:[f,o]});
+  }
+  /* 2. Le favori qui couvre son handicap. */
+  var sp=[];
+  deep.forEach(function(m){var l=spreadLeg(m);if(l&&sp.length<3)sp.push(l)});
+  if(sp.length>=2)out.push({id:"cover",em:"⚑",sp:"cover",tag:"NOT JUST WINNING",name:"Cover the spread",
+    sub:"The favourites, but they have to win big",legs:sp});
+  /* 3. La soiree a points. */
+  var ov=[];
+  deep.forEach(function(m){var l=overLeg(m);if(l&&ov.length<3)ov.push(l)});
+  if(ov.length>=2)out.push({id:"over",em:"↑",sp:"over",tag:"GOALS AND POINTS",name:"Over the top",
+    sub:"Every one of them goes over the line",legs:ov});
+  /* 4. Les deux equipes marquent. */
+  var bt=[];
+  deep.forEach(function(m){var l=bttsLeg(m);if(l&&bt.length<3)bt.push(l)});
+  if(bt.length>=2)out.push({id:"btts",em:"⚽",sp:"btts",tag:"BOTH SIDES SCORE",name:"Open game",
+    sub:"Nobody keeps a clean sheet tonight",legs:bt});
+  /* 5. Les classiques, sur le vainqueur. */
   var l1=pick3(byFav,4,favLeg);
   if(l1.length>=3)out.push({id:"lock",em:"🔒",sp:"lock",tag:"THE SAFE ONE",name:"Lock of the day",sub:"The four strongest favourites on the board",legs:l1});
   var l2=pick3(byFav.slice().reverse(),3,dogLeg);
@@ -1451,20 +1531,52 @@ function combosOfDay(){
   if(l3.length>=3)out.push({id:"prime",em:"🔥",sp:"prime",tag:"MOST TRADED",name:"The big money",sub:"Where Polymarket traders put the most money",legs:l3});
   var l4=pick3(byLive,3,favLeg);
   if(l4.length>=3)out.push({id:"live",em:"⚡",sp:"live",tag:"PLAYING RIGHT NOW",name:"Live card",sub:"Three matches already running",legs:l4});
+  var l5=[];
+  deep.forEach(function(m){var l=underLeg(m);if(l&&l5.length<3)l5.push(l)});
+  if(l5.length>=3)out.push({id:"under",em:"↓",sp:"under",tag:"THE QUIET ONE",name:"Low scorers",sub:"Three matches that stay shut",legs:l5});
   return out;
 }
-function comboX2(legs){return legs.reduce(function(a,l){var o=l.m.opts[l.j];return a/price(o.token,o.p)},1)}
-function comboVol(legs){return legs.reduce(function(a,l){return a+(+l.m.vol||0)},0)}
+function combosOfDay(){return comboOfDayList()}
+/* Le prix d'un combo: le produit des cotes, sauf si deux paris portent sur
+   le meme match. Dans ce cas on demande le prix exact au serveur, une
+   fois, et on le garde.                                                */
+function ckey(legs){return legs.map(function(l){return l.o.token}).sort().join(",")}
+function comboSame(legs){
+  var seen={},dup=false;
+  legs.forEach(function(l){if(seen[l.m.id])dup=true;seen[l.m.id]=1});
+  return dup;
+}
+function comboX2(legs){
+  if(comboSame(legs)){
+    var k=ckey(legs);
+    if(QC[k]>0)return QC[k];
+    askCombo(legs);
+  }
+  return legs.reduce(function(a,l){return a/price(l.o.token,l.o.p)},1);
+}
+function askCombo(legs){
+  var k=ckey(legs);
+  if(qcOn[k])return;
+  qcOn[k]=1;
+  api("quote",{picks:legs.map(function(l){return{event_id:l.m.id,token_id:l.o.token}})}).then(function(j){
+    QC[k]=+j.mult||0;
+    if(tab==="matches"&&!detail)renderDaily();
+  }).catch(function(){QC[k]=-1}).then(function(){setTimeout(function(){qcOn[k]=0},45000)});
+}
+function comboVol(legs){
+  var seen={},v=0;
+  legs.forEach(function(l){if(seen[l.m.id])return;seen[l.m.id]=1;v+=(+l.m.vol||0)});
+  return v;
+}
 function dcHTML(c,i){
-  var sp=c.legs[0]?c.legs[0].m.sport:"other";
+  var sp=c.legs[0]?c.legs[0].m.sport:"other",same=comboSame(c.legs);
   return'<button type="button" class="dc c'+(i%4)+'" data-dc="'+c.id+'" style="background-image:url('+sportBg(sp)+')"><span class="em">'+c.em+'</span>'+
     '<u>'+c.tag+'</u><h5>'+esc(c.name)+'</h5><div class="lgs">'+
     c.legs.slice(0,3).map(function(l){
-      var o=l.m.opts[l.j];
-      return'<div>'+logoMini(o)+'<span class="t">'+esc(o.label)+'</span><span class="k">'+fx(1/price(o.token,o.p))+"</span></div>";
+      return'<div>'+logoMini(l.o)+'<span class="t">'+esc(l.o.label)+'</span><span class="k">'+fx(1/price(l.o.token,l.o.p))+"</span></div>";
     }).join("")+
     (c.legs.length>3?'<div><span class="lo">+'+(c.legs.length-3)+'</span><span class="t">more</span></div>':"")+
-    '</div><div class="ft"><span class="x" data-dcx="'+c.id+'">'+fx(comboX2(c.legs))+"<em>"+vol(comboVol(c.legs))+' on Polymarket</em></span><span class="add">Add to slip</span></div></button>';
+    '</div><div class="ft"><span class="x" data-dcx="'+c.id+'">'+fx(comboX2(c.legs))+"<em>"+(same?"exact price":vol(comboVol(c.legs))+" on Polymarket")+'</em></span><span class="add">Add to slip</span></div></button>';
 }
 function logoMini(o){
   if(o.draw)return'<span class="lo">=</span>';
@@ -1476,7 +1588,7 @@ function renderDaily(){
   var el=$("daily");if(!el)return;
   var cs=combosOfDay();DC=cs;
   if(!cs.length){el.innerHTML="";el.dataset.k="";return}
-  var k=cs.map(function(c){return c.id+c.legs.map(function(l){return l.m.id+":"+l.j}).join("-")}).join("|");
+  var k=cs.map(function(c){return c.id+c.legs.map(function(l){return l.o.token.slice(-6)}).join("-")}).join("|");
   if(el.dataset.k===k)return;
   el.dataset.k=k;
   el.innerHTML='<div class="dayhd"><h3>Today’s combos</h3><span class="pmb">'+PMSVG+'LIVE POLYMARKET PRICES</span></div>'+
@@ -1485,7 +1597,7 @@ function renderDaily(){
 function addCombo(id){
   var c=DC.find(function(x){return x.id===id});if(!c)return;
   var ks=legsList().map(function(x){return x.id});picks={};
-  c.legs.forEach(function(l){var o=l.m.opts[l.j];picks[o.token]=mkLeg(l.m,o,l.m.id+"|ml")});
+  c.legs.forEach(function(l){picks[l.o.token]=mkLeg(l.m,l.o,l.gk,!!l.sub)});
   mode="combo";
   ks.concat(c.legs.map(function(l){return l.m.id})).forEach(renderRows);
   if(detail)paintPicks();
@@ -2373,7 +2485,7 @@ function sign(){
 
 function pollMarkets(){
   if(document.hidden)return;
-  api("markets").then(function(j){timers.mkLoaded=1;MK=j.markets||[];MK.forEach(function(m){m.opts.forEach(function(o){if(Q[o.token]==null)Q[o.token]=o.p})});Object.keys(picks).forEach(function(k){if(!MK.some(function(m){return m.id===picks[k].id}))delete picks[k]});renderTicker();renderRail();if(tab==="matches"&&!detail){renderDaily();renderMatches()}renderTicket()}).catch(function(){timers.mkLoaded=1;if(!MK.length&&tab==="matches")$("mList").innerHTML='<div class="empty"><b>Live prices are slow to load.</b>Check your connection and try again.<br><button class="go" type="button" data-retry="1">Try again</button></div>'});
+  api("markets").then(function(j){timers.mkLoaded=1;MK=j.markets||[];MK.forEach(function(m){m.opts.forEach(function(o){if(Q[o.token]==null)Q[o.token]=o.p})});Object.keys(picks).forEach(function(k){if(!MK.some(function(m){return m.id===picks[k].id}))delete picks[k]});renderTicker();renderRail();if(tab==="matches"&&!detail){renderDaily();renderMatches()}renderTicket();loadDeep()}).catch(function(){timers.mkLoaded=1;if(!MK.length&&tab==="matches")$("mList").innerHTML='<div class="empty"><b>Live prices are slow to load.</b>Check your connection and try again.<br><button class="go" type="button" data-retry="1">Try again</button></div>'});
 }
 function quoteTokens(){
   var s={};openPos().forEach(function(p){p.lg_leg.forEach(function(l){if(l.final==null)s[l.token_id]=1})});
