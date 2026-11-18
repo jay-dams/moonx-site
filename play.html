@@ -1698,8 +1698,10 @@ var SPIMG={
   hockey:"hockey", nhl:"hockey",
   amfootball:"amfootball", nfl:"amfootball", cfb:"amfootball",
   fight:"fight", ufc:"fight",
-  volley:"volley", tt:"tabletennis", pickle:"pickle",
-  esport:"esport"
+  volley:"volley", tt:"tabletennis", pickle:"pickle"
+  /* Pas de photo pour l'e-sport: la carte en vedette se passe de fond
+     plutot que de demander un fichier qui n'existe pas. L'objet dessine,
+     lui, est bien la sur les cartes de combo. */
 };
 function sportBg(k){var f=SPIMG[k];return f?"assets/img/sport/"+f+".jpg":""}
 function bgStyle(k){var u=sportBg(k);return u?' style="background-image:url('+u+')"':""}
