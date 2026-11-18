@@ -610,6 +610,12 @@ footer .lk a{text-decoration:none;color:#fff}
 .clrow .h{flex:1;min-width:0;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .clrow.me{background:rgba(61,220,132,.08);border-radius:10px;padding:7px 8px;box-shadow:inset 0 0 0 1px rgba(61,220,132,.3)}
 .clrow .m{font-weight:900;font-variant-numeric:tabular-nums;font-size:12.5px;text-align:right;line-height:1.15}
+/* "52 playing" au-dessus de cinq lignes, c'etait une promesse non
+   tenue. Le classement est la raison d'etre de ce panneau: il porte
+   tout le monde, et il defile. */
+.clall{max-height:252px;overflow-y:auto;overscroll-behavior:contain;margin:0 -4px;padding:0 4px;scrollbar-width:thin;scrollbar-color:var(--line) transparent}
+.clall::-webkit-scrollbar{width:5px}
+.clall::-webkit-scrollbar-thumb{background:var(--line);border-radius:3px}
 .clfeed{display:grid;gap:7px}
 .clfd{display:flex;gap:9px;align-items:flex-start;font-size:12px;line-height:1.35;color:#C9D4E6}
 .clfd .ic{flex:none;width:21px;height:21px;border-radius:50%;display:grid;place-items:center;font-size:10px;font-weight:900;background:rgba(255,255,255,.07)}
@@ -1106,13 +1112,21 @@ function eqx(e){
 }
 function fx(x){if(!isFinite(x))return"-";return(x>=100?x.toFixed(0):x>=10?x.toFixed(1):x.toFixed(2))+"x"}
 function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+/* Un logo qui ne repond pas du premier coup n'est pas un logo absent:
+   sur un reseau mobile, une seule requete perdue remplacait l'ecusson
+   par deux lettres, definitivement, sans jamais reessayer. On redonne
+   une chance, puis on se rabat. */
+window.lgerr=function(im,ini){
+  if(!im.dataset.r){im.dataset.r="1";var u=im.src;im.src="";setTimeout(function(){im.src=u},900);return}
+  if(im.parentNode)im.parentNode.textContent=ini;
+};
 function initials(s){var w=String(s).replace(/[^A-Za-z0-9 ]/g," ").trim().split(/\s+/);return((w[0]||"?")[0]+(w.length>1?w[w.length-1][0]:(w[0]||"")[1]||"")).toUpperCase()}
 function vol(v){return v>=1e6?"$"+(v/1e6).toFixed(1)+"M":v>=1e3?"$"+Math.round(v/1e3)+"K":"$"+Math.round(v)}
 function when(t){var d=new Date(t),n=new Date(),tm=d.toLocaleTimeString("en-US",{hour:"numeric",minute:"2-digit"});var dd=Math.round((new Date(d.getFullYear(),d.getMonth(),d.getDate())-new Date(n.getFullYear(),n.getMonth(),n.getDate()))/864e5);return dd===0?"Today "+tm:dd===1?"Tomorrow "+tm:d.toLocaleDateString("en-US",{weekday:"short"})+" "+tm}
 function ago(t){var s=Math.max(1,Math.round((Date.now()-Date.parse(t))/1000));return s<60?s+"s":s<3600?Math.round(s/60)+"m":s<86400?Math.round(s/3600)+"h":Math.round(s/86400)+"d"}
 function toast(t){var e=$("toast");e.textContent=t;e.classList.add("on");clearTimeout(timers.toast);timers.toast=setTimeout(function(){e.classList.remove("on")},2600)}
 function vib(p){try{navigator.vibrate&&navigator.vibrate(p)}catch(e){}}
-function av(o){if(o.draw)return'<span class="av draw">=</span>';var ini=initials(o.label),lg=(o.logo&&!/country-flags\/un\.png/i.test(o.logo))?o.logo:"";return'<span class="av">'+(lg?'<img src="'+esc(lg)+'" alt="" loading="lazy" onerror="this.parentNode.textContent=\''+ini+'\'">':ini)+"</span>"}
+function av(o){if(o.draw)return'<span class="av draw">=</span>';var ini=initials(o.label),lg=(o.logo&&!/country-flags\/un\.png/i.test(o.logo))?o.logo:"";return'<span class="av">'+(lg?'<img src="'+esc(lg)+'" alt="" loading="lazy" onerror="lgerr(this,\''+ini+'\')">':ini)+"</span>"}
 /* La fonction Supabase est un seul petit serveur. Huit appels en meme
    temps a froid et il rend WORKER_RESOURCE_LIMIT sur les huit: la page
    se charge vide. Tout ce qui n'est pas demande par le joueur passe donc
@@ -1481,7 +1495,7 @@ function logo(o){
   if(o.draw)return'<span class="lo dw">=</span>';
   if(o.sub&&!realLogo(o))return'<span class="lo dw">'+subIcon(o)+'</span>';
   var ini=initials(o.label),lg=realLogo(o);
-  return'<span class="lo">'+(lg?'<img src="'+esc(lg)+'" alt="" loading="lazy" onerror="this.parentNode.textContent=\''+ini+'\'">':ini)+"</span>";
+  return'<span class="lo">'+(lg?'<img src="'+esc(lg)+'" alt="" loading="lazy" onerror="lgerr(this,\''+ini+'\')">':ini)+"</span>";
 }
 /* "Bosnia and Herzegovina" sur un tiers d'ecran de telephone, ca donne
    "Bosnia and Her...". On raccourcit plutot que de couper au hasard:
@@ -2015,7 +2029,7 @@ function logoMini(o){
   if(o.draw)return'<span class="lo">=</span>';
   if(o.sub&&!realLogo(o))return'<span class="lo">'+subIcon(o)+'</span>';
   var ini=initials(o.label),lg=realLogo(o);
-  return'<span class="lo">'+(lg?'<img src="'+esc(lg)+'" alt="" loading="lazy" onerror="this.parentNode.textContent=\''+ini+'\'">':ini)+"</span>";
+  return'<span class="lo">'+(lg?'<img src="'+esc(lg)+'" alt="" loading="lazy" onerror="lgerr(this,\''+ini+'\')">':ini)+"</span>";
 }
 /* Les cartes de combos ne sont pas redessinees a chaque tic de prix: leur
    composition ne change pas. Mais leurs chiffres, si. Sans ca, les cotes
@@ -2536,8 +2550,7 @@ function clanHTML(){
   var me=P&&P.player.handle.toLowerCase(),b=LD.board,mine=-1;
   if(me)b.some(function(r,i){if(String(r.handle).toLowerCase()===me){mine=i;return true}});
   var h='<div class="cd"><h4>'+esc(LD.league.name)+"<span>"+(LD.total||b.length)+" playing</span></h4>"+
-    b.slice(0,5).map(function(r,i){return clanRow(r,i,me)}).join("");
-  if(mine>=5)h+='<div style="height:1px;background:var(--line);margin:7px 4px"></div>'+clanRow(b[mine],mine,me);
+    '<div class="clall" id="clall">'+b.map(function(r,i){return clanRow(r,i,me)}).join("")+"</div>";
   h+=LG==="ALL"
     ?'<button class="go" type="button" data-newlg="1" style="width:100%;margin-top:11px;height:38px">Start a clan with your friends</button>'
     :'<button class="go ghost" type="button" data-invite="'+LG+'" style="width:100%;margin-top:11px;height:38px">Invite your friends</button>';
@@ -2550,6 +2563,10 @@ function renderSide(){
   var el=$("side");if(!el)return;
   if(!window.matchMedia("(min-width:1080px)").matches){if(el.innerHTML)el.innerHTML="";return}
   el.innerHTML=basketHTML()+youHTML()+clanHTML();
+  /* Le classement entier defile: si le joueur est trente-septieme, il doit
+     quand meme se voir en ouvrant la page. */
+  var box=$("clall"),mine=box&&box.querySelector(".clrow.me");
+  if(box&&mine)box.scrollTop=Math.max(0,mine.offsetTop-box.clientHeight/2+mine.offsetHeight/2);
 }
 /* ---- poser le pari ---- */
 function doBet(){
@@ -3177,6 +3194,11 @@ function cardText(r){
 function shareResult(){
   var r=timers.lastRes;if(!r)return share();
   ev("lg_share_card");
+  /* On demande la carte: on veut voir la carte. L'ecran de resultat avait
+     dit ce qu'il avait a dire, il n'a plus a rester devant. Empile, il
+     obligeait a fermer une fenetre pour decouvrir celle qu'on avait
+     demandee. */
+  $("ov").classList.remove("open");
   openSheet("card",'<h3>Share it <button type="button" data-close-sheet="1">Close</button></h3>'+
     '<div class="cardbox"><div class="skel" style="aspect-ratio:4/5;height:auto"></div></div>'+
     '<div class="cardacts"><button class="go big" type="button" data-cardgo="1">Share</button>'+
