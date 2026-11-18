@@ -1188,7 +1188,7 @@ try{var _s=parseFloat(localStorage.getItem(SK));if(isFinite(_s)&&_s>0)stake=_s}c
    {a:"email", email, source, handle, attr} est en place cote serveur. */
 var MAIL_ON=false;
 var mailSent={};
-var detail=null,QT={k:"",mult:null,err:null,at:0,busy:false},slipOpen=false,kbuf="";
+var detail=null,QT={k:"",mult:null,px:null,err:null,at:0,busy:false},slipOpen=false,kbuf="";
 var P=null,MK=[],Q={},QP={},H={},tab="matches",sport=qp("sport")||"all",lgue="all",day="live",picks={},stake=null,mode="combo",amount=null,LG="ALL",LD=null,inviteCode=(qp("l")||"").toUpperCase(),inviteInfo=null,follow=null,lastVal={},msHit={},seenStatus={},busy=false,timers={};
 
 function qp(k){try{return new URLSearchParams(location.search).get(k)}catch(e){return null}}
@@ -2867,7 +2867,7 @@ function doBet(){
     });
   },Promise.resolve()).then(function(){
     ev("lg_trade",{legs:n,mode:cm?"combo":n>1?"singles":"single"});vib(16);
-    picks={};QT={k:"",mult:null,err:null,at:0,busy:false};
+    picks={};QT={k:"",mult:null,px:null,err:null,at:0,busy:false};
     if(jobs.length===1)undoToast(cm&&n>1?"Combo ×"+n:l[0].label,c.a,c.pay,last);
     else toast(jobs.length+" bets placed. Good luck!");
     ids.forEach(renderRows);if(detail)paintPicks();renderTicket();refreshNav();renderLive();loadHistories();
@@ -2908,7 +2908,17 @@ function nameGo(){
   });
 }
 function legsList(){var l=[];Object.keys(picks).forEach(function(k){l.push(picks[k])});return l}
-function lx(x){return 1/price(x.token,x.p)}
+/* Deux prix, et ce n'est pas une contradiction: c'est ainsi que marche
+   un carnet d'ordres, et Polymarket ne fait pas autrement. Les listes
+   montrent le MILIEU de la fourchette — la probabilite du marche. Le
+   panneau, lui, engage: il montre le prix VENDEUR, celui qu'on paie
+   vraiment pour acheter. Le serveur le renvoie avec le devis; tant
+   qu'il n'a pas repondu on affiche le milieu, qui en est tout proche. */
+function lx(x){
+  var q=(QT.k===pkey()&&QT.px)?QT.px[x.token]:0;
+  return q>0?1/q:1/price(x.token,x.p);
+}
+function midX(l){return l.reduce(function(a,x){return a*(1/price(x.token,x.p))},1)}
 function rawX(l){return l.reduce(function(a,x){return a*lx(x)},1)}
 /* Le multiplicateur d'un combo. Quand plusieurs paris portent sur le meme
    match, le produit des cotes est faux: le serveur calcule la probabilite
@@ -2929,20 +2939,21 @@ function sameMatch(l){
 function quoteSoon(){
   clearTimeout(timers.qt);
   var k=pkey();
-  if(QT.k!==k){QT.k=k;QT.mult=null;QT.err=null;QT.at=0}
-  if(pcount()<2)return;
+  if(QT.k!==k){QT.k=k;QT.mult=null;QT.err=null;QT.px=null;QT.at=0}
+  if(pcount()<1)return;
   timers.qt=setTimeout(askQuote,260);
 }
 function askQuote(){
   var l=legsList(),k=pkey();
-  if(l.length<2||QT.busy)return;
+  if(l.length<1||QT.busy)return;
   QT.busy=true;
   api("quote",{picks:l.map(function(x){return{event_id:x.id,token_id:x.token}})}).then(function(j){
     if(pkey()!==k)return;
-    QT.k=k;QT.mult=+j.mult||null;QT.err=null;QT.at=Date.now();
+    var px={};(j.legs||[]).forEach(function(g){if(+g.p>0)px[g.token_id]=+g.p});
+    QT.k=k;QT.mult=+j.mult||null;QT.px=px;QT.err=null;QT.at=Date.now();
   }).catch(function(e){
     if(pkey()!==k)return;
-    QT.k=k;QT.mult=null;QT.err=e==="combo"?errText("combo"):null;QT.at=Date.now();
+    QT.k=k;QT.mult=null;QT.px=null;QT.err=e==="combo"?errText("combo"):null;QT.at=Date.now();
   }).then(function(){QT.busy=false;renderTicket()});
 }
 function cash(){return P?Math.floor(+P.player.bal*100)/100:START}
@@ -2957,12 +2968,22 @@ function calc(l){
 /* La phrase qui explique pourquoi la cote d'un combo sur un seul match
    n'est pas le produit des cotes. On ne l'affiche que si l'ecart se voit. */
 function qnote(l){
-  if(l.length<2||mode!=="combo"||!sameMatch(l))return"";
+  if(!l.length)return"";
   if(QT.err&&QT.k===pkey())return"";
-  if(QT.k!==pkey()||!(QT.mult>0))return'<p class="qn">Same match: the exact price is being checked\u2026</p>';
-  var r=rawX(l),d=QT.mult/r;
-  if(d>.97&&d<1.03)return"";
-  return'<p class="qn"><span>'+(d<1?"\u25BE":"\u25B4")+'</span><span>Same match, so these picks move together. Priced at <b>'+fx(QT.mult)+'</b> instead of '+fx(r)+'.</span></p>';
+  if(l.length>1&&mode==="combo"&&sameMatch(l)){
+    if(QT.k!==pkey()||!(QT.mult>0))return'<p class="qn">Same match: the exact price is being checked\u2026</p>';
+    var r=rawX(l),d=QT.mult/r;
+    if(d<=.97||d>=1.03)
+      return'<p class="qn"><span>'+(d<1?"\u25BE":"\u25B4")+'</span><span>Same match, so these picks move together. Priced at <b>'+fx(QT.mult)+'</b> instead of '+fx(r)+'.</span></p>';
+  }
+  /* L'ecart entre le prix affiche dans les listes et celui qu'on paie
+     vraiment: on le dit plutot que de laisser le joueur le decouvrir. */
+  if(QT.k===pkey()&&QT.px){
+    var ex=mode==="combo"&&l.length>1?comboX(l):rawX(l),mi=midX(l);
+    if(ex>0&&mi>0&&ex/mi<.99)
+      return'<p class="qn"><span>\u25BE</span><span>Order book price: <b>'+fx(ex)+'</b>, not '+fx(mi)+'. You buy from a seller, like on Polymarket.</span></p>';
+  }
+  return"";
 }
 
 function nameField(){return P?"":'<label class="lbl" for="hdl">YOUR NAME ON THE LEADERBOARD</label><input class="fld" id="hdl" maxlength="18" autocomplete="nickname" placeholder="e.g. moonboy_23" value="'+esc(timers.hdl||"")+'">'}
