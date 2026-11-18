@@ -99,7 +99,10 @@ nav.top{position:fixed;top:0;left:0;right:0;z-index:30;height:var(--nh);display:
 /* Polymarket range chaque sport par competition. Sans ce second etage,
    la Premier League, la Ligue 1 et un championnat indonesien tombaient
    dans la meme liste de football, melanges par l'heure du coup d'envoi. */
-.lgs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:9px -14px 0;padding:2px 14px}
+/* Le filtre appartient au calendrier: il reste colle en haut avec les
+   dates et suit le defilement, sinon on perd de vue ce qu'on a filtre
+   des le deuxieme ecran. */
+.lgs{position:sticky;top:calc(var(--nh) + var(--th));z-index:15;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:9px -14px 0;padding:7px 14px 6px;background:var(--bg)}
 .lgs::-webkit-scrollbar{display:none}
 .lgs:empty{display:none}
 .lgb{flex:none;display:inline-flex;align-items:center;gap:6px;height:29px;padding:0 11px;border-radius:999px;border:1px solid var(--line);background:var(--well);font-size:12px;font-weight:700;color:var(--dim);white-space:nowrap}
@@ -316,7 +319,7 @@ body.bslip{padding-bottom:calc(var(--tb) + var(--sab) + 228px)}
 .done1 small{display:block;margin-top:2px;color:var(--dim);font-size:12.5px}
 .done1 .more{margin-top:9px}
 .done1 .more button{color:var(--mint);border-color:rgba(61,220,132,.4)}
-.days{position:sticky;top:calc(var(--nh) + var(--th));z-index:14;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:10px -14px 0;padding:8px 14px;background:var(--bg);scroll-snap-type:x proximity}
+.days{position:sticky;top:calc(var(--nh) + var(--th) + var(--lh, 0px));z-index:14;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:10px -14px 0;padding:8px 14px;background:var(--bg);scroll-snap-type:x proximity}
 .days::-webkit-scrollbar{display:none}
 .day{flex:none;scroll-snap-align:start;min-width:74px;padding:7px 11px 6px;border-radius:14px;border:1px solid var(--line);background:var(--well);text-align:left;color:var(--dim);transition:border-color .15s,background .15s}
 .day:hover{border-color:var(--line-2)}
@@ -1527,7 +1530,7 @@ function lgChip(x){
 function lgsBar(){
   var el=$("lgs");if(!el)return;
   var l=lgList();
-  if(l.length<2){el.innerHTML="";el.dataset.k="";return}
+  if(l.length<2){el.innerHTML="";el.dataset.k="";lgsH();return}
   var k=sport+"/"+lgue+"/"+l.map(function(x){return x.k+":"+x.n}).join("|");
   if(el.dataset.k===k)return;
   el.dataset.k=k;
@@ -1539,6 +1542,13 @@ function lgsBar(){
     (rest.length?'<button type="button" class="lgb more" data-lgsheet="1">'+rest.length+" more"+CHSVG+"</button>":"");
   var on=el.querySelector(".lgb.on");
   if(on)el.scrollTo({left:Math.max(0,on.offsetLeft-60),behavior:"auto"});
+  lgsH();
+}
+/* La barre des dates se pose juste sous celle des competitions, qui
+   n'existe pas toujours: on lui donne la hauteur mesuree, zero compris. */
+function lgsH(){
+  var el=$("lgs"),h=el&&el.innerHTML?el.offsetHeight:0;
+  document.documentElement.style.setProperty("--lh",h+"px");
 }
 function lgSheet(){
   var l=lgList();if(!l.length)return;
@@ -2133,7 +2143,9 @@ function legFace(l){
 function scrollToFilter(el,underDays){
   if(!el)return;
   var pad=parseInt(getComputedStyle(document.body).paddingTop)||0;
-  var d=$("days"),h=underDays&&d?d.offsetHeight:0;
+  var d=$("days"),l=$("lgs");
+  var h=underDays&&d?d.offsetHeight:0;
+  if(underDays&&l&&l.innerHTML)h+=l.offsetHeight;
   var y=el.getBoundingClientRect().top+window.scrollY-pad-h-6;
   window.scrollTo({top:Math.max(0,y),behavior:"smooth"});
 }
@@ -3682,7 +3694,7 @@ document.addEventListener("click",function(e){
   if(d.restart){restart();return}
   if(d.bsort){if(d.bsort!==bsort){bsort=d.bsort;try{localStorage.setItem("moonx.play.bsort",bsort)}catch(x){}renderSide();if(tab==="league")renderLeague()}return}
   if(d.lgsheet){lgSheet();return}
-  if(d.lgue){closeSheet();if(d.lgue!==lgue){lgue=d.lgue;SHOWN=14;fixDay();loadDeep();renderDaily();renderMatches();renderTicket()}scrollToFilter($("days"),false);return}
+  if(d.lgue){closeSheet();if(d.lgue!==lgue){lgue=d.lgue;SHOWN=14;fixDay();loadDeep();renderDaily();renderMatches();renderTicket()}var lb=$("lgs");scrollToFilter(lb&&lb.innerHTML?lb:$("days"),false);return}
   if(d.lg){LG=d.lg;LD=null;renderLeague();loadLeague();return}
   if(d.newlg){newLeague();return}
   if(d.mklg){rememberName();makeLeague();return}
