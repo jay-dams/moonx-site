@@ -549,10 +549,16 @@ body.bslip{padding-bottom:calc(var(--tb) + var(--sab) + 228px)}
 .toast.on{opacity:1;transform:translate(-50%,0)}
 body.bslip .toast{bottom:calc(var(--tb) + var(--sab) + 232px)}
 .toast.rich{display:flex;align-items:center;gap:12px;text-align:left;pointer-events:auto;padding:9px 9px 9px 15px}
-.toast.rich .tt{display:block}
-.toast.rich .tt b{display:block;font-size:13.5px;font-weight:900}
-.toast.rich .tt small{display:block;font-size:11.5px;opacity:.6;font-weight:700}
-.toast.rich button{flex:none;height:34px;padding:0 13px;border-radius:10px;background:rgba(6,17,10,.1);border:1px solid rgba(6,17,10,.25);font-weight:800;font-size:12.5px;color:#06110A}
+.toast.rich .tt{min-width:0;display:flex;align-items:center;gap:7px;text-align:left;color:inherit;font:inherit}
+.toast.rich button.tt{cursor:pointer}
+.toast.rich button.tt:active{opacity:.55}
+.toast.rich .tt .tx{display:block;min-width:0}
+.toast.rich .tt .cv{flex:none;width:13px;height:13px;opacity:.4;margin-left:-1px}
+/* Les deux lignes ne se coupent pas: sans ca le bandeau se replie sur
+   lui-meme et "$50.00 on Phantom" tient sur trois lignes. */
+.toast.rich .tt b{display:block;font-size:13.5px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.toast.rich .tt small{display:block;font-size:11.5px;opacity:.6;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.toast.rich .ud{flex:none;height:34px;padding:0 13px;border-radius:10px;background:rgba(6,17,10,.1);border:1px solid rgba(6,17,10,.25);font-weight:800;font-size:12.5px;color:#06110A}
 #fx{position:fixed;inset:0;z-index:66;pointer-events:none}
 .side{display:none}
 .view{display:none}
@@ -2971,12 +2977,27 @@ function doBet(){
     ids.forEach(renderRows);if(detail)paintPicks();renderTicket();refreshNav();renderLive();loadHistories();
   }).catch(function(e){toast(errText(e))}).then(function(){busy=false;setBusy(false)});
 }
+/* Le bandeau annonce le pari et offre de l'annuler. Il manquait le geste
+   evident: appuyer dessus pour aller le voir. Sans ca il fallait le
+   laisser passer, puis chercher l'onglet. */
 function undoToast(label,a,pay,posId){
   var e=$("toast");
-  e.innerHTML='<span class="tt"><b>'+money(a)+" on "+esc(label)+'</b><small>pays '+money(pay)+" ("+fx(pay/a)+")</small></span>"+
-    (posId?'<button type="button" data-undo="'+posId+'">Undo</button>':"");
+  var txt='<span class="tx"><b>'+money(a)+" on "+esc(label)+'</b><small>pays '+money(pay)+" ("+fx(pay/a)+")</small></span>";
+  e.innerHTML=(posId
+      ?'<button type="button" class="tt" data-seebet="'+posId+'" aria-label="See this bet">'+txt+
+       '<svg class="cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>'
+      :'<span class="tt">'+txt+"</span>")+
+    (posId?'<button type="button" class="ud" data-undo="'+posId+'">Undo</button>':"");
   e.classList.add("on","rich");clearTimeout(timers.toast);
   timers.toast=setTimeout(function(){e.classList.remove("on","rich")},5200);
+}
+function seeBet(id){
+  var e=$("toast");e.classList.remove("on","rich");clearTimeout(timers.toast);
+  timers.lastNew=id;setTab("trades");
+  setTimeout(function(){
+    var c=document.querySelector('[data-pos="'+id+'"]');
+    if(c)c.scrollIntoView({block:"center",behavior:"smooth"});
+  },70);
 }
 function nameHTML(l){
   var c=calc(l),one=l.length===1?l[0]:null,bet=l.length>0;
@@ -4006,6 +4027,7 @@ document.addEventListener("click",function(e){
     if($("sheet").dataset.k==="name")$("sheetP").innerHTML=nameHTML(legsList());
     return}
   if(d.undo){var u=d.undo;$("toast").classList.remove("on","rich");eject(u);return}
+  if(d.seebet){seeBet(d.seebet);return}
   if(d.rm){var rl=picks[d.rm];delete picks[d.rm];afterPick(rl&&rl.id);return}
   if(d.clear){var ks=legsList().map(function(x){return x.id});picks={};ks.forEach(renderRows);if(detail)paintPicks();renderTicket();quoteSoon();return}
   if(d.mode){mode=d.mode;renderTicket();if(mode==="combo")quoteSoon();return}
