@@ -107,6 +107,11 @@ nav.top{position:fixed;top:0;left:0;right:0;z-index:30;height:var(--nh);display:
 .lgb i{font-style:normal;font-size:10.5px;font-weight:800;opacity:.65;font-variant-numeric:tabular-nums}
 .lgb.on{background:var(--acc);color:#06110A;border-color:var(--acc)}
 .lgb.on i{opacity:.75}
+.lgb.more{color:var(--mint);border-color:rgba(61,220,132,.35)}
+.lgb.more svg{width:13px;height:13px;margin-left:1px}
+.lgsheet{max-height:min(62vh,520px);overflow-y:auto;overscroll-behavior:contain;padding:2px}
+.lgsheet button .ic{display:grid;place-items:center;width:22px;height:22px}
+.lgsheet button .ic img{width:20px;height:20px;object-fit:contain}
 .mail{margin-top:12px;padding-top:12px;border-top:1px solid rgba(150,195,255,.22)}
 .mail label{display:block;font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.12em;color:var(--dim);margin:0 2px 6px}
 .mailrow{display:flex;gap:8px;align-items:stretch}
@@ -1479,6 +1484,17 @@ function fixLg(){
   if(lgue==="all")return;
   if(!lgList().some(function(x){return x.k===lgue}))lgue="all";
 }
+/* Cinquante-sept competitions de football, c'est complet et illisible:
+   huit metres de barre a faire defiler pour trouver la Ligue 1. On
+   montre les huit plus fournies — celles que le monde cherche — plus
+   celle qui est choisie si elle n'en fait pas partie, et le reste tient
+   dans une liste qui s'ouvre. */
+var LGTOP=8;
+function lgChip(x){
+  return'<button type="button" class="lgb'+(x.k===lgue?" on":"")+'" data-lgue="'+esc(x.k)+'">'+
+    (x.ic?'<img src="'+esc(x.ic)+'" alt="" loading="lazy" onerror="this.remove()">':"")+
+    esc(x.k)+"<i>"+x.n+"</i></button>";
+}
 function lgsBar(){
   var el=$("lgs");if(!el)return;
   var l=lgList();
@@ -1487,14 +1503,24 @@ function lgsBar(){
   if(el.dataset.k===k)return;
   el.dataset.k=k;
   var tot=l.reduce(function(a,x){return a+x.n},0);
+  var head=l.slice(0,LGTOP),rest=l.slice(LGTOP);
+  var cur=rest.filter(function(x){return x.k===lgue});
   el.innerHTML='<button type="button" class="lgb'+(lgue==="all"?" on":"")+'" data-lgue="all">All leagues<i>'+tot+"</i></button>"+
-    l.map(function(x){
-      return'<button type="button" class="lgb'+(x.k===lgue?" on":"")+'" data-lgue="'+esc(x.k)+'">'+
-        (x.ic?'<img src="'+esc(x.ic)+'" alt="" loading="lazy" onerror="this.remove()">':"")+
-        esc(x.k)+"<i>"+x.n+"</i></button>";
-    }).join("");
+    head.concat(cur).map(lgChip).join("")+
+    (rest.length?'<button type="button" class="lgb more" data-lgsheet="1">'+rest.length+" more"+CHSVG+"</button>":"");
   var on=el.querySelector(".lgb.on");
   if(on)el.scrollTo({left:Math.max(0,on.offsetLeft-60),behavior:"auto"});
+}
+function lgSheet(){
+  var l=lgList();if(!l.length)return;
+  var tot=l.reduce(function(a,x){return a+x.n},0);
+  openSheet("lgue",'<h3>Choose a league <button type="button" data-close-sheet="1">Close</button></h3><div class="fsheet lgsheet">'+
+    '<button type="button" class="'+(lgue==="all"?"on":"")+'" data-lgue="all"><span class="ic">\u25C9</span><span class="lb">All leagues</span><span class="n">'+tot+"</span></button>"+
+    l.map(function(x){
+      return'<button type="button" class="'+(x.k===lgue?"on":"")+'" data-lgue="'+esc(x.k)+'"><span class="ic">'+
+        (x.ic?'<img src="'+esc(x.ic)+'" alt="" loading="lazy" onerror="this.remove()">':"\u26BD")+
+        '</span><span class="lb">'+esc(x.k)+'</span><span class="n">'+x.n+"</span></button>";
+    }).join("")+"</div>");
 }
 function dayList(){
   var by={},ord=[];
@@ -3545,7 +3571,8 @@ document.addEventListener("click",function(e){
   if(d.carddl){cardDownload();return}
   if(d.restart){restart();return}
   if(d.bsort){if(d.bsort!==bsort){bsort=d.bsort;try{localStorage.setItem("moonx.play.bsort",bsort)}catch(x){}renderSide();if(tab==="league")renderLeague()}return}
-  if(d.lgue){if(d.lgue!==lgue){lgue=d.lgue;SHOWN=14;fixDay();loadDeep();renderDaily();renderMatches();renderTicket()}scrollToFilter($("days"),false);return}
+  if(d.lgsheet){lgSheet();return}
+  if(d.lgue){closeSheet();if(d.lgue!==lgue){lgue=d.lgue;SHOWN=14;fixDay();loadDeep();renderDaily();renderMatches();renderTicket()}scrollToFilter($("days"),false);return}
   if(d.lg){LG=d.lg;LD=null;renderLeague();loadLeague();return}
   if(d.newlg){newLeague();return}
   if(d.mklg){rememberName();makeLeague();return}
