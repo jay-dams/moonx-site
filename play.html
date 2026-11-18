@@ -2561,8 +2561,12 @@ function famHTML(f){
     var cap=gcap(g);
     if(cap&&fl(cap)===fl(f.name))cap="";
     var many=g.opts.length>3;
+    /* Range sur le prix affiche, pas sur celui de Polymarket: les deux
+       divergent sur un pari peu echange, et un 74x coince entre un 18x
+       et un 25x ressemble a une erreur. */
+    var ops=many?g.opts.slice().sort(function(a,b){return price(b.token,b.p)-price(a.token,a.p)}):g.opts;
     return'<div class="drow'+(many?" wide":"")+'">'+(cap?'<span class="dcap">'+esc(cap)+'</span>':"")+
-      '<div class="dops'+(many?" many":"")+'">'+g.opts.map(dopHTML).join("")+'</div></div>';
+      '<div class="dops'+(many?" many":"")+'">'+ops.map(dopHTML).join("")+'</div></div>';
   }).join("")+'</section>';
 }
 /* On ne redessine pas tout l'ecran a chaque tap: la page sauterait. */
