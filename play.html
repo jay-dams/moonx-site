@@ -96,6 +96,17 @@ nav.top{position:fixed;top:0;left:0;right:0;z-index:30;height:var(--nh);display:
 .chip.on{background:#fff;color:#06110A;border-color:#fff}
 .chip .ci{margin-right:6px;font-size:13px}
 .chip.add{color:var(--mint);border-color:rgba(61,220,132,.4)}
+/* Polymarket range chaque sport par competition. Sans ce second etage,
+   la Premier League, la Ligue 1 et un championnat indonesien tombaient
+   dans la meme liste de football, melanges par l'heure du coup d'envoi. */
+.lgs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:9px -14px 0;padding:2px 14px}
+.lgs::-webkit-scrollbar{display:none}
+.lgs:empty{display:none}
+.lgb{flex:none;display:inline-flex;align-items:center;gap:6px;height:29px;padding:0 11px;border-radius:999px;border:1px solid var(--line);background:var(--well);font-size:12px;font-weight:700;color:var(--dim);white-space:nowrap}
+.lgb img{width:15px;height:15px;object-fit:contain;flex:none}
+.lgb i{font-style:normal;font-size:10.5px;font-weight:800;opacity:.65;font-variant-numeric:tabular-nums}
+.lgb.on{background:var(--acc);color:#06110A;border-color:var(--acc)}
+.lgb.on i{opacity:.75}
 .mail{margin-top:12px;padding-top:12px;border-top:1px solid rgba(150,195,255,.22)}
 .mail label{display:block;font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.12em;color:var(--dim);margin:0 2px 6px}
 .mailrow{display:flex;gap:8px;align-items:stretch}
@@ -1011,6 +1022,7 @@ footer .lk button:hover{color:#fff}
       <div class="idbox" id="idBox" hidden></div>
       <section class="view on" id="v-matches">
         <div class="sportrow"><button class="srb" type="button" data-search="1" aria-label="Search a team or a player"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg></button><button class="sportbtn" type="button" data-filter="1" id="fBtn"><span class="ic">◉</span><span class="lb">All sports</span><span class="n"></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button><div class="chips" id="sports"></div></div>
+        <div class="lgs" id="lgs"></div>
         <div class="days" id="days"></div>
         <div id="daily"></div>
         <div class="mlist" id="mList"></div>
@@ -1101,7 +1113,7 @@ try{var _s=parseFloat(localStorage.getItem(SK));if(isFinite(_s)&&_s>0)stake=_s}c
 var MAIL_ON=false;
 var mailSent={};
 var detail=null,QT={k:"",mult:null,err:null,at:0,busy:false},slipOpen=false,kbuf="";
-var P=null,MK=[],Q={},QP={},H={},tab="matches",sport=qp("sport")||"all",day="live",picks={},stake=null,mode="combo",amount=null,LG="ALL",LD=null,inviteCode=(qp("l")||"").toUpperCase(),inviteInfo=null,follow=null,lastVal={},msHit={},seenStatus={},busy=false,timers={};
+var P=null,MK=[],Q={},QP={},H={},tab="matches",sport=qp("sport")||"all",lgue="all",day="live",picks={},stake=null,mode="combo",amount=null,LG="ALL",LD=null,inviteCode=(qp("l")||"").toUpperCase(),inviteInfo=null,follow=null,lastVal={},msHit={},seenStatus={},busy=false,timers={};
 
 function qp(k){try{return new URLSearchParams(location.search).get(k)}catch(e){return null}}
 function ev(n,p){try{if(window.MOONX_EVENT)window.MOONX_EVENT(n,p||{})}catch(e){}}
@@ -1437,10 +1449,55 @@ function dface(k,t){
   var day=d.toLocaleDateString("en-US",{weekday:"short"}),num=d.getDate();
   return{u:dd===0?"TODAY":dd===1?"TOMORROW":day.toUpperCase(),b:day+" "+num};
 }
+/* Un sport n'est pas une liste de matchs, c'est une liste de
+   competitions. Polymarket les separe, on les separait pas: la Premier
+   League, la Ligue 1 et un championnat indonesien tombaient dans la meme
+   liste de football, ranges par l'heure du coup d'envoi. Le second etage
+   n'apparait que la ou il sert: un seul sport choisi, et au moins deux
+   competitions dedans. */
+function lgOf(m){return String(m.league||"").trim()}
+function inSp(m){return sport==="all"||catOf(m)===sport}
+function inLg(m){return lgue==="all"||lgOf(m)===lgue}
+function lgList(){
+  if(sport==="all")return[];
+  var by={},ord=[];
+  MK.forEach(function(m){
+    if(!inSp(m)||m.opts.length<2)return;
+    var k=lgOf(m);if(!k)return;
+    if(!by[k]){by[k]={k:k,n:0,ic:m.licon||""};ord.push(by[k])}
+    by[k].n++;
+    if(!by[k].ic&&m.licon)by[k].ic=m.licon;
+  });
+  ord.sort(function(a,b){return b.n-a.n||(a.k<b.k?-1:1)});
+  return ord;
+}
+/* Si la competition choisie disparait (changement de sport, journee
+   terminee), on revient a toutes plutot que sur une page vide. */
+function fixLg(){
+  if(lgue==="all")return;
+  if(!lgList().some(function(x){return x.k===lgue}))lgue="all";
+}
+function lgsBar(){
+  var el=$("lgs");if(!el)return;
+  var l=lgList();
+  if(l.length<2){el.innerHTML="";el.dataset.k="";return}
+  var k=sport+"/"+lgue+"/"+l.map(function(x){return x.k+":"+x.n}).join("|");
+  if(el.dataset.k===k)return;
+  el.dataset.k=k;
+  var tot=l.reduce(function(a,x){return a+x.n},0);
+  el.innerHTML='<button type="button" class="lgb'+(lgue==="all"?" on":"")+'" data-lgue="all">All leagues<i>'+tot+"</i></button>"+
+    l.map(function(x){
+      return'<button type="button" class="lgb'+(x.k===lgue?" on":"")+'" data-lgue="'+esc(x.k)+'">'+
+        (x.ic?'<img src="'+esc(x.ic)+'" alt="" loading="lazy" onerror="this.remove()">':"")+
+        esc(x.k)+"<i>"+x.n+"</i></button>";
+    }).join("");
+  var on=el.querySelector(".lgb.on");
+  if(on)el.scrollTo({left:Math.max(0,on.offsetLeft-60),behavior:"auto"});
+}
 function dayList(){
   var by={},ord=[];
   MK.forEach(function(m){
-    if(sport!=="all"&&catOf(m)!==sport)return;
+    if(!inSp(m)||!inLg(m))return;
     if(m.opts.length<2)return;
     var k=dkey(m);
     if(!by[k]){by[k]={k:k,n:0,t:m.start};ord.push(by[k])}
@@ -1478,7 +1535,7 @@ function daysBar(){
 function mlist(){
   var now=Date.now();
   return MK.filter(function(m){
-    return(sport==="all"||catOf(m)===sport)&&m.opts.length>=2&&(day==="all"||dkey(m)===day);
+    return inSp(m)&&inLg(m)&&m.opts.length>=2&&(day==="all"||dkey(m)===day);
   }).sort(function(a,b){
     var al=a.start<=now,bl=b.start<=now;
     if(al!==bl)return al?-1:1;
@@ -1887,12 +1944,14 @@ function bttsLeg(m){
    mince pour en tirer trois. */
 function comboPool(){
   if(sport==="all")return openMk();
-  var l=openMk().filter(function(m){return catOf(m)===sport});
+  var l=openMk().filter(function(m){return catOf(m)===sport&&inLg(m)});
+  if(l.length>=3)return l;
+  l=openMk().filter(function(m){return catOf(m)===sport});
   return l.length>=3?l:openMk();
 }
 function comboNarrow(){
   if(sport==="all")return false;
-  return openMk().filter(function(m){return catOf(m)===sport}).length>=3;
+  return openMk().filter(function(m){return catOf(m)===sport&&inLg(m)}).length>=3;
 }
 function comboOfDayList(){
   var now=Date.now(),all=comboPool();
@@ -2086,10 +2145,12 @@ function renderMatches(){
       :'<div class="skel"></div><div class="skel" style="margin-top:10px"></div>';
     return;
   }
-  fixDay();daysBar();
+  fixLg();lgsBar();fixDay();daysBar();
   var l=mlist();
   if(!l.length){
-    el.innerHTML='<div class="empty"><b>Nothing here right now.</b>Try another day or another sport.<br><button class="go" type="button" data-sport="all">All sports</button></div>';
+    el.innerHTML=lgue!=="all"
+      ?'<div class="empty"><b>Nothing here right now.</b>No match in this league on this day.<br><button class="go" type="button" data-lgue="all">All leagues</button></div>'
+      :'<div class="empty"><b>Nothing here right now.</b>Try another day or another sport.<br><button class="go" type="button" data-sport="all">All sports</button></div>';
     return;
   }
   var h="";
@@ -3396,7 +3457,10 @@ document.addEventListener("click",function(e){
   if(d.tab){setTab(d.tab);return}
   if(d.mail){sendMail(d.mail);return}
   if(d.startgame){startGame();return}
-  if(d.sport){sport=d.sport;SHOWN=14;closeSheet();fixDay();DEEP=DEEP;loadDeep();renderDaily();if(detail){detail=null;syncViews();renderIdentity();renderDaily()}if(tab!=="matches"){setTab("matches")}try{var u=new URL(location.href);if(sport==="all")u.searchParams.delete("sport");else u.searchParams.set("sport",sport);history.replaceState(null,"",u)}catch(x){}renderMatches();renderTicket();pollQuotes();scrollToFilter($("days"),false);return}
+  if(d.sport){sport=d.sport;lgue="all";SHOWN=14;closeSheet();fixLg();fixDay();DEEP=DEEP;loadDeep();renderDaily();if(detail){detail=null;syncViews();renderIdentity();renderDaily()}if(tab!=="matches"){setTab("matches")}try{var u=new URL(location.href);if(sport==="all")u.searchParams.delete("sport");else u.searchParams.set("sport",sport);history.replaceState(null,"",u)}catch(x){}renderMatches();renderTicket();pollQuotes();
+    /* On vient de choisir un sport: la barre des competitions est le geste
+       suivant, elle doit rester sous les yeux. */
+    var lb=$("lgs");scrollToFilter(lb&&lb.innerHTML?lb:$("days"),false);return}
   if(d.pick){togglePick(d.pick,+d.j);return}
   if(d.dc){addCombo(d.dc);return}
   if(d.go){goMarket(d.go);return}
@@ -3457,6 +3521,7 @@ document.addEventListener("click",function(e){
   if(d.carddl){cardDownload();return}
   if(d.restart){restart();return}
   if(d.bsort){if(d.bsort!==bsort){bsort=d.bsort;try{localStorage.setItem("moonx.play.bsort",bsort)}catch(x){}renderSide();if(tab==="league")renderLeague()}return}
+  if(d.lgue){if(d.lgue!==lgue){lgue=d.lgue;SHOWN=14;fixDay();loadDeep();renderDaily();renderMatches();renderTicket()}scrollToFilter($("days"),false);return}
   if(d.lg){LG=d.lg;LD=null;renderLeague();loadLeague();return}
   if(d.newlg){newLeague();return}
   if(d.mklg){rememberName();makeLeague();return}
