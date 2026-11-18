@@ -1119,6 +1119,20 @@ var SPORTS=[
 /* Un match dont on ne sait dire ni le sport ni la ligue n'apprend rien a
    personne: on ne le montre pas. Un sport qu'on ne connait pas encore
    mais qui porte un nom de ligue reste visible, sous "Other sports". */
+/* Le serveur envoie la liste allegee: adresses d'ecussons raccourcies
+   d'un tilde, et jeton du camp d'en face omis puisqu'a deux camps le
+   contraire de l'un est l'autre. On la redeploie une fois, a l'arrivee,
+   et plus rien en aval ne voit la difference. */
+var S3="https://polymarket-upload.s3.us-east-2.amazonaws.com/";
+function unsq(u){return u&&String(u).charAt(0)==="~"?S3+String(u).slice(1):(u||"")}
+function deflate(m){
+  m.licon=unsq(m.licon);
+  var o=m.opts||[],two=o.length===2&&!o[0].draw&&!o[1].draw;
+  for(var i=0;i<o.length;i++){
+    o[i].logo=unsq(o[i].logo);
+    if(o[i].other==null)o[i].other=two?o[1-i].token:null;
+  }
+}
 function usable(m){
   return m&&m.opts&&m.opts.length>=2&&(catOf(m)!=="other"||!!String(m.league||"").trim());
 }
@@ -3571,7 +3585,7 @@ function sign(){
 
 function pollMarkets(){
   if(document.hidden)return;
-  api("markets").then(function(j){timers.mkLoaded=1;MK=(j.markets||[]).filter(usable);MK.forEach(function(m){m.opts.forEach(function(o){if(Q[o.token]==null)Q[o.token]=o.p})});Object.keys(picks).forEach(function(k){if(!MK.some(function(m){return m.id===picks[k].id}))delete picks[k]});renderTicker();renderRail();if(tab==="matches"&&!detail){renderDaily();renderMatches()}renderTicket();loadDeep()}).catch(function(){timers.mkLoaded=1;if(!MK.length&&tab==="matches")$("mList").innerHTML='<div class="empty"><b>Live prices are slow to load.</b>Check your connection and try again.<br><button class="go" type="button" data-retry="1">Try again</button></div>'});
+  api("markets").then(function(j){timers.mkLoaded=1;MK=(j.markets||[]).filter(usable);MK.forEach(deflate);MK.forEach(function(m){m.opts.forEach(function(o){if(Q[o.token]==null)Q[o.token]=o.p})});Object.keys(picks).forEach(function(k){if(!MK.some(function(m){return m.id===picks[k].id}))delete picks[k]});renderTicker();renderRail();if(tab==="matches"&&!detail){renderDaily();renderMatches()}renderTicket();loadDeep()}).catch(function(){timers.mkLoaded=1;if(!MK.length&&tab==="matches")$("mList").innerHTML='<div class="empty"><b>Live prices are slow to load.</b>Check your connection and try again.<br><button class="go" type="button" data-retry="1">Try again</button></div>'});
 }
 function quoteTokens(){
   var s={};openPos().forEach(function(p){p.lg_leg.forEach(function(l){if(l.final==null)s[l.token_id]=1})});
