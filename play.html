@@ -632,6 +632,8 @@ footer .lk a{text-decoration:none;color:#fff}
 .bsb.on{background:#fff;color:#06110A;border-color:#fff}
 #v-league .bsort{margin:12px 0 10px;gap:6px}
 #v-league .bsb{height:34px;font-size:12.5px;border-radius:10px}
+.clwait{margin-top:8px;padding-top:8px;border-top:1px dashed var(--line)}
+.bwait{margin-top:8px;padding-top:9px;border-top:1px dashed var(--line)}
 .clfeed{display:grid;gap:7px}
 .clfd{display:flex;gap:9px;align-items:flex-start;font-size:12px;line-height:1.35;color:#C9D4E6}
 .clfd .ic{flex:none;width:21px;height:21px;border-radius:50%;display:grid;place-items:center;font-size:10px;font-weight:900;background:rgba(255,255,255,.07)}
@@ -2602,6 +2604,20 @@ function bval(r,k){
   if(k==="roi")return r.roi==null?null:+r.roi;
   return r.hit?+r.hit:null;
 }
+/* On entre au classement quand on a un resultat a montrer. Une ligne a
+   mille dollars pile, sans un pari denoue, n'apprend rien a personne et
+   repousse ceux qui ont joue. Seule exception: celui qui regarde. S'il
+   n'a encore rien denoue, sa ligne reste, detachee, pour qu'il sache ou
+   il en est au lieu de se chercher en vain. */
+function hasRec(r){return hasStats(r)&&+r.settled>0}
+function boardRanked(b,me){
+  var ok=[],mine=null;
+  (b||[]).forEach(function(r){
+    if(hasRec(r))ok.push(r);
+    else if(me&&String(r.handle).toLowerCase()===me)mine=r;
+  });
+  return{rows:boardSort(ok),waiting:mine};
+}
 function boardSort(b){
   return(b||[]).map(function(r,i){return{r:r,i:i}}).sort(function(a,c){
     var x=bval(a.r,bsort),y=bval(c.r,bsort);
@@ -2649,9 +2665,13 @@ function clanHTML(){
   if(!LD||!LD.board)return'<div class="cd"><h4>Your clan</h4><div class="empty2">Loading the board…</div></div>';
   var me=P&&P.player.handle.toLowerCase(),b=LD.board,mine=-1;
   if(me)b.some(function(r,i){if(String(r.handle).toLowerCase()===me){mine=i;return true}});
-  var sb=boardSort(b);
-  var h='<div class="cd"><h4>'+esc(LD.league.name)+"<span>"+(LD.total||b.length)+" playing</span></h4>"+boardChips()+
-    '<div class="clall" id="clall">'+sb.map(function(r,i){return clanRow(r,i,me,sb.length)}).join("")+"</div>";
+  var bk=boardRanked(b,me),sb=bk.rows;
+  var h='<div class="cd"><h4>'+esc(LD.league.name)+"<span>"+(LD.total||b.length)+" playing</span></h4>"+
+    (sb.length?boardChips():"")+
+    (sb.length
+      ?'<div class="clall" id="clall">'+sb.map(function(r,i){return clanRow(r,i,me,sb.length)}).join("")+"</div>"
+      :'<div class="empty2">No result yet. The first settled bet takes the top spot.</div>')+
+    (bk.waiting?'<div class="clwait">'+clanRow(bk.waiting,sb.length,me,sb.length)+"</div>":"");
   h+=LG==="ALL"
     ?'<button class="go" type="button" data-newlg="1" style="width:100%;margin-top:11px;height:38px">Start a clan with your friends</button>'
     :'<button class="go ghost" type="button" data-invite="'+LG+'" style="width:100%;margin-top:11px;height:38px">Invite your friends</button>';
@@ -3095,9 +3115,13 @@ function renderLeague(){
     h+=isMember?'<div class="inv"><code>'+url.replace("https://","")+'</code><button class="go" type="button" data-invite="'+LG+'">Invite</button></div>':'<div class="invite" style="margin:12px 0 0"><span style="flex:1">Join <b>'+esc(d.league.name)+"</b> and take on your friends.</span>"+'<button class="go" type="button" data-joinlg="'+LG+'">Join</button></div>';
   }
   h+='<div class="sechead"><h2>'+esc(d.league.name)+"</h2><span>"+(d.total||d.board.length)+" players · live</span></div>";
-  var sb=boardSort(d.board);
-  h+=boardChips();
-  h+=sb.length?'<div class="board">'+sb.map(function(r,i){var n=bRank(r,i,sb.length),c=bCell(r);return'<div class="br'+(me&&String(r.handle).toLowerCase()===me?" me":"")+'"><span class="rk'+(n<=3?" t":"")+'">'+n+'</span><span class="h">@'+esc(r.handle)+'</span><span class="e"><b class="'+c.c+'">'+c.v+'</b><small>'+c.s+"</small></span></div>"}).join("")+"</div>":'<div class="empty"><b>No players yet.</b>Invite your friends with the link above.</div>';
+  var bk=boardRanked(d.board,me),sb=bk.rows;
+  var brow=function(r,i,n){var k=bRank(r,i,n),c=bCell(r);return'<div class="br'+(me&&String(r.handle).toLowerCase()===me?" me":"")+'"><span class="rk'+(k<=3?" t":"")+'">'+k+'</span><span class="h">@'+esc(r.handle)+'</span><span class="e"><b class="'+c.c+'">'+c.v+'</b><small>'+c.s+"</small></span></div>"};
+  if(sb.length)h+=boardChips();
+  h+=sb.length
+    ?'<div class="board">'+sb.map(function(r,i){return brow(r,i,sb.length)}).join("")+"</div>"
+    :'<div class="empty"><b>No result yet.</b>The first settled bet takes the top spot.</div>';
+  if(bk.waiting)h+='<div class="board bwait">'+brow(bk.waiting,sb.length,sb.length)+"</div>";
   var others=(d.open||[]).filter(function(p){return!me||String(p.lg_player&&p.lg_player.handle).toLowerCase()!==me}).slice(0,12);
   if(others.length){
     h+='<div class="sechead"><h2>Their bets</h2><span>Follow them or go against</span></div><div class="grid two">'+others.map(function(p){
