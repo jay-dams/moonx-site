@@ -300,7 +300,7 @@ body.bslip{padding-bottom:calc(var(--tb) + var(--sab) + 228px)}
 .done1 small{display:block;margin-top:2px;color:var(--dim);font-size:12.5px}
 .done1 .more{margin-top:9px}
 .done1 .more button{color:var(--mint);border-color:rgba(61,220,132,.4)}
-.days{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:10px -14px 0;padding:2px 14px;scroll-snap-type:x proximity}
+.days{position:sticky;top:calc(var(--nh) + var(--th));z-index:14;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:10px -14px 0;padding:8px 14px;background:var(--bg);scroll-snap-type:x proximity}
 .days::-webkit-scrollbar{display:none}
 .day{flex:none;scroll-snap-align:start;min-width:74px;padding:7px 11px 6px;border-radius:14px;border:1px solid var(--line);background:var(--well);text-align:left;color:var(--dim);transition:border-color .15s,background .15s}
 .day:hover{border-color:var(--line-2)}
@@ -1979,6 +1979,19 @@ function legFace(l){
   }
   return{lab:lab,sub:sub};
 }
+/* Un filtre qui ne deplace pas le regard donne l'impression de n'avoir
+   rien fait. Entre la barre de dates et les matchs il y a le carrousel de
+   combos, qui mesure trois cents pixels et ne change pas avec la date: on
+   atterrissait dessus, et les matchs du jour choisi restaient sous le pli.
+   La date concerne la liste: on va a la liste, juste sous la barre restee
+   collee. Le sport concerne toute la page, combos compris: on va en haut. */
+function scrollToFilter(el,underDays){
+  if(!el)return;
+  var pad=parseInt(getComputedStyle(document.body).paddingTop)||0;
+  var d=$("days"),h=underDays&&d?d.offsetHeight:0;
+  var y=el.getBoundingClientRect().top+window.scrollY-pad-h-6;
+  window.scrollTo({top:Math.max(0,y),behavior:"smooth"});
+}
 function dcHTML(c,i){
   var sp=c.legs[0]?catOf(c.legs[0].m):"",same=comboSame(c.legs);
   return'<button type="button" class="dc c'+(i%4)+'" data-dc="'+c.id+'"'+bgStyle(sp)+'>'+
@@ -3293,7 +3306,7 @@ document.addEventListener("click",function(e){
   if(d.tab){setTab(d.tab);return}
   if(d.mail){sendMail(d.mail);return}
   if(d.startgame){startGame();return}
-  if(d.sport){sport=d.sport;SHOWN=14;closeSheet();fixDay();DEEP=DEEP;loadDeep();renderDaily();if(detail){detail=null;syncViews();renderIdentity();renderDaily()}if(tab!=="matches"){setTab("matches")}try{var u=new URL(location.href);if(sport==="all")u.searchParams.delete("sport");else u.searchParams.set("sport",sport);history.replaceState(null,"",u)}catch(x){}renderMatches();renderTicket();pollQuotes();return}
+  if(d.sport){sport=d.sport;SHOWN=14;closeSheet();fixDay();DEEP=DEEP;loadDeep();renderDaily();if(detail){detail=null;syncViews();renderIdentity();renderDaily()}if(tab!=="matches"){setTab("matches")}try{var u=new URL(location.href);if(sport==="all")u.searchParams.delete("sport");else u.searchParams.set("sport",sport);history.replaceState(null,"",u)}catch(x){}renderMatches();renderTicket();pollQuotes();scrollToFilter($("days"),false);return}
   if(d.pick){togglePick(d.pick,+d.j);return}
   if(d.dc){addCombo(d.dc);return}
   if(d.go){goMarket(d.go);return}
@@ -3327,7 +3340,7 @@ document.addEventListener("click",function(e){
   if(d.clear){var ks=legsList().map(function(x){return x.id});picks={};ks.forEach(renderRows);if(detail)paintPicks();renderTicket();quoteSoon();return}
   if(d.mode){mode=d.mode;renderTicket();if(mode==="combo")quoteSoon();return}
   if(d.day){day=d.day;SHOWN=14;renderMatches();renderTicket();pollQuotes();vib(6);
-    window.scrollTo({top:Math.max(0,$("days").getBoundingClientRect().top+window.scrollY-(parseInt(getComputedStyle(document.body).paddingTop)+8)),behavior:"smooth"});return}
+    scrollToFilter($("mList"),true);return}
   if(d.open){closeSheet();openDetail(d.open);return}
   if(d.back){closeDetail();return}
   if(d.mc!=null){addMatchCombo(+d.mc);return}
