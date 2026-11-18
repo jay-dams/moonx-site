@@ -648,6 +648,21 @@ footer .lk a{text-decoration:none;color:#fff}
 #v-league .bsb{height:34px;font-size:12.5px;border-radius:10px}
 .clwait{margin-top:8px;padding-top:8px;border-top:1px dashed var(--line)}
 .bwait{margin-top:8px;padding-top:9px;border-top:1px dashed var(--line)}
+.ejp{flex:none;height:38px;padding:0 13px;border-radius:12px;border:1px solid var(--line);background:var(--well);font-size:12.5px;font-weight:800;color:var(--dim);margin-left:auto}
+.selx{display:grid;gap:12px}
+.sxh{display:grid;gap:3px}
+.sxh b{font-size:15.5px;font-weight:900}
+.sxh span{font-size:12.5px;font-weight:700;color:var(--dim)}
+.sxq{display:flex;gap:7px}
+.sxb{flex:1;height:38px;border-radius:11px;border:1px solid var(--line);background:var(--well);font-size:13px;font-weight:800;color:var(--dim)}
+.sxb.on{background:#fff;color:#06110A;border-color:#fff}
+.sxr{width:100%;height:30px;-webkit-appearance:none;appearance:none;background:transparent}
+.sxr::-webkit-slider-runnable-track{height:6px;border-radius:3px;background:var(--line)}
+.sxr::-moz-range-track{height:6px;border-radius:3px;background:var(--line)}
+.sxr::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:24px;height:24px;margin-top:-9px;border-radius:50%;background:var(--acc);border:none}
+.sxr::-moz-range-thumb{width:24px;height:24px;border-radius:50%;background:var(--acc);border:none}
+.sxn{font-size:13px;font-weight:700;color:var(--dim);text-align:center}
+.sxn b{color:#fff;font-weight:900}
 .clfeed{display:grid;gap:7px}
 .clfd{display:flex;gap:9px;align-items:flex-start;font-size:12px;line-height:1.35;color:#C9D4E6}
 .clfd .ic{flex:none;width:21px;height:21px;border-radius:50%;display:grid;place-items:center;font-size:10px;font-weight:900;background:rgba(255,255,255,.07)}
@@ -2912,7 +2927,7 @@ function posCard(p){
   var v=posValue(p),x=v/p.stake,cm=p.lg_leg.length>1,mx=posMax(p);
   return'<article class="card pos'+(timers.lastNew===p.id?" new":"")+'" data-pos="'+p.id+'"><div class="ph"><div><div class="t">'+(cm?"COMBO · "+p.lg_leg.length+" PICKS":"SINGLE")+(p.via_side?" · "+(p.via_side==="same"?"FOLLOWED":"AGAINST"):"")+"</div><div style=\"font-size:12.5px;color:var(--dim);margin-top:3px\">"+money(+p.stake)+" in · pays "+money(mx)+" ("+fx(mx/p.stake)+")</div></div><div class=\"val\"><b class=\""+(v>=p.stake?"up":"dn")+'" data-pv="'+p.id+'">'+money(v)+'</b><small class="'+(v>=p.stake?"up":"dn")+'" data-px="'+p.id+'">'+fx(x)+"</small></div></div>"+
   '<div class="pl">'+p.lg_leg.map(function(l){var c=legNow(l);return'<div class="row">'+av(l)+'<span class="nm">'+esc(l.label)+"<small>"+esc(l.event_title)+"</small></span>"+legStatus(l)+'<span class="pc '+(c>=+l.p0?"up":"dn")+'" data-lp="'+l.token_id+'">'+Math.round(c*100)+"%</span></div>"}).join("")+"</div>"+
-  '<canvas data-ch="'+p.id+'"></canvas><div class="pf"><small>Entered '+ago(p.created_at)+" ago</small><button class=\"ej\" type=\"button\" data-ej=\""+p.id+'">Cash out '+money(v)+"</button></div></article>";
+  '<canvas data-ch="'+p.id+'"></canvas><div class="pf"><small>Entered '+ago(p.created_at)+' ago</small><button class="ejp" type="button" data-ejp="'+p.id+'" aria-label="Cash out part of it">Part</button><button class="ej" type="button" data-ej="'+p.id+'">Cash out '+money(v)+"</button></div></article>";
 }
 
 function closedRow(p){
@@ -3101,11 +3116,58 @@ function drawCharts(){
   });
 }
 
-function eject(id){
+/* En trading on vend une partie de sa ligne pour securiser sans tout
+   lacher. Le bouton principal reste la sortie totale, d'un seul geste:
+   c'est le cas courant, il ne doit pas couter un tour de plus. "Part"
+   ouvre le reste. */
+function posValue(p){
+  var v=+p.stake;
+  for(var i=0;i<p.lg_leg.length;i++){
+    var l=p.lg_leg[i],c=l.final!=null?+l.final:Q[l.token_id];
+    if(c==null||!isFinite(c))return null;
+    v*=c/+l.p0;
+  }
+  return v;
+}
+function ejPart(id){
+  var p=openPos().find(function(z){return z.id===id});if(!p)return;
+  var v=posValue(p);if(v==null){toast("Live price is slow right now. Try again.");return}
+  timers.ejId=id;timers.ejPc=50;
+  openSheet("part",'<h3>Cash out part <button type="button" data-close-sheet="1">Close</button></h3>'+
+    '<div class="selx"><div class="sxh"><b>'+esc(p.lg_leg.length>1?"Combo \u00b7 "+p.lg_leg.length+" picks":p.lg_leg[0].label)+"</b><span>"+money(+p.stake)+" at stake \u00b7 worth "+money(v)+'</span></div>'+
+    '<div class="sxq">'+[25,50,75,100].map(function(n){
+      return'<button type="button" class="sxb'+(n===50?" on":"")+'" data-ejq="'+n+'">'+(n===100?"All":n+"%")+"</button>"}).join("")+"</div>"+
+    '<input class="sxr" id="ejR" type="range" min="5" max="100" step="5" value="50">'+
+    '<div class="sxn" id="ejN"></div>'+
+    '<button class="go big" type="button" id="ejGo" data-ejgo="1"></button></div>');
+  ejPaint();
+}
+function ejPaint(){
+  var p=openPos().find(function(z){return z.id===timers.ejId});if(!p)return;
+  var v=posValue(p);if(v==null)return;
+  var f=timers.ejPc/100,get=v*f,left=+p.stake*(1-f);
+  var n=$("ejN"),g=$("ejGo"),r=$("ejR");
+  if(r&&+r.value!==timers.ejPc)r.value=timers.ejPc;
+  document.querySelectorAll("[data-ejq]").forEach(function(b){b.classList.toggle("on",+b.dataset.ejq===timers.ejPc)});
+  if(n)n.innerHTML=f>=1
+    ?"You sell <b>all of it</b> and nothing stays in play."
+    :"You sell <b>"+timers.ejPc+"%</b> and <b>"+money(left)+"</b> stays in play.";
+  if(g)g.textContent="Cash out "+money(get);
+}
+function ejGo(){
+  var id=timers.ejId,f=timers.ejPc/100;
+  closeSheet();
+  eject(id,f);
+}
+function eject(id,frac){
   if(busy)return;busy=true;var b=document.querySelector('[data-ej="'+id+'"]');if(b){b.disabled=true;b.textContent="Cashing out…"}
   var p=openPos().find(function(z){return z.id===id});
-  api("eject",{token:tok,position:id}).then(function(r){
-    setProfile(r);var pay=r.ejected.payout,st=p?+p.stake:0;vib(25);ev("lg_eject",{mult:st?Math.round(pay/st*100)/100:0});
+  api("eject",{token:tok,position:id,part:frac||undefined}).then(function(r){
+    setProfile(r);var pay=r.ejected.payout,pf=+r.ejected.part||1,st=(p?+p.stake:0)*pf;vib(25);ev("lg_eject",{mult:st?Math.round(pay/st*100)/100:0,part:pf});
+    if(pf<1){
+      toast("Cashed out "+money(pay)+". "+money(r.ejected.left)+" still running.");
+      render();return;
+    }
     showResult({tag:"CASHED OUT",net:pay-st,x:st?pay/st:0,stake:st,legs:p?p.lg_leg:[],label:p?(p.lg_leg.length>1?"Combo · "+p.lg_leg.length+" picks":p.lg_leg[0].label):"",msg:pay>st+.004?"Locked in before the end. "+money(pay)+" is back in your balance.":pay>st-.005?"Out at even. "+money(pay)+" is back in your balance.":"You cut it early. "+money(pay)+" is back in your balance."});
     render();
   }).catch(function(e){toast(errText(e));if(b){b.disabled=false}render()}).then(function(){busy=false});
@@ -3606,6 +3668,9 @@ document.addEventListener("click",function(e){
     vib(5);return}
   if(d.q){amount=Math.max(1,Math.floor(cash()*+d.q*100)/100);if(+d.q===1)amount=cash();rememberName();if($("sheet").dataset.k==="follow")$("sheetP").innerHTML=followHTML();return}
   if(d.fplace){rememberName();placeFollow();return}
+  if(d.ejp){ejPart(d.ejp);return}
+  if(d.ejq){timers.ejPc=+d.ejq;ejPaint();return}
+  if(d.ejgo){ejGo();return}
   if(d.ej){eject(d.ej);return}
   if(d.closeOv){$("ov").classList.remove("open");return}
   if(d.closeSheet){closeSheet();return}
@@ -3696,6 +3761,7 @@ document.addEventListener("keydown",function(e){
   if(e.key==="Escape"){if($("sheet").classList.contains("open"))closeSheet();else $("ov").classList.remove("open")}
   if(e.key==="Enter"&&e.target.id==="lgName")makeLeague()});
 document.addEventListener("input",function(e){
+  if(e.target.id==="ejR"){timers.ejPc=+e.target.value;ejPaint();return}
   if(e.target.classList&&e.target.classList.contains("cin")){
     var v=parseFloat(String(e.target.value).replace(",",".").replace(/[^0-9.]/g,""));
     stake=isFinite(v)?Math.max(0,Math.floor(v*100)/100):0;amount=null;
