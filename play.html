@@ -102,9 +102,9 @@ nav.top{position:fixed;top:0;left:0;right:0;z-index:30;height:var(--nh);display:
 /* Le filtre appartient au calendrier: il reste colle en haut avec les
    dates et suit le defilement, sinon on perd de vue ce qu'on a filtre
    des le deuxieme ecran. */
-.lgs{position:sticky;top:calc(var(--nh) + var(--th));z-index:15;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:9px -14px 0;padding:7px 14px 6px;background:var(--bg)}
-.lgs::-webkit-scrollbar{display:none}
-.lgs:empty{display:none}
+.lgf{position:sticky;top:calc(var(--nh) + var(--th));z-index:15;display:flex;align-items:center;gap:6px;overflow-x:auto;scrollbar-width:none;margin:9px -14px 0;padding:7px 14px 6px;background:var(--bg)}
+.lgf::-webkit-scrollbar{display:none}
+.lgf:empty{display:none}
 .lgb{flex:none;display:inline-flex;align-items:center;gap:6px;height:29px;padding:0 11px;border-radius:999px;border:1px solid var(--line);background:var(--well);font-size:12px;font-weight:700;color:var(--dim);white-space:nowrap}
 .lgb img{width:15px;height:15px;object-fit:contain;flex:none}
 .lgb i{font-style:normal;font-size:10.5px;font-weight:800;opacity:.65;font-variant-numeric:tabular-nums}
@@ -578,9 +578,12 @@ footer .lk a{text-decoration:none;color:#fff}
 .dayhd{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin:18px 3px 10px}
 .dayhd h3{margin:0;font-size:16px;font-weight:900;letter-spacing:-.02em}
 .dayhd span{font-size:12px;color:var(--dim)}
-.dgrid{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none;margin:0 -14px;padding:2px 14px 4px;scroll-snap-type:x mandatory}
+.dgrid{display:flex;align-items:stretch;gap:10px;overflow-x:auto;scrollbar-width:none;margin:0 -14px;padding:2px 14px 4px;scroll-snap-type:x mandatory}
 .dgrid::-webkit-scrollbar{display:none}
-.dc{flex:none;width:258px;scroll-snap-align:start;position:relative;overflow:hidden;border-radius:20px;padding:13px;text-align:left;box-shadow:inset 0 0 0 1px var(--line);background-color:var(--card);isolation:isolate}
+/* Le pied de carte — le multiplicateur et le bouton — est la raison
+   d'etre de la carte: il ne doit jamais sortir. Il est donc ancre en
+   bas, et c'est la liste des jambes qui cede si la place manque. */
+.dc{flex:none;width:258px;scroll-snap-align:start;position:relative;overflow:hidden;border-radius:20px;padding:13px;text-align:left;box-shadow:inset 0 0 0 1px var(--line);background-color:var(--card);isolation:isolate;display:flex;flex-direction:column;min-height:292px}
 .dc:before{content:"";position:absolute;inset:0;z-index:-1}
 /* Chez Novig l'objet est opaque, pas un filigrane: c'est sa teinte
    moyenne qui laisse passer le texte blanc, pas sa transparence. */
@@ -597,7 +600,7 @@ footer .lk a{text-decoration:none;color:#fff}
 .dc.c3:before{background:linear-gradient(135deg,rgba(140,156,255,.5),rgba(140,156,255,.12) 55%,transparent)}
 .dc u{display:block;font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.15em;color:var(--hi);text-decoration:none;position:relative;text-shadow:0 1px 4px rgba(3,6,12,.9)}
 .dc h5{margin:3px 0 9px;font-size:16px;font-weight:900;letter-spacing:-.02em;position:relative;text-shadow:0 1px 5px rgba(3,6,12,.9)}
-.dc .lgs{display:grid;gap:7px;margin-bottom:10px;position:relative}
+.dc .lgs{display:grid;gap:7px;margin-bottom:10px;position:relative;flex:0 1 auto;min-height:0;overflow:hidden;align-content:start}
 /* Le texte traverse l'objet: il porte son propre fond. */
 .dc .lgs div{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:700;color:#F2F6FC;min-width:0;text-shadow:0 1px 4px rgba(3,6,12,.9),0 0 10px rgba(3,6,12,.65)}
 .dc .lgs .lo{flex:none;align-self:center;width:20px;height:20px;border-radius:5px;background:rgba(0,0,0,.35);display:grid;place-items:center;overflow:hidden;font-size:7.5px;font-weight:900}
@@ -605,7 +608,7 @@ footer .lk a{text-decoration:none;color:#fff}
 .dc .lgs .t{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;line-height:1.2}
 .dc .lgs .t small{display:block;font-size:10px;font-weight:600;letter-spacing:0;color:#A9B6CB;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .dc .lgs .k{flex:none;align-self:center;font-family:var(--mono);font-size:11px;font-weight:800;color:#C6D2E6}
-.dc .ft{display:flex;align-items:center;gap:9px;position:relative}
+.dc .ft{display:flex;align-items:center;gap:9px;position:relative;margin-top:auto;flex:none}
 .dc .ft .x{font-size:21px;font-weight:900;letter-spacing:-.03em;color:#fff;font-variant-numeric:tabular-nums}
 .dc .ft .x em{font-style:normal;font-size:11px;color:var(--dim);display:block;font-weight:700;letter-spacing:0}
 .dc .ft .add{margin-left:auto;display:inline-flex;align-items:center;justify-content:center;height:38px;padding:0 15px;border-radius:12px;background:#fff;color:#06110A;font-weight:900;font-size:13px;line-height:1;white-space:nowrap}
@@ -688,10 +691,12 @@ footer .lk a{text-decoration:none;color:#fff}
   .hero{text-align:left;padding:4px 0 0}
   .hero .lead{font-size:13px}
   .howto{justify-content:flex-start;margin-top:9px}
-  .dgrid{margin:0;padding:2px 0 4px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));overflow:visible}
-  .dc{width:auto}
-  .dc .ft{flex-wrap:wrap;gap:10px}
-  .dc .ft .add{flex:1 1 100%;margin-left:0;height:40px;padding:0}
+  /* Une grille de quatre colonnes empilait huit combos sur deux rangees:
+     lourd a parcourir, et la carte prenait la hauteur de sa voisine la
+     plus haute, ce qui coupait le bouton du bas. Une seule ligne qui
+     defile, comme sur telephone — c'est un carrousel, pas un catalogue. */
+  .dgrid{margin:0;padding:2px 0 6px}
+  .dc{width:282px}
   .mlist{max-width:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 12px;align-items:start}
   .mlist{grid-auto-flow:dense}
   .mlist .tline{grid-column:1/-1}
@@ -1056,7 +1061,7 @@ footer .lk button:hover{color:#fff}
       <div class="idbox" id="idBox" hidden></div>
       <section class="view on" id="v-matches">
         <div class="sportrow"><button class="srb" type="button" data-search="1" aria-label="Search a team or a player"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg></button><button class="sportbtn" type="button" data-filter="1" id="fBtn"><span class="ic">◉</span><span class="lb">All sports</span><span class="n"></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button><div class="chips" id="sports"></div></div>
-        <div class="lgs" id="lgs"></div>
+        <div class="lgf" id="lgf"></div>
         <div class="days" id="days"></div>
         <div id="daily"></div>
         <div class="mlist" id="mList"></div>
@@ -1542,7 +1547,7 @@ function lgChip(x){
     esc(x.k)+"<i>"+x.n+"</i></button>";
 }
 function lgsBar(){
-  var el=$("lgs");if(!el)return;
+  var el=$("lgf");if(!el)return;
   var l=lgList();
   if(l.length<2){el.innerHTML="";el.dataset.k="";lgsH();return}
   var k=sport+"/"+lgue+"/"+l.map(function(x){return x.k+":"+x.n}).join("|");
@@ -1561,7 +1566,7 @@ function lgsBar(){
 /* La barre des dates se pose juste sous celle des competitions, qui
    n'existe pas toujours: on lui donne la hauteur mesuree, zero compris. */
 function lgsH(){
-  var el=$("lgs"),h=el&&el.innerHTML?el.offsetHeight:0;
+  var el=$("lgf"),h=el&&el.innerHTML?el.offsetHeight:0;
   document.documentElement.style.setProperty("--lh",h+"px");
 }
 function lgSheet(){
@@ -2157,7 +2162,7 @@ function legFace(l){
 function scrollToFilter(el,underDays){
   if(!el)return;
   var pad=parseInt(getComputedStyle(document.body).paddingTop)||0;
-  var d=$("days"),l=$("lgs");
+  var d=$("days"),l=$("lgf");
   var h=underDays&&d?d.offsetHeight:0;
   if(underDays&&l&&l.innerHTML)h+=l.offsetHeight;
   var y=el.getBoundingClientRect().top+window.scrollY-pad-h-6;
@@ -3643,7 +3648,7 @@ document.addEventListener("click",function(e){
   if(d.sport){sport=d.sport;lgue="all";SHOWN=14;closeSheet();fixLg();fixDay();DEEP=DEEP;loadDeep();renderDaily();if(detail){detail=null;syncViews();renderIdentity();renderDaily()}if(tab!=="matches"){setTab("matches")}try{var u=new URL(location.href);if(sport==="all")u.searchParams.delete("sport");else u.searchParams.set("sport",sport);history.replaceState(null,"",u)}catch(x){}renderMatches();renderTicket();pollQuotes();
     /* On vient de choisir un sport: la barre des competitions est le geste
        suivant, elle doit rester sous les yeux. */
-    var lb=$("lgs");scrollToFilter(lb&&lb.innerHTML?lb:$("days"),false);return}
+    var lb=$("lgf");scrollToFilter(lb&&lb.innerHTML?lb:$("days"),false);return}
   if(d.pick){togglePick(d.pick,+d.j);return}
   if(d.dc){addCombo(d.dc);return}
   if(d.go){goMarket(d.go);return}
@@ -3708,7 +3713,7 @@ document.addEventListener("click",function(e){
   if(d.restart){restart();return}
   if(d.bsort){if(d.bsort!==bsort){bsort=d.bsort;try{localStorage.setItem("moonx.play.bsort",bsort)}catch(x){}renderSide();if(tab==="league")renderLeague()}return}
   if(d.lgsheet){lgSheet();return}
-  if(d.lgue){closeSheet();if(d.lgue!==lgue){lgue=d.lgue;SHOWN=14;fixDay();loadDeep();renderDaily();renderMatches();renderTicket()}var lb=$("lgs");scrollToFilter(lb&&lb.innerHTML?lb:$("days"),false);return}
+  if(d.lgue){closeSheet();if(d.lgue!==lgue){lgue=d.lgue;SHOWN=14;fixDay();loadDeep();renderDaily();renderMatches();renderTicket()}var lb=$("lgf");scrollToFilter(lb&&lb.innerHTML?lb:$("days"),false);return}
   if(d.lg){LG=d.lg;LD=null;renderLeague();loadLeague();return}
   if(d.newlg){newLeague();return}
   if(d.mklg){rememberName();makeLeague();return}
