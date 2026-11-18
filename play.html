@@ -1213,7 +1213,20 @@ window.lgerr=function(im,ini){
   if(!im.dataset.r){im.dataset.r="1";var u=im.src;im.src="";setTimeout(function(){im.src=u},900);return}
   if(im.parentNode)im.parentNode.textContent=ini;
 };
-function initials(s){var w=String(s).replace(/[^A-Za-z0-9 ]/g," ").trim().split(/\s+/);return((w[0]||"?")[0]+(w.length>1?w[w.length-1][0]:(w[0]||"")[1]||"")).toUpperCase()}
+/* "FC Bayern Munchen -2.5" donnait "F5": premiere lettre de "FC",
+   derniere de "-2.5". Deux lettres qui ne veulent rien dire. On enleve
+   le handicap, puis les petits mots de club — FC, AS, CF, SV — qui ne
+   distinguent rien, et on garde les initiales de ce qui reste. */
+var CLUBW=/^(fc|ac|sc|cf|as|rc|sv|cd|ca|ec|if|bk|sk|us|afc|cfc|vfb|vfl|tsg|rb|psv|sl|sd|ud|ss|ssc|aj|rcd|ogc|stade|club|fk|nk|hk|gk)$/i;
+function initials(s){
+  var t=String(s||"").replace(/\s*[-+]?\d+(?:[.,]\d+)?\s*$/,"");
+  var w=t.replace(/[^A-Za-z0-9\u00C0-\u024F ]/g," ").trim().split(/\s+/).filter(Boolean);
+  var big=w.filter(function(x){return x.length>1&&!CLUBW.test(x)});
+  var use=big.length?big:w;
+  if(!use.length)return"?";
+  if(use.length===1)return(use[0].slice(0,2)).toUpperCase();
+  return(use[0][0]+use[use.length-1][0]).toUpperCase();
+}
 function vol(v){return v>=1e6?"$"+(v/1e6).toFixed(1)+"M":v>=1e3?"$"+Math.round(v/1e3)+"K":"$"+Math.round(v)}
 function when(t){var d=new Date(t),n=new Date(),tm=d.toLocaleTimeString("en-US",{hour:"numeric",minute:"2-digit"});var dd=Math.round((new Date(d.getFullYear(),d.getMonth(),d.getDate())-new Date(n.getFullYear(),n.getMonth(),n.getDate()))/864e5);return dd===0?"Today "+tm:dd===1?"Tomorrow "+tm:d.toLocaleDateString("en-US",{weekday:"short"})+" "+tm}
 function ago(t){var s=Math.max(1,Math.round((Date.now()-Date.parse(t))/1000));return s<60?s+"s":s<3600?Math.round(s/60)+"m":s<86400?Math.round(s/3600)+"h":Math.round(s/86400)+"d"}
@@ -2566,9 +2579,18 @@ function mkLeg(m,o,gk,sub){
 }
 /* Un pari du type "Knicks -3,5" porte sur une equipe: on lui rend son logo.
    "Over 216,5" n'appartient a personne: il prend une fleche. */
+/* L'ecusson d'un pari a handicap est celui de son equipe. On compare
+   donc sans le handicap, sans casse et sans ponctuation: "FC Bayern
+   Munchen -2.5" et "FC Bayern Munchen" doivent se reconnaitre. */
+function norm1(x){return String(x||"").toLowerCase().replace(/\s*[-+]?\d+(?:[.,]\d+)?\s*$/,"").replace(/[^a-z0-9\u00C0-\u024F]+/g," ").trim()}
 function subLogo(m,label){
-  var lo="";
-  (m.opts||[]).forEach(function(o){if(!o.draw&&o.logo&&String(label).indexOf(o.label)===0)lo=o.logo});
+  var t=norm1(label),lo="";
+  if(!t)return"";
+  (m.opts||[]).forEach(function(o){
+    if(o.draw||!o.logo)return;
+    var n=norm1(o.label);
+    if(n&&(t===n||t.indexOf(n+" ")===0||t.indexOf(n)===0||n.indexOf(t)===0))lo=o.logo;
+  });
   return lo;
 }
 function subIcon(o){
