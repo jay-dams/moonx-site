@@ -2506,6 +2506,12 @@ function hasStats(r){return!!r&&r.settled!=null}
 function pnlTxt(r){return+(r&&r.settled)>0?signed(+r.pnl||0):"\u2014"}
 function roiTxt(r){return r&&r.roi!=null?(r.roi>=0?"+":"")+(+r.roi).toFixed(1)+"%":"\u2014"}
 function hitTxt(r){return r&&r.hit?fx(+r.hit):"\u2014"}
+/* Un joueur qui n'a encaisse aucun pari n'a pas de "meilleur multiple":
+   ecrire "best —" affiche un trou. On dit ce qui est vrai. */
+function subStats(r){
+  if(!(+r.settled>0))return"no bet settled yet";
+  return r&&r.hit?roiTxt(r)+" \u00b7 best "+hitTxt(r):roiTxt(r)+" \u00b7 no winner yet"
+}
 function pnlUp(r){return+(r&&r.settled)>0?((+r.pnl||0)>=0?"up":"dn"):""}
 function clanRow(r,i,me){
   var n=+r.rank||i+1;
@@ -2971,7 +2977,7 @@ function renderLeague(){
     h+=isMember?'<div class="inv"><code>'+url.replace("https://","")+'</code><button class="go" type="button" data-invite="'+LG+'">Invite</button></div>':'<div class="invite" style="margin:12px 0 0"><span style="flex:1">Join <b>'+esc(d.league.name)+"</b> and take on your friends.</span>"+'<button class="go" type="button" data-joinlg="'+LG+'">Join</button></div>';
   }
   h+='<div class="sechead"><h2>'+esc(d.league.name)+"</h2><span>"+(d.total||d.board.length)+" players · live</span></div>";
-  h+=d.board.length?'<div class="board">'+d.board.map(function(r,i){var n=+r.rank||i+1;return'<div class="br'+(me&&String(r.handle).toLowerCase()===me?" me":"")+'"><span class="rk'+(n<=3?" t":"")+'">'+n+'</span><span class="h">@'+esc(r.handle)+'</span>'+(hasStats(r)?'<span class="e"><b class="'+pnlUp(r)+'">'+pnlTxt(r)+'</b><small>'+(+r.settled>0?roiTxt(r)+" \u00b7 best "+hitTxt(r):"no bet settled yet")+"</small></span>":'<span class="e"><b>'+money(+r.equity)+'</b><small>'+fx(+r.equity/START)+"</small></span>")+"</div>"}).join("")+"</div>":'<div class="empty"><b>No players yet.</b>Invite your friends with the link above.</div>';
+  h+=d.board.length?'<div class="board">'+d.board.map(function(r,i){var n=+r.rank||i+1;return'<div class="br'+(me&&String(r.handle).toLowerCase()===me?" me":"")+'"><span class="rk'+(n<=3?" t":"")+'">'+n+'</span><span class="h">@'+esc(r.handle)+'</span>'+(hasStats(r)?'<span class="e"><b class="'+pnlUp(r)+'">'+pnlTxt(r)+'</b><small>'+subStats(r)+"</small></span>":'<span class="e"><b>'+money(+r.equity)+'</b><small>'+fx(+r.equity/START)+"</small></span>")+"</div>"}).join("")+"</div>":'<div class="empty"><b>No players yet.</b>Invite your friends with the link above.</div>';
   var others=(d.open||[]).filter(function(p){return!me||String(p.lg_player&&p.lg_player.handle).toLowerCase()!==me}).slice(0,12);
   if(others.length){
     h+='<div class="sechead"><h2>Their bets</h2><span>Follow them or go against</span></div><div class="grid two">'+others.map(function(p){
