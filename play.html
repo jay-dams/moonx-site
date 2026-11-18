@@ -467,6 +467,20 @@ body.bslip{padding-bottom:calc(var(--tb) + var(--sab) + 228px)}
 .inv{display:flex;align-items:center;gap:8px;padding:12px;border-radius:16px;border:1px dashed rgba(61,220,132,.5);background:rgba(61,220,132,.05);margin-top:12px}
 .inv code{flex:1;min-width:0;font-family:var(--mono);font-size:12.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--mint)}
 .inv .go{height:36px;padding:0 12px}
+.addp{display:flex;align-items:center;gap:8px;margin-top:8px;padding:8px 10px 8px 12px;border-radius:16px;border:1px solid var(--line);background:var(--card)}
+.addp .at{font-family:var(--mono);font-size:14px;font-weight:900;color:var(--dim);flex:none}
+.addp .fld{flex:1;min-width:0;height:36px;margin:0;padding:0;border:0;background:none;font-size:14px;font-weight:700}
+.addp .fld:focus{outline:none}
+.addp .go{height:36px;padding:0 14px;flex:none}
+.lgadm{display:flex;flex-wrap:wrap;gap:14px;margin:9px 4px 0}
+.lgadm button{font-size:12.5px;font-weight:700;color:var(--dim);text-decoration:underline;text-underline-offset:3px}
+.lgadm button:hover{color:#fff}
+.br .adm{margin-left:7px;font-style:normal;font-size:9.5px;font-weight:900;letter-spacing:.09em;color:var(--mint);vertical-align:1px}
+.br .x{flex:none;width:28px;height:28px;margin:-4px -6px -4px 4px;border-radius:50%;font-size:17px;line-height:1;color:var(--dim)}
+.br .x:hover{background:rgba(255,92,92,.14);color:#FF8A8A}
+.br.pw{opacity:.72;border-style:dashed;border-color:var(--line)}
+.br.pw .rk{text-align:center}
+.br.pw .e small{font-size:11px;font-weight:800;color:var(--dim)}
 .fol .who{font-weight:900}
 .fol .acts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
 .fol .acts .go{height:40px}
@@ -1112,7 +1126,7 @@ footer .lk button:hover{color:#fff}
 <div class="tabs" role="tablist" aria-label="Sections">
   <button type="button" class="on" data-tab="matches" role="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7l4 3-1.5 5h-5L8 10z"/></svg>Matches</button>
   <button type="button" data-tab="trades" role="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg>My bets<i id="openN"></i></button>
-  <button type="button" data-tab="league" role="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 01-10 0z"/><path d="M17 5h3v2a3 3 0 01-3 3M7 5H4v2a3 3 0 003 3"/></svg>Clan</button>
+  <button type="button" data-tab="league" role="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 01-10 0z"/><path d="M17 5h3v2a3 3 0 01-3 3M7 5H4v2a3 3 0 003 3"/></svg>Clan<i id="invN"></i></button>
 </div>
 
 <div class="slipbar" id="slipbar"></div>
@@ -1405,7 +1419,7 @@ function demoApi(a,b){
     },LOCAL?120:0);
   });
 }
-function errText(e){return{taken:"That name is taken. Try another one.",handle:"3 to 18 letters, numbers or _ only.",balance:"Not enough play money.",closed:"This market just closed.",price:"Price out of range right now. Try another pick.",picks:"Up to 6 picks, and never the same one twice.",combo:"These picks can\u2019t all win together. Swap one.",event:"That match isn\u2019t open right now.",stake:"Minimum is $1.",league:"League not found.",name:"Give your league a name.",auth:"Your session expired. Reload the page.",upstream:"Polymarket is slow right now. Try again.",limit:"You already run 10 leagues."}[e]||"Something went wrong. Try again."}
+function errText(e){return{taken:"That name is taken. Try another one.",handle:"3 to 18 letters, numbers or _ only.",balance:"Not enough play money.",closed:"This market just closed.",price:"Price out of range right now. Try another pick.",picks:"Up to 6 picks, and never the same one twice.",combo:"These picks can\u2019t all win together. Swap one.",event:"That match isn\u2019t open right now.",stake:"Minimum is $1.",league:"League not found.",name:"Give your league a name.",auth:"Your session expired. Reload the page.",upstream:"Polymarket is slow right now. Try again.",limit:"You already run 10 leagues.",full:"This clan is full — 60 players max.",member:"Join the clan first.",self:"That’s you.",admin:"Only the player who made the clan can do that.",nobody:"No player with that name. Check the spelling, or send them the link."}[e]||"Something went wrong. Try again."}
 
 function price(t,fb){var v=Q[t];return v!=null?v:fb}
 function legNow(l){return l.final!=null?+l.final:price(l.token_id,+l.p0)}
@@ -1416,7 +1430,7 @@ function equity(){if(!P)return START;return+P.player.bal+openPos().reduce(functi
 
 function setProfile(j){
   if(!j||!j.player)return;
-  var prev=P;P={player:j.player,positions:j.positions||[],leagues:j.leagues||[]};
+  var prev=P;P={player:j.player,positions:j.positions||[],leagues:j.leagues||[],invites:j.invites||[]};
   if(prev){P.positions.forEach(function(p){var o=seenStatus[p.id];if(o==="open"&&p.status!=="open"&&p.status!=="ejected")settled(p)})}
   P.positions.forEach(function(p){seenStatus[p.id]=p.status});
   P.positions.forEach(function(p){p.lg_leg.forEach(function(l){if(Q[l.token_id]==null&&l.final==null)Q[l.token_id]=+l.p0})});
@@ -1426,6 +1440,7 @@ function refreshNav(){
   var b=$("eqBtn");if(!P){b.hidden=true;return}
   b.hidden=false;var e=equity();$("eqV").textContent=money(e);var x=$("eqX");x.textContent=eqx(e);x.className=e>=START?"up":"dn";
   var n=openPos().length,o=$("openN");o.textContent=n;o.classList.toggle("on",n>0);
+  var iv=pendInv().length,ib=$("invN");if(ib){ib.textContent=iv;ib.classList.toggle("on",iv>0)}
   $("hero").hidden=!!P||tab!=="matches";
 }
 
@@ -3368,23 +3383,90 @@ function loadLeague(){
   api("league",{code:LG,token:tok||undefined}).then(function(j){LD=j;renderSide();renderRail();if(tab==="league")renderLeague()}).catch(function(e){if(e==="league"){LG="ALL";loadLeague()}});
 }
 
+/* Une invitation se repond: on entre, ou on la retire. Celle qui vient
+   d'un pseudo est une ligne dans la base; celle qui vient d'un lien de
+   partage n'existe que dans l'adresse. Un lien n'est pas un
+   consentement: pour qui joue deja, les deux se repondent pareil. */
+var IGN="moonx.play.ignored";
+function invIgnored(c){try{return(localStorage.getItem(IGN)||"").split(",").indexOf(c)>=0}catch(e){return false}}
+function invIgnore(c){
+  try{var l=(localStorage.getItem(IGN)||"").split(",").filter(Boolean);if(l.indexOf(c)<0)l.push(c);localStorage.setItem(IGN,l.slice(-20).join(","))}catch(e){}
+  if(inviteInfo&&inviteInfo.code===c){inviteInfo=null;inviteCode=""}
+  linkInvite();render();
+}
+function pendInv(){
+  var out=((P&&P.invites)||[]).map(function(l){return{code:l.code,name:l.name,link:false}});
+  if(P&&inviteInfo&&!invIgnored(inviteInfo.code)&&
+     !P.leagues.some(function(l){return l.code===inviteInfo.code})&&
+     !out.some(function(l){return l.code===inviteInfo.code}))
+    out.push({code:inviteInfo.code,name:inviteInfo.name,link:true});
+  return out;
+}
+function invRow(l){
+  return'<div class="invite" style="margin:12px 0 0"><span style="flex:1">You\u2019re invited to <b>'+esc(l.name)+'</b>.</span>'+
+    '<button class="go" type="button" data-joinlg="'+esc(l.code)+'">Join</button>'+
+    '<button class="go ghost" type="button" data-'+(l.link?"nolink":"noinv")+'="'+esc(l.code)+'">Ignore</button></div>';
+}
+function invitesHTML(){return pendInv().map(invRow).join("")}
+/* Le bandeau du haut dit la meme chose a celui qui arrive par le lien.
+   Celui qui n'a pas encore de pseudo entre en posant son premier pari:
+   le code le suit jusque-la, il n'y a rien a accepter. */
+function linkInvite(){
+  var b=$("inviteBox");if(!b)return;
+  var l=pendInv().filter(function(x){return x.link})[0];
+  if(!l&&!(inviteInfo&&!P)){b.hidden=true;b.innerHTML="";return}
+  b.hidden=false;
+  b.innerHTML=P
+    ?'<span style="flex:1">You\u2019re invited to <b>'+esc(l.name)+'</b>.</span>'+
+     '<button class="go" type="button" data-joinlg="'+esc(l.code)+'">Join</button>'+
+     '<button class="go ghost" type="button" data-nolink="'+esc(l.code)+'">Ignore</button>'
+    :'<span style="flex:1">You\u2019re invited to <b>'+esc(inviteInfo.name)+'</b>. Pick a match to join with $1,000.</span>';
+}
+
 function renderLeague(){
   var el=$("v-league"),me=P&&P.player.handle.toLowerCase();
-  var h=leaguesChips();
+  var h=leaguesChips()+invitesHTML();
   if(!LD||LD.league.code!==LG){el.innerHTML=h+'<div class="grid" style="margin-top:14px"><div class="skel"></div></div>';return}
   var d=LD,isMember=LG==="ALL"||(P&&P.leagues.some(function(l){return l.code===LG}));
   if(LG!=="ALL"){
     var url="https://moonx.fi/play?l="+LG;
-    h+=isMember?'<div class="inv"><code>'+url.replace("https://","")+'</code><button class="go" type="button" data-invite="'+LG+'">Invite</button></div>':'<div class="invite" style="margin:12px 0 0"><span style="flex:1">Join <b>'+esc(d.league.name)+"</b> and take on your friends.</span>"+'<button class="go" type="button" data-joinlg="'+LG+'">Join</button></div>';
+    h+=isMember
+      ?'<div class="inv"><code>'+url.replace("https://","")+'</code><button class="go" type="button" data-invite="'+LG+'">Invite</button></div>'+
+       /* Le lien ne sert qu'a ceux qui arrivent. Celui qui joue deja a un
+          pseudo: c'est par la qu'on le fait entrer. */
+       '<div class="addp"><span class="at">@</span><input class="fld" id="addp" maxlength="18" autocapitalize="off" autocomplete="off" spellcheck="false" placeholder="Their name on the board"><button class="go" type="button" data-addp="'+LG+'">Add</button></div>'+
+       '<div class="lgadm">'+(d.admin?'<button type="button" data-rnlg="'+LG+'">Rename the clan</button>':"")+
+         '<button type="button" data-leave="'+LG+'">'+(d.admin?"Leave \u2014 the clan stays":"Leave this clan")+"</button></div>"
+      :'<div class="invite" style="margin:12px 0 0"><span style="flex:1">Join <b>'+esc(d.league.name)+"</b> and take on your friends.</span>"+'<button class="go" type="button" data-joinlg="'+LG+'">Join</button></div>';
   }
   h+='<div class="sechead"><h2>'+esc(d.league.name)+"</h2><span>"+(d.total||d.board.length)+" players · live</span></div>";
   var bk=boardRanked(d.board,me),sb=bk.rows;
-  var brow=function(r,i,n){var k=bRank(r,i,n),c=bCell(r);return'<div class="br'+(me&&String(r.handle).toLowerCase()===me?" me":"")+'"><span class="rk'+(k<=3?" t":"")+'">'+k+'</span><span class="h">@'+esc(r.handle)+'</span><span class="e"><b class="'+c.c+'">'+c.v+'</b><small>'+c.s+"</small></span></div>"};
+  /* Le patron du clan ajoute et vire. Personne d'autre, et jamais
+     lui-meme: pour partir il y a "Leave". */
+  var adm=LG!=="ALL"&&!!d.admin;
+  var xbtn=function(h,t){return adm&&h!==d.owner?'<button type="button" class="x" data-kick="'+esc(h)+'" aria-label="'+t+'">\u00d7</button>':""};
+  var brow=function(r,i,n){var k=bRank(r,i,n),c=bCell(r);return'<div class="br'+(me&&String(r.handle).toLowerCase()===me?" me":"")+'"><span class="rk'+(k<=3?" t":"")+'">'+k+'</span><span class="h">@'+esc(r.handle)+(d.owner&&r.handle===d.owner?'<i class="adm">admin</i>':"")+'</span><span class="e"><b class="'+c.c+'">'+c.v+'</b><small>'+c.s+"</small></span>"+xbtn(r.handle,"Remove from the clan")+"</div>"};
   if(sb.length)h+=boardChips();
   h+=sb.length
     ?'<div class="board">'+sb.map(function(r,i){return brow(r,i,sb.length)}).join("")+"</div>"
     :'<div class="empty"><b>No result yet.</b>The first settled bet takes the top spot.</div>';
   if(bk.waiting)h+='<div class="board bwait">'+brow(bk.waiting,sb.length,sb.length)+"</div>";
+  /* Le classement ne porte que ceux qui ont un resultat a montrer. Le
+     clan, lui, a des membres: celui qui vient d'entrer, celui qui n'a
+     pas encore parie, celui qu'on attend. Qui tient le clan doit les
+     voir tous, sinon il ne peut rien administrer. */
+  if(LG!=="ALL"&&isMember){
+    var mb=(d.board||[]).map(function(r){return{h:r.handle,s:money(+r.equity),p:false}})
+      .concat((d.pending||[]).map(function(x){return{h:x,s:"Invited",p:true}}));
+    if(mb.length){
+      h+='<div class="sechead"><h2>Members</h2><span>'+(d.board||[]).length+" in the clan"+((d.pending||[]).length?" \u00b7 "+d.pending.length+" invited":"")+"</span></div>"+
+        '<div class="board">'+mb.map(function(m){
+          return'<div class="br'+(m.p?" pw":"")+(me&&m.h.toLowerCase()===me?" me":"")+'"><span class="h">@'+esc(m.h)+
+            (d.owner&&m.h===d.owner?'<i class="adm">admin</i>':"")+'</span><span class="e"><small>'+esc(m.s)+"</small></span>"+
+            xbtn(m.h,m.p?"Cancel the invitation":"Remove from the clan")+"</div>";
+        }).join("")+"</div>";
+    }
+  }
   var others=(d.open||[]).filter(function(p){return!me||String(p.lg_player&&p.lg_player.handle).toLowerCase()!==me}).slice(0,12);
   if(others.length){
     h+='<div class="sechead"><h2>Their bets</h2><span>Follow them or go against</span></div><div class="grid two">'+others.map(function(p){
@@ -3442,7 +3524,63 @@ function makeLeague(){
 function joinLeague(code){
   if(busy)return;
   if(!P){inviteCode=code;setTab("matches");toast("Pick a match to join with $1,000.");return}
-  busy=true;api("league_join",{token:tok,code:code}).then(function(j){setProfile(j);LG=j.league.code;LD=null;toast("You joined "+j.league.name);loadLeague();render()}).catch(function(e){toast(errText(e))}).then(function(){busy=false});
+  busy=true;api("league_join",{token:tok,code:code}).then(function(j){setProfile(j);LG=j.league.code;LD=null;toast("You joined "+j.league.name);linkInvite();loadLeague();render()}).catch(function(e){toast(errText(e))}).then(function(){busy=false});
+}
+/* Faire entrer quelqu'un qui joue deja. Il ne recoit pas de lien: sa
+   ligne de membre est posee en attente, et il la trouve en ouvrant son
+   onglet Clan. Les joueurs de la maison entrent tout de suite. */
+function addPlayer(code){
+  if(busy)return;
+  var f=$("addp"),n=(f&&f.value||"").trim().replace(/^@/,"");
+  if(!/^[A-Za-z0-9_]{3,18}$/.test(n)){toast(errText("handle"));if(f)f.focus();return}
+  busy=true;
+  api("league_invite",{token:tok,code:code,handle:n}).then(function(j){
+    setProfile(j);if(f)f.value="";
+    ev("lg_add",{state:j.state});
+    toast(j.state==="in"?"@"+j.invited+" is in the clan.":"@"+j.invited+" is invited. They\u2019ll see it next time they open MOONX.");
+    LD=null;loadLeague();render();
+  }).catch(function(e){toast(errText(e))}).then(function(){busy=false});
+}
+function leaveLeague(code){
+  if(busy)return;busy=true;closeSheet();
+  api("league_leave",{token:tok,code:code}).then(function(j){
+    setProfile(j);invIgnore(code);if(LG===code){LG="ALL";LD=null;loadLeague()}
+    render();
+  }).catch(function(e){toast(errText(e))}).then(function(){busy=false});
+}
+/* Virer quelqu'un, ou annuler une invitation: la meme ligne part. Un
+   pouce qui glisse ne doit pas sortir un ami du clan, d'ou la question. */
+function askKick(h){
+  var lg=(LD&&LD.league&&LD.league.name)||"the clan";
+  openSheet("kick",'<h3>Remove @'+esc(h)+'? <button type="button" data-close-sheet="1">Cancel</button></h3>'+
+    '<p class="sub">They leave '+esc(lg)+' and drop off its board. Their money and their bets are untouched, and you can invite them back.</p>'+
+    '<button class="go big" type="button" data-kickgo="'+esc(h)+'">Remove @'+esc(h)+'</button>');
+}
+function kickPlayer(h){
+  if(busy)return;busy=true;closeSheet();
+  api("league_kick",{token:tok,code:LG,handle:h}).then(function(j){
+    setProfile(j);toast("@"+j.removed+" is out.");LD=null;loadLeague();render();
+  }).catch(function(e){toast(errText(e))}).then(function(){busy=false});
+}
+function askLeave(code){
+  var lg=(P&&P.leagues.find(function(l){return l.code===code}))||{name:"this clan"};
+  openSheet("leave",'<h3>Leave '+esc(lg.name)+'? <button type="button" data-close-sheet="1">Cancel</button></h3>'+
+    '<p class="sub">You drop off its board. Your money and your bets stay exactly as they are, and the clan keeps running without you.</p>'+
+    '<button class="go big" type="button" data-leavego="'+esc(code)+'">Leave '+esc(lg.name)+'</button>');
+}
+function renameLeague(code){
+  var lg=(P&&P.leagues.find(function(l){return l.code===code}))||{name:""};
+  openSheet("rnlg",'<h3>Rename the clan <button type="button" data-close-sheet="1">Cancel</button></h3>'+
+    '<p class="sub">Everyone sees the new name. The link does not change.</p>'+
+    '<label class="lbl" for="rnName">CLAN NAME</label><input class="fld" id="rnName" maxlength="32" value="'+esc(lg.name)+'">'+
+    '<button class="go big" type="button" data-dornlg="'+esc(code)+'">Save</button>');
+}
+function doRename(code){
+  if(busy)return;var n=($("rnName")&&$("rnName").value||"").trim();
+  if(n.length<2){toast(errText("name"));return}
+  busy=true;api("league_rename",{token:tok,code:code,name:n}).then(function(j){
+    setProfile(j);closeSheet();LD=null;loadLeague();render();
+  }).catch(function(e){toast(errText(e))}).then(function(){busy=false});
 }
 function invite(code){
   var lg=(P&&P.leagues.find(function(l){return l.code===code}))||{name:"my league"},url="https://moonx.fi/play?l="+code,txt="Join "+lg.name+" on MOONX Play. Real matches, live prices, $1,000 of play money. Let’s see who’s best:";
@@ -3848,6 +3986,15 @@ document.addEventListener("click",function(e){
   if(d.newlg){newLeague();return}
   if(d.mklg){rememberName();makeLeague();return}
   if(d.joinlg){joinLeague(d.joinlg);return}
+  if(d.addp){addPlayer(d.addp);return}
+  if(d.noinv){leaveLeague(d.noinv);return}
+  if(d.nolink){invIgnore(d.nolink);return}
+  if(d.kick){askKick(d.kick);return}
+  if(d.kickgo){kickPlayer(d.kickgo);return}
+  if(d.leave){askLeave(d.leave);return}
+  if(d.leavego){leaveLeague(d.leavego);return}
+  if(d.rnlg){renameLeague(d.rnlg);return}
+  if(d.dornlg){doRename(d.dornlg);return}
   if(d.invite){invite(d.invite);return}
   if(d.follow){startFollow(d.follow,d.side);return}
   if(d.unfollow){follow=null;amount=null;closeSheet();renderTicket();return}
@@ -3917,12 +4064,14 @@ document.addEventListener("click",function(e){
 function rememberName(){var f=document.querySelector("#hdl");if(f)timers.hdl=f.value}
 document.addEventListener("keydown",function(e){if(e.key==="Enter"&&e.target&&e.target.dataset&&e.target.dataset.mailIn){e.preventDefault();sendMail(e.target.dataset.mailIn);return}
   if(e.key==="Enter"&&e.target&&e.target.id==="hdl2"){e.preventDefault();startGame()}
-  if(e.key==="Enter"&&e.target&&e.target.id==="qhdl"){e.preventDefault();nameGo()}});
+  if(e.key==="Enter"&&e.target&&e.target.id==="qhdl"){e.preventDefault();nameGo()}
+  if(e.key==="Enter"&&e.target&&e.target.id==="addp"){e.preventDefault();addPlayer(LG)}});
 $("sheet").addEventListener("click",function(e){if(e.target===this){closeSheet();if(follow){follow=null;renderTicket()}}});
 $("ov").addEventListener("click",function(e){if(e.target===this)this.classList.remove("open")});
 document.addEventListener("keydown",function(e){
   if(e.key==="Escape"){if($("sheet").classList.contains("open"))closeSheet();else $("ov").classList.remove("open")}
-  if(e.key==="Enter"&&e.target.id==="lgName")makeLeague()});
+  if(e.key==="Enter"&&e.target.id==="lgName")makeLeague();
+  if(e.key==="Enter"&&e.target.id==="rnName")doRename(LG)});
 document.addEventListener("input",function(e){
   if(e.target.id==="ejR"){timers.ejPc=+e.target.value;ejPaint();return}
   if(e.target.classList&&e.target.classList.contains("cin")){
@@ -3953,8 +4102,8 @@ function boot(){
      marches: sinon la rafale tombe sur un serveur qui demarre encore. */
   setTimeout(function(){timers.deepOk=1;loadDeep()},2500);
   render();pollMarkets();
-  if(inviteCode)api("league",{code:inviteCode}).then(function(j){inviteInfo={code:j.league.code,name:j.league.name};LG=j.league.code;LD=j;var b=$("inviteBox");b.hidden=false;b.innerHTML='<span style="flex:1">You’re invited to <b>'+esc(j.league.name)+"</b>. "+(P?"":"Pick a match to join with $1,000.")+"</span>"+(P&&!P.leagues.some(function(l){return l.code===j.league.code})?'<button class="go" type="button" data-joinlg="'+j.league.code+'">Join</button>':"");}).catch(function(){inviteCode=""});
-  if(tok)api("me",{token:tok}).then(function(j){setProfile(j);if(inviteCode&&!P.leagues.some(function(l){return l.code===inviteCode}))api("league_join",{token:tok,code:inviteCode}).then(function(r){setProfile(r);toast("You joined "+r.league.name);$("inviteBox").hidden=true}).catch(function(){});render();pollQuotes()}).catch(function(e){if(e==="auth"){tok=null;try{localStorage.removeItem(TK)}catch(x){}}render()});
+  if(inviteCode)api("league",{code:inviteCode}).then(function(j){inviteInfo={code:j.league.code,name:j.league.name};LG=j.league.code;LD=j;linkInvite();refreshNav();if(tab==="league")renderLeague();loadLeague()}).catch(function(){inviteCode=""});
+  if(tok)api("me",{token:tok}).then(function(j){setProfile(j);linkInvite();render();pollQuotes()}).catch(function(e){if(e==="auth"){tok=null;try{localStorage.removeItem(TK)}catch(x){}}render()});
   loadLeague();
   setInterval(pollQuotes,6000);setInterval(pollMarkets,45000);setInterval(pollMe,30000);setInterval(tickClocks,30000);
   setInterval(function(){if(tab==="league"||window.matchMedia("(min-width:1080px)").matches)loadLeague()},22000);
