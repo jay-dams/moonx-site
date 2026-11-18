@@ -616,6 +616,11 @@ footer .lk a{text-decoration:none;color:#fff}
 .clall{max-height:252px;overflow-y:auto;overscroll-behavior:contain;margin:0 -4px;padding:0 4px;scrollbar-width:thin;scrollbar-color:var(--line) transparent}
 .clall::-webkit-scrollbar{width:5px}
 .clall::-webkit-scrollbar-thumb{background:var(--line);border-radius:3px}
+.bsort{display:flex;gap:5px;margin:0 0 9px}
+.bsb{flex:1;height:27px;border-radius:8px;border:1px solid var(--line);background:var(--well);font-size:11px;font-weight:800;letter-spacing:.02em;color:var(--dim);white-space:nowrap}
+.bsb.on{background:#fff;color:#06110A;border-color:#fff}
+#v-league .bsort{margin:12px 0 10px;gap:6px}
+#v-league .bsb{height:34px;font-size:12.5px;border-radius:10px}
 .clfeed{display:grid;gap:7px}
 .clfd{display:flex;gap:9px;align-items:flex-start;font-size:12px;line-height:1.35;color:#C9D4E6}
 .clfd .ic{flex:none;width:21px;height:21px;border-radius:50%;display:grid;place-items:center;font-size:10px;font-weight:900;background:rgba(255,255,255,.07)}
@@ -2520,20 +2525,54 @@ function hasStats(r){return!!r&&r.settled!=null}
 function pnlTxt(r){return+(r&&r.settled)>0?signed(+r.pnl||0):"\u2014"}
 function roiTxt(r){return r&&r.roi!=null?(r.roi>=0?"+":"")+(+r.roi).toFixed(1)+"%":"\u2014"}
 function hitTxt(r){return r&&r.hit?fx(+r.hit):"\u2014"}
-/* Un joueur qui n'a encaisse aucun pari n'a pas de "meilleur multiple":
-   ecrire "best —" affiche un trou. On dit ce qui est vrai. */
-function subStats(r){
-  if(!(+r.settled>0))return"no bet settled yet";
-  return r&&r.hit?roiTxt(r)+" \u00b7 best "+hitTxt(r):roiTxt(r)+" \u00b7 no winner yet"
+/* Un joueur se juge sur trois choses, et c'est a lui de dire laquelle
+   compte: son plus gros coup realise, ce qu'il a gagne en dollars, et
+   ce que son capital a fait. Le classement se range donc sur l'une des
+   trois. Le gros chiffre de chaque ligne suit le tri: trier sur un
+   nombre qu'on ne montre pas, c'est demander au joueur de nous croire
+   sur parole. Un joueur qui n'a encore rien denoue n'a aucun de ces
+   trois chiffres: il passe derriere, et sa ligne le dit. */
+var BSORT=[{k:"pnl",lb:"Profit"},{k:"roi",lb:"ROI"},{k:"hit",lb:"Best"}];
+var bsort="pnl";
+try{var _b=localStorage.getItem("moonx.play.bsort");if(_b==="roi"||_b==="hit")bsort=_b}catch(e){}
+function bval(r,k){
+  if(!hasStats(r)||!(+r.settled>0))return null;
+  if(k==="pnl")return+r.pnl||0;
+  if(k==="roi")return r.roi==null?null:+r.roi;
+  return r.hit?+r.hit:null;
+}
+function boardSort(b){
+  return(b||[]).map(function(r,i){return{r:r,i:i}}).sort(function(a,c){
+    var x=bval(a.r,bsort),y=bval(c.r,bsort);
+    if(x==null&&y==null)return(+c.r.equity||0)-(+a.r.equity||0)||a.i-c.i;
+    if(x==null)return 1;
+    if(y==null)return-1;
+    return y-x||a.i-c.i;
+  }).map(function(o){return o.r});
+}
+/* Le rang vient de la place dans la liste, sauf pour le joueur que le
+   serveur a rajoute parce qu'il tombait hors des cent cinquante: lui
+   garde son vrai rang, qui est plus grand que la liste. */
+function bRank(r,i,n){var s=+r.rank||0;return s>n?s:i+1}
+function bCell(r){
+  if(!hasStats(r)||!(+r.settled>0))
+    return{v:money(+r.equity),c:+r.equity/START>=1?"up":"dn",s:"no bet settled yet"};
+  var best=r.hit?"best "+hitTxt(r):"no winner yet";
+  if(bsort==="hit")return{v:hitTxt(r),c:r.hit&&+r.hit>=1?"up":"dn",s:pnlTxt(r)+" \u00b7 "+roiTxt(r)};
+  if(bsort==="roi")return{v:roiTxt(r),c:pnlUp(r),s:pnlTxt(r)+" \u00b7 "+best};
+  return{v:pnlTxt(r),c:pnlUp(r),s:roiTxt(r)+" \u00b7 "+best};
+}
+function boardChips(){
+  return'<div class="bsort">'+BSORT.map(function(x){
+    return'<button type="button" class="bsb'+(x.k===bsort?" on":"")+'" data-bsort="'+x.k+'">'+x.lb+"</button>"
+  }).join("")+"</div>";
 }
 function pnlUp(r){return+(r&&r.settled)>0?((+r.pnl||0)>=0?"up":"dn"):""}
-function clanRow(r,i,me){
-  var n=+r.rank||i+1;
+function clanRow(r,i,me,n0){
+  var n=bRank(r,i,n0||0),c=bCell(r);
   return'<div class="clrow'+(me&&String(r.handle).toLowerCase()===me?" me":"")+'"><span class="rk'+(n<=3?" t":"")+'">'+n+
     '</span><span class="h">@'+esc(r.handle)+'</span>'+
-    (hasStats(r)
-      ?'<span class="m '+pnlUp(r)+'">'+pnlTxt(r)+(r.roi==null?"":'<i>'+roiTxt(r)+"</i>")+"</span>"
-      :'<span class="m '+(+r.equity/START>=1?"up":"dn")+'">'+fx(+r.equity/START)+"</span>")+"</div>";
+    '<span class="m '+c.c+'">'+c.v+"<i>"+c.s+"</i></span></div>";
 }
 function clanFeedRow(f){
   var who="@"+esc(f.lg_player&&f.lg_player.handle||"?"),p=f.lg_position||{},l=p.lg_leg||[],d=f.data||{};
@@ -2549,8 +2588,9 @@ function clanHTML(){
   if(!LD||!LD.board)return'<div class="cd"><h4>Your clan</h4><div class="empty2">Loading the board…</div></div>';
   var me=P&&P.player.handle.toLowerCase(),b=LD.board,mine=-1;
   if(me)b.some(function(r,i){if(String(r.handle).toLowerCase()===me){mine=i;return true}});
-  var h='<div class="cd"><h4>'+esc(LD.league.name)+"<span>"+(LD.total||b.length)+" playing</span></h4>"+
-    '<div class="clall" id="clall">'+b.map(function(r,i){return clanRow(r,i,me)}).join("")+"</div>";
+  var sb=boardSort(b);
+  var h='<div class="cd"><h4>'+esc(LD.league.name)+"<span>"+(LD.total||b.length)+" playing</span></h4>"+boardChips()+
+    '<div class="clall" id="clall">'+sb.map(function(r,i){return clanRow(r,i,me,sb.length)}).join("")+"</div>";
   h+=LG==="ALL"
     ?'<button class="go" type="button" data-newlg="1" style="width:100%;margin-top:11px;height:38px">Start a clan with your friends</button>'
     :'<button class="go ghost" type="button" data-invite="'+LG+'" style="width:100%;margin-top:11px;height:38px">Invite your friends</button>';
@@ -2994,7 +3034,9 @@ function renderLeague(){
     h+=isMember?'<div class="inv"><code>'+url.replace("https://","")+'</code><button class="go" type="button" data-invite="'+LG+'">Invite</button></div>':'<div class="invite" style="margin:12px 0 0"><span style="flex:1">Join <b>'+esc(d.league.name)+"</b> and take on your friends.</span>"+'<button class="go" type="button" data-joinlg="'+LG+'">Join</button></div>';
   }
   h+='<div class="sechead"><h2>'+esc(d.league.name)+"</h2><span>"+(d.total||d.board.length)+" players · live</span></div>";
-  h+=d.board.length?'<div class="board">'+d.board.map(function(r,i){var n=+r.rank||i+1;return'<div class="br'+(me&&String(r.handle).toLowerCase()===me?" me":"")+'"><span class="rk'+(n<=3?" t":"")+'">'+n+'</span><span class="h">@'+esc(r.handle)+'</span>'+(hasStats(r)?'<span class="e"><b class="'+pnlUp(r)+'">'+pnlTxt(r)+'</b><small>'+subStats(r)+"</small></span>":'<span class="e"><b>'+money(+r.equity)+'</b><small>'+fx(+r.equity/START)+"</small></span>")+"</div>"}).join("")+"</div>":'<div class="empty"><b>No players yet.</b>Invite your friends with the link above.</div>';
+  var sb=boardSort(d.board);
+  h+=boardChips();
+  h+=sb.length?'<div class="board">'+sb.map(function(r,i){var n=bRank(r,i,sb.length),c=bCell(r);return'<div class="br'+(me&&String(r.handle).toLowerCase()===me?" me":"")+'"><span class="rk'+(n<=3?" t":"")+'">'+n+'</span><span class="h">@'+esc(r.handle)+'</span><span class="e"><b class="'+c.c+'">'+c.v+'</b><small>'+c.s+"</small></span></div>"}).join("")+"</div>":'<div class="empty"><b>No players yet.</b>Invite your friends with the link above.</div>';
   var others=(d.open||[]).filter(function(p){return!me||String(p.lg_player&&p.lg_player.handle).toLowerCase()!==me}).slice(0,12);
   if(others.length){
     h+='<div class="sechead"><h2>Their bets</h2><span>Follow them or go against</span></div><div class="grid two">'+others.map(function(p){
@@ -3414,6 +3456,7 @@ document.addEventListener("click",function(e){
   if(d.cardgo){shareCardGo();return}
   if(d.carddl){cardDownload();return}
   if(d.restart){restart();return}
+  if(d.bsort){if(d.bsort!==bsort){bsort=d.bsort;try{localStorage.setItem("moonx.play.bsort",bsort)}catch(x){}renderSide();if(tab==="league")renderLeague()}return}
   if(d.lg){LG=d.lg;LD=null;renderLeague();loadLeague();return}
   if(d.newlg){newLeague();return}
   if(d.mklg){rememberName();makeLeague();return}
