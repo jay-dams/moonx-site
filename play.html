@@ -769,6 +769,16 @@ body.det .hero,body.det .invite{display:none}
 .drow{display:flex;align-items:center;gap:10px;padding:3px 0}
 .dcap{flex:0 0 31%;min-width:0;font-size:12.5px;font-weight:700;color:var(--hi);line-height:1.2}
 .dops{flex:1;display:flex;gap:6px;min-width:0}
+/* Un score exact, ce sont douze choix et non deux. Une rangee elastique
+   les ecraserait: a partir de quatre, on passe en grille et le bloc
+   prend toute la largeur, la legende au-dessus plutot qu'a cote. */
+.drow.wide{display:block}
+.drow.wide .dcap{display:block;margin:2px 0 7px}
+.dops.many{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.dops.many .dop{height:46px;padding:0 10px;gap:5px}
+.dops.many .dop .dnm{font-size:12.5px;font-variant-numeric:tabular-nums}
+.dops.many .dop .pc2{display:none}
+@media (max-width:560px){.dops.many{grid-template-columns:repeat(3,minmax(0,1fr))}}
 .dop{flex:1 1 0;min-width:0;display:flex;align-items:center;gap:8px;height:50px;padding:0 12px;border-radius:14px;background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.015));box-shadow:inset 0 0 0 1px var(--line);text-align:left;transition:background .2s,box-shadow .2s,transform .12s}
 .dop:hover{background:linear-gradient(180deg,rgba(255,255,255,.09),rgba(255,255,255,.03))}
 .dop:active{transform:scale(.985)}
@@ -2550,8 +2560,9 @@ function famHTML(f){
   return'<section class="dsec">'+f.gs.map(function(g){
     var cap=gcap(g);
     if(cap&&fl(cap)===fl(f.name))cap="";
-    return'<div class="drow">'+(cap?'<span class="dcap">'+esc(cap)+'</span>':"")+
-      '<div class="dops">'+g.opts.map(dopHTML).join("")+'</div></div>';
+    var many=g.opts.length>3;
+    return'<div class="drow'+(many?" wide":"")+'">'+(cap?'<span class="dcap">'+esc(cap)+'</span>':"")+
+      '<div class="dops'+(many?" many":"")+'">'+g.opts.map(dopHTML).join("")+'</div></div>';
   }).join("")+'</section>';
 }
 /* On ne redessine pas tout l'ecran a chaque tap: la page sauterait. */
