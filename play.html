@@ -104,14 +104,22 @@ nav.top{position:fixed;top:0;left:0;right:0;z-index:30;height:var(--nh);display:
    des le deuxieme ecran. */
 .lgf{position:sticky;top:calc(var(--nh) + var(--th));z-index:15;display:flex;align-items:center;gap:6px;overflow-x:auto;scrollbar-width:none;margin:9px -14px 0;padding:7px 14px 6px;background:var(--bg)}
 .lgf::-webkit-scrollbar{display:none}
+/* Une liste qui defile doit le dire. Le bord s'estompe du cote ou il
+   reste quelque chose a voir, et redevient net quand on est au bout:
+   sans ca, rien ne distingue une liste complete d'une liste coupee, et
+   le joueur ne pense meme pas a essayer. */
+.scx{-webkit-mask-image:none;mask-image:none}
+.scx.er{-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 56px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 56px),transparent)}
+.scx.el{-webkit-mask-image:linear-gradient(90deg,transparent,#000 46px);mask-image:linear-gradient(90deg,transparent,#000 46px)}
+.scx.el.er{-webkit-mask-image:linear-gradient(90deg,transparent,#000 46px,#000 calc(100% - 56px),transparent);mask-image:linear-gradient(90deg,transparent,#000 46px,#000 calc(100% - 56px),transparent)}
 .lgf:empty{display:none}
-.lgb{flex:none;display:inline-flex;align-items:center;gap:6px;height:29px;padding:0 11px;border-radius:999px;border:1px solid var(--line);background:var(--well);font-size:12px;font-weight:700;color:var(--dim);white-space:nowrap}
-.lgb img{width:15px;height:15px;object-fit:contain;flex:none}
+.lgb{flex:none;align-self:center;display:inline-flex;align-items:center;justify-content:center;gap:6px;height:29px;line-height:1;padding:0 11px;border-radius:999px;border:1px solid var(--line);background:var(--well);font-size:12px;font-weight:700;color:var(--dim);white-space:nowrap;vertical-align:middle}
+.lgb img{display:block;width:15px;height:15px;object-fit:contain;flex:none}
 .lgb i{font-style:normal;font-size:10.5px;font-weight:800;opacity:.65;font-variant-numeric:tabular-nums}
 .lgb.on{background:var(--acc);color:#06110A;border-color:var(--acc)}
 .lgb.on i{opacity:.75}
 .lgb.more{color:var(--mint);border-color:rgba(61,220,132,.35)}
-.lgb.more svg{width:13px;height:13px;margin-left:1px}
+.lgb.more svg{display:block;width:13px;height:13px;margin-left:1px;flex:none}
 .lgsheet{max-height:min(62vh,520px);overflow-y:auto;overscroll-behavior:contain;padding:2px}
 .lgsheet button .ic{display:grid;place-items:center;width:22px;height:22px}
 .lgsheet button .ic img{width:20px;height:20px;object-fit:contain}
@@ -604,7 +612,9 @@ footer .lk a{text-decoration:none;color:#fff}
 /* Le texte traverse l'objet: il porte son propre fond. */
 .dc .lgs div{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:700;color:#F2F6FC;min-width:0;text-shadow:0 1px 4px rgba(3,6,12,.9),0 0 10px rgba(3,6,12,.65)}
 .dc .lgs .lo{flex:none;align-self:center;width:20px;height:20px;border-radius:5px;background:rgba(0,0,0,.35);display:grid;place-items:center;overflow:hidden;font-size:7.5px;font-weight:900}
-.dc .lgs .lo img{width:100%;height:100%;object-fit:contain}
+/* Un ecusson carre pose dans un cadre aux coins arrondis se fait
+   manger les angles. On le rentre d'un cheveu. */
+.dc .lgs .lo img{width:100%;height:100%;object-fit:contain;padding:1px;box-sizing:border-box}
 .dc .lgs .t{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;line-height:1.2}
 .dc .lgs .t small{display:block;font-size:10px;font-weight:600;letter-spacing:0;color:#A9B6CB;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .dc .lgs .k{flex:none;align-self:center;font-family:var(--mono);font-size:11px;font-weight:800;color:#C6D2E6}
@@ -619,14 +629,22 @@ footer .lk a{text-decoration:none;color:#fff}
 .bk .hd .cnt{min-width:21px;height:21px;padding:0 6px;border-radius:7px;background:var(--acc);color:#06110A;font-size:11.5px;font-weight:900;display:grid;place-items:center;font-variant-numeric:tabular-nums}
 .bk .hd .clr{margin-left:auto;font-size:12px;font-weight:700;color:var(--dim)}
 .bk .hd .clr:hover{color:#fff}
-.bk .lst{display:grid;gap:6px;margin-bottom:10px;max-height:240px;overflow-y:auto;scrollbar-width:none}
+/* Une case de grille ne descend pas sous la largeur de son contenu si
+   on ne le lui dit pas: les lignes debordaient de vingt pixels et le
+   bouton de suppression sortait du panneau. */
+.bk .lst{display:grid;grid-template-columns:minmax(0,1fr);gap:6px;margin-bottom:10px;max-height:240px;overflow-y:auto;scrollbar-width:none}
 .bk .lst::-webkit-scrollbar{display:none}
-.bk .it{display:flex;align-items:center;gap:9px;padding:8px 7px 8px 9px;border-radius:12px;background:rgba(150,180,230,.06)}
+.bk .it{display:flex;align-items:center;gap:9px;min-width:0;padding:8px 7px 8px 9px;border-radius:12px;background:rgba(150,180,230,.06)}
 .bk .it .lo{flex:none;width:24px;height:24px;border-radius:7px;background:#1B2440;display:grid;place-items:center;overflow:hidden;font-size:9px;font-weight:900}
-.bk .it .lo img{width:100%;height:100%;object-fit:contain}
+.bk .it .lo img{width:100%;height:100%;object-fit:contain;padding:2px;box-sizing:border-box}
 .bk .it .nm3{flex:1;min-width:0;font-size:13px;font-weight:800;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.bk .it .nm3 small{display:block;font-size:10.5px;font-weight:600;color:var(--dim);overflow:hidden;text-overflow:ellipsis}
-.bk .it .k{font-family:var(--disp);font-size:13.5px;font-weight:900;color:var(--acc);font-variant-numeric:tabular-nums}
+.bk .it .nm3 small{display:block;font-size:10.5px;font-weight:600;color:var(--dim);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bk .it .k{flex:none;font-family:var(--disp);font-size:13.5px;font-weight:900;color:var(--acc);font-variant-numeric:tabular-nums}
+/* Le bouton de suppression n'avait de style que dans le bulletin du
+   telephone; dans le panneau il n'en avait aucun et se laissait
+   ecraser. */
+.bk .it .rm1{flex:none;width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,.09);color:var(--dim);font-size:14px;font-weight:700;line-height:1;display:grid;place-items:center}
+.bk .it .rm1:hover{background:rgba(255,255,255,.2);color:#fff}
 .bk .it .rm1{flex:none;width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,.08);color:var(--dim);font-size:14px;line-height:1;display:grid;place-items:center}
 .bk .it .rm1:hover{background:rgba(255,255,255,.2);color:#fff}
 .bk .empty2{padding:16px 10px;text-align:center;font-size:12.5px;color:var(--dim);line-height:1.5}
@@ -1435,6 +1453,7 @@ function render(){
 function sportsBar(){
   var n={};MK.forEach(function(m){var k=catOf(m);n[k]=(n[k]||0)+1});
   var el=$("sports");
+  setTimeout(scAll,0);
   if(el)el.innerHTML=SPORTS.filter(function(s){return s[0]!==sport&&(s[0]==="all"||n[s[0]])}).map(function(s){return'<button type="button" class="chip'+(s[0]===sport?" on":"")+'" data-sport="'+s[0]+'"><span class="ci">'+s[2]+"</span>"+s[1]+"</button>"}).join("");
   renderRail();
   var fb=$("fBtn");
@@ -1561,10 +1580,30 @@ function lgsBar(){
     (rest.length?'<button type="button" class="lgb more" data-lgsheet="1">'+rest.length+" more"+CHSVG+"</button>":"");
   var on=el.querySelector(".lgb.on");
   if(on)el.scrollTo({left:Math.max(0,on.offsetLeft-60),behavior:"auto"});
-  lgsH();
+  lgsH();scWatch(el);
 }
 /* La barre des dates se pose juste sous celle des competitions, qui
    n'existe pas toujours: on lui donne la hauteur mesuree, zero compris. */
+/* On surveille chaque liste qui defile: a chaque mouvement, et a chaque
+   redessin, on dit de quel cote il reste de la matiere. */
+function scEdges(el){
+  if(!el)return;
+  var max=el.scrollWidth-el.clientWidth;
+  el.classList.toggle("el",max>4&&el.scrollLeft>6);
+  el.classList.toggle("er",max>4&&el.scrollLeft<max-6);
+}
+function scWatch(el){
+  if(!el)return;
+  if(!el.dataset.scx){
+    el.dataset.scx="1";el.classList.add("scx");
+    el.addEventListener("scroll",function(){scEdges(el)},{passive:true});
+  }
+  scEdges(el);
+}
+function scAll(){
+  scWatch($("lgf"));scWatch($("days"));scWatch($("sports"));
+  scWatch(document.querySelector(".dgrid"));
+}
 function lgsH(){
   var el=$("lgf"),h=el&&el.innerHTML?el.offsetHeight:0;
   document.documentElement.style.setProperty("--lh",h+"px");
@@ -1617,6 +1656,7 @@ function daysBar(){
   }).join("");
   var on=el.querySelector(".day.on");
   if(on)el.scrollTo({left:Math.max(0,on.offsetLeft-60),behavior:"auto"});
+  scWatch(el);
 }
 function mlist(){
   var now=Date.now();
@@ -2240,6 +2280,7 @@ function renderDaily(){
   var cat=comboNarrow()?(SPORTS.find(function(x){return x[0]===sport})||[])[1]:"";
   el.innerHTML='<div class="dayhd"><h3>'+(cat?esc(cat)+" combos":"Today’s combos")+'</h3><span class="pmb">'+PMSVG+'LIVE POLYMARKET PRICES</span></div>'+
     '<div class="dgrid">'+cs.map(dcHTML).join("")+"</div>";
+  scWatch(el.querySelector(".dgrid"));
 }
 function addCombo(id){
   var c=DC.find(function(x){return x.id===id});if(!c)return;
@@ -3355,18 +3396,28 @@ function invite(code){
    LA CARTE A PARTAGER. Un denouement merite autre chose qu'une phrase.
    On dessine une image: le fond du sport, le mot du resultat, le
    multiplicateur, le gain, les paris. Les logos d'equipes de Polymarket
-   ne peuvent pas y figurer — leur serveur n'autorise pas le dessin sur
-   une toile, l'image se verrouillerait et ne pourrait plus etre exportee.
-   On garde donc nos photos, qui viennent de notre domaine, et les
-   initiales dans des pastilles.
+   viennent d'un seau Amazon qui ne renvoie aucun en-tete d'origine: le
+   navigateur refuse de les dessiner sur une toile, et on retombait sur
+   deux lettres a chaque carte partagee. Ils passent donc par /crest,
+   sur notre domaine, qui les relaie avec le bon en-tete. Les initiales
+   restent, mais seulement quand il n'y a vraiment pas d'ecusson.
 --------------------------------------------------------------------------- */
 var CARDW=1080,CARDH=1350;
-function cardImg(src){
+function cardImg(src,anon){
   return new Promise(function(res){
+    if(!src)return res(null);
     var i=new Image();
+    if(anon)i.crossOrigin="anonymous";
     i.onload=function(){res(i)};i.onerror=function(){res(null)};
     i.src=src;
   });
+}
+/* Le relais n'accepte qu'un seul hote: tout le reste passe tel quel. */
+function crestURL(u){
+  u=String(u||"");
+  if(!u||/country-flags\/un\.png/i.test(u))return"";
+  return u.indexOf("https://polymarket-upload.s3.us-east-2.amazonaws.com/")===0
+    ?"/crest?u="+encodeURIComponent(u):"";
 }
 function rrect(g,x,y,w,h,r){
   g.beginPath();
@@ -3443,10 +3494,31 @@ async function buildCard(r){
   /* les paris */
   var legs=(r.legs||[]).slice(0,3),y=790;
   if(legs.length){
+    var crests=await Promise.all(legs.map(function(l){
+      return l.draw?null:cardImg(crestURL(l.logo),true);
+    }));
     g.strokeStyle="rgba(140,170,220,.22)";g.lineWidth=2;
     g.beginPath();g.moveTo(P,730);g.lineTo(CARDW-P,730);g.stroke();
-    legs.forEach(function(l){
+    legs.forEach(function(l,li){
       g.fillStyle="rgba(150,180,230,.13)";rrect(g,P,y-44,62,62,20);g.fill();
+      var cr=crests[li];
+      if(cr){
+        /* L'ecusson rentre dans sa pastille sans jamais la deborder:
+           on respecte ses proportions et on garde une marge. */
+        var box=46,sc=Math.min(box/cr.width,box/cr.height);
+        var w=cr.width*sc,h=cr.height*sc;
+        g.save();rrect(g,P,y-44,62,62,20);g.clip();
+        g.drawImage(cr,P+31-w/2,y-13-h/2,w,h);
+        g.restore();
+        y+=104;
+        g.fillStyle="#fff";fitText(g,l.label,CARDW-2*P-230,38,"800");
+        g.fillText(l.label,P+86,y-118);
+        g.fillStyle="rgba(165,180,205,.95)";g.font='600 24px Inter,system-ui,sans-serif';
+        g.fillText(String(l.event_title||l.title||""),P+86,y-86);
+        g.fillStyle=acc;g.font='900 34px Inter,system-ui,sans-serif';
+        g.textAlign="right";g.fillText(fx(1/(+l.p0||1)),CARDW-P,y-110);g.textAlign="left";
+        return;
+      }
       var ic=l.draw?"=":/^over/i.test(l.label)?"\u25B4":/^under/i.test(l.label)?"\u25BE":
         /^yes$/i.test(l.label)?"\u2713":/^no$/i.test(l.label)?"\u2715":initials(l.label);
       g.fillStyle="#C8D4EA";g.font='900 '+(ic.length>1?22:28)+'px Inter,system-ui,sans-serif';
