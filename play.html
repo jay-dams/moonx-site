@@ -375,6 +375,10 @@ body.bslip{padding-bottom:calc(var(--tb) + var(--sab) + 228px)}
 .note{margin:10px 0 0;text-align:center;font-size:12px;color:var(--dim)}
 .sheet{position:fixed;inset:0;z-index:40;display:none;align-items:flex-end;justify-content:center;background:rgba(1,2,6,.6);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
 .sheet.open{display:flex}
+/* La popup de resultat est a 50. La carte de partage s'ouvre depuis elle:
+   a 40 elle se construisait derriere, invisible. Elle passe devant, et en
+   la fermant on retrouve le resultat et son bouton. */
+.sheet[data-k="card"]{z-index:55}
 .sheet>.panel{width:100%;max-width:560px;border-radius:22px 22px 0 0;border-bottom:0;padding-bottom:calc(16px + var(--sab));max-height:92vh;overflow:auto;animation:upin .22s cubic-bezier(.22,.61,.36,1)}
 @keyframes upin{from{transform:translateY(30px);opacity:0}}
 .sum-card{border:1px solid var(--line-2);border-radius:22px;background:linear-gradient(180deg,#0E1526,#080C17);padding:16px;margin-top:16px;position:relative;overflow:hidden}
@@ -2045,7 +2049,7 @@ function addCombo(id){
   ks.concat(c.legs.map(function(l){return l.m.id})).forEach(renderRows);
   if(detail)paintPicks();
   renderTicket();quoteSoon();vib(12);
-  toast(c.name+" is in your slip. Pick your stake.");
+  toast(c.name+" is in your combo. Pick your stake.");
   ev("lg_daily",{combo:id});
 
 }
@@ -2274,7 +2278,7 @@ function addMatchCombo(i){
   mode="combo";slipOpen=true;
   ks.forEach(renderRows);paintPicks();renderTicket();quoteSoon();
   vib(12);ev("lg_match_combo",{id:c.id});
-  toast(c.name+" is in your slip.");
+  toast(c.name+" is in your combo.");
 }
 function famOf(e){
   var by={},ord=[];
@@ -2432,10 +2436,10 @@ function renderTicket(){
   document.body.classList.toggle("kpad",!!custom&&PHONE());
   bar.className="slipbar on";
   bar.dataset.k=tkey();
-  bar.innerHTML='<div class="in"><button type="button" class="grab" data-slipx="1" aria-label="Open or close the slip"><s></s></button>'+
+  bar.innerHTML='<div class="in"><button type="button" class="grab" data-slipx="1" aria-label="Open or close your combo"><s></s></button>'+
     miniHTML(l,c)+
     '<div class="full">'+
-      '<div class="slhd"><span>YOUR PICKS</span>'+(n>1?'<button type="button" data-clear="1">Clear all</button>':"")+'</div>'+
+      '<div class="slhd"><span>'+(n>1?"YOUR COMBO":"YOUR PICK")+'</span>'+(n>1?'<button type="button" data-clear="1">Clear all</button>':"")+'</div>'+
       '<div class="slv">'+l.map(slipLegHTML).join("")+'</div>'+
       (n>1?'<div class="seg"><button type="button" data-mode="combo" class="'+(cm?"on":"")+'">Combo <em>'+fx(comboX(l))+'</em></button><button type="button" data-mode="singles" class="'+(cm?"":"on")+'">'+n+" singles</button></div>":"")+
       qnote(l)+
@@ -2478,9 +2482,9 @@ function setSlip(on){
 --------------------------------------------------------------------------- */
 function basketHTML(){
   var l=legsList(),n=l.length;
-  if(!n)return'<div class="cd bk"><div class="hd"><b>Your slip</b></div><div class="empty2"><b>Nothing in it yet</b>Tap a team on the left. Stack several and they become a combo: the odds multiply.</div></div>';
+  if(!n)return'<div class="cd bk"><div class="hd"><b>Your combo</b></div><div class="empty2"><b>Nothing in it yet</b>Tap a team on the left. Stack several and they become a combo: the odds multiply.</div></div>';
   var c=calc(l),cm=c.cm;
-  return'<div class="cd bk"><div class="hd"><b>Your slip</b><span class="cnt">'+n+'</span><button class="clr" type="button" data-clear="1">Clear</button></div>'+
+  return'<div class="cd bk"><div class="hd"><b>'+(n>1?"Your combo":"Your pick")+'</b><span class="cnt">'+n+'</span><button class="clr" type="button" data-clear="1">Clear</button></div>'+
     '<div class="lst">'+l.map(function(x){
       return'<div class="it">'+logoMini(x)+'<span class="nm3">'+esc(x.label)+"<small>"+esc(x.title)+'</small></span><span class="k">'+fx(lx(x))+'</span><button type="button" class="rm1" data-rm="'+x.token+'" aria-label="Remove">&times;</button></div>';
     }).join("")+"</div>"+
@@ -2580,7 +2584,7 @@ function nameGo(){
     closeSheet();busy=false;setBusy(false);
     if($("hero"))$("hero").hidden=true;
     renderIdentity();refreshNav();render();
-    if(legsList().length)doBet();else toast("You're in, @"+h+". $1,000 of play money.");
+    if(legsList().length)doBet();else toast("You’re in, @"+h+". $1,000 of play money.");
   }).catch(function(err){
     if(e){e.textContent=errText(err);e.className="slipn ko"}
     busy=false;setBusy(false);
@@ -2656,7 +2660,7 @@ function dyn(){
     var pe=b.querySelector(".per");if(pe)pe.textContent=c.n>1&&!c.cm?c.n+" × "+money(c.a/c.n):"PLAY MONEY";
     b.querySelector(".warn").textContent=c.warn;
     b.querySelector(".pays b").innerHTML=money(c.pay)+"<em>"+fx(c.a>0?c.pay/c.a:0)+"</em>";
-    var k=b.querySelector("[data-place],[data-fplace]");if(k){k.disabled=!!c.warn;k.textContent=(follow?"Take it · ":P?"Place trade · ":"Start with $1,000 · Trade ")+money(c.a)}
+    var k=b.querySelector("[data-place],[data-fplace]");if(k){k.disabled=!!c.warn;k.textContent=(follow?"Take it · ":P?"Bet · ":"Start with $1,000 · Bet ")+money(c.a)}
   });
 }
 
@@ -2685,7 +2689,7 @@ function posCard(p){
 
 function closedRow(p){
   var l=p.lg_leg,lbl=l.length>1?"Combo · "+l.length+" picks":l[0].label,pay=+(p.payout||0),x=pay/p.stake;
-  var st=p.status==="won"?'<span class="st w">WON</span>':p.status==="lost"?'<span class="st x">LOST</span>':'<span class="st">EJECTED</span>';
+  var st=p.status==="won"?'<span class="st w">WON</span>':p.status==="lost"?'<span class="st x">LOST</span>':'<span class="st">CASHED OUT</span>';
   return'<div class="cl">'+(l.length>1?'<span class="av">'+l.length+"</span>":av(l[0]))+'<span class="nm">'+esc(lbl)+"<small>"+esc(l.map(function(z){return z.event_title}).join(" · "))+"</small></span>"+st+'<b class="'+(pay>=p.stake?"up":"dn")+'">'+signed(pay-p.stake)+"</b></div>";
 }
 
@@ -2739,7 +2743,7 @@ function sendMail(place){
   if(!f||!m)return;
   var v=f.value.trim();
   m.className="mailmsg";
-  if(!/^[^@\s]+@[^@\s.]+\.[^@\s]{2,}$/.test(v)){m.className="mailmsg ko";m.textContent="That email doesn't look right.";f.focus();return}
+  if(!/^[^@\s]+@[^@\s.]+\.[^@\s]{2,}$/.test(v)){m.className="mailmsg ko";m.textContent="That email doesn’t look right.";f.focus();return}
   if(mailSent[v]){m.className="mailmsg ok";m.textContent="Already noted. Talk soon.";return}
   m.textContent="Sending…";
   api("email",{email:v,source:"play",handle:P?P.player.handle:null,attr:(window.MOONX_ATTR?window.MOONX_ATTR():null)})
@@ -2764,9 +2768,9 @@ function renderTrades(){
      gain est petit, juste au-dessus d'une ligne qui annonce "+$1.98": le
      titre se contredisait. On ne sort le multiplicateur que quand il dit
      vraiment quelque chose, sinon on parle en argent.                   */
-  h+=realBox(e>=START*1.01?"You're at "+fx(e/START)+" on play money. Now picture it live."
-    :e>START+0.5?"You're ahead on play money. Now picture it live."
-    :"On MOONX, it's the real thing.");
+  h+=realBox(e>=START*1.01?"You’re at "+fx(e/START)+" on play money. Now picture it live."
+    :e>START+0.5?"You’re ahead on play money. Now picture it live."
+    :"On MOONX, it’s the real thing.");
   if(cl.length)h+='<div class="sechead"><h2>Closed</h2><span>'+cl.length+'</span></div><div class="closed">'+cl.slice(0,30).map(closedRow).join("")+"</div>";
   el.innerHTML=h;sign();drawCharts();
 }
@@ -2780,12 +2784,12 @@ function posLabel(p){var l=p.lg_leg;return l.length>1?"Combo \u00d7"+l.length:l[
 function renderLive(){
   var bar=$("lvbar");if(!bar)return;
   var op=P?openPos():[];
-  /* L'onglet "My trades" montre deja tout en grand: pas de doublon. */
+  /* L'onglet "My bets" montre deja tout en grand: pas de doublon. */
   if(!op.length||tab==="trades"){bar.hidden=true;bar.dataset.k="";return}
   var k=op.map(function(p){return p.id}).join(",");
   if(bar.dataset.k!==k){
     bar.dataset.k=k;bar.hidden=false;
-    bar.innerHTML='<div class="in"><div class="lvtot"><u>PORTFOLIO</u><b id="lvV">'+money(equity())+'</b><i id="lvD"></i></div><div class="lvrow">'+
+    bar.innerHTML='<div class="in"><div class="lvtot"><u>TOTAL</u><b id="lvV">'+money(equity())+'</b><i id="lvD"></i></div><div class="lvrow">'+
       op.map(function(p){
         return'<button class="lvt" type="button" data-tab="trades" data-lvt="'+p.id+'"><span class="n">'+esc(posLabel(p))+'</span><span class="v"><b data-lvv="'+p.id+'"></b><i data-lvp="'+p.id+'"></i></span></button>'
       }).join("")+'</div></div>';
@@ -2954,7 +2958,7 @@ function renderLeague(){
   h+=d.board.length?'<div class="board">'+d.board.map(function(r,i){var x=+r.equity/START,n=+r.rank||i+1;return'<div class="br'+(me&&String(r.handle).toLowerCase()===me?" me":"")+'"><span class="rk'+(n<=3?" t":"")+'">'+n+'</span><span class="h">@'+esc(r.handle)+'</span><span class="e">'+money(+r.equity)+'</span><span class="m '+(x>=1?"up":"dn")+'">'+fx(x)+"</span></div>"}).join("")+"</div>":'<div class="empty"><b>No players yet.</b>Invite your friends with the link above.</div>';
   var others=(d.open||[]).filter(function(p){return!me||String(p.lg_player&&p.lg_player.handle).toLowerCase()!==me}).slice(0,12);
   if(others.length){
-    h+='<div class="sechead"><h2>Their trades</h2><span>Follow them or go against</span></div><div class="grid two">'+others.map(function(p){
+    h+='<div class="sechead"><h2>Their bets</h2><span>Follow them or go against</span></div><div class="grid two">'+others.map(function(p){
       var one=p.lg_leg.length===1,canOther=one&&p.lg_leg[0].other_token;
       return'<article class="card fol"><div class="meta"><span class="lg"><span class="who">@'+esc(p.lg_player.handle)+"</span> · "+ago(p.created_at)+'</span><span class="r">'+(one?"SINGLE":"COMBO · "+p.lg_leg.length)+'</span></div><div class="pl">'+p.lg_leg.map(function(l){return'<div class="row">'+av(l)+'<span class="nm">'+esc(l.label)+"<small>"+esc(l.event_title)+"</small></span>"+legStatus(l)+"</div>"}).join("")+'</div><div class="acts"><button class="go" type="button" data-follow="'+p.id+'" data-side="same">Same side</button>'+(canOther?'<button class="go ghost" type="button" data-follow="'+p.id+'" data-side="other">Other side</button>':'<button class="go ghost" type="button" disabled>Other side</button>')+"</div></article>"}).join("")+"</div>";
   }
@@ -2994,7 +2998,7 @@ function placeFollow(){
   if(busy||!follow)return;busy=true;var f=follow;
   ensurePlayer().then(function(){
     var c=fcalc();return api("open",{token:tok,picks:f.legs.map(function(l){return{event_id:l.event_id,token_id:l.token}}),stake:Math.min(c.a,cash()),via:f.id,side:f.side}).then(function(r){
-      setProfile(r);timers.lastNew=r.opened&&r.opened.id;ev("lg_follow",{side:f.side});follow=null;amount=null;closeSheet();confetti(50);toast(f.side==="same"?"You're with @"+f.who+".":"You're against @"+f.who+".");setTab("trades");
+      setProfile(r);timers.lastNew=r.opened&&r.opened.id;ev("lg_follow",{side:f.side});follow=null;amount=null;closeSheet();confetti(50);toast(f.side==="same"?"You’re with @"+f.who+".":"You’re against @"+f.who+".");setTab("trades");
     });
   }).catch(function(e){toast(errText(e))}).then(function(){busy=false});
 }
@@ -3012,7 +3016,7 @@ function joinLeague(code){
   busy=true;api("league_join",{token:tok,code:code}).then(function(j){setProfile(j);LG=j.league.code;LD=null;toast("You joined "+j.league.name);loadLeague();render()}).catch(function(e){toast(errText(e))}).then(function(){busy=false});
 }
 function invite(code){
-  var lg=(P&&P.leagues.find(function(l){return l.code===code}))||{name:"my league"},url="https://moonx.fi/play?l="+code,txt="Join "+lg.name+" on MOONX Play. Real matches, live prices, $1,000 of play money. Let's see who's best:";
+  var lg=(P&&P.leagues.find(function(l){return l.code===code}))||{name:"my league"},url="https://moonx.fi/play?l="+code,txt="Join "+lg.name+" on MOONX Play. Real matches, live prices, $1,000 of play money. Let’s see who’s best:";
   ev("lg_invite");
   if(navigator.share){navigator.share({title:"MOONX Play",text:txt,url:url}).catch(function(){});return}
   (navigator.clipboard?navigator.clipboard.writeText(txt+" "+url):Promise.reject()).then(function(){toast("Invite link copied.")}).catch(function(){toast(url)});
@@ -3443,7 +3447,7 @@ document.addEventListener("keydown",function(e){if(e.key==="Enter"&&e.target&&e.
 $("sheet").addEventListener("click",function(e){if(e.target===this){closeSheet();if(follow){follow=null;renderTicket()}}});
 $("ov").addEventListener("click",function(e){if(e.target===this)this.classList.remove("open")});
 document.addEventListener("keydown",function(e){
-  if(e.key==="Escape"){closeSheet();$("ov").classList.remove("open")}
+  if(e.key==="Escape"){if($("sheet").classList.contains("open"))closeSheet();else $("ov").classList.remove("open")}
   if(e.key==="Enter"&&e.target.id==="lgName")makeLeague()});
 document.addEventListener("input",function(e){
   if(e.target.classList&&e.target.classList.contains("cin")){
@@ -3474,7 +3478,7 @@ function boot(){
      marches: sinon la rafale tombe sur un serveur qui demarre encore. */
   setTimeout(function(){timers.deepOk=1;loadDeep()},2500);
   render();pollMarkets();
-  if(inviteCode)api("league",{code:inviteCode}).then(function(j){inviteInfo={code:j.league.code,name:j.league.name};LG=j.league.code;LD=j;var b=$("inviteBox");b.hidden=false;b.innerHTML='<span style="flex:1">You\'re invited to <b>'+esc(j.league.name)+"</b>. "+(P?"":"Pick a match to join with $1,000.")+"</span>"+(P&&!P.leagues.some(function(l){return l.code===j.league.code})?'<button class="go" type="button" data-joinlg="'+j.league.code+'">Join</button>':"");}).catch(function(){inviteCode=""});
+  if(inviteCode)api("league",{code:inviteCode}).then(function(j){inviteInfo={code:j.league.code,name:j.league.name};LG=j.league.code;LD=j;var b=$("inviteBox");b.hidden=false;b.innerHTML='<span style="flex:1">You’re invited to <b>'+esc(j.league.name)+"</b>. "+(P?"":"Pick a match to join with $1,000.")+"</span>"+(P&&!P.leagues.some(function(l){return l.code===j.league.code})?'<button class="go" type="button" data-joinlg="'+j.league.code+'">Join</button>':"");}).catch(function(){inviteCode=""});
   if(tok)api("me",{token:tok}).then(function(j){setProfile(j);if(inviteCode&&!P.leagues.some(function(l){return l.code===inviteCode}))api("league_join",{token:tok,code:inviteCode}).then(function(r){setProfile(r);toast("You joined "+r.league.name);$("inviteBox").hidden=true}).catch(function(){});render();pollQuotes()}).catch(function(e){if(e==="auth"){tok=null;try{localStorage.removeItem(TK)}catch(x){}}render()});
   loadLeague();
   setInterval(pollQuotes,6000);setInterval(pollMarkets,45000);setInterval(pollMe,30000);setInterval(tickClocks,30000);
