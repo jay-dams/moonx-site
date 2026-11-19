@@ -548,17 +548,25 @@ body.bslip{padding-bottom:calc(var(--tb) + var(--sab) + 228px)}
 .toast{position:fixed;left:50%;bottom:calc(var(--tb) + var(--sab) + 12px);z-index:70;transform:translate(-50%,20px);opacity:0;pointer-events:none;padding:11px 16px;border-radius:13px;background:#fff;color:#06110A;font-weight:800;font-size:13.5px;transition:all .25s;max-width:92vw;text-align:center;box-shadow:0 10px 30px -10px rgba(0,0,0,.6)}
 .toast.on{opacity:1;transform:translate(-50%,0)}
 body.bslip .toast{bottom:calc(var(--tb) + var(--sab) + 232px)}
-.toast.rich{display:flex;align-items:center;gap:12px;text-align:left;pointer-events:auto;padding:9px 9px 9px 15px}
-.toast.rich .tt{min-width:0;display:flex;align-items:center;gap:7px;text-align:left;color:inherit;font:inherit}
+.toast.rich{display:flex;align-items:center;gap:10px;text-align:left;pointer-events:auto;padding:10px 10px 13px 12px;overflow:hidden;min-width:min(342px,92vw)}
+.toast.rich .tk{flex:none;display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:rgba(61,220,132,.22);color:#0E7A41;font-size:14px;font-weight:900;line-height:1}
+.toast.rich .tt{flex:1 1 auto;min-width:0;display:block;padding:0;text-align:left;color:inherit;font:inherit}
 .toast.rich button.tt{cursor:pointer}
 .toast.rich button.tt:active{opacity:.55}
-.toast.rich .tt .tx{display:block;min-width:0}
-.toast.rich .tt .cv{flex:none;width:13px;height:13px;opacity:.4;margin-left:-1px}
 /* Les deux lignes ne se coupent pas: sans ca le bandeau se replie sur
    lui-meme et "$50.00 on Phantom" tient sur trois lignes. */
 .toast.rich .tt b{display:block;font-size:13.5px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.toast.rich .tt small{display:block;font-size:11.5px;opacity:.6;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.toast.rich .ud{flex:none;height:34px;padding:0 13px;border-radius:10px;background:rgba(6,17,10,.1);border:1px solid rgba(6,17,10,.25);font-weight:800;font-size:12.5px;color:#06110A}
+.toast.rich .tt small{display:flex;align-items:center;gap:5px;margin-top:1px;font-size:11.5px;font-weight:700;white-space:nowrap;overflow:hidden}
+.toast.rich .tt small .sub{min-width:0;opacity:.55;overflow:hidden;text-overflow:ellipsis}
+.toast.rich .tt small .go3{flex:none;display:inline-flex;align-items:center;gap:2px;color:#0E7A41;text-decoration:underline;text-underline-offset:2px}
+.toast.rich .tt small .cv{flex:none;width:9px;height:9px}
+.toast.rich .ud{flex:none;height:36px;padding:0 15px;border-radius:11px;background:#06110A;color:#fff;font-weight:800;font-size:12.5px}
+.toast.rich .ud:active{opacity:.7}
+/* La barre EST le minuteur: on voit le temps qu'il reste pour annuler,
+   au lieu de voir le bandeau disparaitre sans prevenir. */
+.toast.rich .tbar{position:absolute;left:0;bottom:0;width:100%;height:4px;background:rgba(6,17,10,.38);transform-origin:left}
+.toast.on.rich .tbar{animation:tdrain 6s linear forwards}
+@keyframes tdrain{from{transform:scaleX(1)}to{transform:scaleX(0)}}
 #fx{position:fixed;inset:0;z-index:66;pointer-events:none}
 .side{display:none}
 .view{display:none}
@@ -1281,7 +1289,18 @@ function initials(s){
 function vol(v){return v>=1e6?"$"+(v/1e6).toFixed(1)+"M":v>=1e3?"$"+Math.round(v/1e3)+"K":"$"+Math.round(v)}
 function when(t){var d=new Date(t),n=new Date(),tm=d.toLocaleTimeString("en-US",{hour:"numeric",minute:"2-digit"});var dd=Math.round((new Date(d.getFullYear(),d.getMonth(),d.getDate())-new Date(n.getFullYear(),n.getMonth(),n.getDate()))/864e5);return dd===0?"Today "+tm:dd===1?"Tomorrow "+tm:d.toLocaleDateString("en-US",{weekday:"short"})+" "+tm}
 function ago(t){var s=Math.max(1,Math.round((Date.now()-Date.parse(t))/1000));return s<60?s+"s":s<3600?Math.round(s/60)+"m":s<86400?Math.round(s/3600)+"h":Math.round(s/86400)+"d"}
-function toast(t){var e=$("toast");e.textContent=t;e.classList.add("on");clearTimeout(timers.toast);timers.toast=setTimeout(function(){e.classList.remove("on")},2600)}
+/* On enleve "on" tout de suite, mais "rich" seulement une fois le fondu
+   fini: sinon la fleche perd sa taille en plein vol et reapparait
+   en grand pendant un quart de seconde. */
+function hideToast(){
+  var e=$("toast");clearTimeout(timers.toast);clearTimeout(timers.toastEnd);
+  e.onmouseenter=e.onmouseleave=null;e.classList.remove("on");
+  timers.toastEnd=setTimeout(function(){
+    if(e.classList.contains("on"))return;
+    e.classList.remove("rich");e.innerHTML="";
+  },320);
+}
+function toast(t){var e=$("toast");clearTimeout(timers.toastEnd);e.onmouseenter=e.onmouseleave=null;e.classList.remove("rich");e.textContent=t;e.classList.add("on");clearTimeout(timers.toast);timers.toast=setTimeout(hideToast,2600)}
 function vib(p){try{navigator.vibrate&&navigator.vibrate(p)}catch(e){}}
 function av(o){if(o.draw)return'<span class="av draw">=</span>';var ini=initials(o.label),lg=(o.logo&&!/country-flags\/un\.png/i.test(o.logo))?o.logo:"";return'<span class="av">'+(lg?'<img src="'+esc(lg)+'" alt="" loading="lazy" onerror="lgerr(this,\''+ini+'\')">':ini)+"</span>"}
 /* La fonction Supabase est un seul petit serveur. Huit appels en meme
@@ -2998,17 +3017,32 @@ function doBet(){
    laisser passer, puis chercher l'onglet. */
 function undoToast(label,a,pay,posId){
   var e=$("toast");
-  var txt='<span class="tx"><b>'+money(a)+" on "+esc(label)+'</b><small>pays '+money(pay)+" ("+fx(pay/a)+")</small></span>";
-  e.innerHTML=(posId
-      ?'<button type="button" class="tt" data-seebet="'+posId+'" aria-label="See this bet">'+txt+
-       '<svg class="cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>'
-      :'<span class="tt">'+txt+"</span>")+
-    (posId?'<button type="button" class="ud" data-undo="'+posId+'">Undo</button>':"");
-  e.classList.add("on","rich");clearTimeout(timers.toast);
-  timers.toast=setTimeout(function(){e.classList.remove("on","rich")},5200);
+  clearTimeout(timers.toast);clearTimeout(timers.toastEnd);
+  var cv='<svg class="cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>';
+  var body='<b>'+money(a)+" on "+esc(label)+'</b><small><span class="sub">pays '+money(pay)+" ("+fx(pay/a)+")</span>"+
+    (posId?'<span class="go3">See it'+cv+"</span>":"")+"</small>";
+  e.innerHTML='<span class="tk" aria-hidden="true">\u2713</span>'+
+    (posId?'<button type="button" class="tt" data-seebet="'+posId+'" aria-label="See this bet">'+body+"</button>"
+          :'<span class="tt">'+body+"</span>")+
+    (posId?'<button type="button" class="ud" data-undo="'+posId+'">Undo</button>':"")+
+    '<i class="tbar"></i>';
+  e.classList.add("rich");e.classList.add("on");
+  var bar=e.querySelector(".tbar");
+  if(bar)bar.addEventListener("animationend",hideToast);
+  /* Sur un ecran a souris, s'arreter sur le bandeau suspend le compte a
+     rebours: on a le temps de lire avant de viser Undo. Pas sur mobile,
+     ou un simple appui declencherait mouseenter sans jamais le relacher. */
+  if(bar&&window.matchMedia&&window.matchMedia("(hover:hover)").matches){
+    e.onmouseenter=function(){bar.style.animationPlayState="paused"};
+    e.onmouseleave=function(){bar.style.animationPlayState="running"};
+  }
+  timers.toast=setTimeout(function(){
+    if(bar&&bar.style.animationPlayState==="paused")return;
+    hideToast();
+  },6600);
 }
 function seeBet(id){
-  var e=$("toast");e.classList.remove("on","rich");clearTimeout(timers.toast);
+  hideToast();
   timers.lastNew=id;setTab("trades");
   setTimeout(function(){
     var c=document.querySelector('[data-pos="'+id+'"]');
@@ -4059,7 +4093,7 @@ document.addEventListener("click",function(e){
     renderTicket();
     if($("sheet").dataset.k==="name")$("sheetP").innerHTML=nameHTML(legsList());
     return}
-  if(d.undo){var u=d.undo;$("toast").classList.remove("on","rich");eject(u);return}
+  if(d.undo){var u=d.undo;hideToast();eject(u);return}
   if(d.seebet){seeBet(d.seebet);return}
   if(d.mego){
     /* offsetTop se compte depuis le premier ancetre positionne, qui n'est
