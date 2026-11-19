@@ -448,13 +448,20 @@ body.bslip{padding-bottom:calc(var(--tb) + var(--sab) + 228px)}
 .st.l{color:#fff;background:rgba(255,59,107,.2)}
 .st.w{color:#06110A;background:var(--mint)}
 .st.x{color:#fff;background:var(--red)}
-.pc{flex:none;width:44px;text-align:right;font-weight:900;font-variant-numeric:tabular-nums}
-.pos canvas{display:block;width:100%;height:64px;margin:10px 0 0}
+.pc{flex:none;min-width:52px;text-align:right;font-weight:900;font-variant-numeric:tabular-nums;line-height:1.15}
+.pc b{display:block;font-size:13.5px;font-weight:900}
+/* Le prix paye reste sous le prix du moment: on voit d'un coup d'oeil
+   si on est entre au-dessus ou en dessous, comme sur Polymarket. */
+.pc small{display:block;font-size:10px;font-weight:700;color:var(--dim);white-space:nowrap}
+.pos canvas{display:block;width:100%;height:78px;margin:10px 0 0}
 /* Trois mots sous la courbe. La ligne en pointilles, c'est ce qu'on a
    mis; a droite, ce qu'on a gagne ou perdu depuis. */
 .pcap{display:flex;align-items:center;gap:7px;margin:5px 0 2px;font-size:11.5px;font-weight:700;color:var(--dim)}
-.pcap i{flex:none;width:15px;height:0;border-top:1px dashed rgba(150,195,255,.6)}
-.pcap b{margin-left:auto;font-size:12.5px;font-weight:900;font-variant-numeric:tabular-nums}
+.pcap i{flex:none;width:15px;height:0;border-top:1px dashed rgba(150,195,255,.75)}
+/* Sans repere de temps on ne savait pas si la courbe couvrait dix
+   minutes ou trois jours. */
+.pcap em{margin:0 auto;padding:0 8px;font-style:normal;font-size:10.5px;font-weight:700;opacity:.75;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pcap b{flex:none;font-size:12.5px;font-weight:900;font-variant-numeric:tabular-nums}
 .pf{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:8px}
 .pf small{font-size:12px;color:var(--dim)}
 .ej{height:42px;padding:0 18px;border-radius:12px;background:transparent;border:1px solid var(--line-2);color:#fff;font-weight:800;font-size:14px;white-space:nowrap}
@@ -1471,6 +1478,50 @@ function price(t,fb){var v=Q[t];return v!=null?v:fb}
 function legNow(l){return l.final!=null?+l.final:price(l.token_id,+l.p0)}
 function posValue(p){if(p.status!=="open")return+(p.payout||0);return p.lg_leg.reduce(function(v,l){return v*legNow(l)/+l.p0},+p.stake)}
 function posMax(p){return p.lg_leg.reduce(function(v,l){return v/+l.p0},+p.stake)}
+function posPrice(p){return p.lg_leg.reduce(function(v,l){return v*(+l.p0)},1)}
+function posNow(p){return p.lg_leg.reduce(function(v,l){return v*legNow(l)},1)}
+function cents(x){x=+x;return(x<.0995?(x*100).toFixed(1):String(Math.round(x*100)))+"\u00a2"}
+function shq(n){n=+n;return n>=1000?n.toFixed(0):n.toFixed(2)}
+
+/* Prendre deux fois le meme pari ne doit pas faire deux lignes. Comme sur
+   Polymarket: chaque achat reste dans l'historique, mais la position se
+   cumule et le prix d'entree devient la moyenne reellement payee. */
+function posKey(p){return p.lg_leg.map(function(l){return l.token_id}).sort().join("|")}
+function mergePos(ps){
+  if(ps.length===1)return ps[0];
+  var stake=0,shares=0;
+  ps.forEach(function(p){stake+=+p.stake;shares+=posMax(p)});
+  var base=ps[0],k=base.lg_leg.length;
+  /* Le prix moyen d'une jambe est pondere par les parts achetees a chaque
+     fois. On recale ensuite toutes les jambes d'un meme facteur pour que
+     le produit des prix vaille exactement mise/parts: sans ce recalage un
+     combo gagnerait ou perdrait des parts au passage. */
+  var legs=base.lg_leg.map(function(l0){
+    var num=0;
+    ps.forEach(function(p){
+      var l=p.lg_leg.filter(function(z){return z.token_id===l0.token_id})[0];
+      num+=posMax(p)*(+(l?l.p0:l0.p0));
+    });
+    var o={};for(var z in l0)o[z]=l0[z];
+    o.p0=num/shares;return o;
+  });
+  var f=Math.pow((stake/shares)/legs.reduce(function(a,l){return a*l.p0},1),1/k);
+  legs.forEach(function(l){l.p0=Math.min(.985,Math.max(.015,l.p0*f))});
+  return{id:"g"+base.id,group:ps,status:"open",stake:stake,payout:0,
+    created_at:base.created_at,via_side:base.via_side,lg_leg:legs};
+}
+function openGroups(){
+  var m={},out=[];
+  openPos().slice().sort(function(a,b){return Date.parse(a.created_at)-Date.parse(b.created_at)})
+    .forEach(function(p){var k=posKey(p);if(!m[k]){m[k]=[];out.push(m[k])}m[k].push(p)});
+  /* Le plus recent d'abord, comme avant le regroupement. */
+  return out.map(mergePos).sort(function(a,b){
+    var ta=Math.max.apply(null,(a.group||[a]).map(function(z){return Date.parse(z.created_at)}));
+    var tb=Math.max.apply(null,(b.group||[b]).map(function(z){return Date.parse(z.created_at)}));
+    return tb-ta;
+  });
+}
+function groupOf(id){var g=null;openGroups().some(function(z){if(z.id===id||(z.group||[]).some(function(q){return q.id===id})){g=z;return true}});return g}
 function openPos(){return P?P.positions.filter(function(p){return p.status==="open"}):[]}
 function equity(){if(!P)return START;return+P.player.bal+openPos().reduce(function(s,p){return s+posValue(p)},0)}
 
@@ -1508,7 +1559,7 @@ function setProfile(j){
 function refreshNav(){
   var b=$("eqBtn");if(!P){b.hidden=true;return}
   b.hidden=false;var e=equity();$("eqV").textContent=money(e);var x=$("eqX");x.textContent=eqx(e);x.className=e>=START?"up":"dn";
-  var n=openPos().length,o=$("openN");o.textContent=n;o.classList.toggle("on",n>0);
+  var n=openGroups().length,o=$("openN");o.textContent=n;o.classList.toggle("on",n>0);
   var iv=pendInv().length,ib=$("invN");if(ib){ib.textContent=iv;ib.classList.toggle("on",iv>0)}
   $("hero").hidden=!!P||tab!=="matches";
 }
@@ -2055,7 +2106,7 @@ function renderRail(){
       '<span class="ic">'+x[2]+'</span><span class="lb">'+esc(x[1])+'</span><span class="n">'+(c||"")+"</span></button>";
   }).join("");
   h+='<div class="sep"></div><div class="rh">YOU</div>'+
-    '<button type="button" class="'+(tab==="trades"?"on":"")+'" data-tab="trades"><span class="ic">◈</span><span class="lb">My bets</span><span class="n">'+(openPos().length||"")+'</span></button>'+
+    '<button type="button" class="'+(tab==="trades"?"on":"")+'" data-tab="trades"><span class="ic">◈</span><span class="lb">My bets</span><span class="n">'+(openGroups().length||"")+'</span></button>'+
     '<button type="button" class="'+(tab==="league"?"on":"")+'" data-tab="league"><span class="ic">⚔</span><span class="lb">Clan</span><span class="n">'+((LD&&(LD.total||(LD.board&&LD.board.length)))||"")+'</span></button>'+
     '<div class="mini"><u>MOONX IS LIVE</u><b>Same markets, real money, sell anytime.</b><a class="go" data-cta="rail" href="'+SIGN+'">Create account</a></div>';
   r.innerHTML=h;
@@ -3045,7 +3096,7 @@ function seeBet(id){
   hideToast();
   timers.lastNew=id;setTab("trades");
   setTimeout(function(){
-    var c=document.querySelector('[data-pos="'+id+'"]');
+    var g=groupOf(id),c=document.querySelector('[data-pos="'+((g&&g.id)||id)+'"]');
     if(c)c.scrollIntoView({block:"center"});
   },70);
 }
@@ -3189,11 +3240,13 @@ function legStatus(l){
 
 function posCard(p){
   var v=posValue(p),x=v/p.stake,cm=p.lg_leg.length>1,mx=posMax(p);
-  return'<article class="card pos'+(timers.lastNew===p.id?" new":"")+'" data-pos="'+p.id+'"><div class="ph"><div><div class="t">'+(cm?"COMBO · "+p.lg_leg.length+" PICKS":"SINGLE")+(p.via_side?" · "+(p.via_side==="same"?"FOLLOWED":"AGAINST"):"")+"</div><div style=\"font-size:12.5px;color:var(--dim);margin-top:3px\">"+money(+p.stake)+" in · pays "+money(mx)+" ("+fx(mx/p.stake)+")</div></div><div class=\"val\"><b class=\""+(v>=p.stake?"up":"dn")+'" data-pv="'+p.id+'">'+money(v)+'</b><small class="'+(v>=p.stake?"up":"dn")+'" data-px="'+p.id+'">'+fx(x)+"</small></div></div>"+
-  '<div class="pl">'+p.lg_leg.map(function(l){var c=legNow(l);return'<div class="row">'+av(l)+'<span class="nm">'+esc(l.label)+"<small>"+esc(l.event_title)+"</small></span>"+legStatus(l)+'<span class="pc '+(c>=+l.p0?"up":"dn")+'" data-lp="'+l.token_id+'">'+Math.round(c*100)+"%</span></div>"}).join("")+"</div>"+
+  var ps=p.group||[p],nw=ps.some(function(z){return z.id===timers.lastNew})||timers.lastNew===p.id;
+  var t0=Math.min.apply(null,ps.map(function(z){return Date.parse(z.created_at)}));
+  return'<article class="card pos'+(nw?" new":"")+'" data-pos="'+p.id+'"><div class="ph"><div><div class="t">'+(cm?"COMBO \u00b7 "+p.lg_leg.length+" PICKS":"SINGLE")+(p.via_side?" \u00b7 "+(p.via_side==="same"?"FOLLOWED":"AGAINST"):"")+(ps.length>1?" \u00b7 "+ps.length+" BUYS":"")+"</div><div style=\"font-size:12.5px;color:var(--dim);margin-top:3px\">"+money(+p.stake)+" in \u00b7 "+shq(mx)+" shares at "+cents(posPrice(p))+"</div></div><div class=\"val\"><b class=\""+(v>=p.stake?"up":"dn")+'" data-pv="'+p.id+'">'+money(v)+'</b><small class="'+(v>=p.stake?"up":"dn")+'" data-px="'+p.id+'">'+fx(x)+"</small></div></div>"+
+  '<div class="pl">'+p.lg_leg.map(function(l){var c=legNow(l);return'<div class="row">'+av(l)+'<span class="nm">'+esc(l.label)+"<small>"+esc(l.event_title)+"</small></span>"+legStatus(l)+'<span class="pc '+(c>=+l.p0?"up":"dn")+'" data-lp="'+p.id+"|"+l.token_id+'"><b>'+cents(c)+"</b><small>paid "+cents(+l.p0)+"</small></span></div>"}).join("")+"</div>"+
   '<canvas data-ch="'+p.id+'"></canvas>'+
-  '<div class="pcap"><i></i><span>'+money(+p.stake)+' in</span><b class="'+(v>=p.stake?"up":"dn")+'" data-pd="'+p.id+'">'+signed(v-p.stake)+'</b></div>'+
-  '<div class="pf"><small>Entered '+ago(p.created_at)+' ago</small><button class="ejp" type="button" data-ejp="'+p.id+'" aria-label="Cash out part of it">Part</button><button class="ej" type="button" data-ej="'+p.id+'">Cash out '+money(v)+"</button></div></article>";
+  '<div class="pcap"><i></i><span>what you put in</span><em>'+ago(new Date(t0).toISOString())+' ago \u2192 now</em><b class="'+(v>=p.stake?"up":"dn")+'" data-pd="'+p.id+'">'+signed(v-p.stake)+'</b></div>'+
+  '<div class="pf"><small>'+(ps.length>1?ps.length+" buys \u00b7 first "+ago(new Date(t0).toISOString())+" ago":"Entered "+ago(p.created_at)+" ago")+'</small><button class="ejp" type="button" data-ejp="'+p.id+'" aria-label="Cash out part of it">Part</button><button class="ej" type="button" data-ej="'+p.id+'">Cash out '+money(v)+"</button></div></article>";
 }
 
 function closedRow(p){
@@ -3268,7 +3321,7 @@ function sendMail(place){
 function renderTrades(){
   var el=$("v-trades");
   if(!P){el.innerHTML='<div class="empty" style="margin-top:18px"><b>No bets yet.</b>Tap a team to start with $1,000 of play money.<br><button class="go" type="button" data-tab="matches">See the matches</button></div>';return}
-  var e=equity(),op=openPos(),cl=P.positions.filter(function(p){return p.status!=="open"}),inplay=op.reduce(function(s,p){return s+posValue(p)},0);
+  var e=equity(),op=openGroups(),cl=P.positions.filter(function(p){return p.status!=="open"}),inplay=op.reduce(function(s,p){return s+posValue(p)},0);
   var ST=(P&&P.stats)||{};
   var h='<div class="sum-card"><div class="t">@'+esc(P.player.handle).toUpperCase()+' · TOTAL</div><div><span class="v '+(e>=START?"up":"dn")+'" id="tEq">'+money(e)+'</span><span class="x" id="tX">'+eqx(e)+'</span></div><div class="kp"><div><small>CASH</small><b>'+money(+P.player.bal)+'</b></div><div><small>IN PLAY</small><b id="tIn">'+money(inplay)+'</b></div><div><small>BEST</small><b class="up">'+(hasStats(ST)?hitTxt(ST):fx(+P.player.best/START))+'</b></div>'+(hasStats(ST)?'<div><small>PROFIT</small><b class="'+pnlUp(ST)+'">'+pnlTxt(ST)+'</b></div><div><small>ROI</small><b class="'+pnlUp(ST)+'">'+roiTxt(ST)+'</b></div><div><small>BETS</small><b>'+(+ST.settled||0)+"</b></div>":"")+"</div>"+
   (e<1&&!op.length?'<button class="go big" type="button" data-restart="1" style="margin-top:12px">Start again with $1,000</button>':"")+"</div>";
@@ -3293,7 +3346,7 @@ function renderTrades(){
 function posLabel(p){var l=p.lg_leg;return l.length>1?"Combo \u00d7"+l.length:l[0].label}
 function renderLive(){
   var bar=$("lvbar");if(!bar)return;
-  var op=P?openPos():[];
+  var op=P?openGroups():[];
   /* L'onglet "My bets" montre deja tout en grand: pas de doublon. */
   if(!op.length||tab==="trades"){bar.hidden=true;bar.dataset.k="";return}
   var k=op.map(function(p){return p.id}).join(",");
@@ -3314,7 +3367,7 @@ function tickLive(){
   if(dd){var pc=d/START*100,sg=Math.abs(pc)<.05?"":(d>=0?"+":"\u2212");
     dd.textContent=sg+money(Math.abs(d))+" ("+sg+Math.abs(pc).toFixed(1)+"%)";
     dd.className=Math.abs(pc)<.05?"":(d>=0?"up":"dn")}
-  openPos().forEach(function(p){
+  openGroups().forEach(function(p){
     var val=posValue(p),x=val/p.stake,up=val>=p.stake;
     var b=document.querySelector('[data-lvv="'+p.id+'"]');
     if(b){if(b.textContent!==money(val)){b.classList.remove("tick");void b.offsetWidth;b.classList.add("tick")}b.textContent=money(val);b.className=up?"up":"dn"}
@@ -3326,7 +3379,8 @@ function tickLive(){
 }
 function updateLive(){
   if(!P)return;
-  openPos().forEach(function(p){
+  var GR=openGroups();
+  GR.forEach(function(p){
     var v=posValue(p),pv=lastVal[p.id];
     if(pv!=null){var d=v-pv;if(Math.abs(d)>=Math.max(1,p.stake*.06))popPos(p,d)}
     lastVal[p.id]=v;
@@ -3340,8 +3394,13 @@ function updateLive(){
     }
   });
   if(tab==="trades"){
-    document.querySelectorAll("[data-lp]").forEach(function(e){var t=e.dataset.lp,l=null;openPos().some(function(p){return p.lg_leg.some(function(z){if(z.token_id===t){l=z;return true}})});if(l){var c=legNow(l);e.textContent=Math.round(c*100)+"%";e.className="pc "+(c>=+l.p0?"up":"dn")}});
-    var e=equity(),te=$("tEq");if(te){te.textContent=money(e);te.className="v "+(e>=START?"up":"dn");$("tX").textContent=eqx(e);$("tIn").textContent=money(openPos().reduce(function(s,p){return s+posValue(p)},0))}
+    document.querySelectorAll("[data-lp]").forEach(function(el){
+      var s=el.dataset.lp.split("|"),g=GR.filter(function(z){return z.id===s[0]})[0];if(!g)return;
+      var l=g.lg_leg.filter(function(z){return z.token_id===s[1]})[0];if(!l)return;
+      var c=legNow(l);el.className="pc "+(c>=+l.p0?"up":"dn");
+      el.innerHTML="<b>"+cents(c)+"</b><small>paid "+cents(+l.p0)+"</small>";
+    });
+    var e=equity(),te=$("tEq");if(te){te.textContent=money(e);te.className="v "+(e>=START?"up":"dn");$("tX").textContent=eqx(e);$("tIn").textContent=money(GR.reduce(function(s,p){return s+posValue(p)},0))}
     drawCharts();
   }
   refreshNav();renderLive();
@@ -3356,7 +3415,7 @@ function popPos(p,d){
 function milestone(x){var e=document.createElement("div");e.className="ms";e.textContent=(x%1?x.toFixed(1):x)+"x!";document.body.appendChild(e);setTimeout(function(){e.remove()},1350);confetti(x>=3?110:60);vib([15,30,15,30,25])}
 
 function loadHistories(){
-  openPos().forEach(function(p){p.lg_leg.forEach(function(l){
+  openGroups().forEach(function(p){p.lg_leg.forEach(function(l){
     if(H[l.token_id]&&H[l.token_id].from<=Date.parse(p.created_at))return;
     var from=Math.floor(Date.parse(p.created_at)/1000)-600;H[l.token_id]={from:from*1000,pts:(H[l.token_id]&&H[l.token_id].pts)||[]};
     api("history",{token:l.token_id,from:from,fidelity:Date.now()-from*1000>6*3600e3?10:2}).then(function(r){var pts=(r.history||[]).map(function(h){return[h.t*1000,+h.p]});var old=H[l.token_id].pts.filter(function(q){return q[0]>(pts.length?pts[pts.length-1][0]:0)});H[l.token_id].pts=pts.concat(old);drawCharts()}).catch(function(){});
@@ -3364,22 +3423,41 @@ function loadHistories(){
 }
 function at(pts,t){if(!pts.length)return null;var lo=0,hi=pts.length-1;if(t<=pts[0][0])return pts[0][1];if(t>=pts[hi][0])return pts[hi][1];while(hi-lo>1){var md=(lo+hi)>>1;if(pts[md][0]<=t)lo=md;else hi=md}var a=pts[lo],b=pts[hi];return a[1]+(b[1]-a[1])*(t-a[0])/(b[0]-a[0])}
 function drawCharts(){
+  var GR=openGroups();
   document.querySelectorAll("canvas[data-ch]").forEach(function(c){
-    var p=openPos().find(function(z){return z.id===c.dataset.ch});if(!p)return;
+    var p=GR.filter(function(z){return z.id===c.dataset.ch})[0];if(!p)return;
+    var ps=p.group||[p];
     var w=c.clientWidth,h=c.clientHeight,dpr=Math.min(2,window.devicePixelRatio||1);if(!w)return;
     if(c.width!==Math.round(w*dpr)){c.width=Math.round(w*dpr);c.height=Math.round(h*dpr)}
     var g=c.getContext("2d");g.setTransform(dpr,0,0,dpr,0,0);g.clearRect(0,0,w,h);
-    var st=+p.stake,t0=Date.parse(p.created_at),t1=Date.now(),N=80,ys=[],i;
-    for(i=0;i<=N;i++){var t=t0+(t1-t0)*i/N,v=st;p.lg_leg.forEach(function(l){var hp=H[l.token_id]&&H[l.token_id].pts||[],b=hp.length?at(hp,t0):null,f;if(i===N)f=legNow(l)/+l.p0;else if(b)f=at(hp,t)/b;else f=1;v*=f});ys.push(v)}
+    var st=+p.stake,t1=Date.now(),N=80,ys=[],i;
+    var t0=Math.min.apply(null,ps.map(function(z){return Date.parse(z.created_at)}));
+    /* Une ligne peut reunir plusieurs achats. Avant son achat, l'argent
+       dormait en caisse: il vaut sa mise, ni plus ni moins. On additionne
+       donc achat par achat, sinon la courbe pretendrait que toute la
+       somme etait engagee depuis le debut. */
+    for(i=0;i<=N;i++){
+      var t=t0+(t1-t0)*i/N,tot=0;
+      ps.forEach(function(q){
+        var qt=Date.parse(q.created_at),v=+q.stake;
+        if(t>qt||i===N)q.lg_leg.forEach(function(l){
+          var hp=H[l.token_id]&&H[l.token_id].pts||[],b=hp.length?at(hp,qt):null,f;
+          if(i===N)f=legNow(l)/+l.p0;else if(b)f=at(hp,t)/b;else f=1;
+          v*=f;
+        });
+        tot+=v;
+      });
+      ys.push(tot);
+    }
     ys[0]=st;
     /* L'echelle ne colle plus aux donnees. Collee, un pari qui a bouge de
        quarante centimes dessinait une montagne: le debutant lisait un
        drame la ou il ne s'etait rien passe. Au moins un dixieme de la
        mise du haut en bas, et la ligne de la mise toujours dedans. */
     var mn=Math.min.apply(null,ys.concat([st])),mx=Math.max.apply(null,ys.concat([st]));
-    var mid=(mn+mx)/2,half=Math.max((mx-mn)/2,st*.05)*1.25;
+    var mid=(mn+mx)/2,half=Math.max((mx-mn)/2,st*.10)*1.25;
     mn=mid-half;mx=mid+half;
-    var Y=function(v){return 5+(1-(v-mn)/(mx-mn))*(h-10)},X=function(k){return 1+k/N*(w-2)};
+    var Y=function(v){return 7+(1-(v-mn)/(mx-mn))*(h-14)},X=function(k){return 1+k/N*(w-2)};
     var y0=Y(st),up=ys[N]>=st,col=up?"#3DDC84":"#FF5C7A";
     /* La surface entre la courbe et ce qu'on a mise, verte au-dessus et
        rouge en dessous. Avant, le degrade descendait jusqu'au bas du
@@ -3388,7 +3466,13 @@ function drawCharts(){
     var band=function(){g.beginPath();g.moveTo(X(0),Y(ys[0]));for(var k=1;k<=N;k++)g.lineTo(X(k),Y(ys[k]));g.lineTo(X(N),y0);g.lineTo(X(0),y0);g.closePath()};
     g.save();g.beginPath();g.rect(0,0,w,y0);g.clip();band();g.fillStyle="rgba(61,220,132,.26)";g.fill();g.restore();
     g.save();g.beginPath();g.rect(0,y0,w,Math.max(0,h-y0));g.clip();band();g.fillStyle="rgba(255,92,122,.26)";g.fill();g.restore();
-    g.setLineDash([3,4]);g.strokeStyle="rgba(150,195,255,.38)";g.lineWidth=1;g.beginPath();g.moveTo(0,y0);g.lineTo(w,y0);g.stroke();g.setLineDash([]);
+    g.setLineDash([3,4]);g.strokeStyle="rgba(150,195,255,.52)";g.lineWidth=1;g.beginPath();g.moveTo(0,y0);g.lineTo(w,y0);g.stroke();g.setLineDash([]);
+    /* Un repere sur chaque achat suivant: on voit quand on est revenu. */
+    ps.forEach(function(q){
+      var qt=Date.parse(q.created_at);if(qt<=t0+1000||t1<=t0)return;
+      var xq=X(Math.round((qt-t0)/(t1-t0)*N));
+      g.setLineDash([2,3]);g.strokeStyle="rgba(255,255,255,.22)";g.beginPath();g.moveTo(xq,2);g.lineTo(xq,h-2);g.stroke();g.setLineDash([]);
+    });
     g.beginPath();g.moveTo(X(0),Y(ys[0]));for(i=1;i<=N;i++)g.lineTo(X(i),Y(ys[i]));g.strokeStyle=col;g.lineWidth=2.2;g.lineJoin="round";g.stroke();
     g.fillStyle=col;g.beginPath();g.arc(X(N),Y(ys[N]),3.6,0,7);g.fill();
   });
@@ -3408,7 +3492,7 @@ function posValue(p){
   return v;
 }
 function ejPart(id){
-  var p=openPos().find(function(z){return z.id===id});if(!p)return;
+  var p=openGroups().find(function(z){return z.id===id});if(!p)return;
   var v=posValue(p);if(v==null){toast("Live price is slow right now. Try again.");return}
   timers.ejId=id;timers.ejPc=50;
   openSheet("part",'<h3>Cash out part <button type="button" data-close-sheet="1">Close</button></h3>'+
@@ -3421,7 +3505,7 @@ function ejPart(id){
   ejPaint();
 }
 function ejPaint(){
-  var p=openPos().find(function(z){return z.id===timers.ejId});if(!p)return;
+  var p=openGroups().find(function(z){return z.id===timers.ejId});if(!p)return;
   var v=posValue(p);if(v==null)return;
   var f=timers.ejPc/100,get=v*f,left=+p.stake*(1-f);
   var n=$("ejN"),g=$("ejGo"),r=$("ejR");
@@ -3438,17 +3522,34 @@ function ejGo(){
   eject(id,f);
 }
 function eject(id,frac){
-  if(busy)return;busy=true;var b=document.querySelector('[data-ej="'+id+'"]');if(b){b.disabled=true;b.textContent="Cashing out…"}
-  var p=openPos().find(function(z){return z.id===id});
-  api("eject",{token:tok,position:id,part:frac||undefined}).then(function(r){
-    setProfile(r);var pay=r.ejected.payout,pf=+r.ejected.part||1,st=(p?+p.stake:0)*pf;vib(25);ev("lg_eject",{mult:st?Math.round(pay/st*100)/100:0,part:pf});
-    if(pf<1){
-      toast("Cashed out "+money(pay)+". "+money(r.ejected.left)+" still running.");
-      render();return;
-    }
-    showResult({tag:"CASHED OUT",net:pay-st,x:st?pay/st:0,stake:st,legs:p?p.lg_leg:[],label:p?(p.lg_leg.length>1?"Combo · "+p.lg_leg.length+" picks":p.lg_leg[0].label):"",msg:pay>st+.004?"Locked in before the end. "+money(pay)+" is back in your balance.":pay>st-.005?"Out at even. "+money(pay)+" is back in your balance.":"You cut it early. "+money(pay)+" is back in your balance."});
+  if(busy)return;
+  var g=openGroups().filter(function(z){return z.id===id})[0];if(!g)return;
+  var ps=g.group||[g],f=frac||1;
+  busy=true;var b=document.querySelector('[data-ej="'+id+'"]');if(b){b.disabled=true;b.textContent="Cashing out\u2026"}
+  /* Une ligne cumulee peut reposer sur plusieurs achats: on les vend l'un
+     apres l'autre, dans la meme proportion. Si l'un echoue en route, on
+     dit ce qui est parti et le reste demeure ouvert, visible. */
+  var paid=0,sold=0,done=0,r0=null;
+  var step=function(i){
+    if(i>=ps.length)return Promise.resolve();
+    return api("eject",{token:tok,position:ps[i].id,part:frac||undefined}).then(function(r){
+      r0=r;paid+=+r.ejected.payout;sold+=(+ps[i].stake)*(+r.ejected.part||1);done++;
+      return step(i+1);
+    });
+  };
+  step(0).then(function(){
+    setProfile(r0);vib(25);ev("lg_eject",{mult:sold?Math.round(paid/sold*100)/100:0,part:f});
+    if(f<1){toast("Cashed out "+money(paid)+". "+money(+g.stake-sold)+" still running.");render();return}
+    showResult({tag:"CASHED OUT",net:paid-sold,x:sold?paid/sold:0,stake:sold,legs:g.lg_leg,
+      label:g.lg_leg.length>1?"Combo \u00b7 "+g.lg_leg.length+" picks":g.lg_leg[0].label,
+      msg:paid>sold+.004?"Locked in before the end. "+money(paid)+" is back in your balance.":paid>sold-.005?"Out at even. "+money(paid)+" is back in your balance.":"You cut it early. "+money(paid)+" is back in your balance."});
     render();
-  }).catch(function(e){toast(errText(e));if(b){b.disabled=false}render()}).then(function(){busy=false});
+  }).catch(function(e){
+    if(r0)setProfile(r0);
+    if(done)toast("Cashed out "+money(paid)+". The rest is still open \u2014 tap again.");
+    else{toast(errText(e));if(b){b.disabled=false}}
+    render();
+  }).then(function(){busy=false});
 }
 
 function settled(p){
