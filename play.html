@@ -3446,6 +3446,19 @@ function bonusBox(r){
     '<a class="go big" data-cta="bonus" href="'+SIGN+'">Claim your $5 and go real</a>'+
     '<small>Card works if you have no crypto. Already hold USDC on Coinbase, Revolut or anywhere else? Send it straight in. 18+ only, not available everywhere.</small></div>';
 }
+/* null = on ne sait pas encore, true/false = le serveur a tranche. On
+   garde la reponse: elle ne change pas d'un gain a l'autre. */
+var BON=null;
+function askBonus(r){
+  var put=function(){
+    if(!BON)return;
+    var sl=$("bonusSlot");
+    if(sl&&!sl.innerHTML)sl.innerHTML=bonusBox(r);
+  };
+  if(BON!==null){put();return}
+  if(!tok){BON=false;return}
+  api("bonus",{token:tok}).then(function(j){BON=!!j.ok;put()}).catch(function(){BON=false});
+}
 function showResult(r){
   /* Gagne ou perdu, c'est un moment: une onde, un anneau qui tombe, le
      montant qui monte tout seul. Perdu, meme traitement en rouge, sans
@@ -3459,12 +3472,16 @@ function showResult(r){
     '<p class="rsub">'+esc(r.label)+"<span>"+esc(r.msg)+"</span></p>"+
     '<div class="racts"><button class="go" type="button" data-close-ov="1">'+(win?"Keep playing":"Go again")+"</button>"+
     '<button class="iconb" type="button" data-share="1" aria-label="Share"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v7a1 1 0 001 1h14a1 1 0 001-1v-7"/><path d="M12 15V3M8 7l4-4 4 4"/></svg></button></div>'+
-    (win&&r.net>0?bonusBox(r):"")+
+    '<div id="bonusSlot"></div>'+
     '<details class="rmore"><summary>'+(win?"How going real works":"On MOONX, this one was real")+"</summary>"+
     realBox(win?"That was a "+fx(r.x)+". The same market was open for real.":"The market is still open for real.","result")+"</details>";
   timers.lastRes=r;timers.card=null;
   $("ov").classList.add("open");
   countUp($("rAmt"),r.net);
+  /* L'offre n'est pas pour tout le monde: vingt places, tenues par le
+     serveur. On ne la dessine qu'une fois la place obtenue — rien a
+     reprendre a quelqu'un qui l'aurait deja lue. */
+  if(win&&r.net>0)askBonus(r);
   if(win&&r.net>0)confetti(r.x>=3?150:90);
   vib(win?[18,45,18,45,30]:[30,60,30]);
   sign();
