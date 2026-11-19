@@ -701,6 +701,8 @@ footer .lk a{text-decoration:none;color:#fff}
 /* "52 playing" au-dessus de cinq lignes, c'etait une promesse non
    tenue. Le classement est la raison d'etre de ce panneau: il porte
    tout le monde, et il defile. */
+.clrow.go2{width:100%;text-align:left}
+.clrow.go2:hover{background:rgba(61,220,132,.13)}
 .clall{max-height:252px;overflow-y:auto;overscroll-behavior:contain;margin:0 -4px;padding:0 4px;scrollbar-width:thin;scrollbar-color:var(--line) transparent}
 .clall::-webkit-scrollbar{width:5px}
 .clall::-webkit-scrollbar-thumb{background:var(--line);border-radius:3px}
@@ -1502,8 +1504,19 @@ function setTab(t){
   window.scrollTo({top:0});
 }
 
+/* Le joueur doit se situer sans qu'on le traine dans la liste: son rang
+   est ecrit sur sa propre carte, et appuyer dessus l'amene a sa ligne. */
+function myRank(){
+  if(!P||!LD||!LD.board)return null;
+  var me=P.player.handle.toLowerCase(),bk=boardRanked(LD.board,me),n=null;
+  bk.rows.some(function(r,i){if(String(r.handle).toLowerCase()===me){n=bRank(r,i,bk.rows.length);return true}});
+  return n;
+}
 function youHTML(){
-  if(P)return'<div class="cd"><h4>You<span>play money</span></h4><div class="clrow me"><span class="rk">◉</span><span class="h">@'+esc(P.player.handle)+'</span><span class="m '+(equity()>=START?"up":"dn")+'">'+money(equity())+"</span></div></div>";
+  if(P){
+    var k=myRank();
+    return'<div class="cd"><h4>You<span>play money</span></h4><'+(k?'button type="button" class="clrow me go2" data-mego="1"':'div class="clrow me"')+'><span class="rk'+(k&&k<=3?" t":"")+'">'+(k||"◉")+'</span><span class="h">@'+esc(P.player.handle)+'</span><span class="m '+(equity()>=START?"up":"dn")+'">'+money(equity())+"</span></"+(k?"button":"div")+"></div>";
+  }
   return'<div class="cd"><h4>You</h4><div class="empty2"><b>No name yet</b>Pick the name your clan will see, and start with $1,000 of play money.</div><button class="go" type="button" data-join="1" style="width:100%;height:40px;margin-top:10px">Pick your name</button></div>';
 }
 function renderIdentity(){
@@ -2945,11 +2958,14 @@ function clanHTML(){
 function renderSide(){
   var el=$("side");if(!el)return;
   if(!window.matchMedia("(min-width:1080px)").matches){if(el.innerHTML)el.innerHTML="";return}
+  /* Le classement commence au premier. Il se redessine toutes les vingt
+     secondes: s'il se recalait sur la ligne du joueur, celui-ci etait
+     ramene au milieu du tableau sans arret, et ne pouvait plus lire le
+     haut. On garde seulement l'endroit ou il avait laisse la liste. */
+  var old=$("clall"),keep=old?old.scrollTop:0;
   el.innerHTML=basketHTML()+youHTML()+clanHTML();
-  /* Le classement entier defile: si le joueur est trente-septieme, il doit
-     quand meme se voir en ouvrant la page. */
-  var box=$("clall"),mine=box&&box.querySelector(".clrow.me");
-  if(box&&mine)box.scrollTop=Math.max(0,mine.offsetTop-box.clientHeight/2+mine.offsetHeight/2);
+  var box=$("clall");
+  if(box&&keep)box.scrollTop=keep;
 }
 /* ---- poser le pari ---- */
 function doBet(){
@@ -2996,7 +3012,7 @@ function seeBet(id){
   timers.lastNew=id;setTab("trades");
   setTimeout(function(){
     var c=document.querySelector('[data-pos="'+id+'"]');
-    if(c)c.scrollIntoView({block:"center",behavior:"smooth"});
+    if(c)c.scrollIntoView({block:"center"});
   },70);
 }
 function nameHTML(l){
@@ -4028,6 +4044,19 @@ document.addEventListener("click",function(e){
     return}
   if(d.undo){var u=d.undo;$("toast").classList.remove("on","rich");eject(u);return}
   if(d.seebet){seeBet(d.seebet);return}
+  if(d.mego){
+    /* offsetTop se compte depuis le premier ancetre positionne, qui n'est
+       pas la liste: l'ancien calcul visait des centaines de pixels trop
+       bas. On mesure l'ecart reel entre la ligne et le cadre. */
+    var bx=$("clall"),mr=bx&&bx.querySelector(".clrow.me");
+    if(bx&&mr){
+      var dy=mr.getBoundingClientRect().top-bx.getBoundingClientRect().top;
+      /* Pas de defilement anime: il ne fait rien quand le systeme
+         demande moins d'animation, et la ligne ne bougeait pas du tout. */
+      bx.scrollTop=Math.max(0,bx.scrollTop+dy-bx.clientHeight/2+mr.offsetHeight/2);
+    }
+    return;
+  }
   if(d.rm){var rl=picks[d.rm];delete picks[d.rm];afterPick(rl&&rl.id);return}
   if(d.clear){var ks=legsList().map(function(x){return x.id});picks={};ks.forEach(renderRows);if(detail)paintPicks();renderTicket();quoteSoon();return}
   if(d.mode){mode=d.mode;renderTicket();if(mode==="combo")quoteSoon();return}
