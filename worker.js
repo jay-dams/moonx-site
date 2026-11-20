@@ -17,14 +17,6 @@ const ENTETES = (type) => ({
   "x-content-type-options": "nosniff",
 });
 
-function mots(s) {
-  const t = String(s || "").normalize("NFD").replace(/[̀-ͯ]/g, "")
-    .toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
-  return t ? new Set(t.split(" ")) : new Set();
-}
-const memeJeu = (a, b) => a.size === b.size && [...a].every((x) => b.has(x));
-const inclus = (a, b) => [...a].every((x) => b.has(x));
-const communs = (a, b) => [...a].filter((x) => b.has(x)).length;
 
 let TRACE = null;
 function note(k, v) { if (TRACE) TRACE.push(k + "=" + v); }
@@ -37,30 +29,10 @@ async function json(u) {
   return await r.json();
 }
 
-/* L'identifiant ESPN du joueur. On n'accepte qu'un nom qui coincide
-   mot pour mot, dans n'importe quel ordre; a defaut un nom qui contient
-   le notre ou l'inverse, avec deux mots communs au moins, ce qui
-   rattrape les deuxiemes prenoms ("Dragos Nicolae Cazacu"). En dessous
-   on prefere ne rien montrer qu'un visage qui n'est pas le bon. */
-async function idEspn(nom, sport) {
-  const u = "https://site.web.api.espn.com/apis/common/v3/search?region=us&lang=en"
-    + "&limit=12&type=player&query=" + encodeURIComponent(nom);
-  let d;
-  try { d = await json(u); } catch (e) { note("espnSearch", "ECHEC " + e.message); return null; }
-  note("espnItems", (d.items || []).length);
-  note("espnSports", (d.items || []).map((x) => x.sport).join("/") || "-");
-  const cible = mots(nom);
-  let approche = null;
-  for (const it of d.items || []) {
-    if (it.sport !== sport) continue;
-    const vu = mots(it.displayName);
-    if (!vu.size) continue;
-    if (memeJeu(vu, cible)) return it.id;
-    if (!approche && (inclus(vu, cible) || inclus(cible, vu)) && communs(vu, cible) >= 2) approche = it.id;
-  }
-  return approche;
-}
-
+/* ESPN refuse ses recherches aux requetes venant de Cloudflare: verifie,
+   elle repond 403 depuis le worker alors qu'elle repond 200 ailleurs. Le
+   jeu porte donc la table des identifiants, etablie a l'avance, et ne
+   demande ici que l'image, que le CDN d'ESPN sert sans difficulte. */
 /* L'image principale de la page Wikipedia anglaise. On ne la garde que
    si la page parle bien d'un joueur de tennis ou d'un combattant: sans
    ce controle, un homonyme quelconque finirait sur la fiche du match.
@@ -105,12 +77,10 @@ async function image(u) {
 /* Photo ESPN d'abord: un PNG detoure, fait pour etre pose sur un fond.
    Sinon Wikipedia. Sinon rien, et le jeu retombe sur le drapeau ou les
    initiales. */
-async function visage(nom, sport) {
-  const id = await idEspn(nom, sport);
+async function visage(nom, sport, id) {
   note("id", id || "-");
   if (id) {
-    const u = "https://a.espncdn.com/i/headshots/" + sport + "/players/full/" + id + ".png";
-    const r = await image(u);
+    const r = await image("https://a.espncdn.com/i/headshots/" + sport + "/players/full/" + id + ".png");
     note("headshot", r ? "ok" : "ko");
     if (r) return r;
   }
@@ -137,23 +107,25 @@ export default {
       const nom = (url.searchParams.get("n") || "").trim().replace(/\s+/g, " ").slice(0, 64);
       const sport = url.searchParams.get("s") === "mma" ? "mma" : "tennis";
       if (nom.length < 3) return new Response("bad name", { status: 400 });
-      const clef = new Request("https://moonx.fi/_face/" + sport + "/"
+      const brut = url.searchParams.get("i") || "";
+      const id = /^[0-9]{1,9}$/.test(brut) ? brut : null;
+      if (url.searchParams.get("d") === "1") {
+        TRACE = [];
+        let got = null;
+        try { got = await visage(nom, sport, id); } catch (e) { note("erreur", e.message); }
+        const t = TRACE.join(" | ");
+        TRACE = null;
+        if (got) await got.body?.cancel();
+        return new Response(JSON.stringify({ nom, sport, id, trouve: !!got, etapes: t }, null, 1),
+          { headers: { "content-type": "application/json", "cache-control": "no-store" } });
+      }
+      const clef = new Request("https://moonx.fi/_face/" + sport + "/" + (id || "0") + "/"
         + encodeURIComponent(nom.toLowerCase()));
       const cache = caches.default;
       const vu = await cache.match(clef);
       if (vu) return vu;
-      if (url.searchParams.get("d") === "1") {
-        TRACE = [];
-        let got = null;
-        try { got = await visage(nom, sport); } catch (e) { note("erreur", e.message); }
-        const t = TRACE.join(" | ");
-        TRACE = null;
-        if (got) await got.body?.cancel();
-        return new Response(JSON.stringify({ nom, sport, trouve: !!got, etapes: t }, null, 1),
-          { headers: { "content-type": "application/json", "cache-control": "no-store" } });
-      }
       let rep = null;
-      try { rep = await visage(nom, sport); } catch { rep = null; }
+      try { rep = await visage(nom, sport, id); } catch { rep = null; }
       if (!rep) {
         rep = new Response("no face", {
           status: 404,

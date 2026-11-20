@@ -1083,6 +1083,7 @@ function deflate(m){
     o[i].logo=unsq(o[i].logo);
     if(o[i].other==null)o[i].other=two?o[1-i].token:null;
     if(fa&&!o[i].draw)SPORTOF[nkey(o[i].label)]=m.sport==="fight"?"mma":"tennis";
+    if(!o[i].draw){var u=usLogo(o[i].label,m.league);if(u)ESPNL[nkey(o[i].label)]=u}
   }
 }
 function usable(m){
@@ -1679,13 +1680,91 @@ var TFLAG={"agustin eduardo cuellar lorberg":"bo","alan magadan":"mx","aleksandr
 var TCREST={"new zealand breakers":"https://a.espncdn.com/i/teamlogos/nbl/500/nzl.png"};
 var FACEOK=/^(fight|tennis)$/;
 var SPORTOF={};
+var ESPNL={};
+var ESPNT="https://a.espncdn.com/i/teamlogos/";
+var USLIG=/^(NBA|NFL|NHL)$/;
+var TLOGO={"NBA|76ers":"phi","NBA|atlanta":"atl","NBA|atlanta hawks":"atl","NBA|boston":"bos",
+"NBA|boston celtics":"bos","NBA|brooklyn":"bkn","NBA|brooklyn nets":"bkn","NBA|bucks":"mil","NBA|bulls":"chi",
+"NBA|cavaliers":"cle","NBA|celtics":"bos","NBA|charlotte":"cha","NBA|charlotte hornets":"cha",
+"NBA|chicago":"chi","NBA|chicago bulls":"chi","NBA|cleveland":"cle","NBA|cleveland cavaliers":"cle",
+"NBA|clippers":"lac","NBA|dallas":"dal","NBA|dallas mavericks":"dal","NBA|denver":"den",
+"NBA|denver nuggets":"den","NBA|detroit":"det","NBA|detroit pistons":"det","NBA|golden state":"gs",
+"NBA|golden state warriors":"gs","NBA|grizzlies":"mem","NBA|hawks":"atl","NBA|heat":"mia","NBA|hornets":"cha",
+"NBA|houston":"hou","NBA|houston rockets":"hou","NBA|indiana":"ind","NBA|indiana pacers":"ind",
+"NBA|jazz":"utah","NBA|kings":"sac","NBA|knicks":"ny","NBA|la":"lac","NBA|la clippers":"lac","NBA|lakers":"lal",
+"NBA|los angeles":"lal","NBA|los angeles lakers":"lal","NBA|magic":"orl","NBA|mavericks":"dal",
+"NBA|memphis":"mem","NBA|memphis grizzlies":"mem","NBA|miami":"mia","NBA|miami heat":"mia",
+"NBA|milwaukee":"mil","NBA|milwaukee bucks":"mil","NBA|minnesota":"min","NBA|minnesota timberwolves":"min",
+"NBA|nets":"bkn","NBA|new orleans":"no","NBA|new orleans pelicans":"no","NBA|new york":"ny",
+"NBA|new york knicks":"ny","NBA|nuggets":"den","NBA|oklahoma city":"okc","NBA|oklahoma city thunder":"okc",
+"NBA|orlando":"orl","NBA|orlando magic":"orl","NBA|pacers":"ind","NBA|pelicans":"no","NBA|philadelphia":"phi",
+"NBA|philadelphia 76ers":"phi","NBA|phoenix":"phx","NBA|phoenix suns":"phx","NBA|pistons":"det",
+"NBA|portland":"por","NBA|portland trail blazers":"por","NBA|raptors":"tor","NBA|rockets":"hou",
+"NBA|sacramento":"sac","NBA|sacramento kings":"sac","NBA|san antonio":"sa","NBA|san antonio spurs":"sa",
+"NBA|spurs":"sa","NBA|suns":"phx","NBA|thunder":"okc","NBA|timberwolves":"min","NBA|toronto":"tor",
+"NBA|toronto raptors":"tor","NBA|trail blazers":"por","NBA|utah":"utah","NBA|utah jazz":"utah",
+"NBA|warriors":"gs","NBA|washington":"wsh","NBA|washington wizards":"wsh","NBA|wizards":"wsh","NFL|49ers":"sf",
+"NFL|arizona cardinals":"ari","NFL|atlanta falcons":"atl","NFL|baltimore ravens":"bal","NFL|bears":"chi",
+"NFL|bengals":"cin","NFL|bills":"buf","NFL|broncos":"den","NFL|browns":"cle","NFL|buccaneers":"tb",
+"NFL|buffalo bills":"buf","NFL|cardinals":"ari","NFL|carolina panthers":"car","NFL|chargers":"lac",
+"NFL|chicago bears":"chi","NFL|chiefs":"kc","NFL|cincinnati bengals":"cin","NFL|cleveland browns":"cle",
+"NFL|colts":"ind","NFL|commanders":"wsh","NFL|cowboys":"dal","NFL|dallas cowboys":"dal",
+"NFL|denver broncos":"den","NFL|detroit lions":"det","NFL|dolphins":"mia","NFL|eagles":"phi",
+"NFL|falcons":"atl","NFL|giants":"nyg","NFL|green bay packers":"gb","NFL|houston texans":"hou",
+"NFL|indianapolis colts":"ind","NFL|jacksonville jaguars":"jax","NFL|jaguars":"jax","NFL|jets":"nyj",
+"NFL|kansas city chiefs":"kc","NFL|las vegas raiders":"lv","NFL|lions":"det","NFL|los angeles chargers":"lac",
+"NFL|los angeles rams":"lar","NFL|miami dolphins":"mia","NFL|minnesota vikings":"min",
+"NFL|new england patriots":"ne","NFL|new orleans saints":"no","NFL|new york giants":"nyg",
+"NFL|new york jets":"nyj","NFL|packers":"gb","NFL|panthers":"car","NFL|patriots":"ne",
+"NFL|philadelphia eagles":"phi","NFL|pittsburgh steelers":"pit","NFL|raiders":"lv","NFL|rams":"lar",
+"NFL|ravens":"bal","NFL|saints":"no","NFL|san francisco 49ers":"sf","NFL|seahawks":"sea",
+"NFL|seattle seahawks":"sea","NFL|steelers":"pit","NFL|tampa bay buccaneers":"tb","NFL|tennessee titans":"ten",
+"NFL|texans":"hou","NFL|titans":"ten","NFL|vikings":"min","NFL|washington commanders":"wsh","NHL|anaheim":"ana",
+"NHL|anaheim ducks":"ana","NHL|avalanche":"col","NHL|blackhawks":"chi","NHL|blue jackets":"cbj",
+"NHL|blues":"stl","NHL|boston":"bos","NHL|boston bruins":"bos","NHL|bruins":"bos","NHL|buffalo":"buf",
+"NHL|buffalo sabres":"buf","NHL|calgary":"cgy","NHL|calgary flames":"cgy","NHL|canadiens":"mtl",
+"NHL|canucks":"van","NHL|capitals":"wsh","NHL|carolina":"car","NHL|carolina hurricanes":"car",
+"NHL|chicago":"chi","NHL|chicago blackhawks":"chi","NHL|colorado":"col","NHL|colorado avalanche":"col",
+"NHL|columbus":"cbj","NHL|columbus blue jackets":"cbj","NHL|dallas":"dal","NHL|dallas stars":"dal",
+"NHL|detroit":"det","NHL|detroit red wings":"det","NHL|devils":"nj","NHL|ducks":"ana","NHL|edmonton":"edm",
+"NHL|edmonton oilers":"edm","NHL|flames":"cgy","NHL|florida":"fla","NHL|florida panthers":"fla",
+"NHL|flyers":"phi","NHL|golden knights":"vgk","NHL|hurricanes":"car","NHL|islanders":"nyi","NHL|jets":"wpg",
+"NHL|kings":"la","NHL|kraken":"sea","NHL|lightning":"tb","NHL|los angeles":"la","NHL|los angeles kings":"la",
+"NHL|mammoth":"utah","NHL|maple leafs":"tor","NHL|minnesota":"min","NHL|minnesota wild":"min",
+"NHL|montreal":"mtl","NHL|montreal canadiens":"mtl","NHL|nashville":"nsh","NHL|nashville predators":"nsh",
+"NHL|new jersey":"nj","NHL|new jersey devils":"nj","NHL|new york":"nyi","NHL|new york islanders":"nyi",
+"NHL|new york rangers":"nyr","NHL|oilers":"edm","NHL|ottawa":"ott","NHL|ottawa senators":"ott",
+"NHL|panthers":"fla","NHL|penguins":"pit","NHL|philadelphia":"phi","NHL|philadelphia flyers":"phi",
+"NHL|pittsburgh":"pit","NHL|pittsburgh penguins":"pit","NHL|predators":"nsh","NHL|rangers":"nyr",
+"NHL|red wings":"det","NHL|sabres":"buf","NHL|san jose":"sj","NHL|san jose sharks":"sj","NHL|seattle":"sea",
+"NHL|seattle kraken":"sea","NHL|senators":"ott","NHL|sharks":"sj","NHL|st louis":"stl",
+"NHL|st louis blues":"stl","NHL|stars":"dal","NHL|tampa bay":"tb","NHL|tampa bay lightning":"tb",
+"NHL|toronto":"tor","NHL|toronto maple leafs":"tor","NHL|utah":"utah","NHL|utah mammoth":"utah",
+"NHL|vancouver":"van","NHL|vancouver canucks":"van","NHL|vegas":"vgk","NHL|vegas golden knights":"vgk",
+"NHL|washington":"wsh","NHL|washington capitals":"wsh","NHL|wild":"min","NHL|winnipeg":"wpg",
+"NHL|winnipeg jets":"wpg"};
+var TFACE={"aleksandre topuria":5185662,"alessandro costa":5074121,"alik lorenz":5220971,
+"aljamain sterling":3031559,"amir albazi":4684848,"arantxa rus":810,"asu almabayev":4294926,
+"brian ortega":3045737,"carlos alcaraz":3782,"dan hooker":3109135,"daniil medvedev":2383,
+"diyar nurgozhay":5213352,"dom mar fan":5157806,"frances tiafoe":2708,"ikram aliskerov":4684776,
+"jake matthews":3089915,"jared cannonier":3154860,"jiri prochazka":3156612,"kevin vallejos":5145681,
+"kyoji horiguchi":2613374,"laslo djere":2365,"navajo stirling":5216713,"nikolas motta":3897242,
+"omar jasika":2632,"pierre hugues herbert":1613,"santiago luna":5307799,"shamil gaziev":5145498,
+"shuai zhang":707,"stefan kozlov":2238,"tahir abdullayev":4394753,"tallison teixeira":5212856};
 function nkey(s){return String(s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]+/g," ").trim()}
+function usLogo(label,league){
+  if(!USLIG.test(league||""))return"";
+  var c=TLOGO[league+"|"+nkey(label)];
+  return c?ESPNT+String(league).toLowerCase()+"/500/"+c+".png":"";
+}
 function faceURL(o){
   if(!o||o.draw||o.sub)return"";
   var n=String(o.label||"").replace(/\s+/g," ").trim();
   if(n.length<3||/\d/.test(n))return"";
   var s=SPORTOF[nkey(n)]||(FACEOK.test(o.sport||"")?(o.sport==="fight"?"mma":"tennis"):"");
-  return s?"/face?s="+s+"&n="+encodeURIComponent(n):"";
+  if(!s)return"";
+  var i=TFACE[nkey(n)];
+  return"/face?s="+s+"&n="+encodeURIComponent(n)+(i?"&i="+i:"");
 }
 function altLogo(o){
   var k=nkey(o.label);
@@ -1694,6 +1773,8 @@ function altLogo(o){
   return c?S3+"country-flags/"+c+".png":"";
 }
 function realLogo(o){
+  var u=ESPNL[nkey(o.label)]||usLogo(o.label,o.league);
+  if(u)return u;
   return o.logo&&!/country-flags\/un\.png/i.test(o.logo)?o.logo:altLogo(o);
 }
 function logo(o){
@@ -3449,11 +3530,12 @@ function cardImg(src,anon){
     i.src=src;
   });
 }
+var CRESTOK=["https://polymarket-upload.s3.us-east-2.amazonaws.com/","https://a.espncdn.com/","https://upload.wikimedia.org/"];
 function crestURL(u){
   u=String(u||"");
   if(!u||/country-flags\/un\.png/i.test(u))return"";
-  return u.indexOf("https://polymarket-upload.s3.us-east-2.amazonaws.com/")===0
-    ?"/crest?u="+encodeURIComponent(u):"";
+  for(var i=0;i<CRESTOK.length;i++)if(u.indexOf(CRESTOK[i])===0)return"/crest?u="+encodeURIComponent(u);
+  return"";
 }
 function rrect(g,x,y,w,h,r){
   g.beginPath();
