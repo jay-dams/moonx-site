@@ -1127,7 +1127,7 @@ var NOISEW=/^(fc|afc|cfc|ac|sc|cf|as|rc|sv|cd|ca|ec|if|bk|sk|us|vfb|vfl|tsg|rb|p
 var INDIV=/^(tennis|tabletennis|pickle|fight)$/;
 var PARTW=/^(de|del|della|di|da|das|dos|van|von|den|der|ter|la|le|el|al|bin|ibn|mac|mc|st|saint|do|du|abu)$/i;
 var SUFXW=/^(jr|sr|ii|iii|iv)\.?$/i;
-function mhue(s){var h=0,t=String(s||"");for(var i=0;i<t.length;i++)h=(h*31+t.charCodeAt(i))%235;return h<85?25+h:185+(h-85)}
+function mhue(s){var h=2166136261,t=String(s||"");for(var i=0;i<t.length;i++){h^=t.charCodeAt(i);h=Math.imul(h,16777619)>>>0}h=h%210;return h<50?20+h:185+(h-50)}
 function mono(s){var h=mhue(s);return"background:hsl("+h+",26%,17%);color:hsl("+h+",66%,72%)"}
 function initials(s){
   var t=String(s||"").replace(/\s*[-+]?\d+(?:[.,]\d+)?\s*$/,"");
