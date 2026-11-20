@@ -26,9 +26,13 @@ const memeJeu = (a, b) => a.size === b.size && [...a].every((x) => b.has(x));
 const inclus = (a, b) => [...a].every((x) => b.has(x));
 const communs = (a, b) => [...a].filter((x) => b.has(x)).length;
 
+let TRACE = null;
+function note(k, v) { if (TRACE) TRACE.push(k + "=" + v); }
+
 async function json(u) {
   const r = await fetch(u, { headers: { "user-agent": UA, accept: "application/json" },
     cf: { cacheEverything: true, cacheTtl: 86400 } });
+  note("http", r.status);
   if (!r.ok) throw new Error("http " + r.status);
   return await r.json();
 }
@@ -42,7 +46,9 @@ async function idEspn(nom, sport) {
   const u = "https://site.web.api.espn.com/apis/common/v3/search?region=us&lang=en"
     + "&limit=12&type=player&query=" + encodeURIComponent(nom);
   let d;
-  try { d = await json(u); } catch { return null; }
+  try { d = await json(u); } catch (e) { note("espnSearch", "ECHEC " + e.message); return null; }
+  note("espnItems", (d.items || []).length);
+  note("espnSports", (d.items || []).map((x) => x.sport).join("/") || "-");
   const cible = mots(nom);
   let approche = null;
   for (const it of d.items || []) {
@@ -85,8 +91,11 @@ async function visageWiki(nom, sport) {
 }
 
 async function image(u) {
-  const r = await fetch(u, { headers: { "user-agent": UA },
-    cf: { cacheEverything: true, cacheTtl: SEMAINE } });
+  let r;
+  try { r = await fetch(u, { headers: { "user-agent": UA },
+    cf: { cacheEverything: true, cacheTtl: SEMAINE } }); }
+  catch (e) { note("img", "ECHEC " + e.message); return null; }
+  note("img", r.status + " " + (r.headers.get("content-type") || "?"));
   if (!r.ok) return null;
   const type = r.headers.get("content-type") || "";
   if (!type.startsWith("image/")) { await r.body?.cancel(); return null; }
@@ -98,11 +107,15 @@ async function image(u) {
    initiales. */
 async function visage(nom, sport) {
   const id = await idEspn(nom, sport);
+  note("id", id || "-");
   if (id) {
-    const r = await image("https://a.espncdn.com/i/headshots/" + sport + "/players/full/" + id + ".png");
+    const u = "https://a.espncdn.com/i/headshots/" + sport + "/players/full/" + id + ".png";
+    const r = await image(u);
+    note("headshot", r ? "ok" : "ko");
     if (r) return r;
   }
   const w = await visageWiki(nom, sport);
+  note("wiki", w ? "ok" : "-");
   if (w) return await image(w);
   return null;
 }
@@ -129,6 +142,16 @@ export default {
       const cache = caches.default;
       const vu = await cache.match(clef);
       if (vu) return vu;
+      if (url.searchParams.get("d") === "1") {
+        TRACE = [];
+        let got = null;
+        try { got = await visage(nom, sport); } catch (e) { note("erreur", e.message); }
+        const t = TRACE.join(" | ");
+        TRACE = null;
+        if (got) await got.body?.cancel();
+        return new Response(JSON.stringify({ nom, sport, trouve: !!got, etapes: t }, null, 1),
+          { headers: { "content-type": "application/json", "cache-control": "no-store" } });
+      }
       let rep = null;
       try { rep = await visage(nom, sport); } catch { rep = null; }
       if (!rep) {
