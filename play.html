@@ -1151,7 +1151,7 @@ function hideToast(){
 }
 function toast(t){var e=$("toast");clearTimeout(timers.toastEnd);e.onmouseenter=e.onmouseleave=null;e.classList.remove("rich");e.textContent=t;e.classList.add("on");clearTimeout(timers.toast);timers.toast=setTimeout(hideToast,2600)}
 function vib(p){try{navigator.vibrate&&navigator.vibrate(p)}catch(e){}}
-function av(o){if(o.draw)return'<span class="av draw">=</span>';var ini=initials(o.label),lg=(o.logo&&!/country-flags\/un\.png/i.test(o.logo))?o.logo:"",mn=mono(o.label);return lg?'<span class="av"><img src="'+esc(lg)+'" alt="" loading="lazy" data-mn="'+mn+'" onerror="lgerr(this,\''+ini+'\')"></span>':'<span class="av mn" style="'+mn+'">'+ini+"</span>"}
+function av(o){if(o.draw)return'<span class="av draw">=</span>';var ini=initials(o.label),lg=realLogo(o),mn=mono(o.label);return lg?'<span class="av"><img src="'+esc(lg)+'" alt="" loading="lazy" data-mn="'+mn+'" onerror="lgerr(this,\''+ini+'\')"></span>':'<span class="av mn" style="'+mn+'">'+ini+"</span>"}
 var BQ=[],bqOn=0;
 function bq(fn){
   BQ.push(fn);
@@ -1621,8 +1621,48 @@ function groupOf(m){
   var dd=Math.round((new Date(d.getFullYear(),d.getMonth(),d.getDate())-new Date(n.getFullYear(),n.getMonth(),n.getDate()))/864e5);
   return dd<=0?"TODAY":dd===1?"TOMORROW":d.toLocaleDateString("en-US",{weekday:"long",month:"short",day:"numeric"}).toUpperCase();
 }
+var TFLAG={"agustin eduardo cuellar lorberg":"bo","alan magadan":"mx","aleksandre bakshi":"ge",
+"alessandro bellifemine":"it","ana sofia sanchez":"mx","andrea colombo":"it","andrea paolini":"it",
+"andrey chepelev":"ru","ane mintegi del olmo":"es","angela fita boluda":"es","aradhya kshitij":"in",
+"arantxa rus":"nl","artur kukasian":"ru","ashley lahey":"us","aziz ouakaa":"tn","bastian malla":"cl",
+"benjamin pietri":"fr","bernardo munk mesa":"es","blu baker":"gb","branko djuric":"rs","caheer warik":"in",
+"carles hernandez":"es","carlos maria zarate":"ar","carlota martinez cirez":"es","celia cervino ruiz":"es",
+"charo esquiva banuls":"es","chirag duhan":"in","dakotah bobo":"us","daniel dutra da silva":"br",
+"daniil sarksian":"ru","dante pagani":"ar","diana ioana simionescu":"ro","dmitry popko":"kz",
+"dragos cazacu":"ro","dragos nicolae madaras":"se","duje ajdukovic":"hr","elizara yaneva":"bg",
+"emily appleton":"gb","enrique carrascosa diaz":"es","enzo kohlmann de freitas":"br","ergi kirkin":"tr",
+"fanming meng":"cn","fausto tabacco":"it","federico bondioli":"it","federico iannaccone":"it",
+"felipe de dios":"ar","felix corwin":"us","fermin tenti":"ar","filippo romano":"it","francisco rocha":"pt",
+"gabriel debru":"fr","gavin goode":"us","gavin young":"us","gilles arnaud bailly":"be","giulio perego":"it",
+"greet minnen":"be","hanna chang":"us","hazem naw":"sy","henry searle":"gb","ioannis xilas":"gr",
+"ivan dreycopp":"ar","jack secord":"us","jacob brumm":"us","javier barranco cosano":"es","jessika ponchet":"fr",
+"joanna garland":"tw","joao domingues":"pt","joao vitor scramin do lago":"br","jorge plans":"es",
+"juan bautista torres":"ar","juan estevez":"ar","julio cesar porras":"ar","justin roberts":"bs",
+"kabir hans":"in","kasra rahmani":"ir","katie swan":"gb","kris van wyk":"za","lachlan mcfadzean":"au",
+"lea boskovic":"hr","logan zapp":"us","lorenzo claverie":"it","lorenzo gagliardo":"it",
+"lorenzo joaquin rodriguez":"ar","maan kesharwani":"in","mara guth":"de","marcel latak":"us",
+"marek gengel":"cz","mariam bolkvadze":"ge","markus malaszszak":"th","martina colmegna":"it",
+"mateo del pino":"ar","mateus alves":"br","matt ponchet":"fr","matteo covato":"it","matthew segura":"us",
+"matyas cerny":"cz","maximilian homberg":"de","melios efstathiou":"cy","mia horvit":"us","murkel dellien":"bo",
+"nicolas bruna":"cl","nicolas oliveira":"br","nikita mashtakov":"ua","oleksii krutykh":"ua",
+"oliver bonding":"gb","olivia gadecki":"au","olle wallin":"se","patricio alvarado":"ec","patrick schoen":"ch",
+"pavel lagutin":"ru","pedro liborio":"pt","pedro rodenas":"es","pedro sakamoto":"br","rachel gailis":"us",
+"rodrigo alujas":"mx","romain gales":"fr","saba purtseladze":"ge","sandra samir":"eg","sanhui shin":"kr",
+"santiago giamichelle":"ar","sasikumar mukund":"in","sebastian sorger":"at","shuai zhang":"cn",
+"shunsuke mitsui":"jp","stijn paardekooper":"nl","suzan lamens":"nl","teodor davidov":"us","tomas re":"ar",
+"ty host":"au","valentini grammatikopoulou":"gr","victor pagotto":"br","victoria bosio":"ar","victoria hu":"us",
+"victoria rodriguez":"mx","william jansen":"gb","william rejchtman vinciguerra":"se","yannik alvarez":"pr",
+"yuto oki":"jp"};
+var TCREST={"new zealand breakers":"https://a.espncdn.com/i/teamlogos/nbl/500/nzl.png"};
+function nkey(s){return String(s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]+/g," ").trim()}
+function altLogo(o){
+  var k=nkey(o.label);
+  if(TCREST[k])return TCREST[k];
+  var c=TFLAG[k];
+  return c?S3+"country-flags/"+c+".png":"";
+}
 function realLogo(o){
-  return o.logo&&!/country-flags\/un\.png/i.test(o.logo)?o.logo:"";
+  return o.logo&&!/country-flags\/un\.png/i.test(o.logo)?o.logo:altLogo(o);
 }
 function logo(o){
   if(o.draw)return'<span class="lo dw">=</span>';
@@ -3450,7 +3490,7 @@ async function buildCard(r){
   var legs=(r.legs||[]).slice(0,3),y=790;
   if(legs.length){
     var crests=await Promise.all(legs.map(function(l){
-      return l.draw?null:cardImg(crestURL(l.logo),true);
+      return l.draw?null:cardImg(crestURL(realLogo(l)),true);
     }));
     g.strokeStyle="rgba(140,170,220,.22)";g.lineWidth=2;
     g.beginPath();g.moveTo(P,730);g.lineTo(CARDW-P,730);g.stroke();
