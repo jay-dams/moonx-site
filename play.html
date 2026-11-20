@@ -1129,6 +1129,7 @@ function eqx(e){
 function fx(x){if(!isFinite(x))return"-";return(x>=100?x.toFixed(0):x>=10?x.toFixed(1):x.toFixed(2))+"x"}
 function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
 window.faceOk=function(im){
+  if(im.naturalWidth===im.naturalHeight)return;
   if(im.naturalWidth===600&&im.naturalHeight===436)return;
   if(im.parentNode)im.parentNode.classList.add("fw");
 };
@@ -1679,6 +1680,28 @@ var TFLAG={"agustin eduardo cuellar lorberg":"bo","alan magadan":"mx","aleksandr
 "yuto oki":"jp"};
 var TCREST={"new zealand breakers":"https://a.espncdn.com/i/teamlogos/nbl/500/nzl.png"};
 var FACEOK=/^(fight|tennis)$/;
+var TCUT={"aidan mayo":1,"aleksandre topuria":1,"alessandro costa":1,"alik lorenz":1,"aljamain sterling":1,
+"amir albazi":1,"ana sofia sanchez":1,"andrea lazaro garcia":1,"angela fita boluda":1,"arantxa rus":1,
+"asu almabayev":1,"aziz ouakaa":1,"ben shelton":1,"brian ortega":1,"carlos alcaraz":1,"carson tanguilig":1,
+"clement chidekh":1,"dalibor svrcina":1,"dan hooker":1,"daniil medvedev":1,"darwin blanch":1,"dino prizmic":1,
+"diyar nurgozhay":1,"dmitry popko":1,"dom mar fan":1,"dragos nicolae madaras":1,"duje ajdukovic":1,
+"edas butvilas":1,"elizara yaneva":1,"ella mcdonald":1,"elmer moeller":1,"felipe meligeni alves":1,
+"flavio cobolli":1,"frances tiafoe":1,"francesco passaro":1,"franco roncadelli":1,"gabriel debru":1,
+"gilles arnaud bailly":1,"greet minnen":1,"guido justo":1,"guiomar maristany":1,"harold mayot":1,
+"harry wendelken":1,"ikram aliskerov":1,"irene burillo escorihuela":1,"jake matthews":1,"james kent trotter":1,
+"jared cannonier":1,"javier barranco cosano":1,"jay dylan friend":1,"jessika ponchet":1,"jiri prochazka":1,
+"joanna garland":1,"joao domingues":1,"juan bautista torres":1,"katie swan":1,"kevin vallejos":1,
+"kristina penickova":1,"kylie collins":1,"kyoji horiguchi":1,"laslo djere":1,"laura samson":1,"lea boskovic":1,
+"lea ma":1,"leyre romero gormaz":1,"li tu":1,"liam broady":1,"liam draxl":1,"luca nardi":1,
+"lucciana perez alarcon":1,"lucia bronzetti":1,"mariam bolkvadze":1,"mateus alves":1,
+"matheus pucinelli de almeida":1,"mell elizabeth reasco gonzalez":1,"mia ristic":1,"mika stojsavljevic":1,
+"navajo stirling":1,"nicolai budkov kjaer":1,"nikolas motta":1,"nishesh basavareddy":1,"oliver tarvet":1,
+"olivia gadecki":1,"omar jasika":1,"oriol roca batalla":1,"otto virtanen":1,"philip sekulic":1,
+"pierre hugues herbert":1,"raluca georgiana serban":1,"rebeka masarova":1,"salma djoubri":1,"sandra samir":1,
+"santiago fa rodriguez taverna":1,"santiago luna":1,"sasikumar mukund":1,"shamil gaziev":1,"shuai zhang":1,
+"soon woo kwon":1,"stefan kozlov":1,"suzan lamens":1,"tahir abdullayev":1,"tallison teixeira":1,
+"thiago seyboth wild":1,"toby samuel":1,"tristan boyer":1,"valentini grammatikopoulou":1,"valeriya strakhova":1,
+"yosuke watanuki":1};
 var SPORTOF={};
 var ESPNL={};
 var ESPNT="https://a.espncdn.com/i/teamlogos/";
@@ -1761,9 +1784,11 @@ function faceURL(o){
   if(!o||o.draw||o.sub)return"";
   var n=String(o.label||"").replace(/\s+/g," ").trim();
   if(n.length<3||/\d/.test(n))return"";
-  var s=SPORTOF[nkey(n)]||(FACEOK.test(o.sport||"")?(o.sport==="fight"?"mma":"tennis"):"");
+  var k=nkey(n);
+  if(TCUT[k])return"assets/face/"+k.replace(/ /g,"-")+".webp";
+  var s=SPORTOF[k]||(FACEOK.test(o.sport||"")?(o.sport==="fight"?"mma":"tennis"):"");
   if(!s)return"";
-  var i=TFACE[nkey(n)];
+  var i=TFACE[k];
   return"/face?s="+s+"&n="+encodeURIComponent(n)+(i?"&i="+i:"");
 }
 function altLogo(o){
@@ -3620,7 +3645,7 @@ async function buildCard(r){
         fg.addColorStop(0,"#263A62");fg.addColorStop(1,"#0C1222");
         g.save();g.beginPath();g.arc(P+31,y-13,31,0,6.2832);g.clip();
         g.fillStyle=fg;g.fillRect(P,y-44,62,62);
-        if(!(fa.width===600&&fa.height===436)){
+        if(fa.width!==fa.height&&!(fa.width===600&&fa.height===436)){
           var px=P+31,py=y-44+12.4;
           g.translate(px,py);g.scale(1.38,1.38);g.translate(-px,-py);
         }

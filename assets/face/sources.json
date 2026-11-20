@@ -1,0 +1,511 @@
+{
+ "aidan-mayo": {
+  "name": "Aidan Mayo",
+  "page": "https://en.wikipedia.org/wiki/Aidan_Mayo",
+  "source": "wikimedia"
+ },
+ "aleksandre-topuria": {
+  "name": "Aleksandre Topuria",
+  "source": "espn"
+ },
+ "alessandro-costa": {
+  "name": "Alessandro Costa",
+  "source": "espn"
+ },
+ "alik-lorenz": {
+  "name": "Alik Lorenz",
+  "source": "espn"
+ },
+ "aljamain-sterling": {
+  "name": "Aljamain Sterling",
+  "source": "espn"
+ },
+ "amir-albazi": {
+  "name": "Amir Albazi",
+  "source": "espn"
+ },
+ "ana-sofia-sanchez": {
+  "name": "Ana Sofia Sanchez",
+  "page": "https://en.wikipedia.org/wiki/Ana_Sofía_Sánchez",
+  "source": "wikimedia"
+ },
+ "andrea-lazaro-garcia": {
+  "name": "Andrea Lazaro Garcia",
+  "page": "https://en.wikipedia.org/wiki/Andrea_Lázaro_García",
+  "source": "wikimedia"
+ },
+ "angela-fita-boluda": {
+  "name": "Angela Fita Boluda",
+  "page": "https://en.wikipedia.org/wiki/Ángela_Fita_Boluda",
+  "source": "wikimedia"
+ },
+ "arantxa-rus": {
+  "name": "Arantxa Rus",
+  "source": "espn"
+ },
+ "asu-almabayev": {
+  "name": "Asu Almabayev",
+  "source": "espn"
+ },
+ "aziz-ouakaa": {
+  "name": "Aziz Ouakaa",
+  "page": "https://en.wikipedia.org/wiki/Aziz_Ouakaa",
+  "source": "wikimedia"
+ },
+ "ben-shelton": {
+  "name": "Ben Shelton",
+  "page": "https://en.wikipedia.org/wiki/Ben_Shelton",
+  "source": "wikimedia"
+ },
+ "brian-ortega": {
+  "name": "Brian Ortega",
+  "source": "espn"
+ },
+ "carlos-alcaraz": {
+  "name": "Carlos Alcaraz",
+  "source": "espn"
+ },
+ "carson-tanguilig": {
+  "name": "Carson Tanguilig",
+  "page": "https://en.wikipedia.org/wiki/Carson_Tanguilig",
+  "source": "wikimedia"
+ },
+ "clement-chidekh": {
+  "name": "Clement Chidekh",
+  "page": "https://en.wikipedia.org/wiki/Clément_Chidekh",
+  "source": "wikimedia"
+ },
+ "dalibor-svrcina": {
+  "name": "Dalibor Svrcina",
+  "page": "https://en.wikipedia.org/wiki/Dalibor_Svrčina",
+  "source": "wikimedia"
+ },
+ "dan-hooker": {
+  "name": "Dan Hooker",
+  "source": "espn"
+ },
+ "daniil-medvedev": {
+  "name": "Daniil Medvedev",
+  "source": "espn"
+ },
+ "darwin-blanch": {
+  "name": "Darwin Blanch",
+  "page": "https://en.wikipedia.org/wiki/Darwin_Blanch",
+  "source": "wikimedia"
+ },
+ "dino-prizmic": {
+  "name": "Dino Prizmic",
+  "page": "https://en.wikipedia.org/wiki/Dino_Prižmić",
+  "source": "wikimedia"
+ },
+ "diyar-nurgozhay": {
+  "name": "Diyar Nurgozhay",
+  "source": "espn"
+ },
+ "dmitry-popko": {
+  "name": "Dmitry Popko",
+  "page": "https://en.wikipedia.org/wiki/Dmitry_Popko",
+  "source": "wikimedia"
+ },
+ "dom-mar-fan": {
+  "name": "Dom Mar Fan",
+  "source": "espn"
+ },
+ "dragos-nicolae-madaras": {
+  "name": "Dragos Nicolae Madaras",
+  "page": "https://en.wikipedia.org/wiki/Dragoș_Nicolae_Mădăraș",
+  "source": "wikimedia"
+ },
+ "duje-ajdukovic": {
+  "name": "Duje Ajdukovic",
+  "page": "https://en.wikipedia.org/wiki/Duje_Ajduković",
+  "source": "wikimedia"
+ },
+ "edas-butvilas": {
+  "name": "Edas Butvilas",
+  "page": "https://en.wikipedia.org/wiki/Edas_Butvilas",
+  "source": "wikimedia"
+ },
+ "elizara-yaneva": {
+  "name": "Elizara Yaneva",
+  "page": "https://en.wikipedia.org/wiki/Elizara_Yaneva",
+  "source": "wikimedia"
+ },
+ "ella-mcdonald": {
+  "name": "Ella McDonald",
+  "page": "https://en.wikipedia.org/wiki/Ella_McDonald",
+  "source": "wikimedia"
+ },
+ "elmer-moeller": {
+  "name": "Elmer Moeller",
+  "page": "https://en.wikipedia.org/wiki/Elmer_Møller",
+  "source": "wikimedia"
+ },
+ "felipe-meligeni-alves": {
+  "name": "Felipe Meligeni Alves",
+  "page": "https://en.wikipedia.org/wiki/Felipe_Meligeni_Alves",
+  "source": "wikimedia"
+ },
+ "flavio-cobolli": {
+  "name": "Flavio Cobolli",
+  "page": "https://en.wikipedia.org/wiki/Flavio_Cobolli",
+  "source": "wikimedia"
+ },
+ "frances-tiafoe": {
+  "name": "Frances Tiafoe",
+  "source": "espn"
+ },
+ "francesco-passaro": {
+  "name": "Francesco Passaro",
+  "page": "https://en.wikipedia.org/wiki/Francesco_Passaro",
+  "source": "wikimedia"
+ },
+ "franco-roncadelli": {
+  "name": "Franco Roncadelli",
+  "page": "https://en.wikipedia.org/wiki/Franco_Roncadelli",
+  "source": "wikimedia"
+ },
+ "gabriel-debru": {
+  "name": "Gabriel Debru",
+  "page": "https://en.wikipedia.org/wiki/Gabriel_Debru",
+  "source": "wikimedia"
+ },
+ "gilles-arnaud-bailly": {
+  "name": "Gilles Arnaud Bailly",
+  "page": "https://en.wikipedia.org/wiki/Gilles-Arnaud_Bailly",
+  "source": "wikimedia"
+ },
+ "greet-minnen": {
+  "name": "Greet Minnen",
+  "page": "https://en.wikipedia.org/wiki/Greet_Minnen",
+  "source": "wikimedia"
+ },
+ "guido-justo": {
+  "name": "Guido Justo",
+  "page": "https://en.wikipedia.org/wiki/Guido_Iván_Justo",
+  "source": "wikimedia"
+ },
+ "guiomar-maristany": {
+  "name": "Guiomar Maristany",
+  "page": "https://en.wikipedia.org/wiki/Guiomar_Maristany",
+  "source": "wikimedia"
+ },
+ "harold-mayot": {
+  "name": "Harold Mayot",
+  "page": "https://en.wikipedia.org/wiki/Harold_Mayot",
+  "source": "wikimedia"
+ },
+ "harry-wendelken": {
+  "name": "Harry Wendelken",
+  "page": "https://en.wikipedia.org/wiki/Harry_Wendelken",
+  "source": "wikimedia"
+ },
+ "ikram-aliskerov": {
+  "name": "Ikram Aliskerov",
+  "source": "espn"
+ },
+ "irene-burillo-escorihuela": {
+  "name": "Irene Burillo Escorihuela",
+  "page": "https://en.wikipedia.org/wiki/Irene_Burillo",
+  "source": "wikimedia"
+ },
+ "jake-matthews": {
+  "name": "Jake Matthews",
+  "source": "espn"
+ },
+ "james-kent-trotter": {
+  "name": "James Kent Trotter",
+  "page": "https://en.wikipedia.org/wiki/James_Trotter_(tennis)",
+  "source": "wikimedia"
+ },
+ "jared-cannonier": {
+  "name": "Jared Cannonier",
+  "source": "espn"
+ },
+ "javier-barranco-cosano": {
+  "name": "Javier Barranco Cosano",
+  "page": "https://en.wikipedia.org/wiki/Javier_Barranco_Cosano",
+  "source": "wikimedia"
+ },
+ "jay-dylan-friend": {
+  "name": "Jay Dylan Friend",
+  "page": "https://en.wikipedia.org/wiki/Jay_Friend",
+  "source": "wikimedia"
+ },
+ "jessika-ponchet": {
+  "name": "Jessika Ponchet",
+  "page": "https://en.wikipedia.org/wiki/Jessika_Ponchet",
+  "source": "wikimedia"
+ },
+ "jiri-prochazka": {
+  "name": "Jirí Procházka",
+  "source": "espn"
+ },
+ "joanna-garland": {
+  "name": "Joanna Garland",
+  "page": "https://en.wikipedia.org/wiki/Joanna_Garland",
+  "source": "wikimedia"
+ },
+ "joao-domingues": {
+  "name": "Joao Domingues",
+  "page": "https://en.wikipedia.org/wiki/João_Domingues",
+  "source": "wikimedia"
+ },
+ "juan-bautista-torres": {
+  "name": "Juan Bautista Torres",
+  "page": "https://en.wikipedia.org/wiki/Juan_Bautista_Torres",
+  "source": "wikimedia"
+ },
+ "katie-swan": {
+  "name": "Katie Swan",
+  "page": "https://en.wikipedia.org/wiki/Katie_Swan",
+  "source": "wikimedia"
+ },
+ "kevin-vallejos": {
+  "name": "Kevin Vallejos",
+  "source": "espn"
+ },
+ "kristina-penickova": {
+  "name": "Kristina Penickova",
+  "page": "https://en.wikipedia.org/wiki/Kristina_Penickova",
+  "source": "wikimedia"
+ },
+ "kylie-collins": {
+  "name": "Kylie Collins",
+  "page": "https://en.wikipedia.org/wiki/Kylie_Collins",
+  "source": "wikimedia"
+ },
+ "kyoji-horiguchi": {
+  "name": "Kyoji Horiguchi",
+  "source": "espn"
+ },
+ "laslo-djere": {
+  "name": "Laslo Djere",
+  "source": "espn"
+ },
+ "laura-samson": {
+  "name": "Laura Samson",
+  "page": "https://en.wikipedia.org/wiki/Laura_Samson",
+  "source": "wikimedia"
+ },
+ "lea-boskovic": {
+  "name": "Lea Boskovic",
+  "page": "https://en.wikipedia.org/wiki/Lea_Bošković",
+  "source": "wikimedia"
+ },
+ "lea-ma": {
+  "name": "Lea Ma",
+  "page": "https://en.wikipedia.org/wiki/Lea_Ma",
+  "source": "wikimedia"
+ },
+ "leyre-romero-gormaz": {
+  "name": "Leyre Romero Gormaz",
+  "page": "https://en.wikipedia.org/wiki/Leyre_Romero_Gormaz",
+  "source": "wikimedia"
+ },
+ "li-tu": {
+  "name": "Li Tu",
+  "page": "https://en.wikipedia.org/wiki/Li_Tu",
+  "source": "wikimedia"
+ },
+ "liam-broady": {
+  "name": "Liam Broady",
+  "page": "https://en.wikipedia.org/wiki/Liam_Broady",
+  "source": "wikimedia"
+ },
+ "liam-draxl": {
+  "name": "Liam Draxl",
+  "page": "https://en.wikipedia.org/wiki/Liam_Draxl",
+  "source": "wikimedia"
+ },
+ "luca-nardi": {
+  "name": "Luca Nardi",
+  "page": "https://en.wikipedia.org/wiki/Luca_Nardi",
+  "source": "wikimedia"
+ },
+ "lucciana-perez-alarcon": {
+  "name": "Lucciana Perez Alarcon",
+  "page": "https://en.wikipedia.org/wiki/Lucciana_Pérez",
+  "source": "wikimedia"
+ },
+ "lucia-bronzetti": {
+  "name": "Lucia Bronzetti",
+  "page": "https://en.wikipedia.org/wiki/Lucia_Bronzetti",
+  "source": "wikimedia"
+ },
+ "mariam-bolkvadze": {
+  "name": "Mariam Bolkvadze",
+  "page": "https://en.wikipedia.org/wiki/Mariam_Bolkvadze",
+  "source": "wikimedia"
+ },
+ "mateus-alves": {
+  "name": "Mateus Alves",
+  "page": "https://en.wikipedia.org/wiki/Mateus_Alves",
+  "source": "wikimedia"
+ },
+ "matheus-pucinelli-de-almeida": {
+  "name": "Matheus Pucinelli de Almeida",
+  "page": "https://en.wikipedia.org/wiki/Matheus_Pucinelli_de_Almeida",
+  "source": "wikimedia"
+ },
+ "mell-elizabeth-reasco-gonzalez": {
+  "name": "Mell Elizabeth Reasco Gonzalez",
+  "page": "https://en.wikipedia.org/wiki/Mell_Reasco",
+  "source": "wikimedia"
+ },
+ "mia-ristic": {
+  "name": "Mia Ristic",
+  "page": "https://en.wikipedia.org/wiki/Mia_Ristić",
+  "source": "wikimedia"
+ },
+ "mika-stojsavljevic": {
+  "name": "Mika Stojsavljevic",
+  "page": "https://en.wikipedia.org/wiki/Mika_Stojsavljevic",
+  "source": "wikimedia"
+ },
+ "navajo-stirling": {
+  "name": "Navajo Stirling",
+  "source": "espn"
+ },
+ "nicolai-budkov-kjaer": {
+  "name": "Nicolai Budkov Kjaer",
+  "page": "https://en.wikipedia.org/wiki/Nicolai_Budkov_Kjær",
+  "source": "wikimedia"
+ },
+ "nikolas-motta": {
+  "name": "Nikolas Motta",
+  "source": "espn"
+ },
+ "nishesh-basavareddy": {
+  "name": "Nishesh Basavareddy",
+  "page": "https://en.wikipedia.org/wiki/Nishesh_Basavareddy",
+  "source": "wikimedia"
+ },
+ "oliver-tarvet": {
+  "name": "Oliver Tarvet",
+  "page": "https://en.wikipedia.org/wiki/Oliver_Tarvet",
+  "source": "wikimedia"
+ },
+ "olivia-gadecki": {
+  "name": "Olivia Gadecki",
+  "page": "https://en.wikipedia.org/wiki/Olivia_Gadecki",
+  "source": "wikimedia"
+ },
+ "omar-jasika": {
+  "name": "Omar Jasika",
+  "source": "espn"
+ },
+ "oriol-roca-batalla": {
+  "name": "Oriol Roca Batalla",
+  "page": "https://en.wikipedia.org/wiki/Oriol_Roca_Batalla",
+  "source": "wikimedia"
+ },
+ "otto-virtanen": {
+  "name": "Otto Virtanen",
+  "page": "https://en.wikipedia.org/wiki/Otto_Virtanen",
+  "source": "wikimedia"
+ },
+ "philip-sekulic": {
+  "name": "Philip Sekulic",
+  "page": "https://en.wikipedia.org/wiki/Philip_Sekulic",
+  "source": "wikimedia"
+ },
+ "pierre-hugues-herbert": {
+  "name": "Pierre-Hugues Herbert",
+  "source": "espn"
+ },
+ "raluca-georgiana-serban": {
+  "name": "Raluca Georgiana Serban",
+  "page": "https://en.wikipedia.org/wiki/Raluca_Șerban",
+  "source": "wikimedia"
+ },
+ "rebeka-masarova": {
+  "name": "Rebeka Masarova",
+  "page": "https://en.wikipedia.org/wiki/Rebeka_Masarova",
+  "source": "wikimedia"
+ },
+ "salma-djoubri": {
+  "name": "Salma Djoubri",
+  "page": "https://en.wikipedia.org/wiki/Salma_Djoubri",
+  "source": "wikimedia"
+ },
+ "sandra-samir": {
+  "name": "Sandra Samir",
+  "page": "https://en.wikipedia.org/wiki/Sandra_Samir",
+  "source": "wikimedia"
+ },
+ "santiago-fa-rodriguez-taverna": {
+  "name": "Santiago Fa Rodriguez Taverna",
+  "page": "https://en.wikipedia.org/wiki/Santiago_Rodríguez_Taverna",
+  "source": "wikimedia"
+ },
+ "santiago-luna": {
+  "name": "Santiago Luna",
+  "source": "espn"
+ },
+ "sasikumar-mukund": {
+  "name": "Sasikumar Mukund",
+  "page": "https://en.wikipedia.org/wiki/Mukund_Sasikumar",
+  "source": "wikimedia"
+ },
+ "shamil-gaziev": {
+  "name": "Shamil Gaziev",
+  "source": "espn"
+ },
+ "shuai-zhang": {
+  "name": "Shuai Zhang",
+  "source": "espn"
+ },
+ "soon-woo-kwon": {
+  "name": "Soon-Woo Kwon",
+  "page": "https://en.wikipedia.org/wiki/Kwon_Soon-woo",
+  "source": "wikimedia"
+ },
+ "stefan-kozlov": {
+  "name": "Stefan Kozlov",
+  "source": "espn"
+ },
+ "suzan-lamens": {
+  "name": "Suzan Lamens",
+  "page": "https://en.wikipedia.org/wiki/Suzan_Lamens",
+  "source": "wikimedia"
+ },
+ "tahir-abdullayev": {
+  "name": "Tahir Abdullayev",
+  "source": "espn"
+ },
+ "tallison-teixeira": {
+  "name": "Tallison Teixeira",
+  "source": "espn"
+ },
+ "thiago-seyboth-wild": {
+  "name": "Thiago Seyboth Wild",
+  "page": "https://en.wikipedia.org/wiki/Thiago_Seyboth_Wild",
+  "source": "wikimedia"
+ },
+ "toby-samuel": {
+  "name": "Toby Samuel",
+  "page": "https://en.wikipedia.org/wiki/Toby_Samuel",
+  "source": "wikimedia"
+ },
+ "tristan-boyer": {
+  "name": "Tristan Boyer",
+  "page": "https://en.wikipedia.org/wiki/Tristan_Boyer",
+  "source": "wikimedia"
+ },
+ "valentini-grammatikopoulou": {
+  "name": "Valentini Grammatikopoulou",
+  "page": "https://en.wikipedia.org/wiki/Valentini_Grammatikopoulou",
+  "source": "wikimedia"
+ },
+ "valeriya-strakhova": {
+  "name": "Valeriya Strakhova",
+  "page": "https://en.wikipedia.org/wiki/Valeriya_Strakhova",
+  "source": "wikimedia"
+ },
+ "yosuke-watanuki": {
+  "name": "Yosuke Watanuki",
+  "page": "https://en.wikipedia.org/wiki/Yosuke_Watanuki",
+  "source": "wikimedia"
+ }
+}
