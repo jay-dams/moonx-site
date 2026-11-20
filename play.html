@@ -206,9 +206,13 @@ nav.top{position:fixed;top:0;left:0;right:0;z-index:30;height:var(--nh);display:
 .sg.on .lo{background:rgba(6,17,10,.14)!important;color:#06110A!important}
 .sg.on .lo.mn{box-shadow:none}
 .mn{box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
+.fh{position:relative}
 .fc{border-radius:50%!important;overflow:hidden!important;background:linear-gradient(180deg,#263A62,#0C1222)!important;box-shadow:inset 0 0 0 1px rgba(150,195,255,.43)!important;padding:0!important}
-.fc img{width:100%!important;height:100%!important;object-fit:cover!important;object-position:center top;padding:0!important;border-radius:0!important}
-.fc.fw img{transform:scale(1.38);transform-origin:50% 20%}
+.fim{position:absolute;left:0;top:0;width:100%!important;height:100%!important;object-fit:cover!important;object-position:center top;padding:0!important;border-radius:0!important;opacity:0}
+.fc .fim{opacity:1}
+.fc{color:transparent!important}
+.fc img:not(.fim){visibility:hidden}
+.fc.fw .fim{transform:scale(1.38);transform-origin:50% 20%}
 .sg .k2.fu{color:#8BF2B8}
 .sg .k2.fd{color:var(--red)}
 .sg.on .k2.fu,.sg.on .k2.fd{color:#06110A}
@@ -1129,16 +1133,16 @@ function eqx(e){
 function fx(x){if(!isFinite(x))return"-";return(x>=100?x.toFixed(0):x>=10?x.toFixed(1):x.toFixed(2))+"x"}
 function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
 window.faceOk=function(im){
+  var p=im.parentNode;if(!p)return;
+  p.classList.add("fc");
   if(im.naturalWidth===im.naturalHeight)return;
   if(im.naturalWidth===600&&im.naturalHeight===436)return;
-  if(im.parentNode)im.parentNode.classList.add("fw");
+  p.classList.add("fw");
 };
 window.faceErr=function(im){
-  var p=im.parentNode;if(!p)return;
-  var lg=im.dataset.lg||"",ini=im.dataset.ini||"?",mn=im.dataset.mn||"";
-  p.classList.remove("fc");
-  if(lg){p.innerHTML='<img src="'+esc(lg)+'" alt="" loading="lazy" data-mn="'+mn+'" onerror="lgerr(this,\''+ini+'\')">';return}
-  p.textContent=ini;if(mn){p.style.cssText+=";"+mn;p.classList.add("mn")}
+  var p=im.parentNode;
+  if(p)p.classList.remove("fc","fw","fh");
+  if(im.parentNode)im.parentNode.removeChild(im);
 };
 window.lgerr=function(im,ini){
   if(!im.dataset.r){im.dataset.r="1";var u=im.src;im.src="";setTimeout(function(){im.src=u},900);return}
@@ -1809,8 +1813,10 @@ function logo(o){
 }
 function pastille(cls,o){
   var ini=initials(o.label),lg=realLogo(o),mn=mono(o.label),fu=faceURL(o);
-  if(fu)return'<span class="'+cls+' fc"><img src="'+esc(fu)+'" alt="" loading="lazy" data-lg="'+esc(lg)+'" data-ini="'+esc(ini)+'" data-mn="'+mn+'" onload="faceOk(this)" onerror="faceErr(this)"></span>';
-  return lg?'<span class="'+cls+'"><img src="'+esc(lg)+'" alt="" loading="lazy" data-mn="'+mn+'" onerror="lgerr(this,\''+ini+'\')"></span>'
+  var fond=lg?'<img src="'+esc(lg)+'" alt="" loading="lazy" data-mn="'+mn+'" onerror="lgerr(this,\''+ini+'\')">':ini;
+  if(fu)return'<span class="'+cls+' fh'+(lg?"":" mn")+'"'+(lg?"":' style="'+mn+'"')+'>'+fond+
+    '<img class="fim" src="'+esc(fu)+'" alt="" loading="lazy" onload="faceOk(this)" onerror="faceErr(this)"></span>';
+  return lg?'<span class="'+cls+'">'+fond+"</span>"
            :'<span class="'+cls+' mn" style="'+mn+'">'+ini+"</span>";
 }
 function nameTail(w){
