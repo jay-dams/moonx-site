@@ -998,10 +998,9 @@ footer .lk button:hover{color:#fff}
 </head>
 <body>
 <nav class="top" aria-label="Main">
-  <a class="brand" href="/" aria-label="MOONX home"><span class="bm">MOONX</span><span class="chip-play">PLAY</span><span class="chip-demo" id="demoChip" hidden>DEMO DATA</span></a>
+  <a class="brand" href="/play" aria-label="MOONX Play"><span class="bm">MOONX</span><span class="chip-play">PLAY</span><span class="chip-demo" id="demoChip" hidden>DEMO DATA</span></a>
   <div class="nr">
     <span class="hpill" id="hdlPill" hidden></span><button class="eq" id="eqBtn" type="button" hidden><span id="eqV">$1,000.00</span><small id="eqX">1.00x</small></button>
-    <a class="go ghost dsk" data-cta="nav" href="https://lfg.moonx.fi/users/sign_up">Trade for real</a>
   </div>
 </nav>
 
@@ -1014,7 +1013,7 @@ footer .lk button:hover{color:#fff}
       <div class="lvbar" id="lvbar" hidden></div>
       <header class="hero" id="hero">
         <p class="lead">Free game &middot; <b>$1,000 of play money</b> &middot; real Polymarket prices</p>
-        <div class="howto"><div><b>1</b>Tap a team</div><div><b>2</b>Pick your stake</div><div><b>3</b>Cash out</div></div>
+        <div class="howto"><div><b>1</b>Tap a team</div><div><b>2</b>Pick your amount</div><div><b>3</b>Cash out</div></div>
         <button class="go ghost hjoin" type="button" data-join="1">Pick your name to join the board</button>
         <button class="howlink" type="button" data-welcome="1">How does this work?</button>
       </header>
@@ -1037,14 +1036,14 @@ footer .lk button:hover{color:#fff}
 
   <footer>
     <p>MOONX Play is a free game with play money only: no deposit, nothing to win, nothing to lose. Prices are live Polymarket prices, results are the official Polymarket results.</p>
-    <p>MOONX is the app to trade Polymarket with real money, with the option to sell anytime. 18+ only. Not available everywhere.</p>
-    <div class="lk"><button type="button" data-welcome="1">How it works</button><a href="/">MOONX</a><a href="/learn/">Learn</a><a href="/privacy">Privacy Policy</a><a href="/terms">Terms of Service</a></div>
+    <p>18+ only.</p>
+    <div class="lk"><button type="button" data-welcome="1">How it works</button><a href="/privacy">Privacy Policy</a><a href="/terms">Terms of Service</a></div>
   </footer>
 </main>
 
 <div class="tabs" role="tablist" aria-label="Sections">
   <button type="button" class="on" data-tab="matches" role="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7l4 3-1.5 5h-5L8 10z"/></svg>Matches</button>
-  <button type="button" data-tab="trades" role="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg>My bets<i id="openN"></i></button>
+  <button type="button" data-tab="trades" role="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg>My picks<i id="openN"></i></button>
   <button type="button" data-tab="league" role="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 01-10 0z"/><path d="M17 5h3v2a3 3 0 01-3 3M7 5H4v2a3 3 0 003 3"/></svg>Clan<i id="invN"></i></button>
 </div>
 
@@ -1391,7 +1390,7 @@ function heldCalc(){
   if(Object.keys(HELD).sort().join(",")!==was&&tab==="matches")
     setTimeout(function(){if(tab!=="matches")return;if(detail)paintDetail();else{renderDaily();renderMatches()}},0);
 }
-var CHK='<i class="hd" aria-label="You have this bet">\u2713</i>';
+var CHK='<i class="hd" aria-label="You have this pick">\u2713</i>';
 function setProfile(j){
   if(!j||!j.player)return;
   var prev=P;P={player:j.player,positions:j.positions||[],leagues:j.leagues||[],invites:j.invites||[]};
@@ -2047,9 +2046,9 @@ function renderRail(){
       '<span class="ic">'+x[2]+'</span><span class="lb">'+esc(x[1])+'</span><span class="n">'+(c||"")+"</span></button>";
   }).join("");
   h+='<div class="sep"></div><div class="rh">YOU</div>'+
-    '<button type="button" class="'+(tab==="trades"?"on":"")+'" data-tab="trades"><span class="ic">◈</span><span class="lb">My bets</span><span class="n">'+(openGroups().length||"")+'</span></button>'+
+    '<button type="button" class="'+(tab==="trades"?"on":"")+'" data-tab="trades"><span class="ic">◈</span><span class="lb">My picks</span><span class="n">'+(openGroups().length||"")+'</span></button>'+
     '<button type="button" class="'+(tab==="league"?"on":"")+'" data-tab="league"><span class="ic">⚔</span><span class="lb">Clan</span><span class="n">'+((LD&&(LD.total||(LD.board&&LD.board.length)))||"")+'</span></button>'+
-    '<div class="mini"><u>MOONX IS LIVE</u><b>Same markets, real money, sell anytime.</b><a class="go" data-cta="rail" href="'+SIGN+'">Create account</a></div>';
+    '';
   r.innerHTML=h;
 }
 function tickerList(){
@@ -2334,7 +2333,7 @@ function addCombo(id){
   ks.concat(c.legs.map(function(l){return l.m.id})).forEach(renderRows);
   if(detail)paintPicks();
   renderTicket();quoteSoon();vib(12);
-  toast(c.name+" is in your combo. Pick your stake.");
+  toast(c.name+" is in your combo. Pick your amount.");
   ev("lg_daily",{combo:id});
 
 }
@@ -2342,7 +2341,7 @@ function renderMatches(){
   var el=$("mList");if(!el)return;
   sportsBar();
   var cta=$("mCta");
-  if(cta&&!cta.dataset.ready){cta.dataset.ready="1";cta.innerHTML=realBox("Play money here. Real money on MOONX.","matches")}
+  
   if(!MK.length){
     el.innerHTML=timers.mkLoaded
       ?'<div class="empty"><b>No matches right now.</b>New matches open all day.<br><button class="go" type="button" data-retry="1">Refresh</button></div>'
@@ -2456,7 +2455,7 @@ function paintDetail(){
       return'<button type="button" data-dj="'+i+'" class="'+(i===detail.sec?"on":"")+'">'+esc(f.name)+'<em>'+f.gs.length+'</em></button>';
     }).join("")+'</div><div id="dbody">'+famHTML(fam[detail.sec])+'</div>';
   }
-  h+='<p class="dnote"><span class="pmb">'+PMSVG+'POLYMARKET</span><span>Every line on this page is a live Polymarket market. Stack several of them and they are priced together, not simply multiplied. Two bets on the same match move with each other.</span></p>';
+  h+='<p class="dnote"><span class="pmb">'+PMSVG+'POLYMARKET</span><span>Every line on this page is a live Polymarket market. Stack several of them and they are priced together, not simply multiplied. Two picks on the same match move with each other.</span></p>';
   el.innerHTML=h;
   fitNames();
 }
@@ -2668,7 +2667,7 @@ function syncBet(){
   var c=calc(l);
   document.querySelectorAll("[data-bet]").forEach(function(b){
     b.disabled=!!c.warn;
-    b.innerHTML=c.warn?esc(c.warn):(b.closest(".slipbar")?"Bet "+money(c.a)+' <em>&rarr; '+money(c.pay)+" if right</em>":"Bet "+money(c.a));
+    b.innerHTML=c.warn?esc(c.warn):(b.closest(".slipbar")?"Play "+money(c.a)+' <em>&rarr; '+money(c.pay)+" if right</em>":"Play "+money(c.a));
   });
   document.querySelectorAll(".bk .tot b").forEach(function(e){e.textContent=money(c.pay)});
 }
@@ -2707,7 +2706,7 @@ function renderTicket(){
       '<div class="slst">'+stakeBtns(true)+'</div>'+
     '</div>'+
     '<button class="slbet" type="button" data-bet="1"'+(c.warn?" disabled":"")+">"+
-    (c.warn?esc(c.warn):"Bet "+money(c.a)+' <em>&rarr; '+money(c.pay)+" if right</em>")+"</button></div>";
+    (c.warn?esc(c.warn):"Play "+money(c.a)+' <em>&rarr; '+money(c.pay)+" if right</em>")+"</button></div>";
 }
 function tkey(){return pkey()+"|"+mode+"|"+(custom?1:0)+"|"+(slipOpen?1:0)+"|"+tab+"|"+(follow?1:0)}
 function refreshTicket(){
@@ -2748,7 +2747,7 @@ function basketHTML(){
     '<div class="slst">'+stakeBtns()+"</div>"+
     '<div class="tot"><span>'+(cm?n+"-pick combo":n>1?n+" singles":"Pays if right")+"</span><b>"+money(c.pay)+"</b></div>"+
     '<button class="slbet" type="button" data-bet="1"'+(c.warn?" disabled":"")+">"+
-    (c.warn?esc(c.warn):"Bet "+money(c.a))+"</button></div>";
+    (c.warn?esc(c.warn):"Play "+money(c.a))+"</button></div>";
 }
 function hasStats(r){return!!r&&r.settled!=null}
 function pnlTxt(r){return+(r&&r.settled)>0?signed(+r.pnl||0):"\u2014"}
@@ -2784,7 +2783,7 @@ function boardSort(b){
 function bRank(r,i,n){var s=+r.rank||0;return s>n?s:i+1}
 function bCell(r){
   if(!hasStats(r)||!(+r.settled>0))
-    return{v:money(+r.equity),c:+r.equity/START>=1?"up":"dn",s:"no bet settled yet"};
+    return{v:money(+r.equity),c:+r.equity/START>=1?"up":"dn",s:"no pick settled yet"};
   var best=r.hit?"best "+hitTxt(r):"no winner yet";
   if(bsort==="hit")return{v:hitTxt(r),c:r.hit&&+r.hit>=1?"up":"dn",s:pnlTxt(r)+" \u00b7 "+roiTxt(r)};
   if(bsort==="roi")return{v:roiTxt(r),c:pnlUp(r),s:pnlTxt(r)+" \u00b7 "+best};
@@ -2804,7 +2803,7 @@ function clanRow(r,i,me,n0){
 }
 function clanFeedRow(f){
   var who="@"+esc(f.lg_player&&f.lg_player.handle||"?"),p=f.lg_position||{},l=p.lg_leg||[],d=f.data||{};
-  var what=l.length>1?"a "+l.length+"-pick combo":l[0]?esc(l[0].label):"a bet",ic="o",sym="↗",txt="";
+  var what=l.length>1?"a "+l.length+"-pick combo":l[0]?esc(l[0].label):"a pick",ic="o",sym="↗",txt="";
   if(f.kind==="open")txt=who+" backed <b>"+what+"</b> · "+money(+d.stake||0);
   else if(f.kind==="won"){ic="w";sym="✓";txt=who+" won on <b>"+what+"</b> · "+fx(+d.mult||0)}
   else if(f.kind==="lost"){ic="l";sym="✕";txt=who+" lost on <b>"+what+"</b>"}
@@ -2821,7 +2820,7 @@ function clanHTML(){
     (sb.length?boardChips():"")+
     (sb.length
       ?'<div class="clall" id="clall">'+sb.map(function(r,i){return clanRow(r,i,me,sb.length)}).join("")+"</div>"
-      :'<div class="empty2">No result yet. The first settled bet takes the top spot.</div>')+
+      :'<div class="empty2">No result yet. The first settled pick takes the top spot.</div>')+
     (bk.waiting?'<div class="clwait">'+clanRow(bk.waiting,sb.length,me,sb.length)+"</div>":"");
   h+=LG==="ALL"
     ?'<button class="go" type="button" data-newlg="1" style="width:100%;margin-top:11px;height:38px">Start a clan with your friends</button>'
@@ -2860,7 +2859,7 @@ function doBet(){
     ev("lg_trade",{legs:n,mode:cm?"combo":n>1?"singles":"single"});vib(16);
     picks={};QT={k:"",mult:null,px:null,err:null,at:0,busy:false};
     if(jobs.length===1)undoToast(cm&&n>1?"Combo ×"+n:l[0].label,c.a,c.pay,last);
-    else toast(jobs.length+" bets placed. Good luck!");
+    else toast(jobs.length+" picks placed. Good luck!");
     ids.forEach(renderRows);if(detail)paintPicks();renderTicket();refreshNav();renderLive();loadHistories();
   }).catch(function(e){toast(errText(e))}).then(function(){busy=false;setBusy(false)});
 }
@@ -2871,7 +2870,7 @@ function undoToast(label,a,pay,posId){
   var body='<b>'+money(a)+" on "+esc(label)+'</b><small><span class="sub">pays '+money(pay)+" ("+fx(pay/a)+")</span>"+
     (posId?'<span class="go3">See it'+cv+"</span>":"")+"</small>";
   e.innerHTML='<span class="tk" aria-hidden="true">\u2713</span>'+
-    (posId?'<button type="button" class="tt" data-seebet="'+posId+'" aria-label="See this bet">'+body+"</button>"
+    (posId?'<button type="button" class="tt" data-seebet="'+posId+'" aria-label="See this pick">'+body+"</button>"
           :'<span class="tt">'+body+"</span>")+
     (posId?'<button type="button" class="ud" data-undo="'+posId+'">Undo</button>':"")+
     '<i class="tbar"></i>';
@@ -2901,7 +2900,7 @@ function nameHTML(l){
     (one?'<div class="row">'+logo(one)+'<span class="t">'+esc(one.label)+"<small>"+esc(one.title)+'</small></span><span class="x">'+fx(lx(one))+"</span></div>":"")+
     '<input class="fld" id="qhdl" maxlength="18" autocomplete="nickname" spellcheck="false" aria-label="Your name" value="'+esc(timers.hdl||suggestName())+'">'+
     '<p class="slipn" id="qerr">3 to 18 letters, numbers or _</p>'+
-    '<button class="go big" type="button" data-namego="1">'+(bet?"Bet "+money(c.a)+" &rarr; "+money(c.pay):"Start with $1,000")+"</button>"+
+    '<button class="go big" type="button" data-namego="1">'+(bet?"Play "+money(c.a)+" &rarr; "+money(c.pay):"Start with $1,000")+"</button>"+
     '<p class="note">You start with $1,000 of play money.</p></div>';
 }
 function nameGo(){
@@ -3000,7 +2999,7 @@ function dyn(){
     var pe=b.querySelector(".per");if(pe)pe.textContent=c.n>1&&!c.cm?c.n+" × "+money(c.a/c.n):"PLAY MONEY";
     b.querySelector(".warn").textContent=c.warn;
     b.querySelector(".pays b").innerHTML=money(c.pay)+"<em>"+fx(c.a>0?c.pay/c.a:0)+"</em>";
-    var k=b.querySelector("[data-place],[data-fplace]");if(k){k.disabled=!!c.warn;k.textContent=(follow?"Take it · ":P?"Bet · ":"Start with $1,000 · Bet ")+money(c.a)}
+    var k=b.querySelector("[data-place],[data-fplace]");if(k){k.disabled=!!c.warn;k.textContent=(follow?"Take it · ":P?"Play · ":"Start with $1,000 · Play ")+money(c.a)}
   });
 }
 
@@ -3097,16 +3096,13 @@ function sendMail(place){
 }
 function renderTrades(){
   var el=$("v-trades");
-  if(!P){el.innerHTML='<div class="empty" style="margin-top:18px"><b>No bets yet.</b>Tap a team to start with $1,000 of play money.<br><button class="go" type="button" data-tab="matches">See the matches</button></div>';return}
+  if(!P){el.innerHTML='<div class="empty" style="margin-top:18px"><b>No picks yet.</b>Tap a team to start with $1,000 of play money.<br><button class="go" type="button" data-tab="matches">See the matches</button></div>';return}
   var e=equity(),op=openGroups(),cl=P.positions.filter(function(p){return p.status!=="open"}),inplay=op.reduce(function(s,p){return s+posValue(p)},0);
   var ST=(P&&P.stats)||{};
   var h='<div class="sum-card"><div class="t">@'+esc(P.player.handle).toUpperCase()+' · TOTAL</div><div><span class="v '+(e>=START?"up":"dn")+'" id="tEq">'+money(e)+'</span><span class="x" id="tX">'+eqx(e)+'</span></div><div class="kp"><div><small>CASH</small><b>'+money(+P.player.bal)+'</b></div><div><small>IN PLAY</small><b id="tIn">'+money(inplay)+'</b></div><div><small>BEST</small><b class="up">'+(hasStats(ST)?hitTxt(ST):fx(+P.player.best/START))+'</b></div>'+(hasStats(ST)?'<div><small>PROFIT</small><b class="'+pnlUp(ST)+'">'+pnlTxt(ST)+'</b></div><div><small>ROI</small><b class="'+pnlUp(ST)+'">'+roiTxt(ST)+'</b></div><div><small>BETS</small><b>'+(+ST.settled||0)+"</b></div>":"")+"</div>"+
   (e<1&&!op.length?'<button class="go big" type="button" data-restart="1" style="margin-top:12px">Start again with $1,000</button>':"")+"</div>";
-  h+='<div class="sechead"><h2>'+(op.length?'<span class="ldot"></span>':"")+"Open bets</h2><span>"+op.length+" open</span></div>";
-  h+=op.length?'<div class="grid">'+op.map(posCard).join("")+"</div>":'<div class="empty"><b>No open bet.</b>Live matches move the fastest.<br><button class="go" type="button" data-tab="matches">Tap a team</button></div>';
-  h+=realBox(e>=START*1.01?"You’re at "+fx(e/START)+" on play money. Now picture it live."
-    :e>START+0.5?"You’re ahead on play money. Now picture it live."
-    :"On MOONX, it’s the real thing.");
+  h+='<div class="sechead"><h2>'+(op.length?'<span class="ldot"></span>':"")+"Open picks</h2><span>"+op.length+" open</span></div>";
+  h+=op.length?'<div class="grid">'+op.map(posCard).join("")+"</div>":'<div class="empty"><b>No open pick.</b>Live matches move the fastest.<br><button class="go" type="button" data-tab="matches">Tap a team</button></div>';
   if(cl.length)h+='<div class="sechead"><h2>Closed</h2><span>'+cl.length+'</span></div><div class="closed">'+cl.slice(0,30).map(closedRow).join("")+"</div>";
   el.innerHTML=h;sign();drawCharts();
 }
@@ -3421,7 +3417,7 @@ function renderLeague(){
   if(sb.length)h+=boardChips();
   h+=sb.length
     ?'<div class="board">'+sb.map(function(r,i){return brow(r,i,sb.length)}).join("")+"</div>"
-    :'<div class="empty"><b>No result yet.</b>The first settled bet takes the top spot.</div>';
+    :'<div class="empty"><b>No result yet.</b>The first settled pick takes the top spot.</div>';
   if(bk.waiting)h+='<div class="board bwait">'+brow(bk.waiting,sb.length,sb.length)+"</div>";
   if(LG!=="ALL"&&isMember){
     var mb=(d.board||[]).map(function(r){return{h:r.handle,s:money(+r.equity),p:false}})
@@ -3437,14 +3433,13 @@ function renderLeague(){
   }
   var others=(d.open||[]).filter(function(p){return!me||String(p.lg_player&&p.lg_player.handle).toLowerCase()!==me}).slice(0,12);
   if(others.length){
-    h+='<div class="sechead"><h2>Their bets</h2><span>Follow them or go against</span></div><div class="grid two">'+others.map(function(p){
+    h+='<div class="sechead"><h2>Their picks</h2><span>Follow them or go against</span></div><div class="grid two">'+others.map(function(p){
       var one=p.lg_leg.length===1,canOther=one&&p.lg_leg[0].other_token;
       return'<article class="card fol"><div class="meta"><span class="lg"><span class="who">@'+esc(p.lg_player.handle)+"</span> · "+ago(p.created_at)+'</span><span class="r">'+(one?"SINGLE":"COMBO · "+p.lg_leg.length)+'</span></div><div class="pl">'+p.lg_leg.map(function(l){return'<div class="row">'+av(l)+'<span class="nm">'+esc(l.label)+"<small>"+esc(l.event_title)+"</small></span>"+legStatus(l)+"</div>"}).join("")+'</div><div class="acts"><button class="go" type="button" data-follow="'+p.id+'" data-side="same">Same side</button>'+(canOther?'<button class="go ghost" type="button" data-follow="'+p.id+'" data-side="other">Other side</button>':'<button class="go ghost" type="button" disabled>Other side</button>')+"</div></article>"}).join("")+"</div>";
   }
   if(d.feed&&d.feed.length){
     h+='<div class="sechead"><h2>What happened</h2></div><div class="feed">'+d.feed.map(feedRow).join("")+"</div>";
   }
-  h+=realBox("You are playing for pride. They are playing for money.","league");
   el.innerHTML=h;
 }
 
@@ -3516,7 +3511,7 @@ function leaveLeague(code){
 function askKick(h){
   var lg=(LD&&LD.league&&LD.league.name)||"the clan";
   openSheet("kick",'<h3>Remove @'+esc(h)+'? <button type="button" data-close-sheet="1">Cancel</button></h3>'+
-    '<p class="sub">They leave '+esc(lg)+' and drop off its board. Their money and their bets are untouched, and you can invite them back.</p>'+
+    '<p class="sub">They leave '+esc(lg)+' and drop off its board. Their money and their picks are untouched, and you can invite them back.</p>'+
     '<button class="go big" type="button" data-kickgo="'+esc(h)+'">Remove @'+esc(h)+'</button>');
 }
 function kickPlayer(h){
@@ -3528,7 +3523,7 @@ function kickPlayer(h){
 function askLeave(code){
   var lg=(P&&P.leagues.find(function(l){return l.code===code}))||{name:"this clan"};
   openSheet("leave",'<h3>Leave '+esc(lg.name)+'? <button type="button" data-close-sheet="1">Cancel</button></h3>'+
-    '<p class="sub">You drop off its board. Your money and your bets stay exactly as they are, and the clan keeps running without you.</p>'+
+    '<p class="sub">You drop off its board. Your money and your picks stay exactly as they are, and the clan keeps running without you.</p>'+
     '<button class="go big" type="button" data-leavego="'+esc(code)+'">Leave '+esc(lg.name)+'</button>');
 }
 function renameLeague(code){
@@ -3773,12 +3768,12 @@ function volBadge(v,full){
 function welcomeHTML(){
   return'<div class="wel">'+
     '<div class="top"><span class="bm">MOONX</span><span class="chip-play">PLAY</span>'+
-    '<h2>Bet on tonight’s matches with <em>$1,000 of play money</em>.</h2>'+
+    '<h2>Pick tonight’s matches with <em>$1,000 of play money</em>.</h2>'+
     '<p class="sub">Not a simulator: the odds are the ones traders are paying right now. You risk nothing.</p></div>'+
     '<ol>'+
     '<li><b>1</b><span>Tap a team<small>Or open a match to find handicaps, totals, halves and player lines. Hundreds per game.</small></span></li>'+
-    '<li><b>2</b><span>Pick your stake<small>From $1 to everything you have. Stack several picks and the odds multiply.</small></span></li>'+
-    '<li><b>3</b><span>Cash out whenever you want<small>You don’t have to wait for the final whistle. Take the money and run.</small></span></li>'+
+    '<li><b>2</b><span>Pick your amount<small>From $1 to everything you have. Stack several picks and the odds multiply.</small></span></li>'+
+    '<li><b>3</b><span>Cash out whenever you want<small>You don’t have to wait for the final whistle. Lock it in whenever you like.</small></span></li>'+
     '</ol>'+
     '<div class="src"><img src="assets/img/polymarket-logo.svg" alt="Polymarket">'+
     '<span>Every match, every price and every result comes from the live Polymarket order book.</span></div>'+
