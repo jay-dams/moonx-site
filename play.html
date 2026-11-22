@@ -3312,11 +3312,19 @@ function countUp(el,v){
   }
   requestAnimationFrame(f);
 }
+function bonusBox(r){
+  return'<div class="bonus"><span class="btag">YOUR $5 IS WAITING</span>'+
+    '<b>You just turned '+money(r.stake)+' into '+money(r.stake+r.net)+'.</b>'+
+    '<p>Same match, same price, real money. And we put the first <b>$5</b> in for you.</p>'+
+    '<a class="go big" data-cta="bonus" href="'+SIGN+'">Claim your $5 and go real</a>'+
+    '<small>Card works if you have no crypto. Already hold USDC on Coinbase, Revolut or anywhere else? Send it straight in. 18+ only, not available everywhere.</small></div>';
+}
 var BON=null;
 function askBonus(r){
   var put=function(){
     if(!BON)return;
     var sl=$("bonusSlot");
+    if(sl&&!sl.innerHTML)sl.innerHTML=bonusBox(r);
   };
   if(BON!==null){put();return}
   if(!tok){BON=false;return}
