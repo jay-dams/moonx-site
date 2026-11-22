@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>MOONX Play | Trade real matches with $1,000 of play money</title>
-<meta name="description" content="A free sports trading game on live Polymarket prices. $1,000 of play money, real matches, combos, sell anytime. Beat your friends.">
+<title>MOONX Play | Play real matches with $1,000 of play money</title>
+<meta name="description" content="A free game on live Polymarket prices. $1,000 of play money, real matches, combos, cash out anytime. Beat your friends.">
 <link rel="canonical" href="https://moonx.fi/play">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="MOONX">
 <meta property="og:url" content="https://moonx.fi/play">
-<meta property="og:title" content="MOONX Play | Trade real matches with $1,000 of play money">
-<meta property="og:description" content="Live Polymarket prices, real matches, play money. Sell anytime. Beat your friends.">
+<meta property="og:title" content="MOONX Play | Play real matches with $1,000 of play money">
+<meta property="og:description" content="Live Polymarket prices, real matches, play money only. Cash out anytime. Beat your friends.">
 <meta property="og:image" content="https://moonx.fi/assets/play/og-play-v2.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -1924,7 +1924,7 @@ function matchHTML(m,feat){
     (c?'<span class="pl2">\u25CF '+c+" playing</span>":"")+
     (mine?'<span class="yrs">\u2713 YOU\u2019RE ON</span>':volBadge(m.vol))+
     (live?'<span class="lv">LIVE</span>':'<span class="dt2">'+dstamp(m.start)+'</span><span class="'+cdClass(m.start)+'" data-cd="'+m.start+'">'+cdown(m.start)+"</span>")+
-    '<button type="button" class="allb" data-open="'+m.id+'">ALL BETS'+CHSVG+"</button>"+
+    '<button type="button" class="allb" data-open="'+m.id+'">ALL PICKS'+CHSVG+"</button>"+
     "</span></div>"+marketHTML(m,feat)+"</article>";
 }
 var PROP={points:1,rebounds:1,assists:1,threes:1,steals:1,blocks:1,
@@ -2359,7 +2359,7 @@ function renderMatches(){
   var h="";
   l.slice(0,SHOWN).forEach(function(m,i){h+=matchHTML(m,i===0)});
   if(l.length>SHOWN)h+='<button class="more1" type="button" data-more="1">Show more matches &darr;</button>';
-  h+='<p class="pmnote"><span class="pmb">'+PMSVG+'POLYMARKET</span><span>Every match, every price and every result on this page comes from the live <a href="https://polymarket.com" target="_blank" rel="noopener">Polymarket</a> order book. MOONX Play only lets you trade them with play money.</span></p>';
+  h+='<p class="pmnote"><span class="pmb">'+PMSVG+'POLYMARKET</span><span>Every match, every price and every result on this page comes from the live <a href="https://polymarket.com" target="_blank" rel="noopener">Polymarket</a> order book. MOONX Play only lets you play them with play money.</span></p>';
   el.innerHTML=h;
   fitNames();
 }
@@ -2448,7 +2448,7 @@ function paintDetail(){
     '<div class="dwin">'+marketHTML(e)+'</div>'+(detail.ev?mcHTML(detail.ev):"");
   var fam=detail.ev?famOf(detail.ev):[];
   if(!detail.ev)h+='<div class="dempty">Loading every market on this match…</div>';
-  else if(!fam.length)h+='<div class="dempty">Polymarket only trades the winner on this match for now.</div>';
+  else if(!fam.length)h+='<div class="dempty">Polymarket only prices the winner on this match for now.</div>';
   else{
     if(detail.sec>=fam.length)detail.sec=0;
     h+='<div class="dchips">'+fam.map(function(f,i){
@@ -3173,7 +3173,7 @@ function popPos(p,d){
   vib(d>0?[12,40,12]:20);
   var c=document.querySelector('[data-pos="'+p.id+'"]');
   if(c&&tab==="trades"){var k=d>0?"hu":"hd";c.classList.remove("hu","hd");void c.offsetWidth;c.classList.add(k);setTimeout(function(){c.classList.remove(k)},800);var t=document.createElement("span");t.className="pop "+(d>0?"u":"d");t.textContent=(d>0?"▲ ":"▼ ")+signed(d);c.appendChild(t);setTimeout(function(){t.remove()},1350)}
-  else toast((d>0?"▲ ":"▼ ")+(p.lg_leg.length>1?"Your combo ":"Your "+p.lg_leg[0].label+" trade ")+signed(d))
+  else toast((d>0?"▲ ":"▼ ")+(p.lg_leg.length>1?"Your combo ":"Your "+p.lg_leg[0].label+" pick ")+signed(d))
 }
 function milestone(x){var e=document.createElement("div");e.className="ms";e.textContent=(x%1?x.toFixed(1):x)+"x!";document.body.appendChild(e);setTimeout(function(){e.remove()},1350);confetti(x>=3?110:60);vib([15,30,15,30,25])}
 
@@ -3444,7 +3444,7 @@ function renderLeague(){
 }
 
 function feedRow(f){
-  var who="@"+esc(f.lg_player&&f.lg_player.handle||"?"),p=f.lg_position||{},l=p.lg_leg||[],what=l.length>1?"a "+l.length+"-pick combo":l[0]?esc(l[0].label):"a trade",d=f.data||{},ic="o",txt="",sym="↗";
+  var who="@"+esc(f.lg_player&&f.lg_player.handle||"?"),p=f.lg_position||{},l=p.lg_leg||[],what=l.length>1?"a "+l.length+"-pick combo":l[0]?esc(l[0].label):"a pick",d=f.data||{},ic="o",txt="",sym="↗";
   if(f.kind==="open"){txt=who+" took "+what+(d.side==="other"?" against someone":d.side==="same"?" with someone":"")+" · "+money(+d.stake||0)}
   else if(f.kind==="won"){ic="w";sym="✓";txt=who+" won "+what+" · "+fx(+d.mult||0)+" ("+signed((+d.payout||0)-(+d.stake||0))+")"}
   else if(f.kind==="lost"){ic="l";sym="✕";txt=who+" lost "+what+" · "+signed(-(+d.stake||0))}
