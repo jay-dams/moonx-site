@@ -1113,7 +1113,7 @@ function catOf(m){
 var $=function(id){return document.getElementById(id)};
 var tok=null;try{tok=localStorage.getItem(TK)}catch(e){}
 try{var _s=parseFloat(localStorage.getItem(SK));if(isFinite(_s)&&_s>0)stake=_s}catch(e){}
-var MAIL_ON=false;
+var MAIL_ON=true;
 var mailSent={};
 var detail=null,QT={k:"",mult:null,px:null,err:null,at:0,busy:false},slipOpen=false,kbuf="";
 var P=null,MK=[],Q={},QP={},H={},tab="matches",sport=qp("sport")||"all",lgue=qp("league")||"all",day="live",picks={},stake=null,mode="combo",amount=null,LG="ALL",LD=null,inviteCode=(qp("l")||"").toUpperCase(),inviteInfo=null,follow=null,lastVal={},msHit={},seenStatus={},busy=false,timers={};
