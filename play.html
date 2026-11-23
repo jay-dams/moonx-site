@@ -116,6 +116,7 @@ nav.top{position:fixed;top:0;left:0;right:0;z-index:30;height:var(--nh);display:
 .lgsheet button .ic img{width:20px;height:20px;object-fit:contain}
 .mail{margin-top:12px;padding-top:12px;border-top:1px solid rgba(150,195,255,.22)}
 .mail label{display:block;font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.12em;color:var(--dim);margin:0 2px 6px}
+.mail label b{color:var(--mint);font-weight:800}
 .mailrow{display:flex;gap:8px;align-items:stretch}
 .mailrow input{flex:1;min-width:0;height:46px;padding:0 13px;border-radius:13px;border:1px solid var(--line-2);background:rgba(0,0,0,.3);outline:0;font-weight:700;font-size:15px}
 .mailrow input:focus{border-color:var(--hi)}
@@ -3059,9 +3060,9 @@ function closedRow(p){
 
 function mailHTML(place){
   if(!MAIL_ON&&!LOCAL)return"";
-  return'<div class="mail"><label for="ml_'+place+'">NOT READY? LEAVE YOUR EMAIL</label>'+
+  return'<div class="mail"><label for="ml_'+place+'"><b>$5 ON YOUR REAL ACCOUNT</b> FOR THE FIRST 20 EMAILS</label>'+
     '<div class="mailrow"><input id="ml_'+place+'" type="email" inputmode="email" autocomplete="email" spellcheck="false" placeholder="you@example.com" data-mail-in="'+place+'">'+
-    '<button class="go ghost" type="button" data-mail="'+place+'">Keep me posted</button></div>'+
+    '<button class="go ghost" type="button" data-mail="'+place+'">Claim my $5</button></div>'+
     '<p class="mailmsg" id="mlm_'+place+'" role="status"></p></div>';
 }
 function bestRun(){
@@ -3106,9 +3107,10 @@ function sendMail(place){
   if(mailSent[v]){m.className="mailmsg ok";m.textContent="Already noted. Talk soon.";return}
   m.textContent="Sending…";
   api("email",{email:v,token:tok||undefined,source:"play",handle:P?P.player.handle:null,attr:attrOf()})
-    .then(function(){
-      mailSent[v]=1;f.value="";m.className="mailmsg ok";m.textContent="Got it. You are on the list.";
-      ev("play_email",{place:place});
+    .then(function(j){
+      mailSent[v]=1;f.value="";m.className="mailmsg ok";
+      m.textContent=j&&j.cinq?"Done. $5 is held for you, place "+j.place+" of "+j.total+". We email you to set it up.":(j&&j.cinq===false?"The 20 spots are taken. You are on the list anyway.":"Got it. You are on the list.");
+      ev("play_email",{place:place,cinq:!!(j&&j.cinq)});
     })
     .catch(function(){
       m.className="mailmsg ko";
@@ -3823,7 +3825,7 @@ function sign(){
   var a=null;try{a=window.MOONX_ATTR&&window.MOONX_ATTR()}catch(e){}
   document.querySelectorAll('a[href^="https://lfg.moonx.fi"]').forEach(function(l){
     try{var u=new URL(l.href);u.searchParams.set("utm_source",a&&a.source&&a.source!=="direct"?a.source:"moonx.fi");u.searchParams.set("utm_medium",a&&a.medium&&a.source!=="direct"?a.medium:"play");u.searchParams.set("utm_campaign",a&&a.campaign||"play");if(a&&a.content)u.searchParams.set("utm_content",a.content);l.href=u.toString()}catch(e){}
-    if(!l.dataset.b){l.dataset.b=1;l.addEventListener("click",function(){ev("create_account",{place:l.dataset.cta||"play"})})}
+    if(!l.dataset.b){l.dataset.b=1;l.addEventListener("click",function(){var pl=l.dataset.cta||"play";ev("create_account",{place:pl});if(tok)try{fetch(API,{method:"POST",keepalive:true,headers:{"content-type":"application/json"},body:JSON.stringify({a:"cta",token:tok,place:pl})}).catch(function(){})}catch(e){}})}
   });
 }
 
