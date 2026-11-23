@@ -460,6 +460,8 @@ body.bslip{padding-bottom:calc(var(--tb) + var(--sab) + 228px)}
 .real b{display:block;font-size:15.5px;font-weight:900}
 .real p{margin:4px 0 12px;font-size:13px;color:var(--dim)}
 .real .go{width:100%;height:46px}
+.real .go.wht{background:#fff;color:#07121C;box-shadow:0 12px 28px -16px rgba(255,255,255,.6)}
+.real .go.wht:hover{background:#EDF3FF}
 .real small{display:block;margin-top:8px;font-size:11px;color:var(--dim);text-align:center}
 .board{display:grid;gap:4px}
 .br{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:12px;background:rgba(255,255,255,.025);border:1px solid transparent;font-size:14px}
@@ -532,10 +534,11 @@ body.bslip{padding-bottom:calc(var(--tb) + var(--sab) + 228px)}
 .racts .iconb{width:52px;height:52px;border-radius:15px;display:grid;place-items:center;background:rgba(150,180,230,.09);box-shadow:inset 0 0 0 1px var(--line-2)}
 .racts .iconb:hover{background:rgba(150,180,230,.16)}
 .racts .iconb svg{width:19px;height:19px}
-.rmore{position:relative;margin-top:14px;text-align:left}
-.rmore>summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;height:42px;border-radius:13px;background:rgba(61,220,132,.1);box-shadow:inset 0 0 0 1px rgba(61,220,132,.3);font-size:13px;font-weight:800;color:var(--mint)}
+.rmore{position:relative;margin-top:16px;text-align:left}
+.rmore>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:8px;padding:14px 2px 2px;border-top:1px solid var(--line);font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:var(--dim)}
+.rmore>summary:hover{color:#fff}
 .rmore>summary::-webkit-details-marker{display:none}
-.rmore>summary:after{content:"\25BE";font-size:10px;opacity:.7}
+.rmore>summary:after{content:"\25BE";margin-left:auto;font-size:9px;opacity:.55}
 .rmore[open]>summary:after{content:"\25B4"}
 .rmore .real{margin-top:10px}
 .ms{position:fixed;left:50%;top:38%;z-index:65;font-weight:900;font-size:76px;letter-spacing:-.04em;color:var(--mint);text-shadow:0 0 40px rgba(61,220,132,.7);pointer-events:none;white-space:nowrap;animation:ms 1.3s cubic-bezier(.34,1.42,.44,1) forwards}
@@ -3111,7 +3114,7 @@ function realBox(t,place){
     '<li><s>&#10003;</s><span><b>Pay by card, sell anytime.</b> No crypto knowledge needed, and you never wait for the result.</span></li>'+
     '</ul>'+
     mailHTML(place)+
-    '<a class="go" data-cta="play_'+place+'" href="'+SIGN+'">Create your account in 2 minutes</a>'+
+    '<a class="go wht" data-cta="play_'+place+'" href="'+SIGN+'">Create your account in 2 minutes</a>'+
     '<small class="fine">18+ only. Not available everywhere. Payment partners run their own checks when you add money.</small></div>';
 }
 function sendMail(place){
