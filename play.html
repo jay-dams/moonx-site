@@ -496,7 +496,7 @@ body.bslip{padding-bottom:calc(var(--tb) + var(--sab) + 228px)}
 .ov{position:fixed;inset:0;z-index:50;display:none;align-items:center;justify-content:center;background:rgba(1,2,6,.8);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);padding:14px}
 .ov.open{display:flex}
 .box{width:100%;max-width:440px;border:1px solid var(--line-2);border-radius:24px;background:linear-gradient(180deg,#0E1526,#080C17);padding:20px;text-align:center;box-shadow:0 40px 80px -30px rgba(0,0,0,.9);animation:upin .25s}
-.box{position:relative;overflow:hidden}
+.box{position:relative;overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain;max-height:calc(100vh - 28px);max-height:calc(100dvh - 28px)}
 .box .burst{position:absolute;left:-10%;right:-10%;top:-30%;height:300px;pointer-events:none;background:radial-gradient(55% 55% at 50% 40%,rgba(61,220,132,.34),rgba(61,220,132,0) 70%);animation:brst 1.1s ease-out}
 .box.loss .burst{background:radial-gradient(55% 55% at 50% 40%,rgba(255,92,122,.28),rgba(255,92,122,0) 70%)}
 @keyframes brst{0%{opacity:0;transform:scale(.6)}40%{opacity:1}100%{opacity:.55;transform:scale(1)}}
@@ -3059,7 +3059,7 @@ function closedRow(p){
 
 function mailHTML(place){
   if(!MAIL_ON&&!LOCAL)return"";
-  return'<div class="mail"><label for="ml_'+place+'">OR LEAVE YOUR EMAIL</label>'+
+  return'<div class="mail"><label for="ml_'+place+'">NOT READY? LEAVE YOUR EMAIL</label>'+
     '<div class="mailrow"><input id="ml_'+place+'" type="email" inputmode="email" autocomplete="email" spellcheck="false" placeholder="you@example.com" data-mail-in="'+place+'">'+
     '<button class="go ghost" type="button" data-mail="'+place+'">Keep me posted</button></div>'+
     '<p class="mailmsg" id="mlm_'+place+'" role="status"></p></div>';
@@ -3093,8 +3093,8 @@ function realBox(t,place){
     '<li><s>&#10003;</s><span><b>Non-custodial.</b> The wallet is made on your device and the keys stay there. Your money is yours.</span></li>'+
     '<li><s>&#10003;</s><span><b>Pay by card, sell anytime.</b> No crypto knowledge needed, and you never wait for the result.</span></li>'+
     '</ul>'+
-    '<a class="go" data-cta="play_'+place+'" href="'+SIGN+'">Create your account in 2 minutes</a>'+
     mailHTML(place)+
+    '<a class="go" data-cta="play_'+place+'" href="'+SIGN+'">Create your account in 2 minutes</a>'+
     '<small class="fine">18+ only. Not available everywhere. Payment partners run their own checks when you add money.</small></div>';
 }
 function sendMail(place){
@@ -3107,7 +3107,7 @@ function sendMail(place){
   m.textContent="Sending…";
   api("email",{email:v,token:tok||undefined,source:"play",handle:P?P.player.handle:null,attr:attrOf()})
     .then(function(){
-      mailSent[v]=1;f.value="";m.className="mailmsg ok";m.textContent="Got it. We'll email you when it's your turn.";
+      mailSent[v]=1;f.value="";m.className="mailmsg ok";m.textContent="Got it. You are on the list.";
       ev("play_email",{place:place});
     })
     .catch(function(){
@@ -3355,7 +3355,7 @@ function showResult(r){
     '<div class="racts"><button class="go" type="button" data-close-ov="1">'+(win?"Keep playing":"Go again")+"</button>"+
     '<button class="iconb" type="button" data-share="1" aria-label="Share"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v7a1 1 0 001 1h14a1 1 0 001-1v-7"/><path d="M12 15V3M8 7l4-4 4 4"/></svg></button></div>'+
     '<div id="bonusSlot"></div>'+
-    '<details class="rmore"><summary>'+(win?"How going real works":"On MOONX, this one was real")+"</summary>"+
+    '<details class="rmore"'+(win&&r.net>0?" open":"")+'><summary>'+(win?"How going real works":"On MOONX, this one was real")+"</summary>"+
     realBox(win?"That was a "+fx(r.x)+". The same market was open for real.":"The market is still open for real.","result")+"</details>";
   timers.lastRes=r;timers.card=null;
   $("ov").classList.add("open");
