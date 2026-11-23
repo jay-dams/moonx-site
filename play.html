@@ -41,7 +41,10 @@ nav.top{position:fixed;top:0;left:0;right:0;z-index:30;height:var(--nh);display:
 .brand .bm{font-size:18px}
 .chip-play{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.14em;color:var(--mint);border:1px solid rgba(61,220,132,.35);border-radius:999px;padding:3px 8px 2px}
 .nr{display:flex;align-items:center;gap:8px}
-.eq{display:flex;align-items:center;gap:8px;height:36px;padding:0 12px;border-radius:11px;border:1px solid var(--line-2);background:rgba(255,255,255,.04);font-weight:900;font-variant-numeric:tabular-nums;font-size:14px}
+.eq{display:flex;flex-direction:column;align-items:flex-end;justify-content:center;gap:1px;min-height:36px;padding:3px 11px;border-radius:11px;border:1px solid var(--line-2);background:rgba(255,255,255,.04);font-weight:900;font-variant-numeric:tabular-nums;font-size:14px}
+.eq .eqt{display:flex;align-items:center;gap:8px}
+.eq .eqd{font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.04em;color:var(--dim);white-space:nowrap}
+.eq .eqd b{color:#fff;font-weight:800}
 .eq small{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.06em;padding:2px 6px;border-radius:6px;background:rgba(255,255,255,.07)}
 .go{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:38px;padding:0 16px;border-radius:12px;background:var(--acc);box-shadow:0 8px 22px -12px rgba(61,220,132,.9);font-weight:800;font-size:13.5px;color:#06110A;text-decoration:none;white-space:nowrap;transition:transform .15s,background .15s}
 .go:hover{background:#51E892}
@@ -423,7 +426,12 @@ body.bslip{padding-bottom:calc(var(--tb) + var(--sab) + 228px)}
 .ph .val small{font-weight:900;font-size:13px}
 .ph .val .mx{display:block;margin-top:4px;white-space:nowrap;font-family:var(--mono);font-size:9.5px;font-weight:700;letter-spacing:.05em;color:var(--dim)}
 .pl{display:grid;gap:6px;margin:10px 0 4px}
-.pl .row{display:flex;align-items:center;gap:9px;font-size:13.5px}
+.pl .row{position:relative;display:flex;align-items:center;gap:9px;font-size:13.5px;padding:7px 10px 13px;border-radius:12px;background:rgba(255,255,255,.03)}
+.pl .row .jg{position:absolute;left:10px;right:10px;bottom:6px;height:3px;border-radius:3px;background:rgba(255,255,255,.09)}
+.pl .row .jg i{position:absolute;left:0;top:0;bottom:0;border-radius:3px;background:var(--acc);transition:width .55s cubic-bezier(.3,1,.4,1)}
+.pl .row.neg .jg i{background:var(--red)}
+.pl .row .jg u{position:absolute;top:-3px;bottom:-3px;width:2px;margin-left:-1px;border-radius:2px;background:rgba(255,255,255,.5);text-decoration:none}
+.allw{margin:11px 0 -2px;font-family:var(--mono);font-size:9.5px;font-weight:700;letter-spacing:.09em;color:var(--dim)}
 .pl .row .av{width:26px;height:26px;border-radius:8px;font-size:10px}
 .pl .row .nm{font-size:14px}
 .st{flex:none;font-family:var(--mono);font-size:10px;font-weight:800;letter-spacing:.06em;padding:3px 7px;border-radius:7px;background:rgba(255,255,255,.06);color:var(--dim);white-space:nowrap}
@@ -1003,7 +1011,7 @@ footer .lk button:hover{color:#fff}
 <nav class="top" aria-label="Main">
   <a class="brand" href="/play" aria-label="MOONX Play"><span class="bm">MOONX</span><span class="chip-play">PLAY</span><span class="chip-demo" id="demoChip" hidden>DEMO DATA</span></a>
   <div class="nr">
-    <span class="hpill" id="hdlPill" hidden></span><button class="eq" id="eqBtn" type="button" hidden><span id="eqV">$1,000.00</span><small id="eqX">1.00x</small></button>
+    <span class="hpill" id="hdlPill" hidden></span><button class="eq" id="eqBtn" type="button" hidden><span class="eqt"><span id="eqV">$1,000.00</span><small id="eqX">1.00x</small></span><span class="eqd" id="eqD"></span></button>
   </div>
 </nav>
 
@@ -1129,6 +1137,7 @@ var P=null,MK=[],Q={},QP={},H={},tab="matches",sport=qp("sport")||"all",lgue=qp(
 
 function qp(k){try{return new URLSearchParams(location.search).get(k)}catch(e){return null}}
 function ev(n,p){try{if(window.MOONX_EVENT)window.MOONX_EVENT(n,p||{})}catch(e){}}
+function rond(v){return "$"+Math.round(+v||0).toLocaleString("en-US")}
 function money(v){return"$"+(Math.round(v*100)/100).toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2})}
 function signed(v){return(v>=0?"+":"-")+money(Math.abs(v))}
 function eqx(e){
@@ -1412,6 +1421,8 @@ function setProfile(j){
 function refreshNav(){
   var b=$("eqBtn");if(!P){b.hidden=true;return}
   b.hidden=false;var e=equity();$("eqV").textContent=money(e);var x=$("eqX");x.textContent=eqx(e);x.className=e>=START?"up":"dn";
+  var jeu=openGroups().reduce(function(a,z){return a+posValue(z)},0),d=$("eqD");
+  if(d)d.innerHTML="<b>"+rond(cash())+"</b> FREE \u00b7 <b>"+rond(jeu)+"</b> IN PLAY";
   var n=openGroups().length,o=$("openN");o.textContent=n;o.classList.toggle("on",n>0);
   var iv=pendInv().length,ib=$("invN");if(ib){ib.textContent=iv;ib.classList.toggle("on",iv>0)}
   $("hero").hidden=!!P||tab!=="matches";
@@ -3047,12 +3058,13 @@ function legStatus(l){
   return'<span class="st l">LIVE</span>';
 }
 
+function pct(x){x=+x;return(Math.max(0,Math.min(1,isFinite(x)?x:0))*100).toFixed(1)+"%"}
 function posCard(p){
   var v=posValue(p),x=v/p.stake,cm=p.lg_leg.length>1,mx=posMax(p);
   var ps=p.group||[p],nw=ps.some(function(z){return z.id===timers.lastNew})||timers.lastNew===p.id;
   var t0=Math.min.apply(null,ps.map(function(z){return Date.parse(z.created_at)}));
   return'<article class="card pos'+(nw?" new":"")+'" data-pos="'+p.id+'"><div class="ph"><div><div class="t">'+(cm?"COMBO \u00b7 "+p.lg_leg.length+" PICKS":"SINGLE")+(p.via_side?" \u00b7 "+(p.via_side==="same"?"FOLLOWED":"AGAINST"):"")+(ps.length>1?" \u00b7 "+ps.length+" BUYS":"")+"</div><div style=\"font-size:12.5px;color:var(--dim);margin-top:3px\">"+money(+p.stake)+" in \u00b7 "+shq(mx)+" shares at "+cents(posPrice(p))+"</div></div><div class=\"val\"><b class=\""+(v>=p.stake?"up":"dn")+'" data-pv="'+p.id+'">'+money(v)+'</b><small class="'+(v>=p.stake?"up":"dn")+'" data-px="'+p.id+'">'+fx(x)+'</small><small class="mx">MAX '+fx(mx/p.stake)+" \u00b7 "+money(mx)+"</small></div></div>"+
-  '<div class="pl">'+p.lg_leg.map(function(l){var c=legNow(l);return'<div class="row">'+av(l)+'<span class="nm">'+esc(l.label)+"<small>"+esc(l.event_title)+"</small></span>"+legStatus(l)+'<span class="pc '+(c>=+l.p0?"up":"dn")+'" data-lp="'+p.id+"|"+l.token_id+'"><b>'+cents(c)+"</b><small>paid "+cents(+l.p0)+"</small></span></div>"}).join("")+"</div>"+
+  (cm?'<div class="allw">ALL '+p.lg_leg.length+" MUST WIN \u00b7 ONE MISS AND IT IS OVER</div>":"")+'<div class="pl">'+p.lg_leg.map(function(l){var c=legNow(l),k=p.id+"|"+l.token_id;return'<div class="row '+(c>=+l.p0?"pos":"neg")+'" data-lg="'+k+'"><span class="jg"><i style="width:'+pct(c)+'"></i><u style="left:'+pct(+l.p0)+'"></u></span>'+av(l)+'<span class="nm">'+esc(l.label)+"<small>"+esc(l.event_title)+"</small></span>"+legStatus(l)+'<span class="pc '+(c>=+l.p0?"up":"dn")+'" data-lp="'+k+'"><b>'+cents(c)+"</b><small>paid "+cents(+l.p0)+"</small></span></div>"}).join("")+"</div>"+
   '<canvas data-ch="'+p.id+'"></canvas>'+
   '<div class="pcap"><i></i><span>what you put in</span><em>'+ago(new Date(t0).toISOString())+' ago \u2192 now</em><b class="'+(v>=p.stake?"up":"dn")+'" data-pd="'+p.id+'">'+signed(v-p.stake)+'</b></div>'+
   '<div class="pf"><small>'+(ps.length>1?ps.length+" buys \u00b7 first "+ago(new Date(t0).toISOString())+" ago":"Entered "+ago(p.created_at)+" ago")+'</small><button class="ejp" type="button" data-ejp="'+p.id+'" aria-label="Lock in part of it">Part</button><button class="ej" type="button" data-ej="'+p.id+'">Lock in '+money(v)+"</button></div></article>";
@@ -3194,6 +3206,8 @@ function updateLive(){
       var l=g.lg_leg.filter(function(z){return z.token_id===s[1]})[0];if(!l)return;
       var c=legNow(l);el.className="pc "+(c>=+l.p0?"up":"dn");
       el.innerHTML="<b>"+cents(c)+"</b><small>paid "+cents(+l.p0)+"</small>";
+      var rw=document.querySelector('[data-lg="'+el.dataset.lp+'"]');
+      if(rw){rw.className="row "+(c>=+l.p0?"pos":"neg");var jg=rw.querySelector(".jg i");if(jg)jg.style.width=pct(c)}
     });
     var e=equity(),te=$("tEq");if(te){te.textContent=money(e);te.className="v "+(e>=START?"up":"dn");$("tX").textContent=eqx(e);$("tIn").textContent=money(GR.reduce(function(s,p){return s+posValue(p)},0))}
     drawCharts();
