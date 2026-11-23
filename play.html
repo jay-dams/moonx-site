@@ -513,6 +513,9 @@ body.bslip{padding-bottom:calc(var(--tb) + var(--sab) + 228px)}
 .box.loss .amt3{color:var(--red)}
 .rsub{position:relative;margin:10px 0 0;font-size:14px;line-height:1.45;color:#fff;font-weight:700}
 .rsub span{display:block;margin-top:3px;color:var(--dim);font-weight:500;font-size:13px}
+.rlink{position:relative;display:inline-flex;align-items:center;gap:5px;margin-top:11px;font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.04em;color:rgba(61,220,132,.78);text-decoration:none;border-bottom:1px solid rgba(61,220,132,.25);padding-bottom:1px}
+.rlink:hover{color:var(--mint);border-bottom-color:rgba(61,220,132,.6)}
+.rlink svg{width:11px;height:11px;flex:none}
 .racts{position:relative;display:grid;grid-template-columns:1fr auto;gap:9px;margin-top:18px}
 .racts .go{height:52px;border-radius:15px;font-size:15.5px}
 .racts .iconb{width:52px;height:52px;border-radius:15px;display:grid;place-items:center;background:rgba(150,180,230,.09);box-shadow:inset 0 0 0 1px var(--line-2)}
@@ -3348,6 +3351,7 @@ function showResult(r){
     '<div class="ring"><b>'+fx(r.x)+"</b></div>"+
     '<div class="amt3" id="rAmt">'+signed(0)+"</div>"+
     '<p class="rsub">'+esc(r.label)+"<span>"+esc(r.msg)+"</span></p>"+
+    (r.tag==="CASHED OUT"&&r.net>0?'<a class="rlink" data-cta="play_lockin" href="'+SIGN+'">On MOONX this one was real<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></a>':"")+
     '<div class="racts"><button class="go" type="button" data-close-ov="1">'+(win?"Keep playing":"Go again")+"</button>"+
     '<button class="iconb" type="button" data-share="1" aria-label="Share"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v7a1 1 0 001 1h14a1 1 0 001-1v-7"/><path d="M12 15V3M8 7l4-4 4 4"/></svg></button></div>'+
     '<div id="bonusSlot"></div>'+
