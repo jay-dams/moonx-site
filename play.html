@@ -157,6 +157,7 @@ nav.top{position:fixed;top:0;left:0;right:0;z-index:30;height:var(--nh);display:
 .mt .mh{display:flex;align-items:center;gap:7px;min-width:0;margin:0 5px 7px;font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.11em;color:var(--dim);text-transform:uppercase}
 .mt .mh img{width:15px;height:15px;border-radius:4px;object-fit:contain;flex:none;opacity:.85}
 .mt .mh .lg{flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mt .mh>.sc,.mt .mh>.lv,.mt .mh>.dt2,.mt .mh>[data-cd]{flex:none}
 .mt .mh .r{flex:0 1 auto;min-width:0;margin-left:auto;display:flex;align-items:center;gap:9px;white-space:nowrap;padding-left:8px}
 .mt .mh .vl{color:rgba(130,145,172,.6)}
 .mt .mh .pl2{color:var(--acc)}
@@ -1943,11 +1944,12 @@ function matchHTML(m,feat){
   return'<article class="mt'+(feat?" feat":"")+(imm?" imm":"")+'" data-id="'+m.id+'"'+
     (feat?bgStyle(catOf(m)):"")+'><div class="mh">'+
     (m.licon?'<img src="'+esc(m.licon)+'" alt="" loading="lazy" onerror="this.remove()">':"")+
-    '<span class="lg">'+esc(m.league)+'</span><span class="r">'+
-    (c?'<span class="pl2">\u25CF '+c+" playing</span>":"")+
-    (mine?'<span class="yrs">\u2713 YOU\u2019RE ON</span>':volBadge(m.vol))+
+    '<span class="lg">'+esc(m.league)+"</span>"+
     (live&&m.score?'<span class="sc">'+esc(m.score)+(m.elapsed?" \u00B7 "+esc(m.elapsed):(m.period?" \u00B7 "+esc(m.period):""))+"</span>":"")+
     (live?'<span class="lv">LIVE</span>':'<span class="dt2">'+dstamp(m.start)+'</span><span class="'+cdClass(m.start)+'" data-cd="'+m.start+'">'+cdown(m.start)+"</span>")+
+    '<span class="r">'+
+    (c?'<span class="pl2">\u25CF '+c+" playing</span>":"")+
+    (mine?'<span class="yrs">\u2713 YOU\u2019RE ON</span>':volBadge(m.vol))+
     '<button type="button" class="allb" data-open="'+m.id+'">ALL PICKS'+CHSVG+"</button>"+
     "</span></div>"+marketHTML(m,feat)+"</article>";
 }
