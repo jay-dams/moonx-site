@@ -3,19 +3,19 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>MOONX Play | Play real matches with $1,000 of play money</title>
-<meta name="description" content="A free game on live Polymarket prices. $1,000 of play money, real matches, combos, cash out anytime. Beat your friends.">
+<title>MOONX Play | The free sports prediction game</title>
+<meta name="description" content="Call real matches, stack your picks and climb the leaderboard. Free game, play money only. Can you beat your friends?">
 <link rel="canonical" href="https://moonx.fi/play">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="MOONX">
 <meta property="og:url" content="https://moonx.fi/play">
-<meta property="og:title" content="MOONX Play | Play real matches with $1,000 of play money">
-<meta property="og:description" content="Live Polymarket prices, real matches, play money only. Cash out anytime. Beat your friends.">
-<meta property="og:image" content="https://moonx.fi/assets/play/og-play-v2.png">
+<meta property="og:title" content="MOONX Play | The free sports prediction game">
+<meta property="og:description" content="Call real matches, climb the leaderboard, beat your friends. Free, play money only.">
+<meta property="og:image" content="https://moonx.fi/assets/play/og-play-v3.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://moonx.fi/assets/play/og-play-v2.png">
+<meta name="twitter:image" content="https://moonx.fi/assets/play/og-play-v3.png">
 <meta name="theme-color" content="#070B14">
 <link rel="icon" href="favicon-x.ico" sizes="32x32">
 <link rel="icon" href="favicon-x.svg" type="image/svg+xml">
@@ -1014,8 +1014,8 @@ footer .lk button:hover{color:#fff}
     <div class="col">
       <div class="lvbar" id="lvbar" hidden></div>
       <header class="hero" id="hero">
-        <p class="lead">Free game &middot; <b>$1,000 of play money</b> &middot; real Polymarket prices</p>
-        <div class="howto"><div><b>1</b>Tap a team</div><div><b>2</b>Pick your amount</div><div><b>3</b>Cash out</div></div>
+        <p class="lead">Free game &middot; <b>$1,000 of play money</b> &middot; real matches, live</p>
+        <div class="howto"><div><b>1</b>Tap a team</div><div><b>2</b>Pick your amount</div><div><b>3</b>Lock it in</div></div>
         <button class="go ghost hjoin" type="button" data-join="1">Pick your name to join the board</button>
         <button class="howlink" type="button" data-welcome="1">How does this work?</button>
       </header>
@@ -1069,6 +1069,7 @@ var SPORTS=[
   ["nfl","NFL","\uD83C\uDFC8"],
   ["cfb","College football","\uD83C\uDFC8"],
   ["ufc","UFC","\uD83E\uDD4A"],
+  ["boxing","Boxing","\uD83E\uDD4A"],
   ["basketball","Basketball","\uD83C\uDFC0"],
   ["hockey","Hockey","\uD83C\uDFD2"],
   ["cricket","Cricket","\uD83C\uDFCF"],
@@ -1088,14 +1089,14 @@ function deflate(m){
   for(var i=0;i<o.length;i++){
     o[i].logo=unsq(o[i].logo);
     if(o[i].other==null)o[i].other=two?o[1-i].token:null;
-    if(fa&&!o[i].draw)SPORTOF[nkey(o[i].label)]=m.sport==="fight"?"mma":"tennis";
+    if(fa&&!o[i].draw)SPORTOF[nkey(o[i].label)]=m.sport==="tennis"?"tennis":"mma";
     if(!o[i].draw){var u=usLogo(o[i].label,m.league);if(u)ESPNL[nkey(o[i].label)]=u}
   }
 }
 function usable(m){
   return m&&m.opts&&m.opts.length>=2&&(catOf(m)!=="other"||!!String(m.league||"").trim());
 }
-var SRVCAT={soccer:1,tennis:1,hockey:1,nba:1,cfb:1,esports:1,nfl:1,cricket:1};
+var SRVCAT={soccer:1,tennis:1,hockey:1,nba:1,cfb:1,esports:1,nfl:1,cricket:1,ufc:1,boxing:1};
 function catOf(m){
   if(SRVCAT[m.sport])return m.sport;
   var L=String(m.league||"").toLowerCase(),I=String(m.licon||"").toLowerCase(),s=m.sport;
@@ -1704,7 +1705,7 @@ var TFLAG={"agustin eduardo cuellar lorberg":"bo","alan magadan":"mx","aleksandr
 "victoria rodriguez":"mx","william jansen":"gb","william rejchtman vinciguerra":"se","yannik alvarez":"pr",
 "yuto oki":"jp"};
 var TCREST={"new zealand breakers":"https://a.espncdn.com/i/teamlogos/nbl/500/nzl.png"};
-var FACEOK=/^(fight|tennis)$/;
+var FACEOK=/^(fight|ufc|boxing|tennis)$/;
 var TCUT={"aidan mayo":1,"aleksandre topuria":1,"alessandro costa":1,"alik lorenz":1,"aljamain sterling":1,
 "amir albazi":1,"ana sofia sanchez":1,"andrea lazaro garcia":1,"angela fita boluda":1,"arantxa rus":1,
 "asu almabayev":1,"aziz ouakaa":1,"ben shelton":1,"brian ortega":1,"carlos alcaraz":1,"carson tanguilig":1,
@@ -1811,7 +1812,7 @@ function faceURL(o){
   if(n.length<3||/\d/.test(n))return"";
   var k=nkey(n);
   if(TCUT[k])return"assets/face/"+k.replace(/ /g,"-")+".webp";
-  var s=SPORTOF[k]||(FACEOK.test(o.sport||"")?(o.sport==="fight"?"mma":"tennis"):"");
+  var s=SPORTOF[k]||(FACEOK.test(o.sport||"")?(o.sport==="tennis"?"tennis":"mma"):"");
   if(!s)return"";
   var i=TFACE[k];
   return"/face?s="+s+"&n="+encodeURIComponent(n)+(i?"&i="+i:"");
@@ -2217,9 +2218,9 @@ function comboOfDayList(){
   var l1=pick3(byFav,4,favLeg);
   if(l1.length>=3)out.push({id:"lock",em:"🔒",sp:"lock",tag:"THE SAFE ONE",name:"Lock of the day",sub:"The four strongest favourites on the board",legs:l1});
   var l2=pick3(byFav.slice().reverse(),3,dogLeg);
-  if(l2.length>=3)out.push({id:"moon",em:"🚀",sp:"moon",tag:"THE CRAZY ONE",name:"Moonshot",sub:"Three outsiders. Tiny odds, huge payout",legs:l2});
+  if(l2.length>=3)out.push({id:"moon",em:"🚀",sp:"moon",tag:"THE CRAZY ONE",name:"Moonshot",sub:"Three outsiders. Long shot, huge score",legs:l2});
   var l3=pick3(byVol,3,favLeg);
-  if(l3.length>=3)out.push({id:"prime",em:"🔥",sp:"prime",tag:"MOST TRADED",name:"The big money",sub:"Where Polymarket traders put the most money",legs:l3});
+  if(l3.length>=3)out.push({id:"prime",em:"🔥",sp:"prime",tag:"MOST POPULAR",name:"Crowd favourites",sub:"The picks with the most action right now",legs:l3});
   var l4=pick3(byLive,3,favLeg);
   if(l4.length>=3)out.push({id:"live",em:"⚡",sp:"live",tag:"PLAYING RIGHT NOW",name:"Live card",sub:"Three matches already running",legs:l4});
   var l5=[];
@@ -3050,7 +3051,7 @@ function posCard(p){
   '<div class="pl">'+p.lg_leg.map(function(l){var c=legNow(l);return'<div class="row">'+av(l)+'<span class="nm">'+esc(l.label)+"<small>"+esc(l.event_title)+"</small></span>"+legStatus(l)+'<span class="pc '+(c>=+l.p0?"up":"dn")+'" data-lp="'+p.id+"|"+l.token_id+'"><b>'+cents(c)+"</b><small>paid "+cents(+l.p0)+"</small></span></div>"}).join("")+"</div>"+
   '<canvas data-ch="'+p.id+'"></canvas>'+
   '<div class="pcap"><i></i><span>what you put in</span><em>'+ago(new Date(t0).toISOString())+' ago \u2192 now</em><b class="'+(v>=p.stake?"up":"dn")+'" data-pd="'+p.id+'">'+signed(v-p.stake)+'</b></div>'+
-  '<div class="pf"><small>'+(ps.length>1?ps.length+" buys \u00b7 first "+ago(new Date(t0).toISOString())+" ago":"Entered "+ago(p.created_at)+" ago")+'</small><button class="ejp" type="button" data-ejp="'+p.id+'" aria-label="Cash out part of it">Part</button><button class="ej" type="button" data-ej="'+p.id+'">Cash out '+money(v)+"</button></div></article>";
+  '<div class="pf"><small>'+(ps.length>1?ps.length+" buys \u00b7 first "+ago(new Date(t0).toISOString())+" ago":"Entered "+ago(p.created_at)+" ago")+'</small><button class="ejp" type="button" data-ejp="'+p.id+'" aria-label="Lock in part of it">Part</button><button class="ej" type="button" data-ej="'+p.id+'">Lock in '+money(v)+"</button></div></article>";
 }
 
 function closedRow(p){
@@ -3175,7 +3176,7 @@ function updateLive(){
     if(tab==="trades"){
       var b=document.querySelector('[data-pv="'+p.id+'"]');if(b){b.textContent=money(v);b.className=v>=p.stake?"up":"dn"}
       var s=document.querySelector('[data-px="'+p.id+'"]');if(s){s.textContent=fx(v/p.stake);s.className=v>=p.stake?"up":"dn"}
-      var ej=document.querySelector('[data-ej="'+p.id+'"]');if(ej&&!ej.disabled)ej.textContent="Cash out "+money(v);
+      var ej=document.querySelector('[data-ej="'+p.id+'"]');if(ej&&!ej.disabled)ej.textContent="Lock in "+money(v);
       var dl=document.querySelector('[data-pd="'+p.id+'"]');if(dl){dl.textContent=signed(v-p.stake);dl.className=v>=p.stake?"up":"dn"}
     }
   });
@@ -3264,7 +3265,7 @@ function ejPart(id){
   var p=openGroups().find(function(z){return z.id===id});if(!p)return;
   var v=posValue(p);if(v==null){toast("Live price is slow right now. Try again.");return}
   timers.ejId=id;timers.ejPc=50;
-  openSheet("part",'<h3>Cash out part <button type="button" data-close-sheet="1">Close</button></h3>'+
+  openSheet("part",'<h3>Lock in part <button type="button" data-close-sheet="1">Close</button></h3>'+
     '<div class="selx"><div class="sxh"><b>'+esc(p.lg_leg.length>1?"Combo \u00b7 "+p.lg_leg.length+" picks":p.lg_leg[0].label)+"</b><span>"+money(+p.stake)+" at stake \u00b7 worth "+money(v)+'</span></div>'+
     '<div class="sxq">'+[25,50,75,100].map(function(n){
       return'<button type="button" class="sxb'+(n===50?" on":"")+'" data-ejq="'+n+'">'+(n===100?"All":n+"%")+"</button>"}).join("")+"</div>"+
@@ -3283,7 +3284,7 @@ function ejPaint(){
   if(n)n.innerHTML=f>=1
     ?"You sell <b>all of it</b> and nothing stays in play."
     :"You sell <b>"+timers.ejPc+"%</b> and <b>"+money(left)+"</b> stays in play.";
-  if(g)g.textContent="Cash out "+money(get);
+  if(g)g.textContent="Lock in "+money(get);
 }
 function ejGo(){
   var id=timers.ejId,f=timers.ejPc/100;
@@ -3335,19 +3336,11 @@ function countUp(el,v){
   }
   requestAnimationFrame(f);
 }
-function bonusBox(r){
-  return'<div class="bonus"><span class="btag">YOUR $5 IS WAITING</span>'+
-    '<b>You just turned '+money(r.stake)+' into '+money(r.stake+r.net)+'.</b>'+
-    '<p>Same match, same price, real money. And we put the first <b>$5</b> in for you.</p>'+
-    '<a class="go big" data-cta="bonus" href="'+SIGN+'">Claim your $5 and go real</a>'+
-    '<small>Card works if you have no crypto. Already hold USDC on Coinbase, Revolut or anywhere else? Send it straight in. 18+ only, not available everywhere.</small></div>';
-}
 var BON=null;
 function askBonus(r){
   var put=function(){
     if(!BON)return;
     var sl=$("bonusSlot");
-    if(sl&&!sl.innerHTML)sl.innerHTML=bonusBox(r);
   };
   if(BON!==null){put();return}
   if(!tok){BON=false;return}
@@ -3791,12 +3784,12 @@ function volBadge(v,full){
 function welcomeHTML(){
   return'<div class="wel">'+
     '<div class="top"><span class="bm">MOONX</span><span class="chip-play">PLAY</span>'+
-    '<h2>Pick tonight’s matches with <em>$1,000 of play money</em>.</h2>'+
-    '<p class="sub">Not a simulator: the odds are the ones traders are paying right now. You risk nothing.</p></div>'+
+    '<h2>Think you know sport? <em>Prove it.</em></h2>'+
+    '<p class="sub">Real matches, live prices, $1,000 of play money. Call it right, climb the board, beat your friends.</p></div>'+
     '<ol>'+
     '<li><b>1</b><span>Tap a team<small>Or open a match to find handicaps, totals, halves and player lines. Hundreds per game.</small></span></li>'+
-    '<li><b>2</b><span>Pick your amount<small>From $1 to everything you have. Stack several picks and the odds multiply.</small></span></li>'+
-    '<li><b>3</b><span>Cash out whenever you want<small>You don’t have to wait for the final whistle. Lock it in whenever you like.</small></span></li>'+
+    '<li><b>2</b><span>Pick your amount<small>Stack several picks into a combo for a bigger score.</small></span></li>'+
+    '<li><b>3</b><span>Lock it in whenever you want<small>No need to wait for the final whistle.</small></span></li>'+
     '</ol>'+
     '<div class="src"><img src="assets/img/polymarket-logo.svg" alt="Polymarket">'+
     '<span>Every match, every price and every result comes from the live Polymarket order book.</span></div>'+
