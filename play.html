@@ -1192,6 +1192,7 @@ function bqRun(){
     bqOn=0;clearTimeout(timers.bq);timers.bq=setTimeout(bqRun,420);
   });
 }
+function attrOf(){try{return window.MOONX_ATTR?window.MOONX_ATTR():null}catch(e){return null}}
 function api(a,b){b=b||{};b.a=a;return fetch(API,{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify(b)}).then(function(r){return r.json().then(function(j){if(!r.ok||j.error)throw j.error||"server";return j})})}
 var LOCAL=(function(){try{return location.protocol==="file:"||/^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname)||qp("demo")==="1"}catch(e){return false}})();
 var DK="moonx.play.demo";
@@ -1443,7 +1444,7 @@ function startGame(){
   timers.hdl=hd;
   if(!/^[A-Za-z0-9_]{3,18}$/.test(hd)){e.textContent="3 to 18 letters, numbers or _ only.";f.focus();return}
   e.textContent="";busy=true;
-  api("join",{handle:hd,league:inviteCode||undefined}).then(function(j){
+  api("join",{handle:hd,league:inviteCode||undefined,attr:attrOf()}).then(function(j){
     tok=j.token;try{localStorage.setItem(TK,tok)}catch(x){}
     setProfile(j);ev("lg_join",{invite:!!inviteCode,from:"idbox"});
     $("idBox").dataset.ready="";toast("You're in. $1,000 of play money.");render();
@@ -2925,7 +2926,7 @@ function nameGo(){
   var f=$("qhdl"),e=$("qerr"),h=((f&&f.value)||"").trim().replace(/^@/,"");
   if(!/^[A-Za-z0-9_]{3,18}$/.test(h)){if(e){e.textContent="3 to 18 letters, numbers or _ only.";e.className="slipn ko"}if(f)f.focus();return}
   timers.hdl=h;busy=true;setBusy(true);
-  api("join",{handle:h,league:inviteCode||undefined}).then(function(j){
+  api("join",{handle:h,league:inviteCode||undefined,attr:attrOf()}).then(function(j){
     tok=j.token;try{localStorage.setItem(TK,tok)}catch(x){}
     setProfile(j);ev("lg_join",{invite:!!inviteCode,from:"slip"});
     if(j.league)LG=j.league.code;
@@ -3024,7 +3025,7 @@ function ensurePlayer(){
   if(P)return Promise.resolve();
   var f=document.querySelector(".sheet.open #hdl")||document.querySelector("#side #hdl");var h=(f&&f.value||timers.hdl||"").trim().replace(/^@/,"");
   if(!/^[A-Za-z0-9_]{3,18}$/.test(h)){if(f)f.focus();return Promise.reject("handle")}
-  return api("join",{handle:h,league:inviteCode||undefined}).then(function(j){tok=j.token;try{localStorage.setItem(TK,tok)}catch(e){}setProfile(j);ev("lg_join",{invite:!!inviteCode});if(j.league){LG=j.league.code;toast("You joined "+j.league.name)}})
+  return api("join",{handle:h,league:inviteCode||undefined,attr:attrOf()}).then(function(j){tok=j.token;try{localStorage.setItem(TK,tok)}catch(e){}setProfile(j);ev("lg_join",{invite:!!inviteCode});if(j.league){LG=j.league.code;toast("You joined "+j.league.name)}})
 }
 
 function setBusy(on){document.querySelectorAll("[data-bet],[data-namego],[data-fplace],[data-ej]").forEach(function(b){if(on)b.setAttribute("aria-busy","true");else b.removeAttribute("aria-busy")})}
@@ -3101,7 +3102,7 @@ function sendMail(place){
   if(!/^[^@\s]+@[^@\s.]+\.[^@\s]{2,}$/.test(v)){m.className="mailmsg ko";m.textContent="That email doesn’t look right.";f.focus();return}
   if(mailSent[v]){m.className="mailmsg ok";m.textContent="Already noted. Talk soon.";return}
   m.textContent="Sending…";
-  api("email",{email:v,source:"play",handle:P?P.player.handle:null,attr:(window.MOONX_ATTR?window.MOONX_ATTR():null)})
+  api("email",{email:v,token:tok||undefined,source:"play",handle:P?P.player.handle:null,attr:attrOf()})
     .then(function(){
       mailSent[v]=1;f.value="";m.className="mailmsg ok";m.textContent="Got it. We'll email you when it's your turn.";
       ev("play_email",{place:place});
