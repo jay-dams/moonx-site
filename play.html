@@ -421,6 +421,7 @@ body.bslip{padding-bottom:calc(var(--tb) + var(--sab) + 228px)}
 .ph .val{text-align:right;font-variant-numeric:tabular-nums}
 .ph .val b{display:block;font-size:24px;font-weight:900;letter-spacing:-.03em;line-height:1.1}
 .ph .val small{font-weight:900;font-size:13px}
+.ph .val .mx{display:block;margin-top:4px;white-space:nowrap;font-family:var(--mono);font-size:9.5px;font-weight:700;letter-spacing:.05em;color:var(--dim)}
 .pl{display:grid;gap:6px;margin:10px 0 4px}
 .pl .row{display:flex;align-items:center;gap:9px;font-size:13.5px}
 .pl .row .av{width:26px;height:26px;border-radius:8px;font-size:10px}
@@ -512,6 +513,9 @@ body.bslip{padding-bottom:calc(var(--tb) + var(--sab) + 228px)}
 .ring u{position:absolute;bottom:13px;font-family:var(--mono);font-size:8px;font-weight:700;letter-spacing:.14em;color:var(--dim);text-decoration:none}
 .amt3{position:relative;font-size:clamp(40px,12vw,56px);font-weight:900;letter-spacing:-.045em;line-height:1.05;margin:8px 0 0;font-variant-numeric:tabular-nums;color:var(--acc)}
 .box.loss .amt3{color:var(--red)}
+.rmkt{position:relative;display:flex;align-items:center;justify-content:center;gap:9px;margin:11px 0 0;min-width:0}
+.rmkt .av{width:30px;height:30px;border-radius:9px;font-size:11px}
+.rmkt>span{min-width:0;max-width:74%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
 .rsub{position:relative;margin:10px 0 0;font-size:14px;line-height:1.45;color:#fff;font-weight:700}
 .rsub span{display:block;margin-top:3px;color:var(--dim);font-weight:500;font-size:13px}
 .rlink{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:6px;margin-top:13px;padding:7px 13px;border-radius:999px;font-family:var(--mono);font-size:11.5px;font-weight:800;letter-spacing:.03em;line-height:1.3;text-align:center;color:var(--mint);text-decoration:none;border:1px solid rgba(61,220,132,.42);background:rgba(61,220,132,.07)}
@@ -3047,7 +3051,7 @@ function posCard(p){
   var v=posValue(p),x=v/p.stake,cm=p.lg_leg.length>1,mx=posMax(p);
   var ps=p.group||[p],nw=ps.some(function(z){return z.id===timers.lastNew})||timers.lastNew===p.id;
   var t0=Math.min.apply(null,ps.map(function(z){return Date.parse(z.created_at)}));
-  return'<article class="card pos'+(nw?" new":"")+'" data-pos="'+p.id+'"><div class="ph"><div><div class="t">'+(cm?"COMBO \u00b7 "+p.lg_leg.length+" PICKS":"SINGLE")+(p.via_side?" \u00b7 "+(p.via_side==="same"?"FOLLOWED":"AGAINST"):"")+(ps.length>1?" \u00b7 "+ps.length+" BUYS":"")+"</div><div style=\"font-size:12.5px;color:var(--dim);margin-top:3px\">"+money(+p.stake)+" in \u00b7 "+shq(mx)+" shares at "+cents(posPrice(p))+"</div></div><div class=\"val\"><b class=\""+(v>=p.stake?"up":"dn")+'" data-pv="'+p.id+'">'+money(v)+'</b><small class="'+(v>=p.stake?"up":"dn")+'" data-px="'+p.id+'">'+fx(x)+"</small></div></div>"+
+  return'<article class="card pos'+(nw?" new":"")+'" data-pos="'+p.id+'"><div class="ph"><div><div class="t">'+(cm?"COMBO \u00b7 "+p.lg_leg.length+" PICKS":"SINGLE")+(p.via_side?" \u00b7 "+(p.via_side==="same"?"FOLLOWED":"AGAINST"):"")+(ps.length>1?" \u00b7 "+ps.length+" BUYS":"")+"</div><div style=\"font-size:12.5px;color:var(--dim);margin-top:3px\">"+money(+p.stake)+" in \u00b7 "+shq(mx)+" shares at "+cents(posPrice(p))+"</div></div><div class=\"val\"><b class=\""+(v>=p.stake?"up":"dn")+'" data-pv="'+p.id+'">'+money(v)+'</b><small class="'+(v>=p.stake?"up":"dn")+'" data-px="'+p.id+'">'+fx(x)+'</small><small class="mx">MAX '+fx(mx/p.stake)+" \u00b7 "+money(mx)+"</small></div></div>"+
   '<div class="pl">'+p.lg_leg.map(function(l){var c=legNow(l);return'<div class="row">'+av(l)+'<span class="nm">'+esc(l.label)+"<small>"+esc(l.event_title)+"</small></span>"+legStatus(l)+'<span class="pc '+(c>=+l.p0?"up":"dn")+'" data-lp="'+p.id+"|"+l.token_id+'"><b>'+cents(c)+"</b><small>paid "+cents(+l.p0)+"</small></span></div>"}).join("")+"</div>"+
   '<canvas data-ch="'+p.id+'"></canvas>'+
   '<div class="pcap"><i></i><span>what you put in</span><em>'+ago(new Date(t0).toISOString())+' ago \u2192 now</em><b class="'+(v>=p.stake?"up":"dn")+'" data-pd="'+p.id+'">'+signed(v-p.stake)+'</b></div>'+
@@ -3378,20 +3382,27 @@ function askBonus(r){
   if(!tok){BON=false;return}
   api("bonus",{token:tok}).then(function(j){BON=!!j.ok;put()}).catch(function(){BON=false});
 }
+function marcheHTML(r){
+  var l=r.legs&&r.legs.length?r.legs:null;
+  if(!l)return"";
+  if(l.length>1)return'<div class="rmkt"><span class="av">'+l.length+'</span><span>'+esc(l.map(function(z){return z.label}).join(" + "))+"</span></div>";
+  return'<div class="rmkt">'+av(l[0])+"<span>"+esc(l[0].event_title||l[0].label)+"</span></div>";
+}
 function showResult(r){
   var win=r.net>=0,b=$("box");
   b.className="box "+(win?"win":"loss");
   b.innerHTML='<span class="burst"></span>'+
     '<div class="rtag">'+esc(r.tag)+'</div>'+
+    marcheHTML(r)+
     '<div class="ring"><b>'+fx(r.x)+"</b></div>"+
     '<div class="amt3" id="rAmt">'+signed(0)+"</div>"+
     '<p class="rsub">'+esc(r.label)+"<span>"+esc(r.msg)+"</span></p>"+
-    (r.net>0?'<a class="rlink" data-cta="play_lockin" href="'+SIGN+'"><span>Same pick, real money: <b>'+signed(r.net)+'</b></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></a>':"")+
+    '<a class="rlink" data-cta="play_lockin" href="'+SIGN+'"><span>'+(r.net>0?'Same pick, real money: <b>'+signed(r.net)+'</b>':"Nothing lost. The market is open for real")+'</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></a>'+
     '<div class="racts"><button class="go" type="button" data-close-ov="1">'+(win?"Keep playing":"Go again")+"</button>"+
     '<button class="iconb" type="button" data-share="1" aria-label="Share"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v7a1 1 0 001 1h14a1 1 0 001-1v-7"/><path d="M12 15V3M8 7l4-4 4 4"/></svg></button></div>'+
     '<div id="bonusSlot"></div>'+
-    '<details class="rmore"'+(win&&r.net>0?" open":"")+'><summary>'+(win?"How going real works":"On MOONX, this one was real")+"</summary>"+
-    realBox(win?"That was a "+fx(r.x)+". The same market was open for real.":"The market is still open for real.","result")+"</details>";
+    '<details class="rmore" open><summary>How going real works</summary>'+
+    realBox(win&&r.net>0?"That was a "+fx(r.x)+". The same market was open for real.":"Wrong this time, and it cost you nothing. The same market is open for real.","result")+"</details>";
   timers.lastRes=r;timers.card=null;
   $("ov").classList.add("open");
   countUp($("rAmt"),r.net);
