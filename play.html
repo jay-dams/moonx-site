@@ -3058,11 +3058,13 @@ function closedRow(p){
   return'<div class="cl">'+(l.length>1?'<span class="av">'+l.length+"</span>":av(l[0]))+'<span class="nm">'+esc(lbl)+"<small>"+esc(l.map(function(z){return z.event_title}).join(" · "))+"</small></span>"+st+'<b class="'+(pay>=p.stake?"up":"dn")+'">'+signed(pay-p.stake)+"</b></div>";
 }
 
+function cinqOuvert(){return!LD||LD.cinq===undefined?true:+LD.cinq>0}
 function mailHTML(place){
   if(!MAIL_ON&&!LOCAL)return"";
-  return'<div class="mail"><label for="ml_'+place+'"><b>$5 ON YOUR REAL ACCOUNT</b> FOR THE FIRST 20 EMAILS</label>'+
+  var c=cinqOuvert();
+  return'<div class="mail"><label for="ml_'+place+'">'+(c?'<b>$5 ON YOUR REAL ACCOUNT</b> FOR LEAVING YOUR EMAIL':'<b>LEAVE YOUR EMAIL</b> AND WE HELP YOU SET UP THE REAL ACCOUNT')+'</label>'+
     '<div class="mailrow"><input id="ml_'+place+'" type="email" inputmode="email" autocomplete="email" spellcheck="false" placeholder="you@example.com" data-mail-in="'+place+'">'+
-    '<button class="go ghost" type="button" data-mail="'+place+'">Claim my $5</button></div>'+
+    '<button class="go ghost" type="button" data-mail="'+place+'">'+(c?"Claim my $5":"Send it")+'</button></div>'+
     '<p class="mailmsg" id="mlm_'+place+'" role="status"></p></div>';
 }
 function bestRun(){
@@ -3109,7 +3111,8 @@ function sendMail(place){
   api("email",{email:v,token:tok||undefined,source:"play",handle:P?P.player.handle:null,attr:attrOf()})
     .then(function(j){
       mailSent[v]=1;f.value="";m.className="mailmsg ok";
-      m.textContent=j&&j.cinq?"Done. $5 is held for you, place "+j.place+" of "+j.total+". We email you to set it up.":(j&&j.cinq===false?"The 20 spots are taken. You are on the list anyway.":"Got it. You are on the list.");
+      if(LD&&j&&j.cinq&&+j.place&&+j.total)LD.cinq=Math.max(0,+j.total-+j.place);
+      m.textContent=j&&j.cinq?"Done. $5 is held for you. We email you to set it up.":(j&&j.cinq===false?"The spots are taken. You are on the list anyway.":"Got it. You are on the list.");
       ev("play_email",{place:place,cinq:!!(j&&j.cinq)});
     })
     .catch(function(){
