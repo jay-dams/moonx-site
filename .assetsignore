@@ -5,3 +5,6 @@ wrangler.toml
 faq.html
 rodeo.html
 game/
+worker.js
+.gitignore
+.DS_Store
