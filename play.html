@@ -3107,6 +3107,14 @@ function leverLine(){
   }
   return out.length?'<p class="lev">'+out[0]+"</p>":"";
 }
+function realWhy(){
+  var ST=(P&&P.stats)||{},op=P?openGroups():[],n=+ST.settled||0;
+  if(n>0&&+ST.pnl>0)return"You are up "+signed(+ST.pnl)+" on play money. The same markets are open for real.";
+  if(n>0&&ST.hit&&+ST.hit>=2)return"You hit a "+fx(+ST.hit)+" on play money. That market was open for real.";
+  if(op.length)return(op.length>1?op.length+" picks are":"A pick is")+" running on play money. The same markets are open for real.";
+  if(n>0)return"Every pick here settles on the real Polymarket price. Only the money is play.";
+  return"Every dollar here is play money. The same markets are open for real.";
+}
 function realBox(t,place){
   place=place||"trades";
   return'<div class="real"><span class="rtag">MOONX IS LIVE</span><b>'+t+'</b>'+leverLine()+
@@ -3144,11 +3152,12 @@ function renderTrades(){
   if(!P){el.innerHTML='<div class="empty" style="margin-top:18px"><b>No picks yet.</b>Tap a team to start with $1,000 of play money.<br><button class="go" type="button" data-tab="matches">See the matches</button></div>';return}
   var e=equity(),op=openGroups(),cl=P.positions.filter(function(p){return p.status!=="open"}),inplay=op.reduce(function(s,p){return s+posValue(p)},0);
   var ST=(P&&P.stats)||{};
-  var h='<div class="sum-card"><div class="t">@'+esc(P.player.handle).toUpperCase()+' · TOTAL</div><div><span class="v '+(e>=START?"up":"dn")+'" id="tEq">'+money(e)+'</span><span class="x" id="tX">'+eqx(e)+'</span></div><div class="kp"><div><small>CASH</small><b>'+money(+P.player.bal)+'</b></div><div><small>IN PLAY</small><b id="tIn">'+money(inplay)+'</b></div><div><small>BEST</small><b class="up">'+(hasStats(ST)?hitTxt(ST):fx(+P.player.best/START))+'</b></div>'+(hasStats(ST)?'<div><small>PROFIT</small><b class="'+pnlUp(ST)+'">'+pnlTxt(ST)+'</b></div><div><small>ROI</small><b class="'+pnlUp(ST)+'">'+roiTxt(ST)+'</b></div><div><small>BETS</small><b>'+(+ST.settled||0)+"</b></div>":"")+"</div>"+
+  var h='<div class="sum-card"><div class="t">@'+esc(P.player.handle).toUpperCase()+' · TOTAL</div><div><span class="v '+(e>=START?"up":"dn")+'" id="tEq">'+money(e)+'</span><span class="x" id="tX">'+eqx(e)+'</span></div><div class="kp"><div><small>CASH</small><b>'+money(+P.player.bal)+'</b></div><div><small>IN PLAY</small><b id="tIn">'+money(inplay)+'</b></div><div><small>BEST</small><b class="up">'+(hasStats(ST)?hitTxt(ST):fx(Math.max(+P.player.best,e)/START))+'</b></div>'+(hasStats(ST)?'<div><small>PROFIT</small><b class="'+pnlUp(ST)+'">'+pnlTxt(ST)+'</b></div><div><small>ROI</small><b class="'+pnlUp(ST)+'">'+roiTxt(ST)+'</b></div><div><small>BETS</small><b>'+(+ST.settled||0)+"</b></div>":"")+"</div>"+
   (e<1&&!op.length?'<button class="go big" type="button" data-restart="1" style="margin-top:12px">Start again with $1,000</button>':"")+"</div>";
   h+='<div class="sechead"><h2>'+(op.length?'<span class="ldot"></span>':"")+"Open picks</h2><span>"+op.length+" open</span></div>";
   h+=op.length?'<div class="grid">'+op.map(posCard).join("")+"</div>":'<div class="empty"><b>No open pick.</b>Live matches move the fastest.<br><button class="go" type="button" data-tab="matches">Tap a team</button></div>';
   if(cl.length)h+='<div class="sechead"><h2>Closed</h2><span>'+cl.length+'</span></div><div class="closed">'+cl.slice(0,30).map(closedRow).join("")+"</div>";
+  h+='<div class="sechead"><h2>Real money</h2></div>'+realBox(realWhy(),"trades");
   el.innerHTML=h;sign();drawCharts();
 }
 
@@ -3418,7 +3427,7 @@ function vus(){try{return(localStorage.getItem(RK)||"").split(",").filter(Boolea
 function marqueVus(ids){try{var l=vus();ids.forEach(function(i){if(l.indexOf(i)<0)l.push(i)});localStorage.setItem(RK,l.slice(-300).join(","))}catch(e){}}
 function rattrapage(){
   if(!P||!P.positions.length)return;
-  var deja=vus(),limite=Date.now()-7*864e5,neufs=[],best=null,bnet=0;
+  var deja=vus(),limite=Date.now()-7*864e5,neufs=[],best=null,bnet=0,perte=null,pt=0;
   P.positions.forEach(function(p){
     if(p.status==="open"||p.status==="ejected")return;
     if(deja.indexOf(p.id)>=0)return;
@@ -3427,18 +3436,24 @@ function rattrapage(){
     neufs.push(p.id);
     var n=+(p.payout||0)-+p.stake;
     if(n>0&&n>bnet){best=p;bnet=n}
+    if(n<=0&&t>=pt){perte=p;pt=t}
   });
   if(!neufs.length)return;
   marqueVus(neufs);
-  if(!best)return;
+  var cible=best||perte;
+  if(!cible)return;
   var ov=$("ov");
   if(ov&&ov.classList.contains("open"))return;
-  var pay=+(best.payout||0),cm=best.lg_leg.length>1;
-  var label=cm?"Combo \u00b7 "+best.lg_leg.length+" picks":best.lg_leg[0].label;
-  ev("play_rattrapage",{net:Math.round(bnet)});
-  showResult({tag:"WON",net:bnet,x:pay/best.stake,stake:+best.stake,legs:best.lg_leg,
+  var pay=+(cible.payout||0),cm=cible.lg_leg.length>1;
+  var label=cm?"Combo \u00b7 "+cible.lg_leg.length+" picks":cible.lg_leg[0].label;
+  var net=pay-+cible.stake;
+  ev("play_rattrapage",{net:Math.round(net)});
+  if(best)showResult({tag:"WON",net:bnet,x:pay/cible.stake,stake:+cible.stake,legs:cible.lg_leg,
     label:label+" came through while you were away",
     msg:"It settled without you. "+money(pay)+" went into your balance."});
+  else showResult({tag:"LOST",net:net,x:pay/cible.stake,stake:+cible.stake,legs:cible.lg_leg,
+    label:cm?"The combo broke while you were away":label+" didn\u2019t make it",
+    msg:"It settled without you. Play money, so nothing real is gone."});
 }
 
 function settled(p){
