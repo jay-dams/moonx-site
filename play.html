@@ -124,7 +124,7 @@ nav.top{position:fixed;top:0;left:0;right:0;z-index:30;height:var(--nh);display:
 .mailrow input{flex:1;min-width:0;height:46px;padding:0 13px;border-radius:13px;border:1px solid var(--line-2);background:rgba(0,0,0,.3);outline:0;font-weight:700;font-size:15px}
 .mailrow input:focus{border-color:var(--hi)}
 .real .mailrow .go{flex:none;width:auto;height:46px;padding:0 16px}
-.mailmsg{margin:8px 2px 0;font-size:12.5px;color:var(--dim);min-height:1em}
+.mailwhy{display:block;margin:8px 2px 0;font-size:11.5px;line-height:1.45;color:var(--dim)}.mailmsg{margin:6px 2px 0;font-size:12.5px;color:var(--dim);min-height:1em}
 .mailmsg.ok{color:var(--mint)}
 .mailmsg.ko{color:var(--red)}
 @media (max-width:560px){.mailrow{flex-direction:column}.real .mailrow .go{width:100%}}
@@ -3084,6 +3084,7 @@ function mailHTML(place){
   return'<div class="mail"><label for="ml_'+place+'">'+(c?'<b>$5 ON YOUR REAL ACCOUNT</b> FOR LEAVING YOUR EMAIL':'<b>LEAVE YOUR EMAIL</b> AND WE HELP YOU SET UP THE REAL ACCOUNT')+'</label>'+
     '<div class="mailrow"><input id="ml_'+place+'" type="email" inputmode="email" autocomplete="email" spellcheck="false" placeholder="you@example.com" data-mail-in="'+place+'">'+
     '<button class="go ghost" type="button" data-mail="'+place+'">'+(c?"Claim my $5":"Send it")+'</button></div>'+
+    '<small class="mailwhy">A real person reads it and writes back to set you up. Not a mailing list.</small>'+
     '<p class="mailmsg" id="mlm_'+place+'" role="status"></p></div>';
 }
 function bestRun(){
@@ -3118,12 +3119,12 @@ function realWhy(){
 function realBox(t,place){
   place=place||"trades";
   return'<div class="real"><span class="rtag">MOONX IS LIVE</span><b>'+t+'</b>'+leverLine()+
+    mailHTML(place)+
     '<ul>'+
     '<li><s>&#10003;</s><span><b>No KYC.</b> No identity check, no document to upload, no approval to wait for.</span></li>'+
     '<li><s>&#10003;</s><span><b>Non-custodial.</b> The wallet is made on your device and the keys stay there. Your money is yours.</span></li>'+
     '<li><s>&#10003;</s><span><b>Pay by card, sell anytime.</b> No crypto knowledge needed, and you never wait for the result.</span></li>'+
     '</ul>'+
-    mailHTML(place)+
     '<a class="go wht" data-cta="play_'+place+'" href="'+SIGN+'">Create your account in 2 minutes</a>'+
     '<small class="fine">18+ only. Not available everywhere. Payment partners run their own checks when you add money.</small></div>';
 }
@@ -3139,7 +3140,7 @@ function sendMail(place){
     .then(function(j){
       mailSent[v]=1;f.value="";m.className="mailmsg ok";
       if(LD&&j&&j.cinq&&+j.place&&+j.total)LD.cinq=Math.max(0,+j.total-+j.place);
-      m.textContent=j&&j.cinq?"Done. $5 is held for you. We email you to set it up.":(j&&j.cinq===false?"The spots are taken. You are on the list anyway.":"Got it. You are on the list.");
+      m.textContent=j&&j.cinq?"Done. Your $5 is held. A real person writes back to set it up.":(j&&j.cinq===false?"The spots are taken, but a real person still writes back to set you up.":"Got it. A real person writes back to set you up.");
       ev("play_email",{place:place,cinq:!!(j&&j.cinq)});
     })
     .catch(function(){
