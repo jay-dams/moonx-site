@@ -1133,7 +1133,7 @@ var tok=null;try{tok=localStorage.getItem(TK)}catch(e){}
 try{var _s=parseFloat(localStorage.getItem(SK));if(isFinite(_s)&&_s>0)stake=_s}catch(e){}
 var MAIL_ON=true;
 var mailSent={};
-var detail=null,QT={k:"",mult:null,px:null,err:null,at:0,busy:false},slipOpen=false,kbuf="";
+var detail=null,QT={k:"",pk:"",mult:null,px:null,err:null,at:0,busy:false},slipOpen=false,kbuf="";
 var P=null,MK=[],Q={},QP={},H={},tab="matches",sport=qp("sport")||"all",lgue=qp("league")||"all",day="live",picks={},stake=null,mode="combo",amount=null,LG="ALL",LD=null,inviteCode=(qp("l")||"").toUpperCase(),inviteInfo=null,follow=null,lastVal={},msHit={},seenStatus={},busy=false,timers={};
 
 function qp(k){try{return new URLSearchParams(location.search).get(k)}catch(e){return null}}
@@ -1350,7 +1350,7 @@ function demoApi(a,b){
     },LOCAL?120:0);
   });
 }
-function errText(e){return{taken:"That name is taken. Try another one.",handle:"3 to 18 letters, numbers or _ only.",balance:"Not enough play money.",closed:"This market just closed.",price:"Price out of range right now. Try another pick.",picks:"Up to 6 picks, and never the same one twice.",combo:"These picks can\u2019t all win together. Swap one.",event:"That match isn\u2019t open right now.",stake:"Minimum is $1.",league:"League not found.",name:"Give your league a name.",auth:"Your session expired. Reload the page.",upstream:"Polymarket is slow right now. Try again.",limit:"You already run 10 leagues.",full:"This clan is full. 60 players max.",member:"Join the clan first.",self:"That’s you.",admin:"Only the player who made the clan can do that.",nobody:"No player with that name. Check the spelling, or send them the link."}[e]||"Something went wrong. Try again."}
+function errText(e){return{taken:"That name is taken. Try another one.",handle:"3 to 18 letters, numbers or _ only.",balance:"Not enough play money.",closed:"This market just closed.",price:"Price out of range right now. Try another pick.",liquidity:"Not enough on the order book for that size. Try a smaller amount.",picks:"Up to 6 picks, and never the same one twice.",combo:"These picks can\u2019t all win together. Swap one.",event:"That match isn\u2019t open right now.",stake:"Minimum is $1.",league:"League not found.",name:"Give your league a name.",auth:"Your session expired. Reload the page.",upstream:"Polymarket is slow right now. Try again.",limit:"You already run 10 leagues.",full:"This clan is full. 60 players max.",member:"Join the clan first.",self:"That’s you.",admin:"Only the player who made the clan can do that.",nobody:"No player with that name. Check the spelling, or send them the link."}[e]||"Something went wrong. Try again."}
 
 function price(t,fb){var v=Q[t];return v!=null?v:fb}
 function legNow(l){return l.final!=null?+l.final:price(l.token_id,+l.p0)}
@@ -2897,7 +2897,7 @@ function doBet(){
     });
   },Promise.resolve()).then(function(){
     ev("lg_trade",{legs:n,mode:cm?"combo":n>1?"singles":"single"});vib(16);
-    picks={};QT={k:"",mult:null,px:null,err:null,at:0,busy:false};
+    picks={};QT={k:"",pk:"",mult:null,px:null,err:null,at:0,busy:false};
     if(jobs.length===1)undoToast(cm&&n>1?"Combo ×"+n:l[0].label,c.a,c.pay,last);
     else toast(jobs.length+" picks placed. Good luck!");
     ids.forEach(renderRows);if(detail)paintPicks();renderTicket();refreshNav();renderLive();loadHistories();
@@ -2963,19 +2963,20 @@ function nameGo(){
 }
 function legsList(){var l=[];Object.keys(picks).forEach(function(k){l.push(picks[k])});return l}
 function lx(x){
-  var q=(QT.k===pkey()&&QT.px)?QT.px[x.token]:0;
+  var q=(QT.pk===pkeyP()&&QT.px)?QT.px[x.token]:0;
   return q>0?1/q:1/price(x.token,x.p);
 }
 function midX(l){return l.reduce(function(a,x){return a*(1/price(x.token,x.p))},1)}
 function rawX(l){return l.reduce(function(a,x){return a*lx(x)},1)}
 function comboX(l){
-  if(l.length>1&&QT.k===pkey()){
+  if(l.length>1&&QT.pk===pkeyP()){
     if(QT.err)return NaN;
     if(QT.mult>0)return QT.mult;
   }
   return rawX(l);
 }
-function pkey(){return Object.keys(picks).sort().join(",")}
+function pkeyP(){return Object.keys(picks).sort().join(",")}
+function pkey(){return pkeyP()+"@"+Math.round(curAmt()*100)}
 function sameMatch(l){
   var seen={},dup=false;
   l.forEach(function(x){if(seen[x.id])dup=true;seen[x.id]=1});
@@ -2983,23 +2984,23 @@ function sameMatch(l){
 }
 function quoteSoon(){
   clearTimeout(timers.qt);
-  var k=pkey();
-  if(QT.k!==k){QT.k=k;QT.mult=null;QT.err=null;QT.px=null;QT.at=0}
+  if(QT.pk!==pkeyP()){QT.pk=pkeyP();QT.k=null;QT.mult=null;QT.err=null;QT.px=null;QT.at=0}
   if(pcount()<1)return;
-  timers.qt=setTimeout(askQuote,260);
+  if(QT.k===pkey())return;
+  timers.qt=setTimeout(askQuote,300);
 }
 function askQuote(){
-  var l=legsList(),k=pkey();
+  var l=legsList(),k=pkey(),pk=pkeyP();
   if(l.length<1||QT.busy)return;
   QT.busy=true;
-  api("quote",{picks:l.map(function(x){return{event_id:x.id,token_id:x.token}})}).then(function(j){
-    if(pkey()!==k)return;
+  api("quote",{picks:l.map(function(x){return{event_id:x.id,token_id:x.token}}),stake:curAmt()}).then(function(j){
+    if(pkeyP()!==pk)return;
     var px={};(j.legs||[]).forEach(function(g){if(+g.p>0)px[g.token_id]=+g.p});
-    QT.k=k;QT.mult=+j.mult||null;QT.px=px;QT.err=null;QT.at=Date.now();
+    QT.pk=pk;QT.k=k;QT.mult=+j.mult||null;QT.px=px;QT.err=null;QT.at=Date.now();
   }).catch(function(e){
-    if(pkey()!==k)return;
-    QT.k=k;QT.mult=null;QT.px=null;QT.err=e==="combo"?errText("combo"):null;QT.at=Date.now();
-  }).then(function(){QT.busy=false;renderTicket()});
+    if(pkeyP()!==pk)return;
+    QT.pk=pk;QT.k=k;QT.mult=null;QT.px=null;QT.err=(e==="combo"||e==="liquidity")?errText(e):null;QT.at=Date.now();
+  }).then(function(){QT.busy=false;renderTicket();if(QT.k!==pkey())quoteSoon()});
 }
 function cash(){return P?Math.floor(+P.player.bal*100)/100:START}
 function curAmt(){return amount!=null?Math.min(amount,cash()):stakeNow()}
@@ -3007,7 +3008,7 @@ function calc(l){
   var n=l.length,cm=n>1&&mode==="combo",a=curAmt(),pay=cm?a*comboX(l):l.reduce(function(s,x){return s+a/n*lx(x)},0);
   if(!isFinite(pay))pay=0;
   var w=!(a>=1)?"Minimum is $1.":a>cash()+1e-9?"You have "+money(cash())+" in cash.":"";
-  if(!w&&cm&&QT.err&&QT.k===pkey())w=QT.err;
+  if(!w&&QT.err&&QT.pk===pkeyP())w=QT.err;
   return{n:n,cm:cm,a:a,pay:pay,warn:w};
 }
 function qnote(l){
@@ -4050,13 +4051,13 @@ document.addEventListener("click",function(e){
   if(d.custom!=null){custom=d.custom==="1";if(custom)kbuf="";renderTicket();
     if(custom)setTimeout(function(){var f=document.querySelector(".cin");if(f){f.focus();f.select()}},30);
     return}
-  if(d.max){stake=cash();amount=null;try{localStorage.setItem(SK,String(stake))}catch(x){}renderTicket();return}
+  if(d.max){stake=cash();amount=null;try{localStorage.setItem(SK,String(stake))}catch(x){}renderTicket();quoteSoon();return}
   if(d.join){openSheet("name",nameHTML(legsList()));return}
   if(d.bet){doBet();return}
   if(d.namego){nameGo();return}
   if(d.more){SHOWN+=40;renderMatches();pollQuotes();return}
   if(d.stake){stake=+d.stake;amount=null;custom=false;try{localStorage.setItem(SK,String(stake))}catch(x){}
-    renderTicket();
+    renderTicket();quoteSoon();
     if($("sheet").dataset.k==="name")$("sheetP").innerHTML=nameHTML(legsList());
     return}
   if(d.undo){var u=d.undo;hideToast();eject(u);return}
@@ -4090,7 +4091,7 @@ document.addEventListener("click",function(e){
       if(on)cs.scrollTo({left:Math.max(0,on.offsetLeft-70),behavior:"smooth"});
     }
     vib(5);return}
-  if(d.q){amount=Math.max(1,Math.floor(cash()*+d.q*100)/100);if(+d.q===1)amount=cash();rememberName();if($("sheet").dataset.k==="follow")$("sheetP").innerHTML=followHTML();return}
+  if(d.q){amount=Math.max(1,Math.floor(cash()*+d.q*100)/100);if(+d.q===1)amount=cash();rememberName();quoteSoon();if($("sheet").dataset.k==="follow")$("sheetP").innerHTML=followHTML();return}
   if(d.fplace){rememberName();placeFollow();return}
   if(d.ejp){ejPart(d.ejp);return}
   if(d.ejq){timers.ejPc=+d.ejq;ejPaint();return}
@@ -4206,7 +4207,7 @@ document.addEventListener("input",function(e){
   if(e.target.id==="hdl"){timers.hdl=e.target.value;document.querySelectorAll("#hdl").forEach(function(f){if(f!==e.target)f.value=e.target.value});return}
   if(!e.target.classList.contains("amtIn"))return;
   var v=parseFloat(String(e.target.value).replace(",",".").replace(/[^0-9.]/g,""));amount=isFinite(v)?Math.floor(v*100)/100:0;
-  document.querySelectorAll(".amtIn").forEach(function(f){if(f!==e.target)f.value=e.target.value});dyn();
+  document.querySelectorAll(".amtIn").forEach(function(f){if(f!==e.target)f.value=e.target.value});dyn();quoteSoon();
 });
 document.addEventListener("visibilitychange",function(){if(!document.hidden){pollMarkets();pollQuotes();pollMe();bqRun()}});
 
