@@ -1069,6 +1069,8 @@ footer .lk button:hover{color:#fff}
 (function(){
 "use strict";
 var API="https://xcyqdfhnpntcloimotoo.supabase.co/functions/v1/league",SIGN="https://lfg.moonx.fi/users/sign_up",TK="moonx.play.token",SK="moonx.play.stake",RK="moonx.play.vus",START=1000;
+var META_PIXEL="";
+var MTK="moonx.meta";
 var SPORTS=[
   ["all","All sports","\u25C9"],
   ["soccer","Soccer","\u26BD"],
@@ -1138,6 +1140,50 @@ var P=null,MK=[],Q={},QP={},H={},tab="matches",sport=qp("sport")||"all",lgue=qp(
 
 function qp(k){try{return new URLSearchParams(location.search).get(k)}catch(e){return null}}
 function ev(n,p){try{if(window.MOONX_EVENT)window.MOONX_EVENT(n,p||{})}catch(e){}}
+function metaOk(){try{return window.MOONX_CONSENT&&window.MOONX_CONSENT()==="granted"}catch(e){return false}}
+function bisc(n){try{var m=document.cookie.match("(^|; )"+n+"=([^;]*)");return m?decodeURIComponent(m[2]):""}catch(e){return""}}
+function fbcVal(){
+  var c=bisc("_fbc");if(c)return c;
+  try{var q=qp("fbclid");if(q)return"fb.1."+Date.now()+"."+q}catch(e){}
+  return"";
+}
+function metaLoad(){
+  if(!META_PIXEL||!metaOk()||window.fbq)return;
+  var f=window,b=document,e="script",v="https://connect.facebook.net/en_US/fbevents.js",n,t,x;
+  n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;
+  n.push=n;n.loaded=true;n.version="2.0";n.queue=[];
+  t=b.createElement(e);t.async=true;t.src=v;
+  x=b.getElementsByTagName(e)[0];x.parentNode.insertBefore(t,x);
+  f.fbq("init",META_PIXEL);
+}
+function metaId(){return"mx"+Date.now().toString(36)+Math.random().toString(36).slice(2,10)}
+function metaState(){try{var o=JSON.parse(localStorage.getItem(MTK)||"null");if(o&&typeof o==="object")return o}catch(e){}return{h:"",done:{}}}
+function metaOnce(n){
+  var h=(P&&P.player&&P.player.handle)||"";
+  var o=metaState();
+  if(h&&o.h!==h)o={h:h,done:{}};
+  if(o.done[n])return"";
+  o.done[n]=1;
+  try{localStorage.setItem(MTK,JSON.stringify(o))}catch(e){}
+  return metaId();
+}
+function metaPush(n,eid,std){
+  if(!eid||!metaOk())return;
+  metaLoad();
+  try{if(window.fbq)window.fbq(std?"track":"trackCustom",n,{},{eventID:eid})}catch(e){}
+  if(LOCAL)return;
+  try{api("meta",{ev:n,eid:eid,token:tok||undefined,fbp:bisc("_fbp"),fbc:fbcVal(),url:location.href,consent:true}).catch(function(){})}catch(e){}
+}
+function metaArme(){return!!META_PIXEL&&metaOk()}
+function metaPage(){if(metaArme())metaPush("PageView",metaId(),true)}
+function metaReg(){if(metaArme())metaPush("CompleteRegistration",metaOnce("CompleteRegistration"),true)}
+function metaPicks(){
+  if(!metaArme()||!P||!P.positions)return;
+  var n=P.positions.length;
+  if(n>=1)metaPush("PlayFirstPick",metaOnce("PlayFirstPick"),false);
+  if(n>=3)metaPush("PlayThirdPick",metaOnce("PlayThirdPick"),false);
+}
 function rond(v){return "$"+Math.round(+v||0).toLocaleString("en-US")}
 function money(v){return"$"+(Math.round(v*100)/100).toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2})}
 function signed(v){return(v>=0?"+":"-")+money(Math.abs(v))}
@@ -1468,7 +1514,7 @@ function startGame(){
   e.textContent="";busy=true;
   api("join",{handle:hd,league:inviteCode||undefined,attr:attrOf()}).then(function(j){
     tok=j.token;try{localStorage.setItem(TK,tok)}catch(x){}
-    setProfile(j);ev("lg_join",{invite:!!inviteCode,from:"idbox"});
+    setProfile(j);ev("lg_join",{invite:!!inviteCode,from:"idbox"});metaReg();
     $("idBox").dataset.ready="";toast("You're in. $1,000 of play money.");render();
   }).catch(function(err){e.textContent=errText(err)}).then(function(){busy=false});
 }
@@ -2896,7 +2942,7 @@ function doBet(){
       });
     });
   },Promise.resolve()).then(function(){
-    ev("lg_trade",{legs:n,mode:cm?"combo":n>1?"singles":"single"});vib(16);
+    ev("lg_trade",{legs:n,mode:cm?"combo":n>1?"singles":"single"});vib(16);metaPicks();
     picks={};QT={k:"",pk:"",mult:null,px:null,err:null,at:0,busy:false};
     if(jobs.length===1)undoToast(cm&&n>1?"Combo ×"+n:l[0].label,c.a,c.pay,last);
     else toast(jobs.length+" picks placed. Good luck!");
@@ -2950,7 +2996,7 @@ function nameGo(){
   timers.hdl=h;busy=true;setBusy(true);
   api("join",{handle:h,league:inviteCode||undefined,attr:attrOf()}).then(function(j){
     tok=j.token;try{localStorage.setItem(TK,tok)}catch(x){}
-    setProfile(j);ev("lg_join",{invite:!!inviteCode,from:"slip"});
+    setProfile(j);ev("lg_join",{invite:!!inviteCode,from:"slip"});metaReg();
     if(j.league)LG=j.league.code;
     closeSheet();busy=false;setBusy(false);
     if($("hero"))$("hero").hidden=true;
@@ -3048,7 +3094,7 @@ function ensurePlayer(){
   if(P)return Promise.resolve();
   var f=document.querySelector(".sheet.open #hdl")||document.querySelector("#side #hdl");var h=(f&&f.value||timers.hdl||"").trim().replace(/^@/,"");
   if(!/^[A-Za-z0-9_]{3,18}$/.test(h)){if(f)f.focus();return Promise.reject("handle")}
-  return api("join",{handle:h,league:inviteCode||undefined,attr:attrOf()}).then(function(j){tok=j.token;try{localStorage.setItem(TK,tok)}catch(e){}setProfile(j);ev("lg_join",{invite:!!inviteCode});if(j.league){LG=j.league.code;toast("You joined "+j.league.name)}})
+  return api("join",{handle:h,league:inviteCode||undefined,attr:attrOf()}).then(function(j){tok=j.token;try{localStorage.setItem(TK,tok)}catch(e){}setProfile(j);ev("lg_join",{invite:!!inviteCode});metaReg();if(j.league){LG=j.league.code;toast("You joined "+j.league.name)}})
 }
 
 function setBusy(on){document.querySelectorAll("[data-bet],[data-namego],[data-fplace],[data-ej]").forEach(function(b){if(on)b.setAttribute("aria-busy","true");else b.removeAttribute("aria-busy")})}
@@ -3635,7 +3681,7 @@ function placeFollow(){
   if(busy||!follow)return;busy=true;var f=follow;
   ensurePlayer().then(function(){
     var c=fcalc();return api("open",{token:tok,picks:f.legs.map(function(l){return{event_id:l.event_id,token_id:l.token}}),stake:Math.min(c.a,cash()),via:f.id,side:f.side}).then(function(r){
-      setProfile(r);timers.lastNew=r.opened&&r.opened.id;ev("lg_follow",{side:f.side});follow=null;amount=null;closeSheet();confetti(50);toast(f.side==="same"?"You’re with @"+f.who+".":"You’re against @"+f.who+".");setTab("trades");
+      setProfile(r);timers.lastNew=r.opened&&r.opened.id;ev("lg_follow",{side:f.side});metaPicks();follow=null;amount=null;closeSheet();confetti(50);toast(f.side==="same"?"You’re with @"+f.who+".":"You’re against @"+f.who+".");setTab("trades");
     });
   }).catch(function(e){toast(errText(e))}).then(function(){busy=false});
 }
@@ -4239,11 +4285,13 @@ function boot(){
   setInterval(function(){if(tab==="league"||window.matchMedia("(min-width:1080px)").matches)loadLeague()},22000);
   window.addEventListener("resize",function(){clearTimeout(timers.rz);timers.rz=setTimeout(function(){renderSide()},200)});
   ev("lg_open",{invite:!!inviteCode,sport:sport});
+  metaPage();
+  window.addEventListener("moonx:consent",function(e){if(e.detail==="granted")metaPage()});
 }
 boot();
 })();
 </script>
 <script src="assets/js/attr.js"></script>
-<script src="assets/js/ga-v2.js"></script>
+<script src="assets/js/ga-v3.js"></script>
 </body>
 </html>
